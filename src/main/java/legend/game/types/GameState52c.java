@@ -5,8 +5,11 @@ import it.unimi.dsi.fastutil.ints.IntList;
 import legend.core.GameEngine;
 import legend.game.inventory.Equipment;
 import legend.game.inventory.Item;
+import legend.game.modding.coremod.CoreMod;
 import legend.lodmod.LodMod;
 import org.legendofdragoon.modloader.registries.RegistryId;
+
+import static legend.core.GameEngine.CONFIG;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -26,7 +29,7 @@ public class GameState52c {
    * </ul>
    */
   public final int[] scriptData_08 = new int[0x20];
-  public final int[] charIds_88 = new int[3];
+  public final int[] charIds_88 = new int[CONFIG.getConfig(CoreMod.PLAYER_COMBATANT_SIZE_CONFIG.get())]; //greytodo: see if i can replace with a dynamic array
   public int gold_94;
   public int chapterIndex_98;
   public int stardust_9c;
