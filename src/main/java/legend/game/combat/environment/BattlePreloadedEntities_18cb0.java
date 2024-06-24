@@ -10,12 +10,13 @@ import legend.game.types.McqHeader;
 import java.util.Arrays;
 
 import static legend.game.Scus94491BpeSegment_8006.battleState_8006e398;
+import static legend.game.Scus94491BpeSegment_800b.gameState_800babc8;
 
 /** 0x18cb0 bytes */
 public class BattlePreloadedEntities_18cb0 {
   public EncounterData38 encounterData_00;
   /** 3 slots for chars, 3 slots for dragoons */
-  public final AdditionHits80[] additionHits_38 = new AdditionHits80[6];
+  public final AdditionHits80[] additionHits_38 = new AdditionHits80[gameState_800babc8.charIds_88.length*2];
   /** This reference is only valid while it's loading */
 //  public MrgFile stageMrg_638;
 //  public MrgFile stageTmdMrg_63c;
@@ -25,7 +26,7 @@ public class BattlePreloadedEntities_18cb0 {
   public Obj skyboxObj;
   public final MV skyboxTransforms = new MV();
 
-  public final Rendering1298[] _9ce8 = new Rendering1298[3];
+  public final Rendering1298[] _9ce8 = new Rendering1298[gameState_800babc8.charIds_88.length];
 
   public BattlePreloadedEntities_18cb0() {
     Arrays.setAll(this._9ce8, i -> new Rendering1298());
@@ -34,7 +35,7 @@ public class BattlePreloadedEntities_18cb0 {
   @Method(0x800c7488L)
   public int getHitProperty(final int charSlot, final int hitNum, final int hitPropertyIndex) {
     if((battleState_8006e398.playerBents_e40[charSlot].storage_44[7] & 0x2) != 0) { // Is dragoon
-      return this.additionHits_38[charSlot + 3].hits_00[hitNum].get(hitPropertyIndex);
+      return this.additionHits_38[charSlot + (additionHits_38.length/2)].hits_00[hitNum].get(hitPropertyIndex);
     }
 
     //LAB_800c74fc
