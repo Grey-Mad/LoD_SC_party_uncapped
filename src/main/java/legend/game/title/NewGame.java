@@ -4,6 +4,7 @@ import legend.core.memory.Method;
 import legend.game.EngineState;
 import legend.game.EngineStateEnum;
 import legend.game.types.CharacterData2c;
+import legend.game.modding.coremod.CoreMod;
 
 import static legend.game.SItem.levelStuff_80111cfc;
 import static legend.game.SItem.magicStuff_80111d20;
