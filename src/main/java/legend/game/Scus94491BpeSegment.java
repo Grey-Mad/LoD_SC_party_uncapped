@@ -2465,16 +2465,17 @@ public final class Scus94491BpeSegment {
 
           //LAB_8001e374
         }*/
-        int charIds_88Length;
+        int charIds_88Length; //todogrey fix
         if (gameState_800babc8 == null){
           charIds_88Length = 3;
         }else{
           charIds_88Length =gameState_800babc8.charIds_88.length;
         }
+        
         for(int charSlot = 0; charSlot <  charIds_88Length; charSlot++) {
           final int index = characterSoundFileIndices_800500f8[charSlot];
 
-          if(soundFiles_800bcf80[index].used_00) {
+          if((soundFiles_800bcf80.length > index) && soundFiles_800bcf80[index].used_00) {
             sssqUnloadPlayableSound(soundFiles_800bcf80[index].playableSound_10);
             soundFiles_800bcf80[index].used_00 = false;
           }
