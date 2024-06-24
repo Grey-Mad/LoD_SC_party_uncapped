@@ -22,7 +22,7 @@ public class Spu implements Runnable {
   private GenericSource source;
 
   private final short[] spuOutput = new short[SAMPLES_PER_TICK * 2];
-  private final byte[] ram = new byte[512 * 1024]; // 0x8_0000
+  private final byte[] ram = new byte[512 * 4096]; // 0x8_0000  grey_todo: make is increase by 30000 per each new pc*/
   private final float[] reverbWorkArea = new float[0x4_0000];
   public final Voice[] voices = new Voice[24];
 
