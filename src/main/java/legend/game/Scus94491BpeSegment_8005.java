@@ -24,9 +24,9 @@ public final class Scus94491BpeSegment_8005 {
     55, -1, -1, -1, -1, -1, -1, -1,
   };
   public static final int[] monsterSoundFileIndices_800500e8 = {4, 5, 6, 7};
-  public static final int[] characterSoundFileIndices_800500f8 = {1, 2, 3};
+  public static final int[] characterSoundFileIndices_800500f8 = {1, 2, 3, 13, 14, 15, 16}; /*greytodo: look into dynamic and more elegant solutions*/
 
-  public static final int[] charSlotSpuOffsets_80050190 = {0x44250, 0x4b780, 0x52cb0};
+  public static final int[] charSlotSpuOffsets_80050190 = {0x44250, 0x4b780, 0x52cb0, 0x80000 , 0x87530, 0x8EA60, 0x95F90}; /*greytodo: look into dynamic and more elegant solutions*/
 
   public static final int[] combatSoundEffectsTypes_8005019c = {
     12, 13, 86, 12, 12, 12, 12, 12,
