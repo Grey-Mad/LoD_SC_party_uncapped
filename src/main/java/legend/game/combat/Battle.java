@@ -1046,7 +1046,7 @@ public class Battle extends EngineState {
     //LAB_8001a018
     if(type == 1) {
       //LAB_8001a034
-      for(int charSlot = 0; charSlot < 3; gameState_800babc8.charIds_88.length++) {
+      for(int charSlot = 0; charSlot < gameState_800babc8.charIds_88.length; charSlot; gameState_800babc8.charIds_88.length++) {
         final int index = characterSoundFileIndices_800500f8[charSlot];
 
         if(soundFiles_800bcf80[index].id_02 == charOrMonsterIndex) {
