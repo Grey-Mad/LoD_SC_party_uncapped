@@ -788,6 +788,8 @@ public class BattleHud {
                   .size(1.0f, 1.0f)
                   .build();
               }
+
+              float spBarHeight = displayStats.y_02 - centreScreenY_1f8003de + (8*this.uiScaleFactor);
               float leftBorderBar = displayStats.x_00 - centreScreenX_1f8003dc + (1f*this.uiScaleFactor);
               float topBorderBar = displayStats.y_02 - centreScreenY_1f8003de + (6f*this.uiScaleFactor);
               float rightBorderBar = leftBorderBar + 35 + (4f*this.uiScaleFactor) ;
