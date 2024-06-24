@@ -122,7 +122,7 @@ public class BattleStateEf4 {
   /** Used in player combat script */
   public int _290;
   /** Indexed by char slot */
-  public final int[] _294 = new int[3];
+  public final int[] _294 = new int[gameState_800babc8.charIds_88.length];
   public int _2a0;
   public int _2a4;
   public int _2a8;
@@ -156,7 +156,7 @@ public class BattleStateEf4 {
   public int _2e0;
   public int _2e4;
   /** Indexed by char slot */
-  public final int[] _2e8 = new int[3];
+  public final int[] _2e8 = new int[gameState_800babc8.charIds_88.length];
   public int _2f4;
   public int _2f8;
   public int _2fc;
@@ -184,14 +184,14 @@ public class BattleStateEf4 {
   public int _32c;
   public int _330;
   /** Pretty sure this is character index loading (boolean) */
-  public final int[] _334 = new int[3];
+  public final int[] _334 = new int[gameState_800babc8.charIds_88.length];
   public int _340;
   public int _344;
   public int _348;
   /** Indexed by char slot */
-  public final int[] _34c = new int[3];
+  public final int[] _34c = new int[gameState_800babc8.charIds_88.length];
   /** Sequence volume is stored in here when player combat script is initialized */
-  public int sequenceVolume_358;
+  public int sequenceVolume_358; //greytodo: check if realted to charslot 3 bug crash
   public int _35c;
   public int _360;
   public int _364;
@@ -202,7 +202,8 @@ public class BattleStateEf4 {
   public int _378;
   public int _37c;
   public int _380;
-  public final Status04[] status_384 = new Status04[8];
+  public final Status04[] status_384 = new Status04[5  + gameState_800babc8.charIds_88.length]; //was 8, greytodo: does this change do anything?
+  public int _3a4;
   public int _3a4;
   public int _3a8;
   public int _3ac;
@@ -252,12 +253,12 @@ public class BattleStateEf4 {
   /** Briefly a bitset of which battle entities have status afflictions, maybe a flag that says this character's status effects forked script hasn't finished yet */
   public int _45c;
   /** Indexed by char slot, something to do with bewitched (set to -1 if not bewitched) */
-  public final int[] _460 = new int[3];
+  public final int[] _460 = new int[gameState_800babc8.charIds_88.length];
   /** Combat stage ID is stored here when player combat script is initialized */
   public int _46c;
   /** Used in player combat script */
   public int _470;
-  public final AdditionExtra04[] additionExtra_474 = new AdditionExtra04[8];
+  public final AdditionExtra04[] additionExtra_474 = new AdditionExtra04[5  + gameState_800babc8.charIds_88.length]; //greytodo: does this change do anything
   public int _494;
   public int _498;
   public int _49c;
@@ -330,11 +331,11 @@ public class BattleStateEf4 {
   // This was used for storing animation files in VRAM
 //  public final int[] y_d80 = new int[3];
   public final CompressedAsset08[] compressedAssets_d8c = new CompressedAsset08[16];
-  public final ScriptState<? extends BattleEntity27c>[] allBents_e0c = new ScriptState[13];
-  public final ScriptState<PlayerBattleEntity>[] playerBents_e40 = new ScriptState[4];
+  public final ScriptState<? extends BattleEntity27c>[] allBents_e0c = new ScriptState[gameState_800babc8.charIds_88.length+10];
+  public final ScriptState<PlayerBattleEntity>[] playerBents_e40 = new ScriptState[gameState_800babc8.charIds_88.length];
   public final ScriptState<MonsterBattleEntity>[] monsterBents_e50 = new ScriptState[10];
-  public final ScriptState<? extends BattleEntity27c>[] aliveBents_e78 = new ScriptState[13];
-  public final ScriptState<PlayerBattleEntity>[] alivePlayerBents_eac = new ScriptState[4];
+  public final ScriptState<? extends BattleEntity27c>[] aliveBents_e78 = new ScriptState[gameState_800babc8.charIds_88.length+10];
+  public final ScriptState<PlayerBattleEntity>[] alivePlayerBents_eac = new ScriptState[gameState_800babc8.charIds_88.length];
   public final ScriptState<MonsterBattleEntity>[] aliveMonsterBents_ebc = new ScriptState[10];
   // Reads directly from gameState now
 //  public TransformationMode morphMode_ee4;
