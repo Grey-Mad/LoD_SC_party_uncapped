@@ -1329,7 +1329,7 @@ public final class Scus94491BpeSegment {
     sssqSetReverbType(3);
     sssqSetReverbVolume(0x30, 0x30);
 
-    for(int i = 0; i < 13; i++) {
+    for(int i = 0; i < soundFiles_800bcf80.length; i++) {
       unuseSoundFile(i);
     }
 
@@ -1338,7 +1338,7 @@ public final class Scus94491BpeSegment {
 
     queuedSounds_800bd110.clear();
 
-    for(int i = 0; i < 13; i++) {
+    for(int i = 0; i < soundFiles_800bcf80.length; i++) {
       soundFiles_800bcf80[i].used_00 = false;
     }
 
@@ -1769,7 +1769,7 @@ public final class Scus94491BpeSegment {
   @Method(0x8001b208L)
   public static FlowControl scriptSetAllSoundSequenceVolumes(final RunningScript<?> script) {
     //LAB_8001b22c
-    for(int i = 0; i < 13; i++) {
+    for(int i = 0; i < soundFiles_800bcf80.length; i++) {
       final SoundFile soundFile = soundFiles_800bcf80[i];
 
       // hasSubfile check added because music loads faster than retail. In Kongol I cutscene when Rose wakes up
@@ -2057,7 +2057,7 @@ public final class Scus94491BpeSegment {
 
     //LAB_8001cd3c
     int charSlot;
-    for(charSlot = 0; charSlot < 3; charSlot++) {
+    for(charSlot = 0; charSlot < characterSoundFileIndices_800500f8[charSlot]; charSlot++) {
       final SoundFile soundFile = soundFiles_800bcf80[characterSoundFileIndices_800500f8[charSlot]];
 
       if(soundFile.id_02 == bent.charId_272) {
@@ -2353,7 +2353,7 @@ public final class Scus94491BpeSegment {
     loadedDrgnFiles_800bcf78.updateAndGet(val -> val | 0x8);
 
     // Player combat sounds for current party composition (example file: 764)
-    for(int charSlot = 0; charSlot < 3; charSlot++) {
+    for(int charSlot = 0; charSlot < gameState_800babc8.charIds_88.length; charSlot++) {
       final int charIndex = gameState_800babc8.charIds_88[charSlot];
 
       if(charIndex != -1) {
@@ -2454,7 +2454,7 @@ public final class Scus94491BpeSegment {
       }
 
       case 1 -> {
-        //LAB_8001e324
+        /*//LAB_8001e324
         for(int charSlot = 0; charSlot < 3; charSlot++) {
           final int index = characterSoundFileIndices_800500f8[charSlot];
 
@@ -2464,6 +2464,20 @@ public final class Scus94491BpeSegment {
           }
 
           //LAB_8001e374
+        }*/
+        int charIds_88Length;
+        if (gameState_800babc8 == null){
+          charIds_88Length = 3;
+        }else{
+          charIds_88Length =gameState_800babc8.charIds_88.length;
+        }
+        for(int charSlot = 0; charSlot <  charIds_88Length; charSlot++) {
+          final int index = characterSoundFileIndices_800500f8[charSlot];
+
+          if(soundFiles_800bcf80[index].used_00) {
+            sssqUnloadPlayableSound(soundFiles_800bcf80[index].playableSound_10);
+            soundFiles_800bcf80[index].used_00 = false;
+          }
         }
       }
 
