@@ -11,6 +11,7 @@ import static legend.game.SItem.xpTables;
 import static legend.game.Scus94491BpeSegment_8004.additionOffsets_8004f5ac;
 import static legend.game.Scus94491BpeSegment_8004.engineStateOnceLoaded_8004dd24;
 import static legend.game.Scus94491BpeSegment_800b.gameState_800babc8;
+import static legend.core.GameEngine.CONFIG;
 
 public class NewGame extends EngineState {
   private static final int[] characterStartingLevels = {1, 3, 4, 8, 13, 15, 17, 19, 23};
@@ -18,9 +19,16 @@ public class NewGame extends EngineState {
 
   @Method(0x800c7194L)
   private void setUpNewGameData() {
-    gameState_800babc8.charIds_88[0] = 0;
-    gameState_800babc8.charIds_88[1] = -1;
-    gameState_800babc8.charIds_88[2] = -1;
+    if(CONFIG.getConfig(CoreMod.PLAYER_COMBATANT_SIZE_CONFIG.get()) == 3){
+      gameState_800babc8.charIds_88 = new int[3];
+      gameState_800babc8.charIds_88[0] = 0;
+      gameState_800babc8.charIds_88[1] = -1;
+      gameState_800babc8.charIds_88[2] = -1;
+    }else{
+      gameState_800babc8.charIds_88 = new int[CONFIG.getConfig(CoreMod.PLAYER_COMBATANT_SIZE_CONFIG.get())];
+      for(int  charIndex = 1; charIndex < CONFIG.getConfig(CoreMod.PLAYER_COMBATANT_SIZE_CONFIG.get()); charIndex++)
+        gameState_800babc8.charIds_88[charIndex] = -1;
+    }
 
     //LAB_800c723c
     for(int charIndex = 0; charIndex < 9; charIndex++) {
