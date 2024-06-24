@@ -8,13 +8,16 @@ import legend.game.inventory.screens.controls.Button;
 import legend.game.inventory.screens.controls.CharacterCard;
 import legend.game.inventory.screens.controls.DragoonSpirits;
 import legend.game.inventory.screens.controls.Glyph;
+import legend.game.modding.coremod.CoreMod;
 import legend.game.saves.ConfigStorage;
 import legend.game.saves.ConfigStorageLocation;
+import legend.game.sound.SoundFile;
 import legend.game.types.MessageBoxResult;
 
 import javax.annotation.Nullable;
 import java.nio.file.Path;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.EnumSet;
 import java.util.List;
 import java.util.function.Function;
@@ -37,11 +40,15 @@ import static legend.game.Scus94491BpeSegment_8004.engineState_8004dd20;
 import static legend.game.Scus94491BpeSegment_800b.continentIndex_800bf0b0;
 import static legend.game.Scus94491BpeSegment_800b.fullScreenEffect_800bb140;
 import static legend.game.Scus94491BpeSegment_800b.gameState_800babc8;
+import static legend.game.Scus94491BpeSegment_800b.livingCharIds_800bc968;
 import static legend.game.Scus94491BpeSegment_800b.renderablePtr_800bdba4;
 import static legend.game.Scus94491BpeSegment_800b.renderablePtr_800bdba8;
 import static legend.game.Scus94491BpeSegment_800b.saveListDownArrow_800bdb98;
 import static legend.game.Scus94491BpeSegment_800b.saveListUpArrow_800bdb94;
+import static legend.game.Scus94491BpeSegment_800b.soundFiles_800bcf80;
+import static legend.game.Scus94491BpeSegment_800b.spGained_800bc950;
 import static legend.game.Scus94491BpeSegment_800b.submapId_800bd808;
+import static legend.game.Scus94491BpeSegment_800b.unlockedUltimateAddition_800bc910;
 import static legend.game.Scus94491BpeSegment_800b.whichMenu_800bdc38;
 import static org.lwjgl.glfw.GLFW.GLFW_MOUSE_BUTTON_LEFT;
 
@@ -289,10 +296,47 @@ public class MainMenuScreen extends MenuScreen {
       ConfigStorage.saveConfig(CONFIG, ConfigStorageLocation.GLOBAL, Path.of("config.dcnf"));
       ConfigStorage.saveConfig(CONFIG, ConfigStorageLocation.CAMPAIGN, Path.of("saves", gameState_800babc8.campaignName, "campaign_config.dcnf"));
       menuStack.popScreen();
+
+
+      if(gameState_800babc8.charIds_88.length > CONFIG.getConfig(CoreMod.PLAYER_COMBATANT_SIZE_CONFIG.get())){//greytodo find better way to this? dyanmic array? also is there a better location for this block of code
+        int[] charIds_replacement = new int[CONFIG.getConfig(CoreMod.PLAYER_COMBATANT_SIZE_CONFIG.get())];
+        java.lang.System.arraycopy(gameState_800babc8.charIds_88, 0, charIds_replacement, 0,CONFIG.getConfig(CoreMod.PLAYER_COMBATANT_SIZE_CONFIG.get()));
+        for(int i=CONFIG.getConfig(CoreMod.PLAYER_COMBATANT_SIZE_CONFIG.get()); i<gameState_800babc8.charIds_88.length; i++){
+          gameState_800babc8.charData_32c[gameState_800babc8.charIds_88[i]].partyFlags_04 |= 0x2;
+        }
+        gameState_800babc8.charIds_88 = charIds_replacement;
+        updateStateGamestateCharIdsDepentedValues();
+      }else if(gameState_800babc8.charIds_88.length < CONFIG.getConfig(CoreMod.PLAYER_COMBATANT_SIZE_CONFIG.get())){
+        int[] charIds_replacement = new int[CONFIG.getConfig(CoreMod.PLAYER_COMBATANT_SIZE_CONFIG.get())];
+        java.lang.System.arraycopy(gameState_800babc8.charIds_88, 0, charIds_replacement, 0, gameState_800babc8.charIds_88.length);
+        for(int i=gameState_800babc8.charIds_88.length; i<CONFIG.getConfig(CoreMod.PLAYER_COMBATANT_SIZE_CONFIG.get()); i++){
+          charIds_replacement[i]=-1;
+        }
+        gameState_800babc8.charIds_88 = charIds_replacement;
+        updateStateGamestateCharIdsDepentedValues();
+      }
+      
       this.loadingStage = 0;
     }));
   }
 
+  private void updateStateGamestateCharIdsDepentedValues() { //
+    unlockedUltimateAddition_800bc910 = new boolean[gameState_800babc8.charIds_88.length];
+    spGained_800bc950 = new int[gameState_800babc8.charIds_88.length];
+    livingCharIds_800bc968 = new int[gameState_800babc8.charIds_88.length];
+    if(soundFiles_800bcf80.length > (gameState_800babc8.charIds_88.length+10)){ //4 sound files are for the monsters
+      SoundFile[] soundFilesReplacement = new SoundFile[gameState_800babc8.charIds_88.length+10]; //4 sound files are for the monsters
+      Arrays.setAll(soundFilesReplacement, i -> new SoundFile()); 
+      java.lang.System.arraycopy(soundFiles_800bcf80, 0, soundFilesReplacement, 0, gameState_800babc8.charIds_88.length+10); //4 sound files are for the monsters
+      soundFiles_800bcf80 = soundFilesReplacement;
+    }else if(soundFiles_800bcf80.length < (gameState_800babc8.charIds_88.length+10)){ //4 sound files are for the monsters
+      SoundFile[] soundFilesReplacement = new SoundFile[gameState_800babc8.charIds_88.length+10]; //4 sound files are for the monsters
+      Arrays.setAll(soundFilesReplacement, i -> new SoundFile()); 
+      java.lang.System.arraycopy(soundFiles_800bcf80, 0, soundFilesReplacement, 0, soundFiles_800bcf80.length); //4 sound files are for the monsters
+      soundFiles_800bcf80 = soundFilesReplacement;
+    }
+  }
+  
   private void showSaveScreen() {
     if(canSave_8011dc88) {
       menuStack.pushScreen(new SaveGameScreen(() -> {
