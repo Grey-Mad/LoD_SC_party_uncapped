@@ -927,7 +927,6 @@ public final class SItem {
       }
 
       //LAB_80103bb4
-    }
   }
 
   @Method(0x80103cc4L)
