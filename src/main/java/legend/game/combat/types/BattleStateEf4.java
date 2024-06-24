@@ -204,7 +204,6 @@ public class BattleStateEf4 {
   public int _380;
   public final Status04[] status_384 = new Status04[5  + gameState_800babc8.charIds_88.length]; //was 8, greytodo: does this change do anything?
   public int _3a4;
-  public int _3a4;
   public int _3a8;
   public int _3ac;
   public int _3b0;
