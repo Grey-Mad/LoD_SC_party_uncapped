@@ -338,7 +338,7 @@ public class Battle extends EngineState {
 
   private int currentPostCombatActionFrame_800c6690;
 
-  private final CombatantStruct1a8[] combatants_8005e398 = new CombatantStruct1a8[10];
+  private final CombatantStruct1a8[] combatants_8005e398 = new CombatantStruct1a8[16]; /*greytodo: see about using dyanmic array*/
   /** The number of {@link #combatants_8005e398}s */
   private int combatantCount_800c66a0;
   public int currentStage_800c66a4;
@@ -401,7 +401,7 @@ public class Battle extends EngineState {
   public static BattleStageDarkening1800 stageDarkening_800c6958;
   public static int stageDarkeningClutWidth_800c695c;
 
-  public final DragoonSpells09[] dragoonSpells_800c6960 = new DragoonSpells09[3];
+  public final DragoonSpells09[] dragoonSpells_800c6960 = new DragoonSpells09[gameState_800babc8.charIds_88.length];
   {
     Arrays.setAll(this.dragoonSpells_800c6960, i -> new DragoonSpells09());
   }
@@ -995,7 +995,7 @@ public class Battle extends EngineState {
     int soundFileIndex = 0;
     if(type == 1) {
       //LAB_80019e68
-      for(int charSlot = 0; charSlot < 3; charSlot++) {
+      for(int charSlot = 0; charSlot < gameState_800babc8.charIds_88.length; charSlot++) {
         final int index = characterSoundFileIndices_800500f8[charSlot];
         if(soundFiles_800bcf80[index].id_02 == bent.charId_272) {
           //LAB_80019ea4
@@ -1046,7 +1046,7 @@ public class Battle extends EngineState {
     //LAB_8001a018
     if(type == 1) {
       //LAB_8001a034
-      for(int charSlot = 0; charSlot < 3; charSlot++) {
+      for(int charSlot = 0; charSlot < 3; gameState_800babc8.charIds_88.length++) {
         final int index = characterSoundFileIndices_800500f8[charSlot];
 
         if(soundFiles_800bcf80[index].id_02 == charOrMonsterIndex) {
@@ -1162,9 +1162,14 @@ public class Battle extends EngineState {
     Arrays.fill(unlockedUltimateAddition_800bc910, false);
     goldGainedFromCombat_800bc920 = 0;
 
+    /*greytodo: make array based on gameState_800babc8.charIds_88.length*/
     spGained_800bc950[0] = 0;
     spGained_800bc950[1] = 0;
     spGained_800bc950[2] = 0;
+    spGained_800bc950[3] = 0;
+    spGained_800bc950[4] = 0;
+    spGained_800bc950[5] = 0;
+    spGained_800bc950[6] = 0;
 
     totalXpFromCombat_800bc95c = 0;
     battleFlags_800bc960 = 0;
@@ -1173,6 +1178,7 @@ public class Battle extends EngineState {
     itemOverflow.clear();
     equipmentOverflow.clear();
 
+    /*greytodo: need way to loop this section */
     int charIndex = gameState_800babc8.charIds_88[1];
     if(charIndex < 0) {
       gameState_800babc8.charIds_88[1] = gameState_800babc8.charIds_88[2];
@@ -1192,7 +1198,7 @@ public class Battle extends EngineState {
       gameState_800babc8.charIds_88[1] = gameState_800babc8.charIds_88[2];
       gameState_800babc8.charIds_88[2] = charIndex;
     }
-
+  
     //LAB_800c760c
     this.allocateStageDarkeningStorage();
     loadEncounterSoundsAndMusic();
@@ -1241,7 +1247,7 @@ public class Battle extends EngineState {
     loadAdditions();
 
     //LAB_800c7830
-    for(int i = 0; i < 12; i++) {
+    for(int i = 0; i < battleState_8006e398.allBents_e0c.length; i++) {
       battleState_8006e398.allBents_e0c[i] = null;
     }
 
@@ -1267,7 +1273,7 @@ public class Battle extends EngineState {
 
     //LAB_801095ec
     //LAB_801095fc
-    for(int i = 0; i < 6; i++) {
+    for(int i = 0; i < 6; i++) { //why 6? 3monsters + 3 players? or players*2, changing to 14 caused pc to attack allies.. so not players*2 or monsters + players, changeing to 10 did not fix issue
       final EncounterData38.EnemyInfo08 s5 = fp.encounterData_00.enemyInfo_08[i];
       final int charIndex = s5.index_00 & 0x1ff;
       if(charIndex == 0x1ff) {
@@ -1297,7 +1303,7 @@ public class Battle extends EngineState {
   public void allocatePlayerBattleEntities() {
     //LAB_800fbdb8
     int charCount;
-    for(charCount = 0; charCount < 3; charCount++) {
+    for(charCount = 0; charCount < gameState_800babc8.charIds_88.length; charCount++) {
       if(gameState_800babc8.charIds_88[charCount] < 0) {
         break;
       }
@@ -1315,9 +1321,9 @@ public class Battle extends EngineState {
     //LAB_800fbe70
     for(int charSlot = 0; charSlot < charCount; charSlot++) {
       final int charIndex = gameState_800babc8.charIds_88[charSlot];
-      final String name = "Char ID " + charIndex + " (bent + " + (charSlot + 6) + ')';
-      final PlayerBattleEntity bent = new PlayerBattleEntity(name, charSlot + 6, this.playerBattleScript_800c66fc);
-      final ScriptState<PlayerBattleEntity> state = SCRIPTS.allocateScriptState(charSlot + 6, name, 0, bent);
+      final String name = "Char ID " + charIndex + " (bent + " + (charSlot + 16) + ')'; //changed 6 to 16, if this value is too low there are issues, needed min of 15 for virage 2. 
+      final PlayerBattleEntity bent = new PlayerBattleEntity(name, charSlot + 16, this.playerBattleScript_800c66fc);
+      final ScriptState<PlayerBattleEntity> state = SCRIPTS.allocateScriptState(charSlot + 16, name, 0, bent);
       state.setTicker(bent::bentLoadingTicker);
       state.setDestructor(bent::bentDestructor);
       bent.element = characterElements_800c706c[charIndex].get();
@@ -1327,7 +1333,7 @@ public class Battle extends EngineState {
       bent.model_148.coord2_14.coord.transfer.x = charCount > 2 && charSlot == 0 ? 0x900 : 0xa00;
       bent.model_148.coord2_14.coord.transfer.y = 0.0f;
       // Alternates placing characters to the right and left of the main character (offsets by -0x400 for even character counts)
-      bent.model_148.coord2_14.coord.transfer.z = 0x800 * ((charSlot + 1) / 2) * (charSlot % 2 * 2 - 1) + (charCount % 2 - 1) * 0x400;
+      bent.model_148.coord2_14.coord.transfer.z = 0x800 * ((charSlot + 1) / 2) * (charSlot % 2 * 2 - 1) + (charCount % 2 - 1) * 0x400; //greytodo: add dynamic spacing for PC>3
       bent.model_148.coord2_14.transforms.rotate.zero();
       battleState_8006e398.addPlayer(state);
     }
@@ -1906,7 +1912,7 @@ public class Battle extends EngineState {
   @Method(0x800c8f50L)
   public int addCombatant(final int a0, final int charSlot) {
     //LAB_800c8f6c
-    for(int combatantIndex = 0; combatantIndex < 10; combatantIndex++) {
+    for(int combatantIndex = 0; combatantIndex < combatants_8005e398.length; combatantIndex++) {
       if(this.combatants_8005e398[combatantIndex] == null) {
         final CombatantStruct1a8 combatant = new CombatantStruct1a8();
         this.combatants_8005e398[combatantIndex] = combatant;
@@ -1950,7 +1956,7 @@ public class Battle extends EngineState {
   @Method(0x800c9060L)
   public int getCombatantIndex(final int charIndex) {
     //LAB_800c906c
-    for(int i = 0; i < 10; i++) {
+    for(int i = 0; i < combatants_8005e398.length; i++) {
       final CombatantStruct1a8 combatant = this.combatants_8005e398[i];
 
       if(combatant != null && combatant.charIndex_1a2 == charIndex) {
@@ -2495,7 +2501,8 @@ public class Battle extends EngineState {
     //LAB_800ca8ac
     //LAB_800ca8c4
     synchronized(this.usedMonsterTextureSlotsLock) {
-      for(int i = a0 < 0x200 ? 4 : 1; i < 9; i++) {
+      //puting breakpoints inside findFreeMonsterTextureSlot caused monster to load player textures. greytodo: see if synchronized sloved the issue
+      for(int i = a0 < 0x200 ? (gameState_800babc8.charIds_88.length + 1) : 1; i < combatants_8005e398.length; i++) { //greytodo: what is the loop doing/how do it work?
         final int a0_0 = 0x1 << i;
 
         if((this.usedMonsterTextureSlots_800c66c4 & a0_0) == 0) {
@@ -7584,7 +7591,7 @@ public class Battle extends EngineState {
     this.monsterCount_800c6b9c = 0;
 
     //LAB_800ee764
-    for(int combatantIndex = 0; combatantIndex < 9; combatantIndex++) {
+    for(int combatantIndex = 0; combatantIndex < 9; combatantIndex++) {//seems to work at 9, greytodo: findout if this val needs to be increased
       this.monsterBents_800c6b78[combatantIndex] = -1;
       this.currentEnemyNames_800c69d0[combatantIndex] = null;
     }
@@ -7599,7 +7606,7 @@ public class Battle extends EngineState {
     this.dragoonSpaceElement_800c6b64 = null;
 
     //LAB_800ee894
-    for(int charSlot = 0; charSlot < 3; charSlot++) {
+    for(int charSlot = 0; charSlot < battleState_8006e398.getPlayerCount(); charSlot++) {
       spGained_800bc950[charSlot] = 0;
     }
 
@@ -7681,11 +7688,11 @@ public class Battle extends EngineState {
     characterStatsLoaded_800be5d0 = true;
 
     //LAB_800ef31c
-    for(int charSlot = 0; charSlot < 3; charSlot++) {
+    for(int charSlot = 0; charSlot < gameState_800babc8.charIds_88.length; charSlot++) {
       this.dragoonSpells_800c6960[charSlot].charId_00 = -1;
 
       //LAB_800ef328
-      for(int spellSlot = 0; spellSlot < 8; spellSlot++) {
+      for(int spellSlot = 0; spellSlot < 8; spellSlot++) { //greytodo: may need to be increased for >7 PCs
         this.dragoonSpells_800c6960[charSlot].spellIndex_01[spellSlot] = -1;
       }
     }
