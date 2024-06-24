@@ -54,7 +54,7 @@ public final class Scus94491BpeSegment_800b {
 
   public static final ScriptState<?>[] scriptStatePtrArr_800bc1c0 = new ScriptState[72];
 
-  public static final boolean[] unlockedUltimateAddition_800bc910 = new boolean[3];
+  public static final boolean[] unlockedUltimateAddition_800bc910 = new boolean[3]; /*gets overwriten during serialization, greytodo: replace with dynamic array*/
   public static EngineStateEnum postCombatMainCallbackIndex_800bc91c = EngineStateEnum.PRELOAD_00;
   public static int goldGainedFromCombat_800bc920;
 
@@ -62,7 +62,7 @@ public final class Scus94491BpeSegment_800b {
   public static final List<Item> itemOverflow = new ArrayList<>();
   public static final List<Equipment> equipmentOverflow = new ArrayList<>();
   public static boolean battleLoaded_800bc94c;
-  public static final int[] spGained_800bc950 = new int[3];
+  public static final int[] spGained_800bc950 = new int[3]; /*gets overwriten during serialization, greytodo: replace with dynamic array*/
   public static int totalXpFromCombat_800bc95c;
   /**
    * <ul>
@@ -80,7 +80,7 @@ public final class Scus94491BpeSegment_800b {
    */
   public static int battleFlags_800bc960;
 
-  public static int[] livingCharIds_800bc968 = new int[3];
+  public static int[] livingCharIds_800bc968 = new int[3]; /*gets overwriten during serialization, greytodo: replace with dynamic array*/
   /**
    * <ol>
    *   <li value="1">Combat victory</li>
@@ -115,7 +115,7 @@ public final class Scus94491BpeSegment_800b {
    */
   public static final AtomicInteger loadedDrgnFiles_800bcf78 = new AtomicInteger();
 
-  public static final SoundFile[] soundFiles_800bcf80 = new SoundFile[13];
+  public static final SoundFile[] soundFiles_800bcf80 = new SoundFile[13]; /*gets overwriten during serialization, greytodo: replace with dynamic array*/
   static {
     Arrays.setAll(soundFiles_800bcf80, i -> new SoundFile());
   }
