@@ -402,7 +402,7 @@ public final class Scus94491BpeSegment_8004 {
    */
   @Method(0x8004bea4L)
   public static PlayableSound0c loadSshdAndSoundbank(final String name, final FileData soundbank, final Sshd sshd, final int addressInSoundBuffer) {
-    if(addressInSoundBuffer > 0x8_0000 || (addressInSoundBuffer & 0xf) != 0) {
+    if(addressInSoundBuffer > (0x80000 * 4) || (addressInSoundBuffer & 0xf) != 0) {/* set to same size as Spu ram*/
       throw new IllegalArgumentException("Invalid sound buffer offset");
     }
 
@@ -664,6 +664,12 @@ public final class Scus94491BpeSegment_8004 {
 
   @Method(0x8004d2fcL)
   public static int startSequenceAndChangeVolumeOverTime(final short transitionTime, final short newVolume) {
+    /*some attacks from char in slot 3 (4th PC) may set a newVolume to higher value from which it does not decrease, may only apply with >4 PC */
+    /* only some additions seem to trigger this issues (e.g. whip smack, shana's basic attack...) */
+    /* on disc 2 haschel double punch starts to cause the issues. this did not occur on disc 1*/
+    /* after barrens miniboss darts additions stop tiggering the issues. may be dragoon spirt realted*/
+    /* sound set to script.params_20[1].state.storage_44[8] is what the newvolume is set to  */
+    /* greytodo: findout how to slove this issue, is it script realated*/
     if(transitionTime >= 0x100 || newVolume >= 0x80) {
       throw new IllegalArgumentException("Invalid transitionTime or newVolume");
     }
