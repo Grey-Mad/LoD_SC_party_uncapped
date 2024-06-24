@@ -924,7 +924,7 @@ public class BattleHud {
         this.battleUiName.render(element.colour);
         Scus94491BpeSegment_8002.renderText(str, 160 - textWidth(str) / 2, 24, TextColour.WHITE, 0);
       }
-    }
+    }}
     //LAB_800f0f2c
   }
 
