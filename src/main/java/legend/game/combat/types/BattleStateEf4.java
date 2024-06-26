@@ -190,8 +190,9 @@ public class BattleStateEf4 {
   public int _348;
   /** Indexed by char slot */
   public final int[] _34c = new int[gameState_800babc8.charIds_88.length];
+  public int _34c_offset = 257;
   /** Sequence volume is stored in here when player combat script is initialized */
-  public int sequenceVolume_358; //greytodo: check if realted to charslot 3 bug crash
+  public int sequenceVolume_358;
   public int _35c;
   public int _360;
   public int _364;
