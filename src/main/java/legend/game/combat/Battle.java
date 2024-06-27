@@ -51,6 +51,8 @@ import legend.game.combat.effects.MonsterDeathEffect34;
 import legend.game.combat.effects.ProjectileHitEffect14;
 import legend.game.combat.effects.RadialGradientEffect14;
 import legend.game.combat.effects.RedEyeDragoonTransformationFlameArmorEffect20;
+import legend.game.combat.effects.ScriptDeffEffect;
+import legend.game.combat.effects.ScriptDeffManualLoadingEffect;
 import legend.game.combat.effects.SpTextEffect40;
 import legend.game.combat.effects.SpriteMetrics08;
 import legend.game.combat.effects.TextureAnimationAttachment1c;
@@ -199,11 +201,11 @@ import static legend.game.Scus94491BpeSegment_8004.doNothingScript_8004f650;
 import static legend.game.Scus94491BpeSegment_8004.previousEngineState_8004dd28;
 import static legend.game.Scus94491BpeSegment_8004.sssqFadeOut;
 import static legend.game.Scus94491BpeSegment_8004.stopSoundSequence;
-import static legend.game.Scus94491BpeSegment_8005.vramSlots_8005027c;
 import static legend.game.Scus94491BpeSegment_8005.characterSoundFileIndices_800500f8;
 import static legend.game.Scus94491BpeSegment_8005.monsterSoundFileIndices_800500e8;
 import static legend.game.Scus94491BpeSegment_8005.submapCut_80052c30;
 import static legend.game.Scus94491BpeSegment_8005.submapScene_80052c34;
+import static legend.game.Scus94491BpeSegment_8005.vramSlots_8005027c;
 import static legend.game.Scus94491BpeSegment_8006.battleState_8006e398;
 import static legend.game.Scus94491BpeSegment_8007.clearRed_8007a3a8;
 import static legend.game.Scus94491BpeSegment_8007.vsyncMode_8007a3b8;
@@ -3867,9 +3869,6 @@ public class Battle extends EngineState {
     final ScriptState<EffectManagerData6c<EffectManagerParams.WeaponTrailType>> state = allocateEffectManager(
       "Weapon trail",
       script.scriptState_04,
-      trail::tickWeaponTrailEffect,
-      trail::renderWeaponTrailEffect,
-      null,
       trail,
       new EffectManagerParams.WeaponTrailType()
     );
@@ -3913,16 +3912,7 @@ public class Battle extends EngineState {
     final int ticks = script.params_20[7].get() & 0xffff;
 
     final FullScreenOverlayEffect0e effect = new FullScreenOverlayEffect0e(r, g, b, fullR, fullG, fullB, ticks);
-
-    final ScriptState<EffectManagerData6c<EffectManagerParams.VoidType>> state = allocateEffectManager(
-      "Full screen overlay rgb(%x, %x, %x) -> rgb(%x, %x, %x)".formatted(r, g, b, fullR, fullG, fullB),
-      script.scriptState_04,
-      effect::tickFullScreenOverlay,
-      effect::renderFullScreenOverlay,
-      null,
-      effect
-    );
-
+    final ScriptState<EffectManagerData6c<EffectManagerParams.VoidType>> state = allocateEffectManager("Full screen overlay rgb(%x, %x, %x) -> rgb(%x, %x, %x)".formatted(r, g, b, fullR, fullG, fullB), script.scriptState_04, effect);
     state.innerStruct_00.params_10.flags_00 = 0x5000_0000;
 
     script.params_20[0].set(state.index);
@@ -4134,15 +4124,7 @@ public class Battle extends EngineState {
     final int b = script.params_20[4].get();
 
     final ProjectileHitEffect14 effect = new ProjectileHitEffect14(count, r, g, b);
-
-    final ScriptState<EffectManagerData6c<EffectManagerParams.VoidType>> state = allocateEffectManager(
-      "ProjectileHitEffect14",
-      script.scriptState_04,
-      null,
-      effect::renderProjectileHitEffect,
-      effect::deallocate,
-      effect
-    );
+    final ScriptState<EffectManagerData6c<EffectManagerParams.VoidType>> state = allocateEffectManager("ProjectileHitEffect14", script.scriptState_04, effect);
 
     //LAB_800d0980
     script.params_20[0].set(state.index);
@@ -4173,15 +4155,7 @@ public class Battle extends EngineState {
     final int ticks = script.params_20[6].get();
 
     final AdditionSparksEffect08 effect = new AdditionSparksEffect08(count, distance, ticks, r, g, b);
-
-    final ScriptState<EffectManagerData6c<EffectManagerParams.VoidType>> state = allocateEffectManager(
-      "AdditionSparksEffect08",
-      script.scriptState_04,
-      null,
-      effect::renderAdditionSparks,
-      effect::deallocate,
-      effect
-    );
+    final ScriptState<EffectManagerData6c<EffectManagerParams.VoidType>> state = allocateEffectManager("AdditionSparksEffect08", script.scriptState_04, effect);
 
     //LAB_800d1154
     script.params_20[0].set(state.index);
@@ -4197,17 +4171,10 @@ public class Battle extends EngineState {
   public FlowControl scriptAllocateAdditionStarburstEffect(final RunningScript<? extends BattleObject> script) {
     final int parentIndex = script.params_20[1].get();
     final int rayCount = script.params_20[2].get();
+    final int type = script.params_20[3].get();
 
-    final AdditionStarburstEffect10 effect = new AdditionStarburstEffect10(parentIndex, rayCount);
-
-    final ScriptState<EffectManagerData6c<EffectManagerParams.VoidType>> state = allocateEffectManager(
-      "AdditionStarburstEffect10",
-      script.scriptState_04,
-      null,
-      effect.additionStarburstRenderers_800c6dc4[script.params_20[3].get()],
-      null,
-      effect
-    );
+    final AdditionStarburstEffect10 effect = new AdditionStarburstEffect10(type, parentIndex, rayCount);
+    final ScriptState<EffectManagerData6c<EffectManagerParams.VoidType>> state = allocateEffectManager("AdditionStarburstEffect10", script.scriptState_04, effect);
 
     //LAB_800d1c7c
     script.params_20[0].set(state.index);
@@ -4218,7 +4185,7 @@ public class Battle extends EngineState {
   @ScriptParam(direction = ScriptParam.Direction.OUT, type = ScriptParam.Type.INT, name = "effectIndex", description = "The new effect manager script index")
   @Method(0x800d1cacL)
   public FlowControl FUN_800d1cac(final RunningScript<? extends BattleObject> script) {
-    script.params_20[0].set(allocateEffectManager("Unknown (FUN_800d1cac)", script.scriptState_04, null, null, null, null).index);
+    script.params_20[0].set(allocateEffectManager("Unknown (FUN_800d1cac)", script.scriptState_04, null).index);
     return FlowControl.CONTINUE;
   }
 
@@ -4226,7 +4193,7 @@ public class Battle extends EngineState {
   @ScriptParam(direction = ScriptParam.Direction.OUT, type = ScriptParam.Type.INT, name = "effectIndex", description = "The new effect manager script index")
   @Method(0x800d1cf4L)
   public FlowControl FUN_800d1cf4(final RunningScript<? extends BattleObject> script) {
-    script.params_20[0].set(allocateEffectManager("Unknown (FUN_800d1cf4)", script.scriptState_04, null, null, null, null).index);
+    script.params_20[0].set(allocateEffectManager("Unknown (FUN_800d1cf4)", script.scriptState_04, null).index);
     return FlowControl.CONTINUE;
   }
 
@@ -4239,15 +4206,10 @@ public class Battle extends EngineState {
     final int circleSubdivisionModifier = script.params_20[1].get();
     final int type = script.params_20[2].get();
 
-    final RadialGradientEffect14 effect = new RadialGradientEffect14(type, circleSubdivisionModifier);
-
     final ScriptState<EffectManagerData6c<EffectManagerParams.RadialGradientType>> state = allocateEffectManager(
       "RadialGradientEffect14",
       script.scriptState_04,
-      null,
-      effect::renderRadialGradientEffect,
-      null,
-      effect,
+      new RadialGradientEffect14(type, circleSubdivisionModifier),
       new EffectManagerParams.RadialGradientType()
     );
 
@@ -4262,15 +4224,7 @@ public class Battle extends EngineState {
   @Method(0x800d2ff4L)
   public FlowControl scriptAllocateGuardEffect(final RunningScript<? extends BattleObject> script) {
     final GuardEffect06 effect = new GuardEffect06();
-
-    final ScriptState<EffectManagerData6c<EffectManagerParams.VoidType>> state = allocateEffectManager(
-      "GuardEffect06",
-      script.scriptState_04,
-      null,
-      effect::renderGuardEffect,
-      null,
-      effect
-    );
+    final ScriptState<EffectManagerData6c<EffectManagerParams.VoidType>> state = allocateEffectManager("GuardEffect06", script.scriptState_04, effect);
 
     // Hack to make shield color default if counter overlay color is default
     // Otherwise, just use the overlay color. Maybe we can make shields toggleable later.
@@ -4302,15 +4256,7 @@ public class Battle extends EngineState {
     final SpriteMetrics08 sprite = deffManager_800c693c.spriteMetrics_39c[script.params_20[2].get() & 0xff];
 
     final MonsterDeathEffect34 deathEffect = new MonsterDeathEffect34(parent, new GenericSpriteEffect24(0x5400_0000, sprite));
-
-    final ScriptState<EffectManagerData6c<EffectManagerParams.VoidType>> state = allocateEffectManager(
-      "MonsterDeathEffect34",
-      script.scriptState_04,
-      deathEffect::monsterDeathEffectTicker,
-      deathEffect::monsterDeathEffectRenderer,
-      deathEffect::destructor,
-      deathEffect
-    );
+    final ScriptState<EffectManagerData6c<EffectManagerParams.VoidType>> state = allocateEffectManager("MonsterDeathEffect34", script.scriptState_04, deathEffect);
 
     //LAB_800d35cc
     script.params_20[0].set(state.index);
@@ -5747,7 +5693,7 @@ public class Battle extends EngineState {
   @ScriptParam(direction = ScriptParam.Direction.IN, type = ScriptParam.Type.INT, name = "p2")
   @ScriptParam(direction = ScriptParam.Direction.IN, type = ScriptParam.Type.INT, name = "scriptEntrypoint", description = "The effect manager's entrypoint into this script")
   @Method(0x800e6470L)
-  public ScriptState<EffectManagerData6c<EffectManagerParams.VoidType>> scriptAllocateDeffEffectManager(final RunningScript<? extends BattleObject> script) {
+  public ScriptState<EffectManagerData6c<EffectManagerParams.VoidType>> scriptAllocateDeffEffectManager(final RunningScript<? extends BattleObject> script, final ScriptDeffEffect effect) {
     final DeffManager7cc struct7cc = deffManager_800c693c;
 
     final int flags = script.params_20[0].get();
@@ -5766,14 +5712,7 @@ public class Battle extends EngineState {
       }
     }
 
-    final ScriptState<EffectManagerData6c<EffectManagerParams.VoidType>> state = allocateEffectManager(
-      "DEFF ticker for script %d (%s)".formatted(script.scriptState_04.index, script.scriptState_04.name),
-      script.scriptState_04,
-      this::scriptDeffTicker,
-      null,
-      this::scriptDeffDeallocator,
-      null
-    );
+    final ScriptState<EffectManagerData6c<EffectManagerParams.VoidType>> state = allocateEffectManager("DEFF ticker for script %d (%s)".formatted(script.scriptState_04.index, script.scriptState_04.name), script.scriptState_04, effect);
 
     LOGGER.info(DEFF, "Allocated DEFF script state %d", state.index);
 
@@ -5798,7 +5737,7 @@ public class Battle extends EngineState {
   @ScriptParam(direction = ScriptParam.Direction.IN, type = ScriptParam.Type.INT, name = "p2")
   @ScriptParam(direction = ScriptParam.Direction.IN, type = ScriptParam.Type.INT, name = "scriptEntrypoint", description = "The effect manager's entrypoint into this script")
   @Method(0x800e665cL)
-  public void loadDragoonDeff(final RunningScript<? extends BattleObject> script) {
+  public void loadDragoonDeff(final RunningScript<? extends BattleObject> script, final ScriptDeffEffect effect) {
     final int index = script.params_20[0].get() & 0xffff;
     final int scriptEntrypoint = script.params_20[3].get() & 0xff;
 
@@ -5806,7 +5745,7 @@ public class Battle extends EngineState {
 
     final DeffManager7cc deffManager = deffManager_800c693c;
     deffManager.flags_20 |= dragoonDeffFlags_800fafec[index] << 16;
-    this.scriptAllocateDeffEffectManager(script);
+    this.scriptAllocateDeffEffectManager(script, effect);
 
     final BattleStruct24_2 battle24 = this._800c6938;
     battle24.type_00 |= 0x100_0000;
@@ -5853,14 +5792,14 @@ public class Battle extends EngineState {
   @ScriptParam(direction = ScriptParam.Direction.IN, type = ScriptParam.Type.INT, name = "p2")
   @ScriptParam(direction = ScriptParam.Direction.IN, type = ScriptParam.Type.INT, name = "scriptEntrypoint", description = "The effect manager's entrypoint into this script")
   @Method(0x800e6844L)
-  public void loadSpellItemDeff(final RunningScript<? extends BattleObject> script) {
+  public void loadSpellItemDeff(final RunningScript<? extends BattleObject> script, final ScriptDeffEffect effect) {
     final int id = script.params_20[0].get() & 0xffff;
     final int s0 = (id - 192) * 2;
 
     LOGGER.info(DEFF, "Loading spell item DEFF (ID: %d, flags: %x)", id, script.params_20[0].get() & 0xffff_0000);
 
     deffManager_800c693c.flags_20 |= 0x40_0000;
-    this.scriptAllocateDeffEffectManager(script);
+    this.scriptAllocateDeffEffectManager(script, effect);
 
     final BattleStruct24_2 t0 = this._800c6938;
 
@@ -5888,7 +5827,7 @@ public class Battle extends EngineState {
   @ScriptParam(direction = ScriptParam.Direction.IN, type = ScriptParam.Type.INT, name = "p2")
   @ScriptParam(direction = ScriptParam.Direction.IN, type = ScriptParam.Type.INT, name = "scriptEntrypoint", description = "The effect manager's entrypoint into this script")
   @Method(0x800e6920L)
-  public void loadEnemyOrBossDeff(final RunningScript<? extends BattleObject> script) {
+  public void loadEnemyOrBossDeff(final RunningScript<? extends BattleObject> script, final ScriptDeffEffect effect) {
     final int s1 = script.params_20[0].get() & 0xff_0000;
     int monsterIndex = (short)script.params_20[0].get();
 
@@ -5902,7 +5841,7 @@ public class Battle extends EngineState {
 
     //LAB_800e69a8
     deffManager_800c693c.flags_20 |= s1 & 0x10_0000;
-    this.scriptAllocateDeffEffectManager(script);
+    this.scriptAllocateDeffEffectManager(script, effect);
 
     final BattleStruct24_2 v1 = this._800c6938;
 
@@ -5958,13 +5897,13 @@ public class Battle extends EngineState {
   @ScriptParam(direction = ScriptParam.Direction.IN, type = ScriptParam.Type.INT, name = "p2")
   @ScriptParam(direction = ScriptParam.Direction.IN, type = ScriptParam.Type.INT, name = "scriptEntrypoint", description = "The effect manager's entrypoint into this script")
   @Method(0x800e6aecL)
-  public void loadCutsceneDeff(final RunningScript<? extends BattleObject> script) {
+  public void loadCutsceneDeff(final RunningScript<? extends BattleObject> script, final ScriptDeffEffect effect) {
     final int v1 = script.params_20[0].get();
     final int cutsceneIndex = v1 & 0xffff;
 
     LOGGER.info(DEFF, "Loading cutscene DEFF (ID: %d, flags: %x)", cutsceneIndex, v1 & 0xffff_0000);
 
-    this.scriptAllocateDeffEffectManager(script);
+    this.scriptAllocateDeffEffectManager(script, effect);
 
     final BattleStruct24_2 a0_0 = this._800c6938;
 
@@ -6122,7 +6061,7 @@ public class Battle extends EngineState {
 
     //LAB_800e7014
     if(v1 == 0) {
-      this.loadDragoonDeff(script);
+      this.loadDragoonDeff(script, new ScriptDeffEffect());
     }
 
     if(v1 < 4) {
@@ -6205,7 +6144,7 @@ public class Battle extends EngineState {
 
     //LAB_800e7244
     if(deffStage == 0) {
-      this.loadSpellItemDeff(script);
+      this.loadSpellItemDeff(script, new ScriptDeffEffect());
     }
 
     //LAB_800e726c
@@ -6236,7 +6175,7 @@ public class Battle extends EngineState {
 
     //LAB_800e72dc
     if(deffStage == 0) {
-      this.loadEnemyOrBossDeff(script);
+      this.loadEnemyOrBossDeff(script, new ScriptDeffEffect());
     }
 
     //LAB_800e7304
@@ -6267,7 +6206,7 @@ public class Battle extends EngineState {
 
     //LAB_800e7374
     if(deffStage == 0) {
-      this.loadCutsceneDeff(script);
+      this.loadCutsceneDeff(script, new ScriptDeffEffect());
     }
 
     //LAB_800e739c
@@ -6288,17 +6227,14 @@ public class Battle extends EngineState {
 
     final int type = script.params_20[4].get();
     if(type == 0x100_0000) {
-      this.loadDragoonDeff(script);
+      this.loadDragoonDeff(script, new ScriptDeffManualLoadingEffect());
     } else if(type == 0x200_0000) {
-      this.loadSpellItemDeff(script);
+      this.loadSpellItemDeff(script, new ScriptDeffManualLoadingEffect());
     } else if(type == 0x300_0000 || type == 0x400_0000) {
-      this.loadEnemyOrBossDeff(script);
+      this.loadEnemyOrBossDeff(script, new ScriptDeffManualLoadingEffect());
     } else if(type == 0x500_0000) {
-      this.loadCutsceneDeff(script);
+      this.loadCutsceneDeff(script, new ScriptDeffManualLoadingEffect());
     }
-
-    final EffectManagerData6c<EffectManagerParams.VoidType> manager = this._800c6938.managerState_18.innerStruct_00;
-    manager.ticker_48 = this::FUN_800e74e0;
 
     return FlowControl.CONTINUE;
   }
@@ -6355,7 +6291,7 @@ public class Battle extends EngineState {
     this.lights_800c692c = deffManager._640;
     deffManager.flags_20 = 0x4;
     deffManager_800c693c = deffManager;
-    final ScriptState<EffectManagerData6c<EffectManagerParams.VoidType>> manager = allocateEffectManager("DEFF manager", null, null, null, null, null);
+    final ScriptState<EffectManagerData6c<EffectManagerParams.VoidType>> manager = allocateEffectManager("DEFF manager", null, null);
     manager.innerStruct_00.flags_04 = 0x600_0400;
     deffManager.scriptState_1c = manager;
     this.allocateLighting();
@@ -6389,7 +6325,7 @@ public class Battle extends EngineState {
   @ScriptParam(direction = ScriptParam.Direction.OUT, type = ScriptParam.Type.INT, name = "effectIndex", description = "The new effect manager script index")
   @Method(0x800e93e0L)
   public FlowControl scriptAllocateEmptyEffectManagerChild(final RunningScript<? extends BattleObject> script) {
-    script.params_20[0].set(allocateEffectManager("Empty EffectManager child, allocated by script %d (%s) from FUN_800e93e0".formatted(script.scriptState_04.index, script.scriptState_04.name), script.scriptState_04, null, null, null, null).index);
+    script.params_20[0].set(allocateEffectManager("Empty EffectManager child, allocated by script %d (%s) from FUN_800e93e0".formatted(script.scriptState_04.index, script.scriptState_04.name), script.scriptState_04, null).index);
     return FlowControl.CONTINUE;
   }
 
@@ -6400,14 +6336,7 @@ public class Battle extends EngineState {
   public FlowControl allocateBillboardSpriteEffect(final RunningScript<? extends BattleObject> script) {
     final BillboardSpriteEffect0c effect = new BillboardSpriteEffect0c();
 
-    final ScriptState<EffectManagerData6c<EffectManagerParams.VoidType>> state = allocateEffectManager(
-      "BillboardSpriteEffect0c",
-      script.scriptState_04,
-      null,
-      effect::renderBillboardSpriteEffect,
-      null,
-      effect
-    );
+    final ScriptState<EffectManagerData6c<EffectManagerParams.VoidType>> state = allocateEffectManager("BillboardSpriteEffect0c", script.scriptState_04, effect);
 
     final EffectManagerData6c<EffectManagerParams.VoidType> manager = state.innerStruct_00;
     manager.flags_04 = 0x400_0000;
@@ -6467,9 +6396,6 @@ public class Battle extends EngineState {
     final ScriptState<EffectManagerData6c<EffectManagerParams.AnimType>> state = allocateEffectManager(
       animatedTmdType.name,
       script.scriptState_04,
-      effect::modelEffectTicker,
-      effect::modelEffectRenderer,
-      null,
       effect,
       new EffectManagerParams.AnimType()
     );
@@ -6513,9 +6439,6 @@ public class Battle extends EngineState {
     final ScriptState<EffectManagerData6c<EffectManagerParams.AnimType>> state = allocateEffectManager(
       animatedTmdType.name,
       script.scriptState_04,
-      effect::modelEffectTicker,
-      effect::modelEffectRenderer,
-      null,
       effect,
       new EffectManagerParams.AnimType()
     );
@@ -6606,9 +6529,6 @@ public class Battle extends EngineState {
     final ScriptState<EffectManagerData6c<EffectManagerParams.AnimType>> state = allocateEffectManager(
       (id & 0x700_0000) != 0 ? "Cloned battle stage model" : "Cloned bent model %d".formatted(id),
       script.scriptState_04,
-      s0::modelEffectTicker,
-      s0::modelEffectRenderer,
-      null,
       s0,
       new EffectManagerParams.AnimType()
     );
