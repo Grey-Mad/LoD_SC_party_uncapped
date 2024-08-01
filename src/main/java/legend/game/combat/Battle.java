@@ -1046,7 +1046,7 @@ public class Battle extends EngineState {
     //LAB_8001a018
     if(type == 1) {
       //LAB_8001a034
-      for(int charSlot = 0; charSlot < gameState_800babc8.charIds_88.length; charSlot; gameState_800babc8.charIds_88.length++) {
+      for(int charSlot = 0; charSlot < gameState_800babc8.charIds_88.length; charSlot++) {
         final int index = characterSoundFileIndices_800500f8[charSlot];
 
         if(soundFiles_800bcf80[index].id_02 == charOrMonsterIndex) {
@@ -1162,14 +1162,9 @@ public class Battle extends EngineState {
     Arrays.fill(unlockedUltimateAddition_800bc910, false);
     goldGainedFromCombat_800bc920 = 0;
 
-    /*greytodo: make array based on gameState_800babc8.charIds_88.length*/
-    spGained_800bc950[0] = 0;
-    spGained_800bc950[1] = 0;
-    spGained_800bc950[2] = 0;
-    spGained_800bc950[3] = 0;
-    spGained_800bc950[4] = 0;
-    spGained_800bc950[5] = 0;
-    spGained_800bc950[6] = 0;
+    for(int charSlot = 0; charSlot < gameState_800babc8.charIds_88.length; charSlot++) {
+      spGained_800bc950[charSlot] = 0;
+    }
 
     totalXpFromCombat_800bc95c = 0;
     battleFlags_800bc960 = 0;
@@ -2501,8 +2496,7 @@ public class Battle extends EngineState {
     //LAB_800ca8ac
     //LAB_800ca8c4
     synchronized(this.usedMonsterTextureSlotsLock) {
-      //puting breakpoints inside findFreeMonsterTextureSlot caused monster to load player textures. greytodo: see if synchronized sloved the issue
-      for(int i = a0 < 0x200 ? (gameState_800babc8.charIds_88.length + 1) : 1; i < combatants_8005e398.length; i++) { //greytodo: what is the loop doing/how do it work?
+      for(int i = a0 < 0x200 ? (gameState_800babc8.charIds_88.length + 1) : 1; i < combatants_8005e398.length; i++) {
         final int a0_0 = 0x1 << i;
 
         if((this.usedMonsterTextureSlots_800c66c4 & a0_0) == 0) {
