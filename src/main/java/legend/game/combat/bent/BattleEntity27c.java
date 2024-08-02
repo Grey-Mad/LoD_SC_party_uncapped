@@ -5,6 +5,7 @@ import legend.core.gpu.Rect4i;
 import legend.core.gte.MV;
 import legend.core.gte.ModelPart10;
 import legend.core.memory.Method;
+import legend.core.opengl.Texture;
 import legend.game.characters.Element;
 import legend.game.characters.ElementSet;
 import legend.game.characters.StatCollection;
@@ -654,6 +655,22 @@ public abstract class BattleEntity27c extends BattleObject {
     final MV lw = new MV();
     final MV ls = new MV();
 
+    Texture vramTexture15 = Texture.create(builder -> {
+      builder.size(256, 64);
+      builder.data(this.combatant_144.combatantVram15, 256, 64);
+      builder.internalFormat(GL_R32UI);
+      builder.dataFormat(GL_RED_INTEGER);
+      builder.dataType(GL_UNSIGNED_INT);
+    });
+
+    Texture vramTexture24 = Texture.create(builder -> {
+      builder.size(256, 64);
+      builder.data(this.combatant_144.combatantVram24, 256, 64);
+      builder.internalFormat(GL_RGBA);
+      builder.dataFormat(GL_RGBA);
+      builder.dataType(GL_UNSIGNED_INT_8_8_8_8_REV);
+    });
+
     //LAB_800ec9d0
     for(int i = 0; i < model.modelParts_00.length; i++) {
       if((model.partInvisible_f4 & 1L << i) == 0) {
@@ -671,7 +688,9 @@ public abstract class BattleEntity27c extends BattleObject {
             .backgroundColour(GTE.backgroundColour)
             .ctmdFlags((part.attribute_00 & 0x4000_0000) != 0 ? 0x12 : 0x0)
             .tmdTranslucency(tmdGp0Tpage_1f8003ec >>> 5 & 0b11)
-            .battleColour(((Battle)currentEngineState_8004dd04)._800c6930.colour_00);
+            .battleColour(((Battle)currentEngineState_8004dd04)._800c6930.colour_00)
+            .texture()
+            .texture();
 
           if(this.useScissor) {
             queue.scissor(this.scissor);

@@ -2551,63 +2551,64 @@ public class Battle extends EngineState {
 
   @Method(0x800ca75cL)
   public void loadCombatantTim(@Nullable final CombatantStruct1a8 combatant, final FileData timFile) {
-    if(timFile.size() == 0) {
-      return;
-    }
-
+    final Tim tim = new Tim(timFile);
     final int vramSlot;
-
-    if(combatant != null) {
-      //LAB_800ca77c
-      if(combatant.vramSlot_1a0 == 0) {
-        final int charSlot = combatant.charSlot_19c;
-
-        if(charSlot < 0) {
-          combatant.vramSlot_1a0 = this.findFreeMonsterTextureSlot(combatant.charIndex_1a2);
-        } else {
-          //LAB_800ca7c4
-          combatant.vramSlot_1a0 = charSlot + 1;
-        }
-      }
-
-      vramSlot = combatant.vramSlot_1a0;
+  
+    if(combatant != null) { 
+      vramSlot = 1;
     } else {
       vramSlot = 0;
     }
-
-    //LAB_800ca7d0
-    this.loadCombatantTim2(vramSlot, timFile);
-  }
-
-  @Method(0x800ca7ecL)
-  public void loadCombatantTim2(final int vramSlot, final FileData timFile) {
-    final Tim tim = new Tim(timFile);
-
+  
     if(vramSlot != 0) {
-      //LAB_800ca83c
-      final Rect4i combatantTimRect = combatantTimRects_800fa6e0[vramSlot];
-      GPU.uploadData15(combatantTimRect, tim.getImageData());
-
+      combatant.textureW = tim.getImageRect().w();
+      combatant.textureH = tim.getImageRect().h();
+      tim.getImageRect().h();
+      int i = 0;
+      for(int y = 0; y < combatant.textureH; y++) {
+        for(int x = 0; x < combatant.textureW; x++) {
+          if(i + 1 >= tim.getImageData().size()) {
+            break;
+          }
+  
+          final int packed = tim.getImageData().readUShort(i);
+          final int unpacked = MathHelper.colour15To24(packed);
+            
+          final int index = y * combatant.textureW + x;
+          combatant.combatantVram24[index] = unpacked;
+          combatant.combatantVram15[index] = packed;
+          
+          i += 2;
+        }
+      }
       if(tim.hasClut()) {
         final Rect4i clutRect = tim.getClutRect();
-        clutRect.x = combatantTimRect.x;
-        clutRect.y = combatantTimRect.y + 240;
-
-        //LAB_800ca884
-        GPU.uploadData15(clutRect, tim.getClutData());
+        
+        int j = 0;
+        for(int y = 240; y < 240 + clutRect.h; y++) {
+          for(int x = 0; x < 0 + clutRect.w; x++) {
+            if(j + 1 >= tim.getClutData().size()) {
+              break;
+            }
+            final int packed = tim.getClutData().readUShort(j);
+            final int unpacked = MathHelper.colour15To24(packed);
+            final int index = y * 64 + x;
+  
+            combatant.combatantVram24[index] = unpacked;
+            combatant.combatantVram15[index] = packed;
+            j += 2;
+          }
+        }
       }
     } else {
       final Rect4i imageRect = tim.getImageRect();
-
-      // This is a fix for a retail bug where they try to load a TMD as a TIM (it has a 0 w/h anyway so no data gets loaded) see GH#330b
+  
       if(imageRect.x == 0x41 && imageRect.y == 0 && imageRect.w == 0 && imageRect.h == 0) {
         return;
       }
-
-      tim.uploadToGpu();
+  
+      GPU.uploadData15(tim.getImageRect(), tim.getImageData());
     }
-
-    //LAB_800ca88c
   }
 
   @Method(0x800ca89cL)

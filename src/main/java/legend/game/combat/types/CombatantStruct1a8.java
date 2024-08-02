@@ -42,6 +42,10 @@ public class CombatantStruct1a8 {
   public int charIndex_1a2;
   public int _1a4;
   public int _1a6;
+  public int textureW;
+  public int textureH;
+  public int[] combatantVram24 = new int[256 * 64];
+  public int[] combatantVram15 = new int[256 * 64];
 
   @Method(0x800c90b0L)
   public boolean isModelLoaded() {
