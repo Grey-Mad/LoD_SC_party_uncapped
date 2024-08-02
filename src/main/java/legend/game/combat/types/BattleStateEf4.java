@@ -203,7 +203,7 @@ public class BattleStateEf4 {
   public int _374;
   public int _378;
   public int _37c;
-  public int _380;
+  public int scriptEffectTableJumpIndex_380;
   public final Status04[] status_384 = new Status04[5  + gameState_800babc8.charIds_88.length];
   public int _3a4;
   public int _3a8;
