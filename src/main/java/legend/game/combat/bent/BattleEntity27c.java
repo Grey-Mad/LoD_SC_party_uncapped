@@ -52,6 +52,13 @@ import static legend.game.combat.Battle.loadCombatantModelAndAnimation;
 import static legend.game.combat.Battle.spellStats_800fa0b8;
 import static legend.game.combat.SEffe.renderBttlShadow;
 
+import static org.lwjgl.opengl.GL30C.GL_R32UI;
+import static org.lwjgl.opengl.GL30C.GL_RED_INTEGER;
+import static org.lwjgl.opengl.GL11C.GL_UNSIGNED_INT;
+
+import static org.lwjgl.opengl.GL12C.GL_UNSIGNED_INT_8_8_8_8_REV;
+import static org.lwjgl.opengl.GL11C.GL_RGBA;
+
 public abstract class BattleEntity27c extends BattleObject {
   private static final int[] vramSlotIndices_800fa730 = {0, 1, 2, 3, 4, 5, 6, 14, 15, 16};
 
@@ -689,8 +696,8 @@ public abstract class BattleEntity27c extends BattleObject {
             .ctmdFlags((part.attribute_00 & 0x4000_0000) != 0 ? 0x12 : 0x0)
             .tmdTranslucency(tmdGp0Tpage_1f8003ec >>> 5 & 0b11)
             .battleColour(((Battle)currentEngineState_8004dd04)._800c6930.colour_00)
-            .texture()
-            .texture();
+            .texture(vramTexture15,1)
+            .texture(vramTexture24,0);
 
           if(this.useScissor) {
             queue.scissor(this.scissor);
