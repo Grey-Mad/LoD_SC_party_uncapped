@@ -1437,7 +1437,7 @@ public class Battle extends EngineState {
       final int charIndex = gameState_800babc8.charIds_88[charSlot];
       final String name = "Char ID " + charIndex + " (bent + " + (charSlot + 16) + ')';//changed 6 to 16, if this value is too low there are issues, needed min of 15 for virage 2.
       final PlayerBattleEntity bent = new PlayerBattleEntity(name, charSlot + 16, this.playerBattleScript_800c66fc);
-      final ScriptState<PlayerBattleEntity> state = SCRIPTS.allocateScriptState(charSlot + 16, name, 0, bent);
+      final ScriptState<PlayerBattleEntity> state = SCRIPTS.allocateScriptState(charSlot + 16, name, bent);
       state.setTicker(bent::bentLoadingTicker);
       state.setDestructor(bent::bentDestructor);
       bent.element = characterElements_800c706c[charIndex].get();
