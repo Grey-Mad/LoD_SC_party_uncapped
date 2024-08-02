@@ -19,6 +19,7 @@ import legend.game.modding.events.battle.SpellStatsEvent;
 import legend.game.scripting.ScriptFile;
 import legend.game.scripting.ScriptState;
 import legend.game.tmd.Renderer;
+import legend.game.tmd.UvAdjustmentMetrics14;
 import legend.game.types.ItemStats0c;
 import legend.game.types.Model124;
 import legend.game.types.SpellStats0c;
@@ -586,7 +587,7 @@ public abstract class BattleEntity27c extends BattleObject {
     //LAB_800cae98
     if(v1 != 0) {
       if(this.combatant_144.isModelLoaded()) {
-        this.model_148.uvAdjustments_9d = vramSlots_8005027c[vramSlotIndices_800fa730[this.combatant_144.vramSlot_1a0]];
+        this.model_148.uvAdjustments_9d = new UvAdjustmentMetrics14(1, 0, 240, 0, 0);
         this.loadingAnimIndex_26e = 0;
         loadCombatantModelAndAnimation(this.model_148, this.combatant_144);
         this._278 = 1;
@@ -663,16 +664,16 @@ public abstract class BattleEntity27c extends BattleObject {
     final MV ls = new MV();
 
     Texture vramTexture15 = Texture.create(builder -> {
-      builder.size(256, 64);
-      builder.data(this.combatant_144.combatantVram15, 256, 64);
+      builder.size(this.combatant_144.textureW, this.combatant_144.textureH);
+      builder.data(this.combatant_144.combatantVram15, this.combatant_144.textureW, this.combatant_144.textureH);
       builder.internalFormat(GL_R32UI);
       builder.dataFormat(GL_RED_INTEGER);
       builder.dataType(GL_UNSIGNED_INT);
     });
 
     Texture vramTexture24 = Texture.create(builder -> {
-      builder.size(256, 64);
-      builder.data(this.combatant_144.combatantVram24, 256, 64);
+      builder.size(this.combatant_144.textureW, this.combatant_144.textureH);
+      builder.data(this.combatant_144.combatantVram24, this.combatant_144.textureW, this.combatant_144.textureH);
       builder.internalFormat(GL_RGBA);
       builder.dataFormat(GL_RGBA);
       builder.dataType(GL_UNSIGNED_INT_8_8_8_8_REV);
@@ -696,8 +697,8 @@ public abstract class BattleEntity27c extends BattleObject {
             .ctmdFlags((part.attribute_00 & 0x4000_0000) != 0 ? 0x12 : 0x0)
             .tmdTranslucency(tmdGp0Tpage_1f8003ec >>> 5 & 0b11)
             .battleColour(((Battle)currentEngineState_8004dd04)._800c6930.colour_00)
-            .texture(vramTexture15,1)
-            .texture(vramTexture24,0);
+            .texture(vramTexture24,0)
+            .texture(vramTexture15,1);
 
           if(this.useScissor) {
             queue.scissor(this.scissor);
