@@ -2551,6 +2551,10 @@ public class Battle extends EngineState {
 
   @Method(0x800ca75cL)
   public void loadCombatantTim(@Nullable final CombatantStruct1a8 combatant, final FileData timFile) {
+    if(timFile.size() == 0) {
+        return;
+      }
+    
     final Tim tim = new Tim(timFile);
     final int vramSlot;
   
@@ -2563,14 +2567,14 @@ public class Battle extends EngineState {
     if(vramSlot != 0) {
       combatant.textureW = tim.getImageRect().w();
       combatant.textureH = tim.getImageRect().h();
-      tim.getImageRect().h();
+      
       int i = 0;
       for(int y = 0; y < combatant.textureH; y++) {
         for(int x = 0; x < combatant.textureW; x++) {
           if(i + 1 >= tim.getImageData().size()) {
             break;
           }
-  
+
           final int packed = tim.getImageData().readUShort(i);
           final int unpacked = MathHelper.colour15To24(packed);
             
@@ -2592,7 +2596,7 @@ public class Battle extends EngineState {
             }
             final int packed = tim.getClutData().readUShort(j);
             final int unpacked = MathHelper.colour15To24(packed);
-            final int index = y * 64 + x;
+            final int index = y * combatant.textureW + x;
   
             combatant.combatantVram24[index] = unpacked;
             combatant.combatantVram15[index] = packed;
