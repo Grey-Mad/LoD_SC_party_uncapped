@@ -40,7 +40,6 @@ import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import static java.lang.Math.round;
 
 import static legend.core.GameEngine.EVENTS;
 import static legend.core.GameEngine.GPU;
@@ -194,14 +193,10 @@ public class BattleHud {
   private UiBox battleUiSpellList;
   private UiBox battleUiItemDescription;
   private Obj spBars;
-  private Obj spBorderBars;
-  private Obj spBorderFlashingBars;
   private final MV spBarTransforms = new MV();
-  private final MV spBorderBarTransforms = new MV();
-  private final MV spBorderFlashingBarTransforms = new MV();
   private final MV lineTransforms = new MV();
   private boolean uiScaleApplied = false;
-  private float uiScaleFactor = 0.40f;
+  private final float uiScaleFactor = (288/(94f*(gameState_800babc8.charIds_88.length/3f)))/3f;
   
   public BattleHud(final Battle battle) {
     this.battle = battle;
@@ -406,11 +401,14 @@ public class BattleHud {
 
   @Method(0x800ef8d8L)
   public void initCharacterDisplay(final int charSlot) {
+
+    
+
     final BattleHudCharacterDisplay3c charDisplay = this.activePartyBattleHudCharacterDisplays_800c6c40[charSlot];
     charDisplay.charIndex_00 = charSlot;
     charDisplay.charId_02 = battleState_8006e398.playerBents_e40[charSlot].innerStruct_00.charId_272;
     charDisplay.flags_06 |= 0x2;
-    charDisplay.x_08 = charSlot * 94 + 63;//i think these values get overidden by FUN_800f417c some how?
+    charDisplay.x_08 = charSlot * 94 + 63;//i think these values get overidden by FUN_800f417c?
     charDisplay.y_0a = 38;
 
     //LAB_800ef980
@@ -427,7 +425,7 @@ public class BattleHud {
   public void draw() {
     if(this.battle.countCombatUiFilesLoaded_800c6cf4 == 6) {
       final int charCount = battleState_8006e398.getPlayerCount();
-
+      
       //LAB_800efa34
       for(int charSlot = 0; charSlot < charCount; charSlot++) {
         if(this.activePartyBattleHudCharacterDisplays_800c6c40[charSlot].charIndex_00 == -1 && characterStatsLoaded_800be5d0) {
@@ -526,7 +524,7 @@ public class BattleHud {
       // Background
       if(this.activePartyBattleHudCharacterDisplays_800c6c40[0].charIndex_00 != -1 && (this.activePartyBattleHudCharacterDisplays_800c6c40[0].flags_06 & 0x1) != 0) {
         if(this.battleUiBackground == null) {
-          this.battleUiBackground = new UiBox("Battle UI Background", 16, battleHudYOffsets_800fb198[this.battleHudYOffsetIndex_800c6c38] - 26, 288, 40);
+          this.battleUiBackground = new UiBox("Battle UI Background", 16, battleHudYOffsets_800fb198[this.battleHudYOffsetIndex_800c6c38] - Math.round(26*this.uiScaleFactor), 288, Math.round(40*this.uiScaleFactor));
         }
 
         this.battleUiBackground.render(Config.changeBattleRgb() ? Config.getBattleRgb() : Config.defaultUiColour);
@@ -734,90 +732,43 @@ public class BattleHud {
               //LAB_800f0738
               spBarW = Math.max(0, (short)spBarW * 35 / 100);
 
-              //LAB_800f0780 /*greytodo: the barscaleing scaling to complicated due to the use of drawLines function, must find a soultion that is not scuffed*/
-              final float left = displayStats.x_00 - centreScreenX_1f8003dc + (3*this.uiScaleFactor) ;
-              final float top = displayStats.y_02 - centreScreenY_1f8003de + (8*this.uiScaleFactor);
-              final float right = left + spBarW ;
-              final float bottom = top + (3*this.uiScaleFactor);
-              final float spBarHeight = bottom - top;
+              //LAB_800f0780 /*greytodo: recheck barscaleing  
+              final float left = displayStats.x_00 - centreScreenX_1f8003dc + 3*this.uiScaleFactor;
+              final float top = displayStats.y_02 - centreScreenY_1f8003de + 8*this.uiScaleFactor;
+              final float right = left + spBarW*this.uiScaleFactor;
+              final float bottom = top + 3*this.uiScaleFactor;
 
               final int[] spBarColours = spBarColours_800c6f04[spBarIndex];
 
               if(this.spBars == null) {
-                this.spBars = new QuadBuilder("SPBar")
-                  .monochrome(0, 229.0f / 255.0f)
-                  .monochrome(1, 133.0f / 255.0f)
-                  .monochrome(2, 229.0f / 255.0f)
-                  .monochrome(3, 133.0f / 255.0f)
-                  .size(1, 1)
-                  .build();
-              }
-
-              spBarTransforms.transfer.set(GPU.getOffsetX() + left, GPU.getOffsetY() + top, 31.0f);
-              spBarTransforms.scaling(right - left, bottom - top, 1.0f);
-              this.spBarTransforms.scale(this.uiScaleFactor, this.uiScaleFactor, 1.0f);
-              RENDERER.queueOrthoModel(this.spBars, spBarTransforms).colour(spBarColours[0] / 255.0f, spBarColours[1] / 255.0f, spBarColours[2] / 255.0f);
-            }
-
-            if(this.uiScaleFactor == 1.0f){
-              //SP border
-              //LAB_800f0910
-              for(int i = 0; i < 4; i++) {
-                final int offsetX = displayStats.x_00 - centreScreenX_1f8003dc;
-                final int offsetY = displayStats.y_02 - centreScreenY_1f8003de;
-                this.drawLine(spBarBorderMetrics_800fb46c[i].x1_00 + offsetX, spBarBorderMetrics_800fb46c[i].y1_01 + offsetY, spBarBorderMetrics_800fb46c[i].x2_02 + offsetX, spBarBorderMetrics_800fb46c[i].y2_03 + offsetY, 0x60, 0x60, 0x60, false);
-              }
-  
-              //Full SP meter
-              if((charDisplay.flags_06 & 0x8) != 0) {
-                //LAB_800f09ec
-                for(int i = 0; i < 4; i++) {
-                  final int offsetX = displayStats.x_00 - centreScreenX_1f8003dc;
-                  final int offsetY = displayStats.y_02 - centreScreenY_1f8003de;
-                  this.drawLine(spBarFlashingBorderMetrics_800fb47c[i].x1_00 + offsetX, spBarFlashingBorderMetrics_800fb47c[i].y1_01 + offsetY, spBarFlashingBorderMetrics_800fb47c[i].x2_02 + offsetX, spBarFlashingBorderMetrics_800fb47c[i].y2_03 + offsetY, 0x80, 0, 0, false);
-                }
-              }
-            }else{ /*greytodo: rework math in this section*/
-               if(this.spBorderBars == null) {
-                this.spBorderBars = new QuadBuilder("SPBorderBar")
-                  .monochrome(0, 255.0f / 255.0f)
-                  .monochrome(1, 255.0f / 255.0f)
-                  .monochrome(2, 255.0f / 255.0f)
-                  .monochrome(3, 255.0f / 255.0f)
-                  .size(1.0f, 1.0f)
-                  .build();
-              }
-
-              float spBarHeight = displayStats.y_02 - centreScreenY_1f8003de + (8*this.uiScaleFactor);
-              float leftBorderBar = displayStats.x_00 - centreScreenX_1f8003dc + (1f*this.uiScaleFactor);
-              float topBorderBar = displayStats.y_02 - centreScreenY_1f8003de + (6f*this.uiScaleFactor);
-              float rightBorderBar = leftBorderBar + 35 + (4f*this.uiScaleFactor) ;
-              float bottomBorderBar = displayStats.y_02 - centreScreenY_1f8003de + spBarHeight + ((13f-spBarHeight)*this.uiScaleFactor) ;
-
-              spBorderBarTransforms.transfer.set(GPU.getOffsetX() + leftBorderBar,
-                                                 GPU.getOffsetY() + topBorderBar, 35.0f);
-              spBorderBarTransforms.scaling(rightBorderBar - leftBorderBar, bottomBorderBar - topBorderBar, 1.0f);
-              this.spBorderBarTransforms.scale(this.uiScaleFactor, this.uiScaleFactor, 1.0f);
-              RENDERER.queueOrthoModel(this.spBorderBars, spBorderBarTransforms).colour(0.5f, 0.5f, 0.5f);
-
-              if((charDisplay.flags_06 & 0x8) != 0) {
-                float leftFlashingBorderBar = displayStats.x_00 - centreScreenX_1f8003dc + (2f*this.uiScaleFactor);
-                float topFlashingBorderBar = displayStats.y_02 - centreScreenY_1f8003de + (7f*this.uiScaleFactor);
-                float rightFlashingBorderBar = leftBorderBar + 35 + (3f*this.uiScaleFactor );
-                float bottomFlashingBorderBar = displayStats.y_02 - centreScreenY_1f8003de +spBarHeight + ((12f-spBarHeight)*this.uiScaleFactor );
-                if(this.spBorderFlashingBars == null) {
-                  this.spBorderFlashingBars = new QuadBuilder("SPFlashingBorderBar")
-                    .monochrome(0, 125.0f / 255.0f)
-                    .monochrome(1, 125.0f / 255.0f)
-                    .monochrome(2, 125.0f / 255.0f)
-                    .monochrome(3, 125.0f / 255.0f)
+                  this.spBars = new QuadBuilder("SPBar")
+                    .monochrome(0, 229.0f / 255.0f)
+                    .monochrome(1, 133.0f / 255.0f)
+                    .monochrome(2, 229.0f / 255.0f)
+                    .monochrome(3, 133.0f / 255.0f)
                     .size(1, 1)
                     .build();
                 }
-                spBorderFlashingBarTransforms.transfer.set(GPU.getOffsetX() + leftFlashingBorderBar, GPU.getOffsetY() + topFlashingBorderBar, 30.0f);
-                spBorderFlashingBarTransforms.scaling(rightFlashingBorderBar - leftFlashingBorderBar, bottomFlashingBorderBar - topFlashingBorderBar, 1.0f);
-                this.spBorderFlashingBarTransforms.scale(this.uiScaleFactor, this.uiScaleFactor, 1.0f);
-                RENDERER.queueOrthoModel(this.spBorderFlashingBars, spBorderFlashingBarTransforms).colour(1, 0f, 0f); 
+              spBarTransforms.transfer.set(GPU.getOffsetX() + left, GPU.getOffsetY() + top, 31.0f);
+              spBarTransforms.scaling(right - left, bottom - top, 1.0f);
+              RENDERER.queueOrthoModel(this.spBars, spBarTransforms).colour(spBarColours[0] / 255.0f, spBarColours[1] / 255.0f, spBarColours[2] / 255.0f);
+            }
+
+            //SP border
+            //LAB_800f0910
+            for(int i = 0; i < 4; i++) {
+              final int offsetX = displayStats.x_00 - centreScreenX_1f8003dc;
+              final int offsetY = displayStats.y_02 - centreScreenY_1f8003de;
+              this.drawLine(spBarBorderMetrics_800fb46c[i].x1_00*this.uiScaleFactor + offsetX, spBarBorderMetrics_800fb46c[i].y1_01*this.uiScaleFactor + offsetY, spBarBorderMetrics_800fb46c[i].x2_02*this.uiScaleFactor + offsetX, spBarBorderMetrics_800fb46c[i].y2_03*this.uiScaleFactor + offsetY, 0x60, 0x60, 0x60, false);
+            }
+
+            //Full SP meter
+            if((charDisplay.flags_06 & 0x8) != 0) {
+              //LAB_800f09ec
+              for(int i = 0; i < 4; i++) {
+                final int offsetX = displayStats.x_00 - centreScreenX_1f8003dc;
+                final int offsetY = displayStats.y_02 - centreScreenY_1f8003de;
+                this.drawLine(spBarFlashingBorderMetrics_800fb47c[i].x1_00*this.uiScaleFactor + offsetX, spBarFlashingBorderMetrics_800fb47c[i].y1_01*this.uiScaleFactor + offsetY, spBarFlashingBorderMetrics_800fb47c[i].x2_02*this.uiScaleFactor + offsetX, spBarFlashingBorderMetrics_800fb47c[i].y2_03*this.uiScaleFactor + offsetY, 0x80, 0, 0, false);
             }
           }
         }
@@ -924,6 +875,7 @@ public class BattleHud {
         Scus94491BpeSegment_8002.renderText(str, 160 - textWidth(str) / 2, 24, TextColour.WHITE, 0);
       }
     }
+  }
     //LAB_800f0f2c
   }
 
@@ -1404,7 +1356,7 @@ public class BattleHud {
 
     //LAB_800f41f4
     //LAB_800f41f8
-    short x = 63;//spacing offest 
+    int x = 16+Math.round(47*this.uiScaleFactor);
 
     //LAB_800f4220
     for(int charSlot = 0; charSlot < activePartyBattleHudCharacterDisplays_800c6c40.length; charSlot++) {
@@ -1417,7 +1369,7 @@ public class BattleHud {
       }
 
       //LAB_800f4238
-      x += 47;//spacing gap 
+      x += Math.round(94*this.uiScaleFactor);//spacing gap 
     }
   }
 
@@ -3024,9 +2976,9 @@ public class BattleHud {
   }
 
   @Method(0x800f9ee8L)
-  private void drawLine(final int x1, final int y1, final int x2, final int y2, final int r, final int g, final int b, final boolean translucent) {
+  private void drawLine(final float x1, final float y1, final float x2, final float y2, final int r, final int g, final int b, final boolean translucent) {
     lineTransforms.transfer.set(GPU.getOffsetX() + x1, GPU.getOffsetY() + y1, 31.0f);
-    lineTransforms.scaling(x2 - x1 + 1, y2 - y1 + 1, 1.0f);
+    lineTransforms.scaling(x2 - x1 + this.uiScaleFactor*1f, y2 - y1 + this.uiScaleFactor*1f, 1.0f);
 
     if(translucent) {
       RENDERER.queueOrthoModel(RENDERER.plainQuads.get(Translucency.B_PLUS_F), lineTransforms)

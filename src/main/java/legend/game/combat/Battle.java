@@ -569,7 +569,7 @@ public class Battle extends EngineState {
    * The rest are -1
    */
   public static final int[] melbuStageIndices_800fb064 = {93, 94, 95, 25, 52, -1, -1, -1};
-  public static final int[] modelVramSlotIndices_800fb06c = {0, 0, 0, 0, 0, 0, 0, 0, 14, 15, 16, 17, 10, 11, 12, 13, 0, 0, 0, 0, 0, 1, 2, 3, 4, 5, 6, 0, 0, 0, 0, 0};
+  public static final int[] modelVramSlotIndices_800fb06c = {0, 0, 0, 0, 0, 0, 0, 0, 14, 15, 16, 17, 10, 11, 12, 13, 0, 0, 0, 0, 0, 1, 2, 3, 4, 5, 6, 0, 0, 0, 0, 0};//??/
 
   @Override
   public int tickMultiplier() {
@@ -1387,7 +1387,7 @@ public class Battle extends EngineState {
 
     //LAB_801095ec
     //LAB_801095fc
-    for(int i = 0; i < 6; i++) { //why 6? 3monsters + 3 players? or players*2, changing to 14 caused pc to attack allies.. so not players*2 or monsters + players, changeing to 10 did not fix issue
+    for(int i = 0; i < 6; i++) { //why 6? 3monsters + 3 players? or players*2, changing to 14 caused pc to attack allies.
       final EncounterData38.EnemyInfo08 s5 = fp.encounterData_00.enemyInfo_08[i];
       final int charIndex = s5.index_00 & 0x1ff;
       if(charIndex == 0x1ff) {
@@ -1446,8 +1446,41 @@ public class Battle extends EngineState {
       bent.combatantIndex_26c = combatantIndices[charSlot];
       bent.model_148.coord2_14.coord.transfer.x = charCount > 2 && charSlot == 0 ? 0x900 : 0xa00;
       bent.model_148.coord2_14.coord.transfer.y = 0.0f;
-      // Alternates placing characters to the right and left of the main character (offsets by -0x400 for even character counts)
-      bent.model_148.coord2_14.coord.transfer.z = 0x800 * ((charSlot + 1) / 2) * (charSlot % 2 * 2 - 1) + (charCount % 2 - 1) * 0x400; //greytodo: add dynamic spacing for PC>3
+      if (charCount <= 3){
+        // Alternates placing characters to the right and left of the main character (offsets by -0x400 for even character counts)
+        bent.model_148.coord2_14.coord.transfer.z = 0x800 * ((charSlot + 1) / 2) * (charSlot % 2 * 2 - 1) + (charCount % 2 - 1) * 0x400;
+      }else{
+        //curve: z= (x^2)*(a/b^2)-a where a = zIcpt, b = xIcpt
+        final float zIcpt = 0x125;
+        final float xIcpt = 0x450;
+        final float zCoord = bent.model_148.coord2_14.coord.transfer.z;
+        //derivative of curve: z'= (2 a x)/b^2
+        //arclength is integral of: sqrt(1 + (x*(2a/b^2))^2)
+        //indef intergral is (2*a*x*sqrt(1 + ((4*a*a*x*x)/(b*b*b*b))) + b*b*log((2*a*x)/(b*b) + sqrt(1 + (4*a*a*x*x)/(b*b*b*b))))/(4*a);
+        final float curveEnd = 0x900;
+        final float halfCurveLength = (2f*zIcpt*curveEnd*Math.sqrt(1f + ((4f*zIcpt*zIcpt*curveEnd*curveEnd)/(xIcpt*xIcpt*xIcpt*xIcpt))) + xIcpt*xIcpt*(float)java.lang.Math.log((2f*zIcpt*curveEnd)/(xIcpt*xIcpt) + Math.sqrt(1f + (4f*zIcpt*zIcpt*curveEnd*curveEnd)/(xIcpt*xIcpt*xIcpt*xIcpt))))/(4f*zIcpt);
+        final float curveSegementLength = (2f*halfCurveLength)/(charCount-1f);
+        
+        int lengthAlongCurve = (int)curveSegementLength * (((charSlot + 1) / 2) * (charSlot % 2 * 2 - 1));
+        
+        float guessZCoord = bent.model_148.coord2_14.coord.transfer.z;
+        float guessXOffset = (float)java.lang.Math.pow(zCoord,2)*(zIcpt/(float)java.lang.Math.pow(xIcpt,2)) - zIcpt;
+        
+        float lengthAlongCurveOnGuessZ = (2f*zIcpt*guessZCoord*Math.sqrt(1f + ((4f*zIcpt*zIcpt*guessZCoord*guessZCoord)/(xIcpt*xIcpt*xIcpt*xIcpt))) + xIcpt*xIcpt*(float)java.lang.Math.log((2f*zIcpt*guessZCoord)/(xIcpt*xIcpt) + Math.sqrt(1f + (4f*zIcpt*zIcpt*guessZCoord*guessZCoord)/(xIcpt*xIcpt*xIcpt*xIcpt))))/(4f*zIcpt);
+        int delta = (int)lengthAlongCurveOnGuessZ - lengthAlongCurve;
+        
+        while (delta < -20 || delta > 20){
+          guessZCoord = guessZCoord -  delta/2;
+          guessXOffset= (float)java.lang.Math.pow(guessZCoord,2)*(zIcpt/(float)java.lang.Math.pow(xIcpt,2)) - zIcpt;
+          lengthAlongCurveOnGuessZ = (2f*zIcpt*guessZCoord*Math.sqrt(1f + ((4f*zIcpt*zIcpt*guessZCoord*guessZCoord)/(xIcpt*xIcpt*xIcpt*xIcpt))) + xIcpt*xIcpt*(float)java.lang.Math.log((2f*zIcpt*guessZCoord)/(xIcpt*xIcpt) + Math.sqrt(1f + (4f*zIcpt*zIcpt*guessZCoord*guessZCoord)/(xIcpt*xIcpt*xIcpt*xIcpt))))/(4f*zIcpt);
+          delta = (int)lengthAlongCurveOnGuessZ - lengthAlongCurve;
+        }
+        bent.model_148.coord2_14.coord.transfer.z = guessZCoord;
+        bent.model_148.coord2_14.coord.transfer.x = bent.model_148.coord2_14.coord.transfer.x - guessXOffset;
+
+      }
+      
+      
       bent.model_148.coord2_14.transforms.rotate.zero();
       battleState_8006e398.addPlayer(state);
     }
@@ -2556,15 +2589,8 @@ public class Battle extends EngineState {
       }
     
     final Tim tim = new Tim(timFile);
-    final int vramSlot;
-  
-    if(combatant != null) { 
-      vramSlot = 1;
-    } else {
-      vramSlot = 0;
-    }
-  
-    if(vramSlot != 0) {
+    
+    if(combatant != null) {
       combatant.textureW = tim.getImageRect().w();
       combatant.textureH = tim.getImageRect().h();
       
@@ -7732,7 +7758,7 @@ public class Battle extends EngineState {
       this.dragoonSpells_800c6960[charSlot].charId_00 = -1;
 
       //LAB_800ef328
-      for(int spellSlot = 0; spellSlot < 8; spellSlot++) { //greytodo: may need to be increased for >7 PCs
+      for(int spellSlot = 0; spellSlot < 8; spellSlot++) {
         this.dragoonSpells_800c6960[charSlot].spellIndex_01[spellSlot] = -1;
       }
     }

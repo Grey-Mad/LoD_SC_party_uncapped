@@ -136,18 +136,20 @@ public class PostBattleScreen extends MenuScreen {
             this.pendingXp_8011e180[i] = 0;
           }
 
-          this.additionsUnlocked_8011e1b8[0] = this.getUltimateAdditionIdIfUnlocked(0);
-          this.additionsUnlocked_8011e1b8[1] = this.getUltimateAdditionIdIfUnlocked(1);
-          this.additionsUnlocked_8011e1b8[2] = this.getUltimateAdditionIdIfUnlocked(2);
 
           int xpDivisor = 0;
-          for(int charSlot = 0; charSlot < 3; charSlot++) {
+          for(int charSlot = 0; charSlot < gameState_800babc8.charIds_88.length; charSlot++) {
+            this.additionsUnlocked_8011e1b8[charSlot] = this.getUltimateAdditionIdIfUnlocked(charSlot);
+          }
+
+
+          for(int charSlot = 0; charSlot < gameState_800babc8.charIds_88.length; charSlot++) {
             if(this.characterIsAlive(charSlot)) {
               xpDivisor++;
             }
           }
 
-          for(int charSlot = 0; charSlot < 3; charSlot++) {
+          for(int charSlot = 0; charSlot < gameState_800babc8.charIds_88.length; charSlot++) {
             if(this.characterIsAlive(charSlot)) {
               this.pendingXp_8011e180[gameState_800babc8.charIds_88[charSlot]] = totalXpFromCombat_800bc95c / xpDivisor;
             }
