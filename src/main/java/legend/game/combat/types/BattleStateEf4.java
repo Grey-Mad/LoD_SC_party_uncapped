@@ -19,7 +19,7 @@ import static legend.game.Scus94491BpeSegment.simpleRand;
 import static legend.game.Scus94491BpeSegment_800b.gameState_800babc8;
 
 public class BattleStateEf4 {
-  public final StatusConditions20[] statusConditions_00 = new StatusConditions20[10];
+  public final StatusConditions20[] statusConditions_00 = new StatusConditions20[12]; //7+5? players + monsters?
 
   public int _180;
   /**
@@ -123,6 +123,7 @@ public class BattleStateEf4 {
   public int _290;
   /** Indexed by char slot */
   public final int[] _294 = new int[gameState_800babc8.charIds_88.length];
+  public int _294Offset = 260;
   public int _2a0;
   public int _2a4;
   public int _2a8;
@@ -157,6 +158,7 @@ public class BattleStateEf4 {
   public int _2e4;
   /** Indexed by char slot */
   public final int[] _2e8 = new int[gameState_800babc8.charIds_88.length];
+  public int _2e8Offset = _294Offset + _294.length;
   public int _2f4;
   public int _2f8;
   public int _2fc;
@@ -187,13 +189,15 @@ public class BattleStateEf4 {
   public int _330;
   /** Pretty sure this is character index loading (boolean) */
   public final int[] _334 = new int[gameState_800babc8.charIds_88.length];
+  public int _334Offset = _2e8Offset + _2e8.length;
   public int _340;
   public int _344;
   public int _348;
   /** Indexed by char slot */
   public final int[] _34c = new int[gameState_800babc8.charIds_88.length];
+  public int _34cOffset = _334Offset + _334.length;
   /** Sequence volume is stored in here when player combat script is initialized */
-  public int sequenceVolume_358; //greytodo: check if realted to charslot 3 bug crash
+  public int sequenceVolume_358;
   public int _35c;
   public int _360;
   public int _364;
@@ -205,6 +209,7 @@ public class BattleStateEf4 {
   public int _37c;
   public int scriptEffectTableJumpIndex_380;
   public final Status04[] status_384 = new Status04[5  + gameState_800babc8.charIds_88.length];
+  public int _384Offset = _34cOffset + _34c.length;
   public int _3a4;
   public int _3a8;
   public int _3ac;
@@ -257,11 +262,16 @@ public class BattleStateEf4 {
   public int scriptsProcessingStatusAfflictions_45c;
   /** Indexed by char slot, something to do with bewitched (set to -1 if not bewitched) */
   public final int[] _460 = new int[gameState_800babc8.charIds_88.length];
+  public int _460Offset = _384Offset + status_384.length;
   /** Combat stage ID is stored here when player combat script is initialized */
   public int _46c;
   /** Used in player combat script */
   public int _470;
-  public final AdditionExtra04[] additionExtra_474 = new AdditionExtra04[5  + gameState_800babc8.charIds_88.length]; //greytodo: does this change do anything
+  public final AdditionExtra04[] additionExtra_474 = new AdditionExtra04[5  + gameState_800babc8.charIds_88.length];
+  public int _474Offset = _460Offset + _460.length;
+
+  //public int playerCombatantBentIndexOffset = _474Offset + additionExtra_474;
+
   public int _494;
   public int _498;
   public int _49c;

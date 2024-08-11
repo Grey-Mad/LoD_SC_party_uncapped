@@ -57,6 +57,8 @@ public class GameVarArrayParam extends Param {
       case 135 -> this.readStatusConditionsVar(7, this.arrIndex);
       case 136 -> this.readStatusConditionsVar(8, this.arrIndex);
       case 137 -> this.readStatusConditionsVar(9, this.arrIndex);
+      case 138 -> this.readStatusConditionsVar(9, this.arrIndex);
+      case 139 -> this.readStatusConditionsVar(9, this.arrIndex);
 
       default -> throw new IllegalArgumentException("Unknown game data index " + this.varIndex);
     };
@@ -93,6 +95,8 @@ public class GameVarArrayParam extends Param {
       case 135 -> this.writeStatusConditionsVar(7, this.arrIndex, val);
       case 136 -> this.writeStatusConditionsVar(8, this.arrIndex, val);
       case 137 -> this.writeStatusConditionsVar(9, this.arrIndex, val);
+      case 138 -> this.writeStatusConditionsVar(10, this.arrIndex, val);
+      case 139 -> this.writeStatusConditionsVar(11, this.arrIndex, val);
 
       default -> throw new IllegalArgumentException("Unknown game data index " + this.varIndex);
     }
@@ -111,6 +115,56 @@ public class GameVarArrayParam extends Param {
   }
 
   private int readBattleVar(final int index) {
+
+      //repatch the script for the wardeness in frugerel I
+      //
+      //0x45        | 0x5a        | 0x6d         | 0x73         | 0x81         | 0xb8         | 0xbd         |
+      //69          | 90          | 109          | 115          | 129          | 184          | 189          |
+      //var[45][71] | var[45][92] | var[45][111] | var[45][117] | var[45][136] | var[45][186] | var[45][196] |
+      
+      
+      //needs fixes
+      //File 5520/1[addr 0x5ad8] post Kongol cuttsceen 
+      //
+      
+
+      //260
+      int indexOffset = Scus94491BpeSegment_8006.battleState_8006e398._294Offset;
+      if((index>=indexOffset) && (index<(indexOffset+Scus94491BpeSegment_8006.battleState_8006e398._294.length))){
+        return Scus94491BpeSegment_8006.battleState_8006e398._294[index - indexOffset];
+      }
+      //270
+      indexOffset = Scus94491BpeSegment_8006.battleState_8006e398._2e8Offset;
+      if((index>=indexOffset) && (index<(indexOffset+Scus94491BpeSegment_8006.battleState_8006e398._2e8.length))){
+        return Scus94491BpeSegment_8006.battleState_8006e398._2e8[index - indexOffset];
+      }
+      //280
+      indexOffset = Scus94491BpeSegment_8006.battleState_8006e398._334Offset;
+      if((index>=indexOffset) && (index<(indexOffset+Scus94491BpeSegment_8006.battleState_8006e398._334.length))){
+        return Scus94491BpeSegment_8006.battleState_8006e398._334[index - indexOffset];
+      }
+      //290
+      indexOffset = Scus94491BpeSegment_8006.battleState_8006e398._34cOffset;
+      if((index>=indexOffset) && (index<(indexOffset+Scus94491BpeSegment_8006.battleState_8006e398._34c.length))){
+        return Scus94491BpeSegment_8006.battleState_8006e398._34c[index - indexOffset];
+      }
+      //300
+      indexOffset = Scus94491BpeSegment_8006.battleState_8006e398._384Offset;
+      if((index>=indexOffset) && (index<(indexOffset+Scus94491BpeSegment_8006.battleState_8006e398.status_384.length))){
+        return Scus94491BpeSegment_8006.battleState_8006e398.status_384[index - indexOffset].pack();
+      }
+      //320
+      indexOffset = Scus94491BpeSegment_8006.battleState_8006e398._460Offset;
+      if((index>=indexOffset) && (index<(indexOffset+Scus94491BpeSegment_8006.battleState_8006e398._460.length))){
+        return Scus94491BpeSegment_8006.battleState_8006e398._460[index - indexOffset];
+      }
+      //330
+      indexOffset = Scus94491BpeSegment_8006.battleState_8006e398._474Offset;
+      if((index>=indexOffset) && (index<(indexOffset+Scus94491BpeSegment_8006.battleState_8006e398.additionExtra_474.length))){
+        return Scus94491BpeSegment_8006.battleState_8006e398.additionExtra_474[index - indexOffset].pack();
+      }
+
+
     return switch(index) {
       case 0 -> Scus94491BpeSegment_8006.battleState_8006e398._180;
       case 1 -> Scus94491BpeSegment_8006.battleState_8006e398.combatantBentIndex_184;
@@ -181,9 +235,8 @@ public class GameVarArrayParam extends Param {
       case 66 -> Scus94491BpeSegment_8006.battleState_8006e398.counterAttackStage_288;
       case 67 -> Scus94491BpeSegment_8006.battleState_8006e398._28c;
       case 68 -> Scus94491BpeSegment_8006.battleState_8006e398._290;
-      case 69 -> Scus94491BpeSegment_8006.battleState_8006e398._294[0];
-      case 70 -> Scus94491BpeSegment_8006.battleState_8006e398._294[1];
-      case 71 -> Scus94491BpeSegment_8006.battleState_8006e398._294[2];
+
+      case 71 -> Scus94491BpeSegment_8006.battleState_8006e398._294Offset;
       case 72 -> Scus94491BpeSegment_8006.battleState_8006e398._2a0;
       case 73 -> Scus94491BpeSegment_8006.battleState_8006e398._2a4;
       case 74 -> Scus94491BpeSegment_8006.battleState_8006e398._2a8;
@@ -202,9 +255,8 @@ public class GameVarArrayParam extends Param {
       case 87 -> Scus94491BpeSegment_8006.battleState_8006e398._2dc;
       case 88 -> Scus94491BpeSegment_8006.battleState_8006e398._2e0;
       case 89 -> Scus94491BpeSegment_8006.battleState_8006e398._2e4;
-      case 90 -> Scus94491BpeSegment_8006.battleState_8006e398._2e8[0];
-      case 91 -> Scus94491BpeSegment_8006.battleState_8006e398._2e8[1];
-      case 92 -> Scus94491BpeSegment_8006.battleState_8006e398._2e8[2];
+
+      case 92 -> Scus94491BpeSegment_8006.battleState_8006e398._2e8Offset;
       case 93 -> Scus94491BpeSegment_8006.battleState_8006e398._2f4;
       case 94 -> Scus94491BpeSegment_8006.battleState_8006e398._2f8;
       case 95 -> Scus94491BpeSegment_8006.battleState_8006e398._2fc;
@@ -221,15 +273,13 @@ public class GameVarArrayParam extends Param {
       case 106 -> Scus94491BpeSegment_8006.battleState_8006e398.additionStarbustEffectCountParam_328;
       case 107 -> Scus94491BpeSegment_8006.battleState_8006e398._32c;
       case 108 -> Scus94491BpeSegment_8006.battleState_8006e398._330;
-      case 109 -> Scus94491BpeSegment_8006.battleState_8006e398._334[0];
-      case 110 -> Scus94491BpeSegment_8006.battleState_8006e398._334[1];
-      case 111 -> Scus94491BpeSegment_8006.battleState_8006e398._334[2];
+
+      case 111 -> Scus94491BpeSegment_8006.battleState_8006e398._334Offset;
       case 112 -> Scus94491BpeSegment_8006.battleState_8006e398._340;
       case 113 -> Scus94491BpeSegment_8006.battleState_8006e398._344;
       case 114 -> Scus94491BpeSegment_8006.battleState_8006e398._348;
-      case 115 -> Scus94491BpeSegment_8006.battleState_8006e398._34c[0];
-      case 116 -> Scus94491BpeSegment_8006.battleState_8006e398._34c[1];
-      case 117 -> Scus94491BpeSegment_8006.battleState_8006e398._34c[2];
+
+      case 117 -> Scus94491BpeSegment_8006.battleState_8006e398._34cOffset;
       case 118 -> Scus94491BpeSegment_8006.battleState_8006e398.sequenceVolume_358;
       case 119 -> Scus94491BpeSegment_8006.battleState_8006e398._35c;
       case 120 -> Scus94491BpeSegment_8006.battleState_8006e398._360;
@@ -241,14 +291,8 @@ public class GameVarArrayParam extends Param {
       case 126 -> Scus94491BpeSegment_8006.battleState_8006e398._378;
       case 127 -> Scus94491BpeSegment_8006.battleState_8006e398._37c;
       case 128 -> Scus94491BpeSegment_8006.battleState_8006e398.scriptEffectTableJumpIndex_380;
-      case 129 -> Scus94491BpeSegment_8006.battleState_8006e398.status_384[0].pack();
-      case 130 -> Scus94491BpeSegment_8006.battleState_8006e398.status_384[1].pack();
-      case 131 -> Scus94491BpeSegment_8006.battleState_8006e398.status_384[2].pack();
-      case 132 -> Scus94491BpeSegment_8006.battleState_8006e398.status_384[3].pack();
-      case 133 -> Scus94491BpeSegment_8006.battleState_8006e398.status_384[4].pack();
-      case 134 -> Scus94491BpeSegment_8006.battleState_8006e398.status_384[5].pack();
-      case 135 -> Scus94491BpeSegment_8006.battleState_8006e398.status_384[6].pack();
-      case 136 -> Scus94491BpeSegment_8006.battleState_8006e398.status_384[7].pack();
+
+      case 136 -> Scus94491BpeSegment_8006.battleState_8006e398._384Offset;
       case 137 -> Scus94491BpeSegment_8006.battleState_8006e398._3a4;
       case 138 -> Scus94491BpeSegment_8006.battleState_8006e398._3a8;
       case 139 -> Scus94491BpeSegment_8006.battleState_8006e398._3ac;
@@ -296,19 +340,12 @@ public class GameVarArrayParam extends Param {
       case 181 -> Scus94491BpeSegment_8006.battleState_8006e398._454;
       case 182 -> Scus94491BpeSegment_8006.battleState_8006e398._458;
       case 183 -> Scus94491BpeSegment_8006.battleState_8006e398.scriptsProcessingStatusAfflictions_45c;
-      case 184 -> Scus94491BpeSegment_8006.battleState_8006e398._460[0];
-      case 185 -> Scus94491BpeSegment_8006.battleState_8006e398._460[1];
-      case 186 -> Scus94491BpeSegment_8006.battleState_8006e398._460[2];
+
+      case 186 -> Scus94491BpeSegment_8006.battleState_8006e398._460Offset;
       case 187 -> Scus94491BpeSegment_8006.battleState_8006e398._46c;
       case 188 -> Scus94491BpeSegment_8006.battleState_8006e398._470;
-      case 189 -> Scus94491BpeSegment_8006.battleState_8006e398.additionExtra_474[0].pack();
-      case 190 -> Scus94491BpeSegment_8006.battleState_8006e398.additionExtra_474[1].pack();
-      case 191 -> Scus94491BpeSegment_8006.battleState_8006e398.additionExtra_474[2].pack();
-      case 192 -> Scus94491BpeSegment_8006.battleState_8006e398.additionExtra_474[3].pack();
-      case 193 -> Scus94491BpeSegment_8006.battleState_8006e398.additionExtra_474[4].pack();
-      case 194 -> Scus94491BpeSegment_8006.battleState_8006e398.additionExtra_474[5].pack();
-      case 195 -> Scus94491BpeSegment_8006.battleState_8006e398.additionExtra_474[6].pack();
-      case 196 -> Scus94491BpeSegment_8006.battleState_8006e398.additionExtra_474[7].pack();
+
+      case 196 -> Scus94491BpeSegment_8006.battleState_8006e398._474Offset;
       case 197 -> Scus94491BpeSegment_8006.battleState_8006e398._494;
       case 198 -> Scus94491BpeSegment_8006.battleState_8006e398._498;
       case 199 -> Scus94491BpeSegment_8006.battleState_8006e398._49c;
@@ -374,6 +411,44 @@ public class GameVarArrayParam extends Param {
   }
 
   private void writeCombatVar(final int index, final int val) {
+    int indexOffset = Scus94491BpeSegment_8006.battleState_8006e398._294Offset;
+    if((index>=indexOffset) && (index<(indexOffset+Scus94491BpeSegment_8006.battleState_8006e398._294.length))){
+      Scus94491BpeSegment_8006.battleState_8006e398._294[index - indexOffset] = val;
+      return;
+    }
+    indexOffset = Scus94491BpeSegment_8006.battleState_8006e398._2e8Offset;
+    if((index>=indexOffset) && (index<(indexOffset+Scus94491BpeSegment_8006.battleState_8006e398._2e8.length))){
+      Scus94491BpeSegment_8006.battleState_8006e398._2e8[index - indexOffset] = val;
+      return;
+    }
+    indexOffset = Scus94491BpeSegment_8006.battleState_8006e398._334Offset;
+    if((index>=indexOffset) && (index<(indexOffset+Scus94491BpeSegment_8006.battleState_8006e398._334.length))){
+      Scus94491BpeSegment_8006.battleState_8006e398._334[index - indexOffset] = val;
+      return;
+    }
+    indexOffset = Scus94491BpeSegment_8006.battleState_8006e398._34cOffset;
+    if((index>=indexOffset) && (index<(indexOffset+Scus94491BpeSegment_8006.battleState_8006e398._34c.length))){
+      Scus94491BpeSegment_8006.battleState_8006e398._34c[index - indexOffset] = val;
+      return;
+    }
+    indexOffset = Scus94491BpeSegment_8006.battleState_8006e398._384Offset;
+    if((index>=indexOffset) && (index<(indexOffset+Scus94491BpeSegment_8006.battleState_8006e398.status_384.length))){
+      Scus94491BpeSegment_8006.battleState_8006e398.status_384[index - indexOffset].unpack(val);
+      return;
+    }
+    indexOffset = Scus94491BpeSegment_8006.battleState_8006e398._460Offset;
+    if((index>=indexOffset) && (index<(indexOffset+Scus94491BpeSegment_8006.battleState_8006e398._460.length))){
+      Scus94491BpeSegment_8006.battleState_8006e398._460[index - indexOffset] = val;
+      return;
+    }
+
+    indexOffset = Scus94491BpeSegment_8006.battleState_8006e398._474Offset;
+    if((index>=indexOffset) && (index<(indexOffset+Scus94491BpeSegment_8006.battleState_8006e398.additionExtra_474.length))){
+      Scus94491BpeSegment_8006.battleState_8006e398.additionExtra_474[index - indexOffset].unpack(val);
+      return;
+    }
+
+
     switch(index) {
       case 0 -> Scus94491BpeSegment_8006.battleState_8006e398._180 = val;
       case 1 -> Scus94491BpeSegment_8006.battleState_8006e398.combatantBentIndex_184 = val;
@@ -444,9 +519,9 @@ public class GameVarArrayParam extends Param {
       case 66 -> Scus94491BpeSegment_8006.battleState_8006e398.counterAttackStage_288 = val;
       case 67 -> Scus94491BpeSegment_8006.battleState_8006e398._28c = val;
       case 68 -> Scus94491BpeSegment_8006.battleState_8006e398._290 = val;
-      case 69 -> Scus94491BpeSegment_8006.battleState_8006e398._294[0] = val;
+      /*case 69 -> Scus94491BpeSegment_8006.battleState_8006e398._294[0] = val;
       case 70 -> Scus94491BpeSegment_8006.battleState_8006e398._294[1] = val;
-      case 71 -> Scus94491BpeSegment_8006.battleState_8006e398._294[2] = val;
+      case 71 -> Scus94491BpeSegment_8006.battleState_8006e398._294[2] = val;*/
       case 72 -> Scus94491BpeSegment_8006.battleState_8006e398._2a0 = val;
       case 73 -> Scus94491BpeSegment_8006.battleState_8006e398._2a4 = val;
       case 74 -> Scus94491BpeSegment_8006.battleState_8006e398._2a8 = val;
@@ -465,9 +540,9 @@ public class GameVarArrayParam extends Param {
       case 87 -> Scus94491BpeSegment_8006.battleState_8006e398._2dc = val;
       case 88 -> Scus94491BpeSegment_8006.battleState_8006e398._2e0 = val;
       case 89 -> Scus94491BpeSegment_8006.battleState_8006e398._2e4 = val;
-      case 90 -> Scus94491BpeSegment_8006.battleState_8006e398._2e8[0] = val;
+      /*case 90 -> Scus94491BpeSegment_8006.battleState_8006e398._2e8[0] = val;
       case 91 -> Scus94491BpeSegment_8006.battleState_8006e398._2e8[1] = val;
-      case 92 -> Scus94491BpeSegment_8006.battleState_8006e398._2e8[2] = val;
+      case 92 -> Scus94491BpeSegment_8006.battleState_8006e398._2e8[2] = val;*/
       case 93 -> Scus94491BpeSegment_8006.battleState_8006e398._2f4 = val;
       case 94 -> Scus94491BpeSegment_8006.battleState_8006e398._2f8 = val;
       case 95 -> Scus94491BpeSegment_8006.battleState_8006e398._2fc = val;
@@ -484,15 +559,15 @@ public class GameVarArrayParam extends Param {
       case 106 -> Scus94491BpeSegment_8006.battleState_8006e398.additionStarbustEffectCountParam_328 = val;
       case 107 -> Scus94491BpeSegment_8006.battleState_8006e398._32c = val;
       case 108 -> Scus94491BpeSegment_8006.battleState_8006e398._330 = val;
-      case 109 -> Scus94491BpeSegment_8006.battleState_8006e398._334[0] = val;
+      /*case 109 -> Scus94491BpeSegment_8006.battleState_8006e398._334[0] = val;
       case 110 -> Scus94491BpeSegment_8006.battleState_8006e398._334[1] = val;
-      case 111 -> Scus94491BpeSegment_8006.battleState_8006e398._334[2] = val;
+      case 111 -> Scus94491BpeSegment_8006.battleState_8006e398._334[2] = val;*/
       case 112 -> Scus94491BpeSegment_8006.battleState_8006e398._340 = val;
       case 113 -> Scus94491BpeSegment_8006.battleState_8006e398._344 = val;
       case 114 -> Scus94491BpeSegment_8006.battleState_8006e398._348 = val;
-      case 115 -> Scus94491BpeSegment_8006.battleState_8006e398._34c[0] = val;
+      /*case 115 -> Scus94491BpeSegment_8006.battleState_8006e398._34c[0] = val;
       case 116 -> Scus94491BpeSegment_8006.battleState_8006e398._34c[1] = val;
-      case 117 -> Scus94491BpeSegment_8006.battleState_8006e398._34c[2] = val;
+      case 117 -> Scus94491BpeSegment_8006.battleState_8006e398._34c[2] = val;*/
       case 118 -> Scus94491BpeSegment_8006.battleState_8006e398.sequenceVolume_358 = val;
       case 119 -> Scus94491BpeSegment_8006.battleState_8006e398._35c = val;
       case 120 -> Scus94491BpeSegment_8006.battleState_8006e398._360 = val;
@@ -504,14 +579,14 @@ public class GameVarArrayParam extends Param {
       case 126 -> Scus94491BpeSegment_8006.battleState_8006e398._378 = val;
       case 127 -> Scus94491BpeSegment_8006.battleState_8006e398._37c = val;
       case 128 -> Scus94491BpeSegment_8006.battleState_8006e398.scriptEffectTableJumpIndex_380 = val;
-      case 129 -> Scus94491BpeSegment_8006.battleState_8006e398.status_384[0].unpack(val);
+      /*case 129 -> Scus94491BpeSegment_8006.battleState_8006e398.status_384[0].unpack(val);
       case 130 -> Scus94491BpeSegment_8006.battleState_8006e398.status_384[1].unpack(val);
       case 131 -> Scus94491BpeSegment_8006.battleState_8006e398.status_384[2].unpack(val);
       case 132 -> Scus94491BpeSegment_8006.battleState_8006e398.status_384[3].unpack(val);
       case 133 -> Scus94491BpeSegment_8006.battleState_8006e398.status_384[4].unpack(val);
       case 134 -> Scus94491BpeSegment_8006.battleState_8006e398.status_384[5].unpack(val);
       case 135 -> Scus94491BpeSegment_8006.battleState_8006e398.status_384[6].unpack(val);
-      case 136 -> Scus94491BpeSegment_8006.battleState_8006e398.status_384[7].unpack(val);
+      case 136 -> Scus94491BpeSegment_8006.battleState_8006e398.status_384[7].unpack(val);*/
       case 137 -> Scus94491BpeSegment_8006.battleState_8006e398._3a4 = val;
       case 138 -> Scus94491BpeSegment_8006.battleState_8006e398._3a8 = val;
       case 139 -> Scus94491BpeSegment_8006.battleState_8006e398._3ac = val;
@@ -559,19 +634,19 @@ public class GameVarArrayParam extends Param {
       case 181 -> Scus94491BpeSegment_8006.battleState_8006e398._454 = val;
       case 182 -> Scus94491BpeSegment_8006.battleState_8006e398._458 = val;
       case 183 -> Scus94491BpeSegment_8006.battleState_8006e398.scriptsProcessingStatusAfflictions_45c = val;
-      case 184 -> Scus94491BpeSegment_8006.battleState_8006e398._460[0] = val;
+      /*case 184 -> Scus94491BpeSegment_8006.battleState_8006e398._460[0] = val;
       case 185 -> Scus94491BpeSegment_8006.battleState_8006e398._460[1] = val;
-      case 186 -> Scus94491BpeSegment_8006.battleState_8006e398._460[2] = val;
+      case 186 -> Scus94491BpeSegment_8006.battleState_8006e398._460[2] = val;*/
       case 187 -> Scus94491BpeSegment_8006.battleState_8006e398._46c = val;
       case 188 -> Scus94491BpeSegment_8006.battleState_8006e398._470 = val;
-      case 189 -> Scus94491BpeSegment_8006.battleState_8006e398.additionExtra_474[0].unpack(val);
+      /*case 189 -> Scus94491BpeSegment_8006.battleState_8006e398.additionExtra_474[0].unpack(val);
       case 190 -> Scus94491BpeSegment_8006.battleState_8006e398.additionExtra_474[1].unpack(val);
       case 191 -> Scus94491BpeSegment_8006.battleState_8006e398.additionExtra_474[2].unpack(val);
       case 192 -> Scus94491BpeSegment_8006.battleState_8006e398.additionExtra_474[3].unpack(val);
       case 193 -> Scus94491BpeSegment_8006.battleState_8006e398.additionExtra_474[4].unpack(val);
       case 194 -> Scus94491BpeSegment_8006.battleState_8006e398.additionExtra_474[5].unpack(val);
       case 195 -> Scus94491BpeSegment_8006.battleState_8006e398.additionExtra_474[6].unpack(val);
-      case 196 -> Scus94491BpeSegment_8006.battleState_8006e398.additionExtra_474[7].unpack(val);
+      case 196 -> Scus94491BpeSegment_8006.battleState_8006e398.additionExtra_474[7].unpack(val);*/
       case 197 -> Scus94491BpeSegment_8006.battleState_8006e398._494 = val;
       case 198 -> Scus94491BpeSegment_8006.battleState_8006e398._498 = val;
       case 199 -> Scus94491BpeSegment_8006.battleState_8006e398._49c = val;
