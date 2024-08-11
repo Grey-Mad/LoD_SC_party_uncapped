@@ -587,7 +587,7 @@ public abstract class BattleEntity27c extends BattleObject {
     //LAB_800cae98
     if(v1 != 0) {
       if(this.combatant_144.isModelLoaded()) {
-        this.model_148.uvAdjustments_9d = new UvAdjustmentMetrics14(1, 0, 240, 0, 0);
+        this.model_148.uvAdjustments_9d = new UvAdjustmentMetrics14(1, 0, 240, 0, 0, false);
         this.loadingAnimIndex_26e = 0;
         loadCombatantModelAndAnimation(this.model_148, this.combatant_144);
         this._278 = 1;
