@@ -1,0 +1,128 @@
+--- original
++++ modified
+@@ -862,7 +862,7 @@
+ div 0xa, stor[9]
+ jmp_cmp >=, stor[9], stor[8], inl[:LABEL_6]
+ call 371, stor[28], stor[10], 0x0
+-add 0x81, stor[10]
++add var[45][136], stor[10]
+ mov var[45][stor[10]], stor[9]
+ jmp_cmp !&, 0x80, stor[9], inl[:LABEL_3]
+ and 0x7, stor[9]
+@@ -2584,7 +2584,7 @@
+ data 0x2000009
+ data 0x0
+ data 0x218
+-data 0x81
++data 0xf00882d
+ data 0x2000009
+ data 0x208
+ data 0x700092d
+@@ -3282,7 +3282,7 @@
+ jmp_cmp !=, 0x0, stor[8], inl[:LABEL_38]
+ mov 0x0, stor[11]
+ call 371, stor[0], stor[9], 0x0
+-add 0x81, stor[9]
++add var[45][136], stor[9]
+ mov var[45][stor[9]], stor[10]
+ jmp_cmp !&, 0x80, stor[10], inl[:LABEL_39]
+ and 0xf, stor[10]
+@@ -3305,7 +3305,7 @@
+ call 600, stor[18]
+ mov stor[0], stor[stor[stor[0], 18], 28]
+ mov stor[32], stor[stor[stor[0], 18], 31]
+-add 0x81, stor[9]
++add var[45][136], stor[9]
+ mov stor[32], var[45][stor[9]]
+ or 0x480, var[45][stor[9]]
+ call 169, stor[0], STATUS, stor[8]
+@@ -3350,7 +3350,7 @@
+ data 0x2000009
+ data 0x0
+ data 0x218
+-data 0x81
++data 0xf00882d
+ data 0x2000009
+ data 0x208
+ data 0x700092d
+@@ -3390,7 +3390,7 @@
+ data 0x200001f
+ data 0x31f1200
+ data 0x218
+-data 0x81
++data 0xf00882d
+ data 0x2000009
+ data 0x208
+ data 0x200001f
+@@ -3440,7 +3440,7 @@
+ data 0x2000009
+ data 0x0
+ data 0x218
+-data 0x81
++data 0xf00882d
+ data 0x2000009
+ data 0x208
+ data 0x700092d
+@@ -3470,7 +3470,7 @@
+ data 0x200001c
+ data 0x31c1200
+ data 0x218
+-data 0x81
++data 0xf00882d
+ data 0x2000009
+ data 0x208
+ data 0x2000009
+@@ -3739,7 +3739,7 @@
+ data 0x2000009
+ data 0x0
+ data 0x218
+-data 0x81
++data 0xf00882d
+ data 0x2000009
+ data 0x211
+ data 0x40
+@@ -3747,7 +3747,7 @@
+ data 0x49
+ LABEL_58:
+ call 371, stor[0], stor[9], 0x0
+-add 0x81, stor[9]
++add var[45][136], stor[9]
+ mov 0x0, var[45][stor[9]]
+ call 169, stor[0], STATUS, stor[8]
+ and 0xfffffff0, stor[8]
+@@ -3758,7 +3758,7 @@
+ data 0x2000009
+ data 0x0
+ data 0x218
+-data 0x81
++data 0xf00882d
+ data 0x2000009
+ data 0x10c
+ data 0x700092d
+@@ -3782,7 +3782,7 @@
+ data 0x2000009
+ data 0x0
+ data 0x218
+-data 0x81
++data 0xf00882d
+ data 0x2000009
+ data 0x210
+ data 0xff7f
+@@ -3798,7 +3798,7 @@
+ data 0x2000009
+ data 0x0
+ data 0x218
+-data 0x81
++data 0xf00882d
+ data 0x2000009
+ data 0x210
+ data 0xff7f
+@@ -3815,7 +3815,7 @@
+ data 0x2000009
+ data 0x0
+ data 0x218
+-data 0x81
++data 0xf00882d
+ data 0x2000009
+ data 0x49
+ LABEL_59:
