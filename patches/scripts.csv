@@ -1,323 +1,56 @@
-SECT/DRGN0.BIN/5068/1,scripts/DRGN0/5068/1.diff
-SECT/DRGN0.BIN/5072/1,scripts/DRGN0/5072/1.diff
-SECT/DRGN21.BIN/36/5,scripts/DRGN21/36/5.diff
-SECT/DRGN21.BIN/597/1,scripts/DRGN21/597/1.diff
-SECT/DRGN22.BIN/597/1,scripts/DRGN22/597/1.diff
-SECT/DRGN23.BIN/348/1,scripts/DRGN23/348/1.diff
-SECT/DRGN23.BIN/348/2,scripts/DRGN23/348/2.diff
-SECT/DRGN23.BIN/348/3,scripts/DRGN23/348/3.diff
-SECT/DRGN23.BIN/360/1,scripts/DRGN23/360/1.diff
-SECT/DRGN23.BIN/360/2,scripts/DRGN23/360/2.diff
-SECT/DRGN23.BIN/360/3,scripts/DRGN23/360/3.diff
-SECT/DRGN23.BIN/366/1,scripts/DRGN23/366/1.diff
-SECT/DRGN23.BIN/366/2,scripts/DRGN23/366/2.diff
-SECT/DRGN23.BIN/366/3,scripts/DRGN23/366/3.diff
-SECT/DRGN1.BIN/1,scripts/DRGN1/1.diff
-SECT/DRGN1.BIN/2,scripts/DRGN1/2.diff
-SECT/DRGN1.BIN/3,scripts/DRGN1/3.diff
-SECT/DRGN1.BIN/4,scripts/DRGN1/4.diff
-SECT/DRGN1.BIN/5,scripts/DRGN1/5.diff
-SECT/DRGN1.BIN/6,scripts/DRGN1/6.diff
-SECT/DRGN1.BIN/7,scripts/DRGN1/7.diff
-SECT/DRGN1.BIN/8,scripts/DRGN1/8.diff
-SECT/DRGN1.BIN/9,scripts/DRGN1/9.diff
-SECT/DRGN1.BIN/10,scripts/DRGN1/10.diff
-SECT/DRGN1.BIN/11,scripts/DRGN1/11.diff
-SECT/DRGN1.BIN/12,scripts/DRGN1/12.diff
-SECT/DRGN1.BIN/13,scripts/DRGN1/13.diff
-SECT/DRGN1.BIN/14,scripts/DRGN1/14.diff
-SECT/DRGN1.BIN/15,scripts/DRGN1/15.diff
-SECT/DRGN1.BIN/16,scripts/DRGN1/16.diff
-SECT/DRGN1.BIN/17,scripts/DRGN1/17.diff
-SECT/DRGN1.BIN/18,scripts/DRGN1/18.diff
-SECT/DRGN1.BIN/19,scripts/DRGN1/19.diff
-SECT/DRGN1.BIN/20,scripts/DRGN1/20.diff
-SECT/DRGN1.BIN/21,scripts/DRGN1/21.diff
-SECT/DRGN1.BIN/22,scripts/DRGN1/22.diff
-SECT/DRGN1.BIN/23,scripts/DRGN1/23.diff
-SECT/DRGN1.BIN/24,scripts/DRGN1/24.diff
-SECT/DRGN1.BIN/25,scripts/DRGN1/25.diff
-SECT/DRGN1.BIN/26,scripts/DRGN1/26.diff
-SECT/DRGN1.BIN/27,scripts/DRGN1/27.diff
-SECT/DRGN1.BIN/28,scripts/DRGN1/28.diff
-SECT/DRGN1.BIN/29,scripts/DRGN1/29.diff
-SECT/DRGN1.BIN/30,scripts/DRGN1/30.diff
-SECT/DRGN1.BIN/31,scripts/DRGN1/31.diff
-SECT/DRGN1.BIN/32,scripts/DRGN1/32.diff
-SECT/DRGN1.BIN/33,scripts/DRGN1/33.diff
-SECT/DRGN1.BIN/34,scripts/DRGN1/34.diff
-SECT/DRGN1.BIN/35,scripts/DRGN1/35.diff
-SECT/DRGN1.BIN/36,scripts/DRGN1/36.diff
-SECT/DRGN1.BIN/37,scripts/DRGN1/37.diff
-SECT/DRGN1.BIN/38,scripts/DRGN1/38.diff
-SECT/DRGN1.BIN/39,scripts/DRGN1/39.diff
-SECT/DRGN1.BIN/40,scripts/DRGN1/40.diff
-SECT/DRGN1.BIN/41,scripts/DRGN1/41.diff
-SECT/DRGN1.BIN/42,scripts/DRGN1/42.diff
-SECT/DRGN1.BIN/43,scripts/DRGN1/43.diff
-SECT/DRGN1.BIN/44,scripts/DRGN1/44.diff
-SECT/DRGN1.BIN/45,scripts/DRGN1/45.diff
-SECT/DRGN1.BIN/46,scripts/DRGN1/46.diff
-SECT/DRGN1.BIN/47,scripts/DRGN1/47.diff
-SECT/DRGN1.BIN/48,scripts/DRGN1/48.diff
-SECT/DRGN1.BIN/49,scripts/DRGN1/49.diff
-SECT/DRGN1.BIN/50,scripts/DRGN1/50.diff
-SECT/DRGN1.BIN/51,scripts/DRGN1/51.diff
-SECT/DRGN1.BIN/52,scripts/DRGN1/52.diff
-SECT/DRGN1.BIN/53,scripts/DRGN1/53.diff
-SECT/DRGN1.BIN/54,scripts/DRGN1/54.diff
-SECT/DRGN1.BIN/55,scripts/DRGN1/55.diff
-SECT/DRGN1.BIN/56,scripts/DRGN1/56.diff
-SECT/DRGN1.BIN/57,scripts/DRGN1/57.diff
-SECT/DRGN1.BIN/58,scripts/DRGN1/58.diff
-SECT/DRGN1.BIN/59,scripts/DRGN1/59.diff
-SECT/DRGN1.BIN/60,scripts/DRGN1/60.diff
-SECT/DRGN1.BIN/61,scripts/DRGN1/61.diff
-SECT/DRGN1.BIN/62,scripts/DRGN1/62.diff
-SECT/DRGN1.BIN/63,scripts/DRGN1/63.diff
-SECT/DRGN1.BIN/64,scripts/DRGN1/64.diff
-SECT/DRGN1.BIN/65,scripts/DRGN1/65.diff
-SECT/DRGN1.BIN/66,scripts/DRGN1/66.diff
-SECT/DRGN1.BIN/67,scripts/DRGN1/67.diff
-SECT/DRGN1.BIN/68,scripts/DRGN1/68.diff
-SECT/DRGN1.BIN/69,scripts/DRGN1/69.diff
-SECT/DRGN1.BIN/70,scripts/DRGN1/70.diff
-SECT/DRGN1.BIN/71,scripts/DRGN1/71.diff
-SECT/DRGN1.BIN/72,scripts/DRGN1/72.diff
-SECT/DRGN1.BIN/73,scripts/DRGN1/73.diff
-SECT/DRGN1.BIN/74,scripts/DRGN1/74.diff
-SECT/DRGN1.BIN/75,scripts/DRGN1/75.diff
-SECT/DRGN1.BIN/76,scripts/DRGN1/76.diff
-SECT/DRGN1.BIN/77,scripts/DRGN1/77.diff
-SECT/DRGN1.BIN/78,scripts/DRGN1/78.diff
-SECT/DRGN1.BIN/79,scripts/DRGN1/79.diff
-SECT/DRGN1.BIN/80,scripts/DRGN1/80.diff
-SECT/DRGN1.BIN/81,scripts/DRGN1/81.diff
-SECT/DRGN1.BIN/82,scripts/DRGN1/82.diff
-SECT/DRGN1.BIN/83,scripts/DRGN1/83.diff
-SECT/DRGN1.BIN/84,scripts/DRGN1/84.diff
-SECT/DRGN1.BIN/85,scripts/DRGN1/85.diff
-SECT/DRGN1.BIN/86,scripts/DRGN1/86.diff
-SECT/DRGN1.BIN/87,scripts/DRGN1/87.diff
-SECT/DRGN1.BIN/88,scripts/DRGN1/88.diff
-SECT/DRGN1.BIN/89,scripts/DRGN1/89.diff
-SECT/DRGN1.BIN/90,scripts/DRGN1/90.diff
-SECT/DRGN1.BIN/91,scripts/DRGN1/91.diff
-SECT/DRGN1.BIN/92,scripts/DRGN1/92.diff
-SECT/DRGN1.BIN/93,scripts/DRGN1/93.diff
-SECT/DRGN1.BIN/94,scripts/DRGN1/94.diff
-SECT/DRGN1.BIN/95,scripts/DRGN1/95.diff
-SECT/DRGN1.BIN/96,scripts/DRGN1/96.diff
-SECT/DRGN1.BIN/97,scripts/DRGN1/97.diff
-SECT/DRGN1.BIN/98,scripts/DRGN1/98.diff
-SECT/DRGN1.BIN/99,scripts/DRGN1/99.diff
-SECT/DRGN1.BIN/100,scripts/DRGN1/100.diff
-SECT/DRGN1.BIN/101,scripts/DRGN1/101.diff
-SECT/DRGN1.BIN/102,scripts/DRGN1/102.diff
-SECT/DRGN1.BIN/103,scripts/DRGN1/103.diff
-SECT/DRGN1.BIN/104,scripts/DRGN1/104.diff
-SECT/DRGN1.BIN/105,scripts/DRGN1/105.diff
-SECT/DRGN1.BIN/106,scripts/DRGN1/106.diff
-SECT/DRGN1.BIN/107,scripts/DRGN1/107.diff
-SECT/DRGN1.BIN/108,scripts/DRGN1/108.diff
-SECT/DRGN1.BIN/109,scripts/DRGN1/109.diff
-SECT/DRGN1.BIN/110,scripts/DRGN1/110.diff
-SECT/DRGN1.BIN/111,scripts/DRGN1/111.diff
-SECT/DRGN1.BIN/112,scripts/DRGN1/112.diff
-SECT/DRGN1.BIN/113,scripts/DRGN1/113.diff
-SECT/DRGN1.BIN/114,scripts/DRGN1/114.diff
-SECT/DRGN1.BIN/115,scripts/DRGN1/115.diff
-SECT/DRGN1.BIN/116,scripts/DRGN1/116.diff
-SECT/DRGN1.BIN/117,scripts/DRGN1/117.diff
-SECT/DRGN1.BIN/118,scripts/DRGN1/118.diff
-SECT/DRGN1.BIN/119,scripts/DRGN1/119.diff
-SECT/DRGN1.BIN/120,scripts/DRGN1/120.diff
-SECT/DRGN1.BIN/121,scripts/DRGN1/121.diff
-SECT/DRGN1.BIN/122,scripts/DRGN1/122.diff
-SECT/DRGN1.BIN/123,scripts/DRGN1/123.diff
-SECT/DRGN1.BIN/124,scripts/DRGN1/124.diff
-SECT/DRGN1.BIN/125,scripts/DRGN1/125.diff
-SECT/DRGN1.BIN/126,scripts/DRGN1/126.diff
-SECT/DRGN1.BIN/127,scripts/DRGN1/127.diff
-SECT/DRGN1.BIN/128,scripts/DRGN1/128.diff
-SECT/DRGN1.BIN/129,scripts/DRGN1/129.diff
-SECT/DRGN1.BIN/130,scripts/DRGN1/130.diff
-SECT/DRGN1.BIN/131,scripts/DRGN1/131.diff
-SECT/DRGN1.BIN/132,scripts/DRGN1/132.diff
-SECT/DRGN1.BIN/133,scripts/DRGN1/133.diff
-SECT/DRGN1.BIN/134,scripts/DRGN1/134.diff
-SECT/DRGN1.BIN/135,scripts/DRGN1/135.diff
-SECT/DRGN1.BIN/136,scripts/DRGN1/136.diff
-SECT/DRGN1.BIN/137,scripts/DRGN1/137.diff
-SECT/DRGN1.BIN/138,scripts/DRGN1/138.diff
-SECT/DRGN1.BIN/139,scripts/DRGN1/139.diff
-SECT/DRGN1.BIN/140,scripts/DRGN1/140.diff
-SECT/DRGN1.BIN/141,scripts/DRGN1/141.diff
-SECT/DRGN1.BIN/142,scripts/DRGN1/142.diff
-SECT/DRGN1.BIN/143,scripts/DRGN1/143.diff
-SECT/DRGN1.BIN/144,scripts/DRGN1/144.diff
-SECT/DRGN1.BIN/145,scripts/DRGN1/145.diff
-SECT/DRGN1.BIN/146,scripts/DRGN1/146.diff
-SECT/DRGN1.BIN/147,scripts/DRGN1/147.diff
-SECT/DRGN1.BIN/148,scripts/DRGN1/148.diff
-SECT/DRGN1.BIN/149,scripts/DRGN1/149.diff
-SECT/DRGN1.BIN/150,scripts/DRGN1/150.diff
-SECT/DRGN1.BIN/151,scripts/DRGN1/151.diff
-SECT/DRGN1.BIN/152,scripts/DRGN1/152.diff
-SECT/DRGN1.BIN/153,scripts/DRGN1/153.diff
-SECT/DRGN1.BIN/154,scripts/DRGN1/154.diff
-SECT/DRGN1.BIN/155,scripts/DRGN1/155.diff
-SECT/DRGN1.BIN/156,scripts/DRGN1/156.diff
-SECT/DRGN1.BIN/157,scripts/DRGN1/157.diff
-SECT/DRGN1.BIN/158,scripts/DRGN1/158.diff
-SECT/DRGN1.BIN/159,scripts/DRGN1/159.diff
-SECT/DRGN1.BIN/160,scripts/DRGN1/160.diff
-SECT/DRGN1.BIN/161,scripts/DRGN1/161.diff
-SECT/DRGN1.BIN/162,scripts/DRGN1/162.diff
-SECT/DRGN1.BIN/254,scripts/DRGN1/254.diff
-SECT/DRGN1.BIN/255,scripts/DRGN1/255.diff
-SECT/DRGN1.BIN/256,scripts/DRGN1/256.diff
-SECT/DRGN1.BIN/258,scripts/DRGN1/258.diff
-SECT/DRGN1.BIN/259,scripts/DRGN1/259.diff
-SECT/DRGN1.BIN/260,scripts/DRGN1/260.diff
-SECT/DRGN1.BIN/261,scripts/DRGN1/261.diff
-SECT/DRGN1.BIN/262,scripts/DRGN1/262.diff
-SECT/DRGN1.BIN/263,scripts/DRGN1/263.diff
-SECT/DRGN1.BIN/264,scripts/DRGN1/264.diff
-SECT/DRGN1.BIN/265,scripts/DRGN1/265.diff
-SECT/DRGN1.BIN/266,scripts/DRGN1/266.diff
-SECT/DRGN1.BIN/267,scripts/DRGN1/267.diff
-SECT/DRGN1.BIN/268,scripts/DRGN1/268.diff
-SECT/DRGN1.BIN/269,scripts/DRGN1/269.diff
-SECT/DRGN1.BIN/270,scripts/DRGN1/270.diff
-SECT/DRGN1.BIN/271,scripts/DRGN1/271.diff
-SECT/DRGN1.BIN/272,scripts/DRGN1/272.diff
-SECT/DRGN1.BIN/273,scripts/DRGN1/273.diff
-SECT/DRGN1.BIN/274,scripts/DRGN1/274.diff
-SECT/DRGN1.BIN/275,scripts/DRGN1/275.diff
-SECT/DRGN1.BIN/276,scripts/DRGN1/276.diff
-SECT/DRGN1.BIN/277,scripts/DRGN1/277.diff
-SECT/DRGN1.BIN/278,scripts/DRGN1/278.diff
-SECT/DRGN1.BIN/279,scripts/DRGN1/279.diff
-SECT/DRGN1.BIN/280,scripts/DRGN1/280.diff
-SECT/DRGN1.BIN/281,scripts/DRGN1/281.diff
-SECT/DRGN1.BIN/282,scripts/DRGN1/282.diff
-SECT/DRGN1.BIN/283,scripts/DRGN1/283.diff
-SECT/DRGN1.BIN/284,scripts/DRGN1/284.diff
-SECT/DRGN1.BIN/285,scripts/DRGN1/285.diff
-SECT/DRGN1.BIN/286,scripts/DRGN1/286.diff
-SECT/DRGN1.BIN/287,scripts/DRGN1/287.diff
-SECT/DRGN1.BIN/288,scripts/DRGN1/288.diff
-SECT/DRGN1.BIN/289,scripts/DRGN1/289.diff
-SECT/DRGN1.BIN/290,scripts/DRGN1/290.diff
-SECT/DRGN1.BIN/291,scripts/DRGN1/291.diff
-SECT/DRGN1.BIN/292,scripts/DRGN1/292.diff
-SECT/DRGN1.BIN/293,scripts/DRGN1/293.diff
-SECT/DRGN1.BIN/294,scripts/DRGN1/294.diff
-SECT/DRGN1.BIN/295,scripts/DRGN1/295.diff
-SECT/DRGN1.BIN/296,scripts/DRGN1/296.diff
-SECT/DRGN1.BIN/297,scripts/DRGN1/297.diff
-SECT/DRGN1.BIN/298,scripts/DRGN1/298.diff
-SECT/DRGN1.BIN/299,scripts/DRGN1/299.diff
-SECT/DRGN1.BIN/300,scripts/DRGN1/300.diff
-SECT/DRGN1.BIN/301,scripts/DRGN1/301.diff
-SECT/DRGN1.BIN/302,scripts/DRGN1/302.diff
-SECT/DRGN1.BIN/303,scripts/DRGN1/303.diff
-SECT/DRGN1.BIN/304,scripts/DRGN1/304.diff
-SECT/DRGN1.BIN/305,scripts/DRGN1/305.diff
-SECT/DRGN1.BIN/306,scripts/DRGN1/306.diff
-SECT/DRGN1.BIN/307,scripts/DRGN1/307.diff
-SECT/DRGN1.BIN/308,scripts/DRGN1/308.diff
-SECT/DRGN1.BIN/309,scripts/DRGN1/309.diff
-SECT/DRGN1.BIN/310,scripts/DRGN1/310.diff
-SECT/DRGN1.BIN/311,scripts/DRGN1/311.diff
-SECT/DRGN1.BIN/312,scripts/DRGN1/312.diff
-SECT/DRGN1.BIN/313,scripts/DRGN1/313.diff
-SECT/DRGN1.BIN/314,scripts/DRGN1/314.diff
-SECT/DRGN1.BIN/315,scripts/DRGN1/315.diff
-SECT/DRGN1.BIN/316,scripts/DRGN1/316.diff
-SECT/DRGN1.BIN/317,scripts/DRGN1/317.diff
-SECT/DRGN1.BIN/318,scripts/DRGN1/318.diff
-SECT/DRGN1.BIN/319,scripts/DRGN1/319.diff
-SECT/DRGN1.BIN/320,scripts/DRGN1/320.diff
-SECT/DRGN1.BIN/321,scripts/DRGN1/321.diff
-SECT/DRGN1.BIN/322,scripts/DRGN1/322.diff
-SECT/DRGN1.BIN/323,scripts/DRGN1/323.diff
-SECT/DRGN1.BIN/324,scripts/DRGN1/324.diff
-SECT/DRGN1.BIN/325,scripts/DRGN1/325.diff
-SECT/DRGN1.BIN/326,scripts/DRGN1/326.diff
-SECT/DRGN1.BIN/327,scripts/DRGN1/327.diff
-SECT/DRGN1.BIN/328,scripts/DRGN1/328.diff
-SECT/DRGN1.BIN/329,scripts/DRGN1/329.diff
-SECT/DRGN1.BIN/330,scripts/DRGN1/330.diff
-SECT/DRGN1.BIN/331,scripts/DRGN1/331.diff
-SECT/DRGN1.BIN/332,scripts/DRGN1/332.diff
-SECT/DRGN1.BIN/333,scripts/DRGN1/333.diff
-SECT/DRGN1.BIN/334,scripts/DRGN1/334.diff
-SECT/DRGN1.BIN/335,scripts/DRGN1/335.diff
-SECT/DRGN1.BIN/336,scripts/DRGN1/336.diff
-SECT/DRGN1.BIN/337,scripts/DRGN1/337.diff
-SECT/DRGN1.BIN/338,scripts/DRGN1/338.diff
-SECT/DRGN1.BIN/339,scripts/DRGN1/339.diff
-SECT/DRGN1.BIN/340,scripts/DRGN1/340.diff
-SECT/DRGN1.BIN/341,scripts/DRGN1/341.diff
-SECT/DRGN1.BIN/342,scripts/DRGN1/342.diff
-SECT/DRGN1.BIN/343,scripts/DRGN1/343.diff
-SECT/DRGN1.BIN/344,scripts/DRGN1/344.diff
-SECT/DRGN1.BIN/345,scripts/DRGN1/345.diff
-SECT/DRGN1.BIN/346,scripts/DRGN1/346.diff
-SECT/DRGN1.BIN/347,scripts/DRGN1/347.diff
-SECT/DRGN1.BIN/348,scripts/DRGN1/348.diff
-SECT/DRGN1.BIN/349,scripts/DRGN1/349.diff
-SECT/DRGN1.BIN/350,scripts/DRGN1/350.diff
-SECT/DRGN1.BIN/351,scripts/DRGN1/351.diff
-SECT/DRGN1.BIN/352,scripts/DRGN1/352.diff
-SECT/DRGN1.BIN/353,scripts/DRGN1/353.diff
-SECT/DRGN1.BIN/354,scripts/DRGN1/354.diff
-SECT/DRGN1.BIN/355,scripts/DRGN1/355.diff
-SECT/DRGN1.BIN/356,scripts/DRGN1/356.diff
-SECT/DRGN1.BIN/357,scripts/DRGN1/357.diff
-SECT/DRGN1.BIN/358,scripts/DRGN1/358.diff
-SECT/DRGN1.BIN/359,scripts/DRGN1/359.diff
-SECT/DRGN1.BIN/360,scripts/DRGN1/360.diff
-SECT/DRGN1.BIN/361,scripts/DRGN1/361.diff
-SECT/DRGN1.BIN/362,scripts/DRGN1/362.diff
-SECT/DRGN1.BIN/363,scripts/DRGN1/363.diff
-SECT/DRGN1.BIN/364,scripts/DRGN1/364.diff
-SECT/DRGN1.BIN/365,scripts/DRGN1/365.diff
-SECT/DRGN1.BIN/366,scripts/DRGN1/366.diff
-SECT/DRGN1.BIN/367,scripts/DRGN1/367.diff
-SECT/DRGN1.BIN/368,scripts/DRGN1/368.diff
-SECT/DRGN1.BIN/369,scripts/DRGN1/369.diff
-SECT/DRGN1.BIN/370,scripts/DRGN1/370.diff
-SECT/DRGN1.BIN/371,scripts/DRGN1/371.diff
-SECT/DRGN1.BIN/372,scripts/DRGN1/372.diff
-SECT/DRGN1.BIN/373,scripts/DRGN1/373.diff
-SECT/DRGN1.BIN/374,scripts/DRGN1/374.diff
-SECT/DRGN1.BIN/375,scripts/DRGN1/375.diff
-SECT/DRGN1.BIN/376,scripts/DRGN1/376.diff
-SECT/DRGN1.BIN/377,scripts/DRGN1/377.diff
-SECT/DRGN1.BIN/378,scripts/DRGN1/378.diff
-SECT/DRGN1.BIN/379,scripts/DRGN1/379.diff
-SECT/DRGN1.BIN/380,scripts/DRGN1/380.diff
-SECT/DRGN1.BIN/381,scripts/DRGN1/381.diff
-SECT/DRGN1.BIN/382,scripts/DRGN1/382.diff
-SECT/DRGN1.BIN/383,scripts/DRGN1/383.diff
-SECT/DRGN1.BIN/384,scripts/DRGN1/384.diff
-SECT/DRGN1.BIN/385,scripts/DRGN1/385.diff
-SECT/DRGN1.BIN/386,scripts/DRGN1/386.diff
-SECT/DRGN1.BIN/387,scripts/DRGN1/387.diff
-SECT/DRGN1.BIN/388,scripts/DRGN1/388.diff
-SECT/DRGN1.BIN/389,scripts/DRGN1/389.diff
-SECT/DRGN1.BIN/390,scripts/DRGN1/390.diff
-SECT/DRGN1.BIN/391,scripts/DRGN1/391.diff
-SECT/DRGN1.BIN/392,scripts/DRGN1/392.diff
-SECT/DRGN1.BIN/393,scripts/DRGN1/393.diff
-SECT/DRGN1.BIN/394,scripts/DRGN1/394.diff
-SECT/DRGN1.BIN/395,scripts/DRGN1/395.diff
-SECT/DRGN1.BIN/396,scripts/DRGN1/396.diff
-SECT/DRGN1.BIN/397,scripts/DRGN1/397.diff
-SECT/DRGN1.BIN/398,scripts/DRGN1/398.diff
-SECT/DRGN1.BIN/399,scripts/DRGN1/399.diff
-SECT/DRGN1.BIN/400,scripts/DRGN1/400.diff
-SECT/DRGN1.BIN/402,scripts/DRGN1/402.diff
+SECT/DRGN1.BIN/266,scripts/DRGN1/266.diff,"Kongol I, Fix for failed addition counter crash when below 3 characters"
+SECT/DRGN1.BIN/294,scripts/DRGN1/294.diff,"Lenus I, Fix for hardcoded character count"
+SECT/DRGN1.BIN/330,scripts/DRGN1/330.diff,"Jiango, Remove code that freezes script when dart is not in party"
+SECT/DRGN1.BIN/388,scripts/DRGN1/388.diff,"Zieg, Remove dart check, fix finisher crash when below 3 characters"
+SECT/DRGN1.BIN/389,scripts/DRGN1/389.diff,"Melbu, Fix for hardcoded character count"
+SECT/DRGN1.BIN/397,scripts/DRGN1/397.diff,"Unknown Script, Fix for hardcoded character count"
+SECT/DRGN0.BIN/4954/1,scripts/DRGN0/4954/1.diff,"Sandora Elite I, scale magic attack according to character count"
+SECT/DRGN0.BIN/5006/1,scripts/DRGN0/5006/1.diff,"Lloyd Dome Attack, fix character count crash"
+SECT/DRGN0.BIN/5036/1,scripts/DRGN0/5036/1.diff,"Regole Tsunami, fix character count crash"
+SECT/DRGN0.BIN/5044/1,scripts/DRGN0/5044/1.diff,"Divine Dragon Leg Swipe, fix character count crash"
+SECT/DRGN0.BIN/5054/1,scripts/DRGN0/5054/1.diff,"Dragon Block Staff, fix NoDart crash"
+SECT/DRGN0.BIN/5068/1,scripts/DRGN0/5068/1.diff,"Shirley transform, fix extremely huge parameter"
+SECT/DRGN0.BIN/5072/1,scripts/DRGN0/5072/1.diff,"Shirley transform, fix extremely huge parameter"
+SECT/DRGN0.BIN/5078/1,scripts/DRGN0/5078/1.diff,"Lenus I AOE attack, fix character count crash"
+SECT/DRGN0.BIN/5152/1,scripts/DRGN0/5152/1.diff,"Virage II Magic AOE, fix character count crash"
+SECT/DRGN0.BIN/5156/1,scripts/DRGN0/5156/1.diff,"Virage II Can't Combat, fix character count crash"
+SECT/DRGN0.BIN/5184/1,scripts/DRGN0/5184/1.diff,"Virage IV Planet Attack, fix character count crash"
+SECT/DRGN0.BIN/5196/1,scripts/DRGN0/5196/1.diff,"Drake Bombs, scale bomb count according to character count"
+SECT/DRGN0.BIN/5204/1,scripts/DRGN0/5204/1.diff,"Jiango Falling rocks, fix character count crash"
+SECT/DRGN0.BIN/5254/1,scripts/DRGN0/5254/1.diff,"Faust Tornado, fix character count crash"
+SECT/DRGN0.BIN/5268/1,scripts/DRGN0/5268/1.diff,"Polter helm command block, fix character count crash"
+SECT/DRGN0.BIN/5274/1,scripts/DRGN0/5274/1.diff,"DD Spirit Leg Swipe, fix character count crash"
+SECT/DRGN0.BIN/5288/1,scripts/DRGN0/5288/1.diff,"Regole Spirit Tsunami, fix character count crash"
+SECT/DRGN0.BIN/5312/1,scripts/DRGN0/5312/1.diff,"Selebus singing, fix character count crash"
+SECT/DRGN0.BIN/5326/1,scripts/DRGN0/5326/1.diff,"Kubila Froggy, fix character count crash"
+SECT/DRGN0.BIN/5334/1,scripts/DRGN0/5334/1.diff,"Zackwell Skeleton, fix character count crash"
+SECT/DRGN0.BIN/5344/1,scripts/DRGN0/5344/1.diff,"Zackwell - Lavitz (weird move), fix character count crash"
+SECT/DRGN0.BIN/5414/1,scripts/DRGN0/5414/1.diff,"Melbu I Magic Casting, fix character count crash"
+SECT/DRGN0.BIN/5414/1,scripts/DRGN0/5414/1.diff,"Melbu I Petrify Move, fix character count crash"
+SECT/DRGN0.BIN/5442/1,scripts/DRGN0/5442/1.diff,"Melbu III Planet Attack, fix character count crash"
+SECT/DRGN0.BIN/5464/1,scripts/DRGN0/5464/1.diff,"Melbu III Bomb Star Spawn, fix character count crash"
+SECT/DRGN0.BIN/5466/1,scripts/DRGN0/5466/1.diff,"Melbu IV Trident Attack, fix character count crash"
+SECT/DRGN0.BIN/5468/1,scripts/DRGN0/5468/1.diff,"Melbu IV Wingly Attack, fix character count crash"
+SECT/DRGN0.BIN/5474/1,scripts/DRGN0/5474/1.diff,"Melbu IV Tornado, fix character count crash"
+SECT/DRGN0.BIN/5478/1,scripts/DRGN0/5478/1.diff,"Melbu IV Singing, fix character count crash, scale effect count according to char count"
+SECT/DRGN0.BIN/5520/1,scripts/DRGN0/5520/1.diff,"Hoax Cutscene, force-load Dart and Lavitz"
+SECT/DRGN0.BIN/5524/1,scripts/DRGN0/5524/1.diff,"Doel Death Cutscene, force-load Dart"
+SECT/DRGN0.BIN/5528/1,scripts/DRGN0/5528/1.diff,"Lloyd Flanvel Cutscene, force-load Dart"
+SECT/DRGN0.BIN/5532/1,scripts/DRGN0/5532/1.diff,"Divine Dragon Death Cutscene, force-load Dart"
+SECT/DRGN0.BIN/5538/1,scripts/DRGN0/5538/1.diff,"Lenus Death Cutscene, force-load Dart"
+SECT/DRGN0.BIN/5548/1,scripts/DRGN0/5548/1.diff,"Mappi I Cutscene, force-load Dart"
+SECT/DRGN0.BIN/5560/1,scripts/DRGN0/5560/1.diff,"Virage I Cutscene, force-load Dart, Lavitz, Shana, Rose"
+SECT/DRGN0.BIN/5562/1,scripts/DRGN0/5562/1.diff,"Virage II Cutscene, force-load Dart"
+SECT/DRGN0.BIN/5572/1,scripts/DRGN0/5572/1.diff,"Urobolos Cutscene, force-load Dart, Lavitz, Shana"
+SECT/DRGN21.BIN/36/5,scripts/DRGN21/36/5.diff,"Seles Anim Crash, GH#813"
+SECT/DRGN21.BIN/597/1,scripts/DRGN21/597/1.diff,"Kazas Garbage Room, GH#1078"
+SECT/DRGN22.BIN/597/1,scripts/DRGN22/597/1.diff,"Kazas Garbage Room, GH#1078"
+SECT/DRGN23.BIN/348/1,scripts/DRGN23/348/1.diff,"Flanvel Teleporter Fixes"
+SECT/DRGN23.BIN/348/2,scripts/DRGN23/348/2.diff,"Flanvel Teleporter Fixes"
+SECT/DRGN23.BIN/348/3,scripts/DRGN23/348/3.diff,"Flanvel Teleporter Fixes"
+SECT/DRGN23.BIN/360/1,scripts/DRGN23/360/1.diff,"Flanvel Teleporter Fixes"
+SECT/DRGN23.BIN/360/2,scripts/DRGN23/360/2.diff,"Flanvel Teleporter Fixes"
+SECT/DRGN23.BIN/360/3,scripts/DRGN23/360/3.diff,"Flanvel Teleporter Fixes"
+SECT/DRGN23.BIN/366/1,scripts/DRGN23/366/1.diff,"Flanvel Teleporter Fixes"
+SECT/DRGN23.BIN/366/2,scripts/DRGN23/366/2.diff,"Flanvel Teleporter Fixes"
+SECT/DRGN23.BIN/366/3,scripts/DRGN23/366/3.diff,"Flanvel Teleporter Fixes"
