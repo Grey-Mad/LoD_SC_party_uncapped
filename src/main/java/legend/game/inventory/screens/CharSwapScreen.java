@@ -36,6 +36,9 @@ public class CharSwapScreen extends MenuScreen {
   private Renderable58 primaryCharHighlight;
   private Renderable58 secondaryCharHighlight;
 
+  private Renderable58 upArrow;
+  private Renderable58 downArrow;
+
   public CharSwapScreen(final Runnable unload) {
     this.unload = unload;
   }
@@ -58,9 +61,22 @@ public class CharSwapScreen extends MenuScreen {
         FUN_80104b60(this.primaryCharHighlight);
         this.renderCharacterSwapScreen(0xff);
         this.loadingStage++;
+
+        if(gameState_800babc8.charIds_88.length > 3) {
+          if (primaryCharIndexOffset != 0){
+            this.upArrow = allocateUiElement(61, 0x44, 106,2);
+            this.upArrow.heightScale_38= 0.75f;
+            this.upArrow.widthScale= 2.f;
+          }
+          if (primaryCharIndexOffset+3 != gameState_800babc8.charIds_88.length){
+            this.downArrow = allocateUiElement(53, 0x3c, 106, 222);
+            this.downArrow.heightScale_38= 0.75f;
+            this.downArrow.widthScale= 2.f;
+          }
+        }
       }
 
-      case 2, 3 -> this.renderCharacterSwapScreen(0);
+      case 2, 3 -> {this.renderCharacterSwapScreen(0);}
 
       // Fade out
       case 100 -> {
@@ -133,10 +149,10 @@ public class CharSwapScreen extends MenuScreen {
     }
 
     if(this.loadingStage == 2) {
-      for(int i = primaryCharIndexOffset; i < primaryCharIndexOffset+3; i++) {
-        if(this.primaryCharIndex+this.primaryCharIndexOffset  != i && MathHelper.inBox(x, y, 8, this.getSlotY(i), 174, 65)) {
+      for(int i = 0; i < 3; i++) {
+        if(this.primaryCharIndex-this.primaryCharIndexOffset  != i && MathHelper.inBox(x, y, 8, this.getSlotY(i), 174, 65)) {
           playMenuSound(1);
-          this.primaryCharIndex = i;
+          this.primaryCharIndex = i+this.primaryCharIndexOffset;
           this.primaryCharHighlight.y_44 = this.getSlotY(i);
           return InputPropagation.HANDLED;
         }
@@ -162,12 +178,13 @@ public class CharSwapScreen extends MenuScreen {
       return InputPropagation.HANDLED;
     }
 
-    if(this.loadingStage == 2) { //greytodo: make sure nothing here is now broken
+    if(this.loadingStage == 2) {
+
       for(int i = 0; i < this.primaryCharIndexOffset+3; i++) {
-        if(MathHelper.inBox(x, y, 8, this.getSlotY(i), 174, 65)) {
+        if(MathHelper.inBox(x, y, 8, this.getSlotY(i-primaryCharIndexOffset), 174, 65)) {
           playMenuSound(2);
           this.primaryCharIndex = i;
-          this.primaryCharHighlight.y_44 = this.getSlotY(i);
+          this.primaryCharHighlight.y_44 = this.getSlotY(i-primaryCharIndexOffset);
 
           final int charIndex = gameState_800babc8.charIds_88[this.primaryCharIndex];
           if(Config.unlockParty() || charIndex == -1 || (gameState_800babc8.charData_32c[charIndex].partyFlags_04 & 0x20) == 0) {
@@ -244,7 +261,7 @@ public class CharSwapScreen extends MenuScreen {
       this.primaryCharIndexOffset++;
       this.loadingStage=1;
     }
-    this.primaryCharHighlight.y_44 = this.getSlotY(this.primaryCharIndex);
+    this.primaryCharHighlight.y_44 = this.getSlotY(this.primaryCharIndex-primaryCharIndexOffset);   
   }
 
   private void menuStage2Select() {
