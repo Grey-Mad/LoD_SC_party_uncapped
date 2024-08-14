@@ -3909,6 +3909,45 @@ public class Battle extends EngineState {
       script.params_20[1].set(bent.bentSlot_274);
     }
 
+    final int[] opOffsetsToCheck = {1,10,13,16,19,14,20,25};//27?
+    for(int i = 0;i<opOffsetsToCheck.length; i++){
+
+    switch(script.scriptState_04.scriptPtr_14.getOp(script.commandOffset_0c+opOffsetsToCheck[i])){
+      case 69 -> script.scriptState_04.scriptPtr_14.setOp(script.commandOffset_0c+opOffsetsToCheck[i], battleState_8006e398._294Offset);
+      case 90 -> script.scriptState_04.scriptPtr_14.setOp(script.commandOffset_0c+opOffsetsToCheck[i], battleState_8006e398._2e8Offset);
+      case 109 -> script.scriptState_04.scriptPtr_14.setOp(script.commandOffset_0c+opOffsetsToCheck[i], battleState_8006e398._334Offset);
+      case 115 -> script.scriptState_04.scriptPtr_14.setOp(script.commandOffset_0c+opOffsetsToCheck[i], battleState_8006e398._34cOffset);
+      case 129 -> script.scriptState_04.scriptPtr_14.setOp(script.commandOffset_0c+opOffsetsToCheck[i], battleState_8006e398._384Offset);
+      case 184 -> script.scriptState_04.scriptPtr_14.setOp(script.commandOffset_0c+opOffsetsToCheck[i], battleState_8006e398._460Offset);
+      case 189 -> script.scriptState_04.scriptPtr_14.setOp(script.commandOffset_0c+opOffsetsToCheck[i], battleState_8006e398._474Offset);
+    }}
+    /*for(int x=3; x < 20; x++){
+      int nextOp = script.scriptState_04.scriptPtr_14.getOp(script.commandOffset_0c+x);
+      if(0x45 == nextOp){ 
+        break;
+      };
+      if(0x5a == nextOp){ 
+        break;
+      };
+      if(0x73 == nextOp){ 
+        break;
+      };
+      if(0xb8 == nextOp){ 
+        break;
+      };
+      if(129 == nextOp){ 
+        break;
+      };
+      if(0x81 == nextOp){
+        break;
+      };
+      if(0xbd == nextOp){
+        break;
+      };
+    }*/
+    //switch(script.scriptState_04.scriptPtr_14.getOp(script.commandOffset_0c+1)){
+
+
     //LAB_800cd9f4
     return FlowControl.CONTINUE;
   }
