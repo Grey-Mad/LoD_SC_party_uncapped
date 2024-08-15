@@ -5,7 +5,6 @@ import legend.core.gpu.Rect4i;
 import legend.core.gte.MV;
 import legend.core.gte.ModelPart10;
 import legend.core.memory.Method;
-import legend.core.opengl.Texture;
 import legend.game.characters.Element;
 import legend.game.characters.ElementSet;
 import legend.game.characters.StatCollection;
@@ -43,7 +42,6 @@ import static legend.game.Scus94491BpeSegment_8003.GsGetLws;
 import static legend.game.Scus94491BpeSegment_8003.GsSetLightMatrix;
 import static legend.game.Scus94491BpeSegment_8004.currentEngineState_8004dd04;
 import static legend.game.Scus94491BpeSegment_8004.itemStats_8004f2ac;
-import static legend.game.Scus94491BpeSegment_8005.vramSlots_8005027c;
 import static legend.game.Scus94491BpeSegment_8006.battleState_8006e398;
 import static legend.game.Scus94491BpeSegment_800b.battleFlags_800bc960;
 import static legend.game.Scus94491BpeSegment_800c.lightColourMatrix_800c3508;
@@ -53,12 +51,6 @@ import static legend.game.combat.Battle.loadCombatantModelAndAnimation;
 import static legend.game.combat.Battle.spellStats_800fa0b8;
 import static legend.game.combat.SEffe.renderBttlShadow;
 
-import static org.lwjgl.opengl.GL30C.GL_R32UI;
-import static org.lwjgl.opengl.GL30C.GL_RED_INTEGER;
-import static org.lwjgl.opengl.GL11C.GL_UNSIGNED_INT;
-
-import static org.lwjgl.opengl.GL12C.GL_UNSIGNED_INT_8_8_8_8_REV;
-import static org.lwjgl.opengl.GL11C.GL_RGBA;
 
 public abstract class BattleEntity27c extends BattleObject {
   private static final int[] vramSlotIndices_800fa730 = {0, 1, 2, 3, 4, 5, 6, 14, 15, 16};
@@ -230,6 +222,8 @@ public abstract class BattleEntity27c extends BattleObject {
 
   public final Rect4i scissor = new Rect4i();
   public boolean useScissor;
+
+  private boolean recreateTexture = true;
 
   public BattleEntity27c(final BattleEntityType type, final String name) {
     super(BattleObject.BOBJ);
@@ -663,21 +657,7 @@ public abstract class BattleEntity27c extends BattleObject {
     final MV lw = new MV();
     final MV ls = new MV();
 
-    Texture vramTexture15 = Texture.create(builder -> {
-      builder.size(this.combatant_144.textureW, this.combatant_144.textureH);
-      builder.data(this.combatant_144.combatantVram15, this.combatant_144.textureW, this.combatant_144.textureH);
-      builder.internalFormat(GL_R32UI);
-      builder.dataFormat(GL_RED_INTEGER);
-      builder.dataType(GL_UNSIGNED_INT);
-    });
-
-    Texture vramTexture24 = Texture.create(builder -> {
-      builder.size(this.combatant_144.textureW, this.combatant_144.textureH);
-      builder.data(this.combatant_144.combatantVram24, this.combatant_144.textureW, this.combatant_144.textureH);
-      builder.internalFormat(GL_RGBA);
-      builder.dataFormat(GL_RGBA);
-      builder.dataType(GL_UNSIGNED_INT_8_8_8_8_REV);
-    });
+    if (this.recreateTexture){this.model_148.createTextureFromTim(); this.recreateTexture = false;}
 
     //LAB_800ec9d0
     for(int i = 0; i < model.modelParts_00.length; i++) {
@@ -697,8 +677,8 @@ public abstract class BattleEntity27c extends BattleObject {
             .ctmdFlags((part.attribute_00 & 0x4000_0000) != 0 ? 0x12 : 0x0)
             .tmdTranslucency(tmdGp0Tpage_1f8003ec >>> 5 & 0b11)
             .battleColour(((Battle)currentEngineState_8004dd04)._800c6930.colour_00)
-            .texture(vramTexture24,0)
-            .texture(vramTexture15,1);
+            .texture(model.texture24,0)
+            .texture(model.texture15,1);
 
           if(this.useScissor) {
             queue.scissor(this.scissor);
@@ -748,5 +728,9 @@ public abstract class BattleEntity27c extends BattleObject {
   public void setActiveSpell(final int spellId) {
     this.spellId_4e = spellId;
     this.setTempSpellStats();
+  }
+
+  public void generateTexture() {
+    this.recreateTexture = true;
   }
 }

@@ -443,7 +443,7 @@ public class PostBattleScreen extends MenuScreen {
    */
   @Method(0x8010cc24L)
   private boolean givePendingXp() {
-    final int[] charIds = {
+    /*final int[] charIds = {
       gameState_800babc8.charIds_88[0],
       gameState_800babc8.charIds_88[1],
       gameState_800babc8.charIds_88[2],
@@ -456,7 +456,17 @@ public class PostBattleScreen extends MenuScreen {
       secondaryCharIds_800bdbf8[6],
       secondaryCharIds_800bdbf8[7],
       secondaryCharIds_800bdbf8[8],
-    };
+    };*/
+    int[] charIds = new int[gameState_800babc8.charIds_88.length+secondaryCharIds_800bdbf8.length];
+
+    for(int i=0; i<gameState_800babc8.charIds_88.length; i++){
+      charIds[i]= gameState_800babc8.charIds_88[i];
+    }
+
+    for(int i=gameState_800babc8.charIds_88.length; i<charIds.length; i++){
+      charIds[i]= secondaryCharIds_800bdbf8[i-gameState_800babc8.charIds_88.length];
+    }
+
     int pendingXpCleared = 0;
 
     for(int charSlot = 0; charSlot < charIds.length; charSlot++) {

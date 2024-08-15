@@ -10,7 +10,6 @@ import legend.game.scripting.ScriptState;
 import legend.game.tmd.Renderer;
 import legend.game.types.CContainer;
 import legend.game.types.Model124;
-import legend.core.opengl.Texture;
 
 import static legend.core.GameEngine.GTE;
 import static legend.core.GameEngine.RENDERER;
@@ -32,12 +31,6 @@ import static legend.game.combat.SEffe.FUN_800e62a8;
 import static legend.game.combat.SEffe.calculateEffectTransforms;
 import static legend.game.combat.SEffe.renderBttlShadow;
 
-import static org.lwjgl.opengl.GL30C.GL_R32UI;
-import static org.lwjgl.opengl.GL30C.GL_RED_INTEGER;
-import static org.lwjgl.opengl.GL11C.GL_UNSIGNED_INT;
-
-import static org.lwjgl.opengl.GL12C.GL_UNSIGNED_INT_8_8_8_8_REV;
-import static org.lwjgl.opengl.GL11C.GL_RGBA;
 
 public class ModelEffect13c implements Effect<EffectManagerParams.AnimType> {
   public int _00;
@@ -47,12 +40,7 @@ public class ModelEffect13c implements Effect<EffectManagerParams.AnimType> {
   public Anim anim_0c;
   public final Model124 model_10;
   public Model124 model_134;
-  public boolean hasLocalTexture = false;
 
-  public int textureW;
-  public int textureH;
-  public int[] combatantVram24 = new int[256 * 64];
-  public int[] combatantVram15 = new int[256 * 64];
 
   public ModelEffect13c(final String name) {
     this.model_10 = new Model124(name);
@@ -102,12 +90,6 @@ public class ModelEffect13c implements Effect<EffectManagerParams.AnimType> {
         zMin = oldZMin;
 
 
-
-
-
-
-        if (hasLocalTexture == false){
-        //TODO remove
         if(part.obj != null) {
           RENDERER.queueModel(part.obj, lw)
             .lightDirection(lightDirectionMatrix_800c34e8)
@@ -115,38 +97,11 @@ public class ModelEffect13c implements Effect<EffectManagerParams.AnimType> {
             .backgroundColour(GTE.backgroundColour)
             .ctmdFlags((part.attribute_00 & 0x4000_0000) != 0 ? 0x12 : 0x0)
             .tmdTranslucency(tmdGp0Tpage_1f8003ec >>> 5 & 0b11)
-            .battleColour(((Battle)currentEngineState_8004dd04)._800c6930.colour_00);
-        }} else{
-
-          Texture vramTexture15 = Texture.create(builder -> {
-            builder.size(this.textureW, this.textureH);
-            builder.data(this.combatantVram15, this.textureW, this.textureH);
-            builder.internalFormat(GL_R32UI);
-            builder.dataFormat(GL_RED_INTEGER);
-            builder.dataType(GL_UNSIGNED_INT);
-          });
-      
-          Texture vramTexture24 = Texture.create(builder -> {
-            builder.size(this.textureW, this.textureH);
-            builder.data(this.combatantVram24, this.textureW, this.textureH);
-            builder.internalFormat(GL_RGBA);
-            builder.dataFormat(GL_RGBA);
-            builder.dataType(GL_UNSIGNED_INT_8_8_8_8_REV);
-          });
-
-          if(part.obj != null) {
-            RENDERER.queueModel(part.obj, lw)
-              .lightDirection(lightDirectionMatrix_800c34e8)
-              .lightColour(lightColourMatrix_800c3508)
-              .backgroundColour(GTE.backgroundColour)
-              .ctmdFlags((part.attribute_00 & 0x4000_0000) != 0 ? 0x12 : 0x0)
-              .tmdTranslucency(tmdGp0Tpage_1f8003ec >>> 5 & 0b11)
-              .battleColour(((Battle)currentEngineState_8004dd04)._800c6930.colour_00)
-              .texture(vramTexture24,0)
-              .texture(vramTexture15,1);
-          }
-
+            .battleColour(((Battle)currentEngineState_8004dd04)._800c6930.colour_00)
+            .texture(model_134.texture24,0)
+            .texture(model_134.texture15,1);
         }
+
 
         part.attribute_00 = oldAttrib;
       }
@@ -205,6 +160,7 @@ public class ModelEffect13c implements Effect<EffectManagerParams.AnimType> {
 
       //LAB_800ea574
       final Model124 model = this.model_134;
+      this.model_134.createTextureFromTim();
 
       final int oldTpage = model.tpage_108;
 

@@ -47,7 +47,19 @@ public class PartyCombatantSizeEntry extends ConfigEntry<Integer> {
         gameState_800babc8.charIds_88 = charIds_replacement;
         updateStateGamestateCharIdsDepentedValues();
       }
-    
+
+      if(soundFiles_800bcf80.length > (val+10)){/*greytodo: see about replacing soundFiles_800bcf80 with a dyanimic array*/
+        SoundFile[] soundFilesReplacement = new SoundFile[val+10]; 
+        Arrays.setAll(soundFilesReplacement, i -> new SoundFile()); 
+        java.lang.System.arraycopy(soundFiles_800bcf80, 0, soundFilesReplacement, 0, val+10);
+        soundFiles_800bcf80 = soundFilesReplacement;
+      }else if(soundFiles_800bcf80.length < (val+10)){
+        SoundFile[] soundFilesReplacement = new SoundFile[val+10];
+        Arrays.setAll(soundFilesReplacement, i -> new SoundFile()); 
+        java.lang.System.arraycopy(soundFiles_800bcf80, 0, soundFilesReplacement, 0, soundFiles_800bcf80.length);
+        soundFiles_800bcf80 = soundFilesReplacement;
+      }
+      
     return data;
   }
 
