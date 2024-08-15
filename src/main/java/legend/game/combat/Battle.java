@@ -141,6 +141,7 @@ import org.legendofdragoon.modloader.registries.RegistryId;
 import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.function.Function;
 
@@ -1278,11 +1279,11 @@ public class Battle extends EngineState {
     this.FUN_800c8624();
 
     gameState_800babc8._b4++;
-    Arrays.fill(unlockedUltimateAddition_800bc910, false);
+    Collections.fill(unlockedUltimateAddition_800bc910, false);
     goldGainedFromCombat_800bc920 = 0;
 
     for(int charSlot = 0; charSlot < gameState_800babc8.charIds_88.length; charSlot++) {
-      spGained_800bc950[charSlot] = 0;
+      spGained_800bc950.set(charSlot,0);
     }
 
     totalXpFromCombat_800bc95c = 0;
@@ -1715,7 +1716,7 @@ public class Battle extends EngineState {
 
       //LAB_800c8104
       for(int i = 0; i < aliveCharBents; i++) {
-        livingCharIds_800bc968[i] = battleState_8006e398.alivePlayerBents_eac[i].innerStruct_00.charId_272;
+        livingCharIds_800bc968.set(i, battleState_8006e398.alivePlayerBents_eac[i].innerStruct_00.charId_272);
       }
 
       //LAB_800c8144
@@ -3695,7 +3696,7 @@ public class Battle extends EngineState {
         }
 
         //LAB_800cd36c
-        unlockedUltimateAddition_800bc910[bent.charSlot_276] = true;
+        unlockedUltimateAddition_800bc910.set(bent.charSlot_276, true);
       }
 
       //LAB_800cd390
@@ -3909,7 +3910,7 @@ public class Battle extends EngineState {
       script.params_20[1].set(bent.bentSlot_274);
     }
 
-    final int[] opOffsetsToCheck = {1,10,13,16,19,14,20,25};//27?
+    final int[] opOffsetsToCheck = {1,10,13,16,19,14,20,25,27,30};//27?
     for(int i = 0;i<opOffsetsToCheck.length; i++){
 
     switch(script.scriptState_04.scriptPtr_14.getOp(script.commandOffset_0c+opOffsetsToCheck[i])){
@@ -3921,7 +3922,7 @@ public class Battle extends EngineState {
       case 184 -> script.scriptState_04.scriptPtr_14.setOp(script.commandOffset_0c+opOffsetsToCheck[i], battleState_8006e398._460Offset);
       case 189 -> script.scriptState_04.scriptPtr_14.setOp(script.commandOffset_0c+opOffsetsToCheck[i], battleState_8006e398._474Offset);
     }}
-    /*for(int x=3; x < 20; x++){
+    /*for(int x=3; x < 40; x++){
       int nextOp = script.scriptState_04.scriptPtr_14.getOp(script.commandOffset_0c+x);
       if(0x45 == nextOp){ 
         break;
@@ -6693,7 +6694,6 @@ public class Battle extends EngineState {
 
   @Method(0x800e9db4L)
   public void copyModel(final Model124 model1, final Model124 model2) {
-    //LAB_800e9dd8
     model1.set(model2);
 
     model1.modelParts_00 = new ModelPart10[model1.modelParts_00.length];
@@ -6722,6 +6722,7 @@ public class Battle extends EngineState {
       effect,
       new EffectManagerParams.AnimType()
     );
+    
 
     final EffectManagerData6c<EffectManagerParams.AnimType> manager = state.innerStruct_00;
     manager.flags_04 = 0x200_0000;
@@ -6730,7 +6731,14 @@ public class Battle extends EngineState {
     effect.tmdType_04 = null;
     effect.extTmd_08 = null;
     effect.anim_0c = null;
-    effect.model_134 = effect.model_10;
+    effect.model_134 = ((BattleEntity27c)scriptStatePtrArr_800bc1c0[id].innerStruct_00).model_148;
+
+    //grey TODO: move texture to  Model124 instead of combatant_144
+    effect.textureW = ((BattleEntity27c)scriptStatePtrArr_800bc1c0[id].innerStruct_00).combatant_144.textureW;
+    effect.textureH = ((BattleEntity27c)scriptStatePtrArr_800bc1c0[id].innerStruct_00).combatant_144.textureH;
+    effect.combatantVram24 = ((BattleEntity27c)scriptStatePtrArr_800bc1c0[id].innerStruct_00).combatant_144.combatantVram24;
+    effect.combatantVram15 = ((BattleEntity27c)scriptStatePtrArr_800bc1c0[id].innerStruct_00).combatant_144.combatantVram15;
+    effect.hasLocalTexture = true;
 
     if((id & 0xff00_0000) == 0x700_0000) {
       this.copyBattleStageModel(effect.model_10, battlePreloadedEntities_1f8003f4.stage_963c);
@@ -7717,7 +7725,7 @@ public class Battle extends EngineState {
 
     //LAB_800ee894
     for(int charSlot = 0; charSlot < battleState_8006e398.getPlayerCount(); charSlot++) {
-      spGained_800bc950[charSlot] = 0;
+      spGained_800bc950.set(charSlot,0);
     }
 
     sortItems();
@@ -8170,7 +8178,7 @@ public class Battle extends EngineState {
     final VitalsStat sp = player.stats.getStat(LodMod.SP_STAT.get());
 
     sp.setCurrent(sp.getCurrent() + script.params_20[1].get());
-    spGained_800bc950[player.charSlot_276] += script.params_20[1].get();
+    spGained_800bc950.set(player.charSlot_276, spGained_800bc950.get(player.charSlot_276) + script.params_20[1].get());
 
     //LAB_800f4500
     script.params_20[2].set(sp.getCurrent());

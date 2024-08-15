@@ -515,7 +515,7 @@ public class PostBattleScreen extends MenuScreen {
   @Method(0x8010cde8L)
   private void levelUpDragoon(final int charIndex, final int charSlot) {
     if(charIndex != -1) {
-      gameState_800babc8.charData_32c[charIndex].dlevelXp_0e += spGained_800bc950[charSlot];
+      gameState_800babc8.charData_32c[charIndex].dlevelXp_0e += spGained_800bc950.get(charSlot);
 
       if(gameState_800babc8.charData_32c[charIndex].dlevelXp_0e > 32000) {
         gameState_800babc8.charData_32c[charIndex].dlevelXp_0e = 32000;
@@ -894,7 +894,7 @@ public class PostBattleScreen extends MenuScreen {
     if(charIndex != -1) {
       //LAB_8010d36c
       for(int i = 0; i < livingCharCount_800bc97c; i++) {
-        if(livingCharIds_800bc968[i] == charIndex) {
+        if(livingCharIds_800bc968.get(i) == charIndex) {
           return true;
         }
 
@@ -940,7 +940,7 @@ public class PostBattleScreen extends MenuScreen {
       return 0;
     }
 
-    if(!unlockedUltimateAddition_800bc910[charSlot]) {
+    if(!unlockedUltimateAddition_800bc910.get(charSlot)) {
       //LAB_8010d5d0
       return 0;
     }

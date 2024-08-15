@@ -26,6 +26,7 @@ import static legend.game.Scus94491BpeSegment_800b.submapId_800bd808;
 import static legend.game.Scus94491BpeSegment_800b.unlockedUltimateAddition_800bc910;
 import static legend.game.Scus94491BpeSegment_800b.whichMenu_800bdc38;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 
 public final class V4Serializer {
@@ -68,12 +69,11 @@ public final class V4Serializer {
 
     final int charSlotCount = data.readByte(offset);
     offset++;
-
-    if (charSlotCount != 3){
-      state.charIds_88 = new int[charSlotCount];
-      unlockedUltimateAddition_800bc910 = new boolean[charSlotCount];
-      spGained_800bc950 = new int[charSlotCount];
-      livingCharIds_800bc968 = new int[charSlotCount];
+    
+    if (charSlotCount != 3){  
+      unlockedUltimateAddition_800bc910=new ArrayList<Boolean>(Arrays.asList(new Boolean[charSlotCount]));
+      spGained_800bc950=new ArrayList<Integer>(Arrays.asList(new Integer[charSlotCount]));
+      livingCharIds_800bc968=new ArrayList<Integer>(Arrays.asList(new Integer[charSlotCount]));
 
       if(soundFiles_800bcf80.length > (state.charIds_88.length+10)){/*greytodo: see about replacing soundFiles_800bcf80 with a dyanimic array*/
         SoundFile[] soundFilesReplacement = new SoundFile[state.charIds_88.length+10]; 
@@ -88,6 +88,7 @@ public final class V4Serializer {
       }
     }
 
+    state.charIds_88 = new int[charSlotCount];
     for(int i = 0; i < charSlotCount; i++) {
       state.charIds_88[i] = data.readShort(offset);
       offset += 2;

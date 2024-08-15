@@ -54,7 +54,8 @@ public final class Scus94491BpeSegment_800b {
 
   public static final ScriptState<?>[] scriptStatePtrArr_800bc1c0 = new ScriptState[108];
 
-  public static boolean[] unlockedUltimateAddition_800bc910 = new boolean[3]; /*gets overwriten during serialization, greytodo: replace with dynamic array*/
+  public static List<Boolean> unlockedUltimateAddition_800bc910;//=new ArrayList<Boolean>(Arrays.asList(new Boolean[gameState_800babc8.charIds_88.length]));
+
   public static EngineStateEnum postCombatMainCallbackIndex_800bc91c = EngineStateEnum.PRELOAD_00;
   public static int goldGainedFromCombat_800bc920;
 
@@ -62,7 +63,8 @@ public final class Scus94491BpeSegment_800b {
   public static final List<Item> itemOverflow = new ArrayList<>();
   public static final List<Equipment> equipmentOverflow = new ArrayList<>();
   public static boolean battleLoaded_800bc94c;
-  public static int[] spGained_800bc950 = new int[3]; /*gets overwriten during serialization, greytodo: replace with dynamic array*/
+  public static List<Integer> spGained_800bc950;//=new ArrayList<Integer>(Arrays.asList(new Integer[gameState_800babc8.charIds_88.length]));
+
   public static int totalXpFromCombat_800bc95c;
   /**
    * <ul>
@@ -80,7 +82,7 @@ public final class Scus94491BpeSegment_800b {
    */
   public static int battleFlags_800bc960;
 
-  public static int[] livingCharIds_800bc968 = new int[3]; /*gets overwriten during serialization, greytodo: replace with dynamic array*/
+  public static List<Integer> livingCharIds_800bc968;//=new ArrayList<Integer>(Arrays.asList(new Integer[gameState_800babc8.charIds_88.length]));
   /**
    * <ol>
    *   <li value="1">Combat victory</li>
