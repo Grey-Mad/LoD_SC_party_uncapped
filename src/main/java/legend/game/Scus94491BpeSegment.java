@@ -163,11 +163,13 @@ import static legend.game.Scus94491BpeSegment_800b.victoryMusic;
 import static legend.game.Scus94491BpeSegment_800b.whichMenu_800bdc38;
 import static legend.game.Scus94491BpeSegment_800c.sequenceData_800c4ac8;
 import static legend.game.combat.environment.StageData.stageData_80109a98;
+
 import static org.lwjgl.glfw.GLFW.GLFW_KEY_DELETE;
 import static org.lwjgl.glfw.GLFW.GLFW_KEY_F12;
 import static org.lwjgl.glfw.GLFW.GLFW_KEY_Q;
 import static org.lwjgl.glfw.GLFW.GLFW_KEY_W;
 import static org.lwjgl.glfw.GLFW.GLFW_MOD_CONTROL;
+import static org.lwjgl.opengl.GL30C.nglUniform1uiv;
 
 public final class Scus94491BpeSegment {
   private Scus94491BpeSegment() { }
@@ -2039,12 +2041,13 @@ public final class Scus94491BpeSegment {
   }
 
   @Method(0x8001cae0L)
-  public static void charSoundEffectsLoaded(final List<FileData> files, final int charSlot) {
+  public static void charSoundEffectsLoaded(final List<FileData> files, final int charSlot,final SoundFile sound) {
     final int charId = gameState_800babc8.charIds_88[charSlot];
-
+    
+    //find way to load bent via charslot
     //LAB_8001cb34
-    final int index = characterSoundFileIndices_800500f8[charSlot];
-    final SoundFile sound = soundFiles_800bcf80[index];
+    //final int index = characterSoundFileIndices_800500f8[charSlot]; //find way to make sound part of model and or combatant
+    //final SoundFile sound = soundFiles_800bcf80[index];
 
     sound.name = "Char slot %d sound effects".formatted(charSlot);
     sound.id_02 = charId;
@@ -2069,20 +2072,11 @@ public final class Scus94491BpeSegment {
   public static void loadCharAttackSounds(final int bentIndex, final int type) {
     final BattleEntity27c bent = (BattleEntity27c)scriptStatePtrArr_800bc1c0[bentIndex].innerStruct_00;
 
-    //LAB_8001cd3c
-    int charSlot;
-    for(charSlot = 0; charSlot < characterSoundFileIndices_800500f8[charSlot]; charSlot++) {
-      final SoundFile soundFile = soundFiles_800bcf80[characterSoundFileIndices_800500f8[charSlot]];
-
-      if(soundFile.id_02 == bent.charId_272) {
-        break;
-      }
-    }
-
-    //LAB_8001cd78
-    final SoundFile soundFile = soundFiles_800bcf80[characterSoundFileIndices_800500f8[charSlot]];
-    sssqUnloadPlayableSound(soundFile.playableSound_10);
-    soundFile.used_00 = false;
+    /*if (bent.model_148.attackSounds.playableSound_10 == null){
+      bent.model_148.attackSounds.playableSound_10 = new PlayableSound0c();
+    }*/
+    sssqUnloadPlayableSound(bent.model_148.attackSounds.playableSound_10);
+    bent.model_148.attackSounds.used_00 = false;
 
     loadedDrgnFiles_800bcf78.updateAndGet(val -> val | 0x8);
 
@@ -2101,24 +2095,21 @@ public final class Scus94491BpeSegment {
       soundName = "Divine dragoon attack sounds";
     }
 
-    //LAB_8001ce70
-    final int finalCharSlot = charSlot;
-    loadDrgnDir(0, fileIndex, files -> charAttackSoundsLoaded(files, soundName, finalCharSlot));
+    loadDrgnDir(0, fileIndex, files -> charAttackSoundsLoaded(files, soundName, bent));
   }
 
   @Method(0x8001ce98L)
-  public static void charAttackSoundsLoaded(final List<FileData> files, final String soundName, final int charSlot) {
-    final SoundFile sound = soundFiles_800bcf80[characterSoundFileIndices_800500f8[charSlot]];
+  public static void charAttackSoundsLoaded(final List<FileData> files, final String soundName, final BattleEntity27c bent) {
 
     //LAB_8001cee8
     //LAB_8001cf2c
-    sound.name = soundName;
-    sound.indices_08 = SoundFileIndices.load(files.get(1));
-    sound.id_02 = files.get(0).readShort(0);
-    sound.playableSound_10 = loadSshdAndSoundbank(sound.name, files.get(3), new Sshd(files.get(2)), charSlotSpuOffsets_80050190[charSlot]);
+    bent.model_148.attackSounds.name = soundName;
+    bent.model_148.attackSounds.indices_08 = SoundFileIndices.load(files.get(1));
+    bent.model_148.attackSounds.id_02 = files.get(0).readShort(0);
+    bent.model_148.attackSounds.playableSound_10 = loadSshdAndSoundbank(bent.model_148.attackSounds.name, files.get(3), new Sshd(files.get(2)), 0);
     cleanUpCharAttackSounds();
-    setSoundSequenceVolume(sound.playableSound_10, 0x7f);
-    sound.used_00 = true;
+    setSoundSequenceVolume(bent.model_148.attackSounds.playableSound_10, 0x7f);
+    bent.model_148.attackSounds.used_00 = true;
   }
 
   /**
@@ -2367,7 +2358,7 @@ public final class Scus94491BpeSegment {
     loadedDrgnFiles_800bcf78.updateAndGet(val -> val | 0x8);
 
     // Player combat sounds for current party composition (example file: 764)
-    for(int charSlot = 0; charSlot < gameState_800babc8.charIds_88.length; charSlot++) {
+    /*for(int charSlot = 0; charSlot < gameState_800babc8.charIds_88.length; charSlot++) {
       final int charIndex = gameState_800babc8.charIds_88[charSlot];
 
       if(charIndex != -1) {
@@ -2375,7 +2366,7 @@ public final class Scus94491BpeSegment {
         final int finalCharSlot = charSlot;
         loadDir("characters/%s/sounds/combat".formatted(name), files -> charSoundEffectsLoaded(files, finalCharSlot));
       }
-    }
+    }*/
 
     loadMonsterSounds();
   }
@@ -2468,18 +2459,7 @@ public final class Scus94491BpeSegment {
       }
 
       case 1 -> {
-        /*//LAB_8001e324
-        for(int charSlot = 0; charSlot < 3; charSlot++) {
-          final int index = characterSoundFileIndices_800500f8[charSlot];
-
-          if(soundFiles_800bcf80[index].used_00) {
-            sssqUnloadPlayableSound(soundFiles_800bcf80[index].playableSound_10);
-            soundFiles_800bcf80[index].used_00 = false;
-          }
-
-          //LAB_8001e374
-        }*/
-        int charIds_88Length; //todogrey fix
+        int charIds_88Length; 
         if (gameState_800babc8 == null){
           charIds_88Length = 3;
         }else{

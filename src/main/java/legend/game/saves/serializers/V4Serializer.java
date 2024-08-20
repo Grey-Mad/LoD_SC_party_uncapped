@@ -70,7 +70,7 @@ public final class V4Serializer {
     final int charSlotCount = data.readByte(offset);
     offset++;
     
-    if (charSlotCount != 3){  
+    if (charSlotCount != 3){  //remove this section if able
       unlockedUltimateAddition_800bc910=new ArrayList<Boolean>(Arrays.asList(new Boolean[charSlotCount]));
       spGained_800bc950=new ArrayList<Integer>(Arrays.asList(new Integer[charSlotCount]));
       livingCharIds_800bc968=new ArrayList<Integer>(Arrays.asList(new Integer[charSlotCount]));

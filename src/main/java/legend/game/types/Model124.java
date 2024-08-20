@@ -14,7 +14,7 @@ import static org.lwjgl.opengl.GL30C.GL_RED_INTEGER;
 import static org.lwjgl.opengl.GL11C.GL_UNSIGNED_INT;
 import static org.lwjgl.opengl.GL12C.GL_UNSIGNED_INT_8_8_8_8_REV;
 import static org.lwjgl.opengl.GL11C.GL_RGBA;
-
+import legend.game.sound.SoundFile;
 
 
 public class Model124 {
@@ -93,6 +93,7 @@ public class Model124 {
   public int[] textureVram15 = new int[256 * 64];
   public Texture texture15;
   public Texture texture24;
+  public SoundFile attackSounds = new SoundFile();
 
   public Model124(final String name) {
     this.name = name;

@@ -53,8 +53,7 @@ import static legend.game.combat.SEffe.renderBttlShadow;
 
 
 public abstract class BattleEntity27c extends BattleObject {
-  private static final int[] vramSlotIndices_800fa730 = {0, 1, 2, 3, 4, 5, 6, 14, 15, 16};
-
+  
   public final BattleEntityType type;
 
   public final StatCollection stats;

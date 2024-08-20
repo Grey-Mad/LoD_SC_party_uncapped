@@ -265,6 +265,8 @@ public final class Scus94491BpeSegment_8002 {
 
     final int fileIndex = 1290 + script.params_20[0].get();
 
+    
+
     final String path;
     switch(fileIndex) {
       case 1290 -> path = "monsters/phases/doel/0";
@@ -280,6 +282,8 @@ public final class Scus94491BpeSegment_8002 {
 
     final AtomicInteger soundbankOffset = new AtomicInteger();
     final AtomicInteger count = new AtomicInteger(0);
+
+    
 
     for(int monsterSlot = 0; monsterSlot < 4; monsterSlot++) {
       if(Unpacker.exists(path + '/' + monsterSlot)) {

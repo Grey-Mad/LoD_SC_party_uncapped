@@ -152,6 +152,7 @@ import static legend.core.GameEngine.REGISTRIES;
 import static legend.core.GameEngine.RENDERER;
 import static legend.core.GameEngine.SCRIPTS;
 import static legend.game.SItem.loadCharacterStats;
+import static legend.game.Scus94491BpeSegment.charSoundEffectsLoaded;
 import static legend.game.Scus94491BpeSegment.FUN_80013404;
 import static legend.game.Scus94491BpeSegment.battlePreloadedEntities_1f8003f4;
 import static legend.game.Scus94491BpeSegment.centreScreenX_1f8003dc;
@@ -1144,7 +1145,7 @@ public class Battle extends EngineState {
     //LAB_80019f74
     //LAB_80019f7c
     //LAB_80019eac
-    final SoundFile soundFile = soundFiles_800bcf80[soundFileIndex];
+    final SoundFile soundFile = bent.model_148.attackSounds;
 
     // Retail bug: one of the Divine Dragon Spirit's attack scripts tries to play soundIndex 10 but there are only 10 elements in the patch/sequence file (DRGN0.1225.1.1)
     if(soundIndex < soundFile.indices_08.length) {
@@ -1316,6 +1317,7 @@ public class Battle extends EngineState {
   
     //LAB_800c760c
     this.allocateStageDarkeningStorage();
+
     loadEncounterSoundsAndMusic();
 
     pregameLoadingStage_800bb10c++;
@@ -1445,6 +1447,12 @@ public class Battle extends EngineState {
       bent.combatant_144 = this.getCombatant((short)combatantIndices[charSlot]);
       bent.charId_272 = charIndex;
       bent.combatantIndex_26c = combatantIndices[charSlot];
+      
+      final String characterName = getCharacterName(gameState_800babc8.charIds_88[charSlot]).toLowerCase();
+      final int finalCharSlot = charSlot;
+      //final int finalI = i;
+      loadDir("characters/%s/sounds/combat".formatted(characterName), files -> charSoundEffectsLoaded(files, finalCharSlot, bent.model_148.attackSounds));
+
       bent.model_148.coord2_14.coord.transfer.x = charCount > 2 && charSlot == 0 ? 0x900 : 0xa00;
       bent.model_148.coord2_14.coord.transfer.y = 0.0f;
       if (charCount <= 3){
@@ -3918,7 +3926,7 @@ public class Battle extends EngineState {
       script.params_20[1].set(bent.bentSlot_274);
     }
 
-    final int[] opOffsetsToCheck = {1,10,13,16,19,14,20,25,27,30};//27?
+    final int[] opOffsetsToCheck = {1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30};//27?
     for(int i = 0;i<opOffsetsToCheck.length; i++){
 
     switch(script.scriptState_04.scriptPtr_14.getOp(script.commandOffset_0c+opOffsetsToCheck[i])){
