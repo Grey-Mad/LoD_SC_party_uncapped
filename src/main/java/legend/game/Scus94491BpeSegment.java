@@ -2165,10 +2165,6 @@ public final class Scus94491BpeSegment {
       System.arraycopy(spuRamOld, 0, SPU.ram, 0, SPU.attackSoundsBentOffsets.get(index));
       System.arraycopy(spuRamOld, SPU.attackSoundsBentOffsets.get(index)+bent.model_148.attackSpuRam.length, SPU.ram, SPU.attackSoundsBentOffsets.get(index), spuRamOld.length - (SPU.attackSoundsBentOffsets.get(index)+bent.model_148.attackSpuRam.length)); 
      
-      
-      /*SPU.effectSoundsBentSlots.remove(index);
-      SPU.effectSoundsBentOffsets.remove(index);
-      SPU.effectSpuRamSizes.remove(index);*/
       playableSounds_800c43d0.remove(bent.model_148.attackSounds.playableSound_10);
       PlayableSound0c[] sounds = new PlayableSound0c[playableSounds_800c43d0.size()];
       playableSounds_800c43d0.toArray(sounds);
@@ -2177,13 +2173,13 @@ public final class Scus94491BpeSegment {
         if (sounds[i].soundBufferPtr_08*8 > SPU.attackSoundsBentOffsets.get(index)){
           PlayableSound0c sound = sounds[i];
           playableSounds_800c43d0.remove(sound);
-          sound.soundBufferPtr_08 = (sound.soundBufferPtr_08*8-SPU.effectSpuRamSizes.get(index))/8;
+          sound.soundBufferPtr_08 = (sound.soundBufferPtr_08*8-SPU.attackSpuRamSizes.get(index))/8;
           playableSounds_800c43d0.add(sound);
         }
     }
-    SPU.effectSoundsBentSlots.remove(index);
-    SPU.effectSoundsBentOffsets.remove(index);
-    SPU.effectSpuRamSizes.remove(index);
+    SPU.attackSoundsBentSlots.remove(index);
+    SPU.attackSoundsBentOffsets.remove(index);
+    SPU.attackSpuRamSizes.remove(index);
   }}
 
 
@@ -2396,6 +2392,8 @@ public final class Scus94491BpeSegment {
       sound.used_00 = true;
       Sshd sshd = new Sshd(files.get(2));
       sound.sshdPtr_04 = sshd;
+
+      synchronized(SPU){
       sound.soundBufferPtr_08 = SPU.ram.length/8;
       bent.model_148.effectSpuRamOffest = SPU.ram.length;
   
@@ -2412,7 +2410,7 @@ public final class Scus94491BpeSegment {
         SPU.effectSoundsBentSlots.add(bent.bentSlot_274);
         SPU.effectSoundsBentOffsets.add(bent.model_148.effectSpuRamOffest);
         SPU.effectSpuRamSizes.add(bent.model_148.effectSpuRam.length);
-      }
+      }}
   
       bent.model_148.effectSounds.playableSound_10 = sound;
       bent.model_148.effectSounds.used_00 = true;
