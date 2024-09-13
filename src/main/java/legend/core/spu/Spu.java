@@ -11,6 +11,9 @@ import org.apache.logging.log4j.MarkerManager;
 import static legend.core.GameEngine.AUDIO_THREAD;
 import static org.lwjgl.openal.AL10.AL_FORMAT_STEREO16;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Spu {
   private static final Logger LOGGER = LogManager.getFormatterLogger(Spu.class);
   private static final Marker SPU_MARKER = MarkerManager.getMarker("SPU");
@@ -21,7 +24,8 @@ public class Spu {
   private GenericSource source;
 
   private final short[] spuOutput = new short[SAMPLES_PER_TICK * 2];
-  private final byte[] ram = new byte[512 * 4096]; // 0x8_0000  grey_todo: make is increase by 30000 per each new pc*/
+  public byte[] ram = new byte[0x8_0000]; //  spu 0x8_0000 
+
   private final float[] reverbWorkArea = new float[0x4_0000];
   public final Voice[] voices = new Voice[24];
 
@@ -41,6 +45,17 @@ public class Spu {
   private int noiseFrequencyShift;
   private int noiseFrequencyStep;
   private final Reverb reverb = new Reverb();
+
+
+
+
+  public List<Integer> attackSoundsBentSlots = new ArrayList<>();
+  public List<Integer> attackSoundsBentOffsets = new ArrayList<>();
+  public List<Integer> attackSpuRamSizes = new ArrayList<>();
+
+  public List<Integer> effectSoundsBentSlots = new ArrayList<>();
+  public List<Integer> effectSoundsBentOffsets = new ArrayList<>();
+  public List<Integer> effectSpuRamSizes = new ArrayList<>();
 
   public Spu() {
     for(int i = 0; i < this.voices.length; i++) {

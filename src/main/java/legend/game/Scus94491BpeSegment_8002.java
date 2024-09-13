@@ -42,7 +42,6 @@ import legend.game.scripting.RunningScript;
 import legend.game.scripting.ScriptDescription;
 import legend.game.scripting.ScriptParam;
 import legend.game.sound.QueuedSound28;
-import legend.game.sound.SoundFile;
 import legend.game.submap.SubmapEnvState;
 import legend.game.tim.Tim;
 import legend.game.tmd.UvAdjustmentMetrics14;
@@ -77,6 +76,7 @@ import legend.lodmod.LodMod;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.joml.Math;
+import legend.game.combat.bent.MonsterBattleEntity;
 
 import javax.annotation.Nullable;
 import java.io.IOException;
@@ -128,7 +128,6 @@ import static legend.game.Scus94491BpeSegment_8004.engineState_8004dd20;
 import static legend.game.Scus94491BpeSegment_8004.stopMusicSequence;
 import static legend.game.Scus94491BpeSegment_8005.collidedPrimitiveIndex_80052c38;
 import static legend.game.Scus94491BpeSegment_8005.digits_80052b40;
-import static legend.game.Scus94491BpeSegment_8005.monsterSoundFileIndices_800500e8;
 import static legend.game.Scus94491BpeSegment_8005.renderBorder_80052b68;
 import static legend.game.Scus94491BpeSegment_8005.shadowScale_8005039c;
 import static legend.game.Scus94491BpeSegment_8005.shouldRestoreCameraPosition_80052c40;
@@ -138,6 +137,7 @@ import static legend.game.Scus94491BpeSegment_8005.submapEnvState_80052c44;
 import static legend.game.Scus94491BpeSegment_8005.submapScene_80052c34;
 import static legend.game.Scus94491BpeSegment_8005.textboxMode_80052b88;
 import static legend.game.Scus94491BpeSegment_8005.textboxTextType_80052ba8;
+import static legend.game.Scus94491BpeSegment_8006.battleState_8006e398;
 import static legend.game.Scus94491BpeSegment_8007.vsyncMode_8007a3b8;
 import static legend.game.Scus94491BpeSegment_800b._800bd7ac;
 import static legend.game.Scus94491BpeSegment_800b._800bd7b0;
@@ -156,7 +156,6 @@ import static legend.game.Scus94491BpeSegment_800b.repeat_800bee98;
 import static legend.game.Scus94491BpeSegment_800b.rumbleDampener_800bee80;
 import static legend.game.Scus94491BpeSegment_800b.saveListDownArrow_800bdb98;
 import static legend.game.Scus94491BpeSegment_800b.saveListUpArrow_800bdb94;
-import static legend.game.Scus94491BpeSegment_800b.soundFiles_800bcf80;
 import static legend.game.Scus94491BpeSegment_800b.stats_800be5f8;
 import static legend.game.Scus94491BpeSegment_800b.submapFullyLoaded_800bd7b4;
 import static legend.game.Scus94491BpeSegment_800b.textZ_800bdf00;
@@ -290,24 +289,36 @@ public final class Scus94491BpeSegment_8002 {
         count.incrementAndGet();
       }
     }
+    
 
+    
+    MonsterBattleEntity bent;
+    switch(fileIndex) {
+      //case 1290 -> path = "monsters/phases/doel/0";
+      case 1291 -> bent = battleState_8006e398.monsterBents_e50[1].innerStruct_00;
+      //case 1292 -> path = "monsters/phases/melbu/0";
+      /*case 1293 -> path = "monsters/phases/melbu/1";
+      case 1294 -> path = "monsters/phases/melbu/4";
+      case 1295 -> path = "monsters/phases/melbu/6";*/
+      //case 1296 -> path = "monsters/phases/zackwell/0";
+      case 1297 -> bent = battleState_8006e398.monsterBents_e50[1].innerStruct_00;
+      default -> throw new IllegalArgumentException("Unknown battle phase file index " + fileIndex);
+    }
+    
     for(int monsterSlot = 0; monsterSlot < 4; monsterSlot++) {
-      final SoundFile file = soundFiles_800bcf80[monsterSoundFileIndices_800500e8[monsterSlot]];
-      file.id_02 = -1;
-      file.used_00 = false;
-
       if(Unpacker.exists(path + '/' + monsterSlot)) {
         final int finalMonsterSlot = monsterSlot;
-        loadDir(path + '/' + monsterSlot, files -> {
+        loadDir(path + '/' + finalMonsterSlot, files -> {
           final int offset = soundbankOffset.getAndUpdate(val -> val + MathHelper.roundUp(files.get(3).size(), 0x10));
-          monsterSoundLoaded(files, "Monster slot %d (file %s) (replaced)".formatted(finalMonsterSlot, path), finalMonsterSlot, offset);
+          monsterSoundLoaded(files, "Monster slot %d (file %s) (replaced)".formatted(finalMonsterSlot, path), finalMonsterSlot, offset, bent);
 
           if(count.decrementAndGet() == 0) {
-            loadedDrgnFiles_800bcf78.updateAndGet(val -> val & ~0x10);
+           loadedDrgnFiles_800bcf78.updateAndGet(val -> val & ~0x10);
           }
         });
       }
     }
+   
 
     return FlowControl.CONTINUE;
   }

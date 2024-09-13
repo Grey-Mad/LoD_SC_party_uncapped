@@ -402,7 +402,7 @@ public final class Scus94491BpeSegment_8004 {
    */
   @Method(0x8004bea4L)
   public static PlayableSound0c loadSshdAndSoundbank(final String name, final FileData soundbank, final Sshd sshd, final int addressInSoundBuffer) {
-    if(addressInSoundBuffer > (0x80000 * 4) || (addressInSoundBuffer & 0xf) != 0) {/* set to same size as Spu ram*/
+    if(addressInSoundBuffer > (0x80000*4) || (addressInSoundBuffer & 0xf) != 0) {/* set to same size as Spu ram*/
       throw new IllegalArgumentException("Invalid sound buffer offset");
     }
 

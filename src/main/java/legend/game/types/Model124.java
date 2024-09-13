@@ -93,7 +93,19 @@ public class Model124 {
   public int[] textureVram15 = new int[256 * 64];
   public Texture texture15;
   public Texture texture24;
+  
+
+
+  public SoundFile effectSounds = new SoundFile();
+  public byte[] effectSpuRam = new byte[0x7530];
+  public int effectSpuRamOffest = 0;
+
   public SoundFile attackSounds = new SoundFile();
+  public final byte[] attackSpuRam = new byte[0x7530];
+  public int attackSpuRamOffest = 0;
+
+
+  public SoundFile dragoonSounds = new SoundFile();
 
   public Model124(final String name) {
     this.name = name;
@@ -177,6 +189,12 @@ public class Model124 {
     this.tpage_108 = other.tpage_108;
     this.shadowSize_10c.set(other.shadowSize_10c);
     this.shadowOffset_118.set(other.shadowOffset_118);
+    this.textureH = other.textureH;
+    this.textureW = other.textureW;
+    this.textureVram15 = other.textureVram15;
+    this.textureVram24 = other.textureVram24;
+    this.createTextureFromTim();
+
   }
 
   public void deleteModelParts() {

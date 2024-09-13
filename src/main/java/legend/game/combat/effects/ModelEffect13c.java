@@ -89,18 +89,31 @@ public class ModelEffect13c implements Effect<EffectManagerParams.AnimType> {
         zMax_1f8003cc = oldZMax;
         zMin = oldZMin;
 
-
-        if(part.obj != null) {
-          RENDERER.queueModel(part.obj, lw)
-            .lightDirection(lightDirectionMatrix_800c34e8)
-            .lightColour(lightColourMatrix_800c3508)
-            .backgroundColour(GTE.backgroundColour)
-            .ctmdFlags((part.attribute_00 & 0x4000_0000) != 0 ? 0x12 : 0x0)
-            .tmdTranslucency(tmdGp0Tpage_1f8003ec >>> 5 & 0b11)
-            .battleColour(((Battle)currentEngineState_8004dd04)._800c6930.colour_00)
-            .texture(model_134.texture24,0)
-            .texture(model_134.texture15,1);
-        }
+        if (this.model_134.textureH != 0 && this.model_134.textureW != 0){
+          // used durning dragoon attack 
+          if(part.obj != null) {
+            RENDERER.queueModel(part.obj, lw)
+              .lightDirection(lightDirectionMatrix_800c34e8)
+              .lightColour(lightColourMatrix_800c3508)
+              .backgroundColour(GTE.backgroundColour)
+              .ctmdFlags((part.attribute_00 & 0x4000_0000) != 0 ? 0x12 : 0x0)
+              .tmdTranslucency(tmdGp0Tpage_1f8003ec >>> 5 & 0b11)
+              .battleColour(((Battle)currentEngineState_8004dd04)._800c6930.colour_00)
+              .texture(model_134.texture24,0)
+              .texture(model_134.texture15,1);
+            }
+        }else{
+          // used durning dragoon transformation or magic 
+          if(part.obj != null) {
+            RENDERER.queueModel(part.obj, lw)
+              .lightDirection(lightDirectionMatrix_800c34e8)
+              .lightColour(lightColourMatrix_800c3508)
+              .backgroundColour(GTE.backgroundColour)
+              .ctmdFlags((part.attribute_00 & 0x4000_0000) != 0 ? 0x12 : 0x0)
+              .tmdTranslucency(tmdGp0Tpage_1f8003ec >>> 5 & 0b11)
+              .battleColour(((Battle)currentEngineState_8004dd04)._800c6930.colour_00);
+            }
+      }
 
 
         part.attribute_00 = oldAttrib;
@@ -160,7 +173,7 @@ public class ModelEffect13c implements Effect<EffectManagerParams.AnimType> {
 
       //LAB_800ea574
       final Model124 model = this.model_134;
-      this.model_134.createTextureFromTim();
+      
 
       final int oldTpage = model.tpage_108;
 
@@ -169,6 +182,7 @@ public class ModelEffect13c implements Effect<EffectManagerParams.AnimType> {
       }
 
       //LAB_800ea598
+      this.model_134.createTextureFromTim();
       FUN_800dd89c(model, manager.params_10.flags_00);
 
       model.tpage_108 = oldTpage;
