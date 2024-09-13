@@ -7,8 +7,6 @@ import legend.game.unpacker.FileData;
 import org.legendofdragoon.modloader.registries.RegistryEntry;
 
 public class Equipment extends RegistryEntry implements InventoryEntry {
-  public final String name;
-  public final String description;
   public final int price;
 
   /**
@@ -49,7 +47,7 @@ public class Equipment extends RegistryEntry implements InventoryEntry {
   public final int mpRegen;
   /** Percentage */
   public final int spRegen;
-  public final int special2Flag80;
+  public final int escapeBonus;
 
   public final int icon_0e;
   public final int speed_0f;
@@ -66,7 +64,7 @@ public class Equipment extends RegistryEntry implements InventoryEntry {
   public final int _1a;
   public final int onHitStatus_1b;
 
-  public static Equipment fromFile(final String name, final String description, final int price, final FileData data) {
+  public static Equipment fromFile(final int price, final FileData data) {
     final int flags = data.readUByte(0x0);
     final int type = data.readUByte(0x1);
     final int _02 = data.readUByte(0x2);
@@ -98,7 +96,7 @@ public class Equipment extends RegistryEntry implements InventoryEntry {
     final int spRegen = (special2 & 0x10) != 0 ? specialAmount : 0;
     final int mpRegen = (special2 & 0x20) != 0 ? specialAmount : 0;
     final int hpRegen = (special2 & 0x40) != 0 ? specialAmount : 0;
-    final int special2Flag80 = (special2 & 0x80) != 0 ? specialAmount : 0;
+    final int escapeBonus = (special2 & 0x80) != 0 ? specialAmount : 0;
 
     final int icon = data.readUByte(0xe);
     final int spd = data.readByte(0xf);
@@ -115,12 +113,10 @@ public class Equipment extends RegistryEntry implements InventoryEntry {
     final int _1a = data.readUByte(0x1a);
     final int onHitStatus = data.readUByte(0x1b);
 
-    return new Equipment(name, description, price, flags, type, _02, equipableFlags, element, _05, elementalResistance, elementalImmunity, statusResist, _09, atk, mpPerPhysicalHit, spPerPhysicalHit, mpPerMagicalHit, spPerMagicalHit, hpMultiplier, mpMultiplier, spMultiplier, magicalResistance, physicalResistance, magicalImmunity, physicalImmunity, revive, hpRegen, mpRegen, spRegen, special2Flag80, icon, spd, atkHi, matk, def, mdef, aHit, mHit, aAv, mAv, onStatusChance, _19, _1a, onHitStatus);
+    return new Equipment(price, flags, type, _02, equipableFlags, element, _05, elementalResistance, elementalImmunity, statusResist, _09, atk, mpPerPhysicalHit, spPerPhysicalHit, mpPerMagicalHit, spPerMagicalHit, hpMultiplier, mpMultiplier, spMultiplier, magicalResistance, physicalResistance, magicalImmunity, physicalImmunity, revive, hpRegen, mpRegen, spRegen, escapeBonus, icon, spd, atkHi, matk, def, mdef, aHit, mHit, aAv, mAv, onStatusChance, _19, _1a, onHitStatus);
   }
 
-  public Equipment(final String name, final String description, final int price, final int flags, final int type, final int _02, final int equipableFlags, final Element element, final int _05, final ElementSet elementalResistance, final ElementSet elementalImmunity, final int statusResist, final int _09, final int atk, final int mpPerPhysicalHit, final int spPerPhysicalHit, final int mpPerMagicalHit, final int spPerMagicalHit, final int hpMultiplier, final int mpMultiplier, final int spMultiplier, final boolean magicalResistance, final boolean physicalResistance, final boolean magicalImmunity, final boolean physicalImmunity, final int revive, final int hpRegen, final int mpRegen, final int spRegen, final int special2Flag80, final int icon, final int spd, final int atkHi, final int matk, final int def, final int mdef, final int aHit, final int mHit, final int aAv, final int mAv, final int onStatusChance, final int _19, final int _1a, final int onHitStatus) {
-    this.name = name;
-    this.description = description;
+  public Equipment(final int price, final int flags, final int type, final int _02, final int equipableFlags, final Element element, final int _05, final ElementSet elementalResistance, final ElementSet elementalImmunity, final int statusResist, final int _09, final int atk, final int mpPerPhysicalHit, final int spPerPhysicalHit, final int mpPerMagicalHit, final int spPerMagicalHit, final int hpMultiplier, final int mpMultiplier, final int spMultiplier, final boolean magicalResistance, final boolean physicalResistance, final boolean magicalImmunity, final boolean physicalImmunity, final int revive, final int hpRegen, final int mpRegen, final int spRegen, final int escapeBonus, final int icon, final int spd, final int atkHi, final int matk, final int def, final int mdef, final int aHit, final int mHit, final int aAv, final int mAv, final int onStatusChance, final int _19, final int _1a, final int onHitStatus) {
     this.price = price;
 
     EquipmentSlot slot = null;
@@ -153,7 +149,7 @@ public class Equipment extends RegistryEntry implements InventoryEntry {
     this.hpRegen = hpRegen;
     this.mpRegen = mpRegen;
     this.spRegen = spRegen;
-    this.special2Flag80 = special2Flag80;
+    this.escapeBonus = escapeBonus;
     this.elementalResistance_06.set(elementalResistance);
     this.elementalImmunity_07.set(elementalImmunity);
     this.statusResist_08 = statusResist;
@@ -185,13 +181,13 @@ public class Equipment extends RegistryEntry implements InventoryEntry {
   }
 
   @Override
-  public String getName() {
-    return this.name;
+  public String getNameTranslationKey() {
+    return this.getTranslationKey();
   }
 
   @Override
-  public String getDescription() {
-    return this.description;
+  public String getDescriptionTranslationKey() {
+    return this.getTranslationKey("description");
   }
 
   @Override

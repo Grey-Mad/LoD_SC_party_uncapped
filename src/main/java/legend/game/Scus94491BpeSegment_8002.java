@@ -15,6 +15,7 @@ import legend.core.memory.Method;
 import legend.core.opengl.Obj;
 import legend.core.opengl.QuadBuilder;
 import legend.game.combat.types.EnemyDrop;
+import legend.game.i18n.I18n;
 import legend.game.input.Input;
 import legend.game.input.InputAction;
 import legend.game.inventory.Equipment;
@@ -38,9 +39,11 @@ import legend.game.saves.ConfigStorageLocation;
 import legend.game.saves.InvalidSaveException;
 import legend.game.saves.SaveFailedException;
 import legend.game.scripting.FlowControl;
+import legend.game.scripting.NotImplementedException;
 import legend.game.scripting.RunningScript;
 import legend.game.scripting.ScriptDescription;
 import legend.game.scripting.ScriptParam;
+import legend.game.scripting.ScriptReadable;
 import legend.game.sound.QueuedSound28;
 import legend.game.submap.SubmapEnvState;
 import legend.game.tim.Tim;
@@ -77,6 +80,9 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.joml.Math;
 import legend.game.combat.bent.MonsterBattleEntity;
+import org.legendofdragoon.modloader.registries.Registry;
+import org.legendofdragoon.modloader.registries.RegistryEntry;
+import org.legendofdragoon.modloader.registries.RegistryId;
 
 import javax.annotation.Nullable;
 import java.io.IOException;
@@ -1334,7 +1340,7 @@ public final class Scus94491BpeSegment_8002 {
   public static <T> Comparator<MenuEntryStruct04<T>> menuItemComparator() {
     return Comparator
       .comparingInt((MenuEntryStruct04<T> item) -> item.getIcon())
-      .thenComparing(MenuEntryStruct04::getName);
+      .thenComparing(item -> I18n.translate(item.getNameTranslationKey()));
   }
 
   @Method(0x80023a88L)
@@ -1738,6 +1744,28 @@ public final class Scus94491BpeSegment_8002 {
       script.params_20[1].set(takeEquipmentId(REGISTRIES.equipment.getEntry(LodMod.equipmentIdMap.get(itemId)).get()) ? 0 : 0xff);
     } else {
       script.params_20[1].set(takeItemId(REGISTRIES.items.getEntry(LodMod.itemIdMap.get(itemId - 192)).get()) ? 0 : 0xff);
+    }
+
+    return FlowControl.CONTINUE;
+  }
+
+  @ScriptDescription("Reads a value from a registry entry")
+  @ScriptParam(direction = ScriptParam.Direction.IN, type = ScriptParam.Type.REG, name = "registryId", description = "The registry to read from")
+  @ScriptParam(direction = ScriptParam.Direction.IN, type = ScriptParam.Type.REG, name = "entryId", description = "The entry to access from the registry")
+  @ScriptParam(direction = ScriptParam.Direction.IN, type = ScriptParam.Type.INT, name = "entryVar", description = "The var to read from the entry")
+  @ScriptParam(direction = ScriptParam.Direction.OUT, type = ScriptParam.Type.ANY, name = "value", description = "The value read from the entry")
+  public static FlowControl scriptReadRegistryEntryVar(final RunningScript<?> script) {
+    final RegistryId registryId = script.params_20[0].getRegistryId();
+    final RegistryId entryId = script.params_20[1].getRegistryId();
+    final int entryVar = script.params_20[2].get();
+
+    final Registry<?> registry = REGISTRIES.get(registryId);
+    final RegistryEntry entry = registry.getEntry(entryId).get();
+
+    if(entry instanceof final ScriptReadable readable) {
+      readable.read(entryVar, script.params_20[3]);
+    } else {
+      throw new NotImplementedException("Registry %s entry %s is not script-readable".formatted(registryId, entryId));
     }
 
     return FlowControl.CONTINUE;
@@ -3554,6 +3582,14 @@ public final class Scus94491BpeSegment_8002 {
     }
   }
 
+  public static void renderCentredText(final String text, final float x, final float y, final TextColour colour, final int trim) {
+    renderText(text, x - textWidth(text) / 2.0f, y, colour, trim);
+  }
+
+  public static void renderRightText(final String text, final float x, final float y, final TextColour colour, final int trim) {
+    renderText(text, x - textWidth(text), y, colour, trim);
+  }
+
   @Method(0x80029920L)
   public static void setTextboxArrowPosition(final int textboxIndex, final boolean visible) {
     final TextboxArrow0c arrow = textboxArrows_800bdea0[textboxIndex];
@@ -3580,7 +3616,7 @@ public final class Scus94491BpeSegment_8002 {
       final TextboxText84 textboxText = textboxText_800bdf38[textboxIndex];
       if((textboxText.flags_08 & TextboxText84.SHOW_ARROW) != 0) {
         textboxArrowTransforms.scaling(1.0f, 0.875f, 1.0f);
-        textboxArrowTransforms.transfer.set(arrow.x_04, arrow.y_06,  textboxText.z_0c);
+        textboxArrowTransforms.transfer.set(arrow.x_04, arrow.y_06,  textboxText.z_0c * 4.0f);
         RENDERER.queueOrthoModel(textboxArrowObjs[arrow.spriteIndex_08], textboxArrowTransforms);
       }
     }
@@ -3981,7 +4017,7 @@ public final class Scus94491BpeSegment_8002 {
       stats.equipmentMpPerPhysicalHit_50 = 0;
       stats.equipmentSpPerMagicalHit_52 = 0;
       stats.equipmentMpPerMagicalHit_54 = 0;
-      stats.equipmentSpecial2Flag80_56 = 0;
+      stats.equipmentEscapeBonus_56 = 0;
       stats.equipmentHpRegen_58 = 0;
       stats.equipmentMpRegen_5a = 0;
       stats.equipmentSpRegen_5c = 0;

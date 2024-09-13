@@ -327,8 +327,8 @@ public final class SEffe {
     }
 
     if((effectParams.flags_00 & 0x400_0000) == 0) {
-      sp0x10.scaling(effectParams.scale_16);
-      sp0x10.rotateXYZ(effectParams.rot_10);
+      sp0x10.rotationXYZ(effectParams.rot_10);
+      sp0x10.scale(effectParams.scale_16);
 
       // Transform override is already in screenspace so we need to un-transform it
       if(RenderEngine.legacyMode == 0) {
@@ -647,8 +647,8 @@ public final class SEffe {
   /** Considers all parents */
   @Method(0x800e8594L)
   public static void calculateEffectTransforms(final MV transformMatrix, final EffectManagerData6c<?> manager) {
-    transformMatrix.scaling(manager.params_10.scale_16);
-    transformMatrix.rotateXYZ(manager.params_10.rot_10);
+    transformMatrix.rotationXYZ(manager.params_10.rot_10);
+    transformMatrix.scale(manager.params_10.scale_16);
     transformMatrix.transfer.set(manager.params_10.trans_04);
 
     EffectManagerData6c<?> currentManager = manager;
@@ -668,8 +668,8 @@ public final class SEffe {
       if(BattleObject.EM__.equals(base.magic_00)) {
         final EffectManagerData6c<?> baseManager = (EffectManagerData6c<?>)base;
         final MV baseTransformMatrix = new MV();
-        baseTransformMatrix.scaling(baseManager.params_10.scale_16);
-        baseTransformMatrix.rotateXYZ(baseManager.params_10.rot_10);
+        baseTransformMatrix.rotationXYZ(baseManager.params_10.rot_10);
+        baseTransformMatrix.scale(baseManager.params_10.scale_16);
         baseTransformMatrix.transfer.set(baseManager.params_10.trans_04);
 
         if(currentManager.coord2Index_0d != -1) {
@@ -3992,7 +3992,7 @@ public final class SEffe {
 
     final ScriptFile file;
     if(deffScriptIndex == -1) {
-      file = script.scriptState_04.scriptPtr_14;
+      file = script.scriptState_04.frame().file;
     } else {
       //LAB_80115654
       file = deffManager_800c693c.scripts_2c[deffScriptIndex];
@@ -4009,7 +4009,7 @@ public final class SEffe {
   @Method(0x80115690L)
   public static FlowControl scriptLoadSameScriptAndJump(final RunningScript<?> script) {
     final ScriptState<?> state = SCRIPTS.getState(script.params_20[0].get());
-    state.loadScriptFile(script.scriptState_04.scriptPtr_14, 0);
+    state.loadScriptFile(script.scriptState_04.frame().file, 0);
     script.params_20[1].jump(state);
     return FlowControl.CONTINUE;
   }
