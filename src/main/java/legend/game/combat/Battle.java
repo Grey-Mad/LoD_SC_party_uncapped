@@ -1116,14 +1116,7 @@ public class Battle extends EngineState {
     int soundFileIndex = 0;
     if(type == 1) {
       //LAB_80019e68
-      for(int charSlot = 0; charSlot < gameState_800babc8.charIds_88.length; charSlot++) {
-        final int index = characterSoundFileIndices_800500f8[charSlot];
-        if(soundFiles_800bcf80[index].id_02 == bent.charId_272) {
-          //LAB_80019ea4
-          soundFileIndex = index;
-          break;
-        }
-      }
+      
     } else {
       //LAB_80019f18
       //LAB_80019f30
@@ -1169,7 +1162,6 @@ public class Battle extends EngineState {
       //LAB_8001a034
       for(int charSlot = 0; charSlot < gameState_800babc8.charIds_88.length; charSlot++) {
         final int index = characterSoundFileIndices_800500f8[charSlot];
-
         if(soundFiles_800bcf80[index].id_02 == charOrMonsterIndex) {
           soundFileIndex = index;
           break;
@@ -1450,7 +1442,6 @@ public class Battle extends EngineState {
       
       final String characterName = getCharacterName(gameState_800babc8.charIds_88[charSlot]).toLowerCase();
       final int finalCharSlot = charSlot;
-      //final int finalI = i;
       loadDir("characters/%s/sounds/combat".formatted(characterName), files -> charSoundEffectsLoaded(files, finalCharSlot, bent.model_148.attackSounds));
 
       bent.model_148.coord2_14.coord.transfer.x = charCount > 2 && charSlot == 0 ? 0x900 : 0xa00;
@@ -3938,33 +3929,7 @@ public class Battle extends EngineState {
       case 184 -> script.scriptState_04.scriptPtr_14.setOp(script.commandOffset_0c+opOffsetsToCheck[i], battleState_8006e398._460Offset);
       case 189 -> script.scriptState_04.scriptPtr_14.setOp(script.commandOffset_0c+opOffsetsToCheck[i], battleState_8006e398._474Offset);
     }}
-    /*for(int x=3; x < 40; x++){
-      int nextOp = script.scriptState_04.scriptPtr_14.getOp(script.commandOffset_0c+x);
-      if(0x45 == nextOp){ 
-        break;
-      };
-      if(0x5a == nextOp){ 
-        break;
-      };
-      if(0x73 == nextOp){ 
-        break;
-      };
-      if(0xb8 == nextOp){ 
-        break;
-      };
-      if(129 == nextOp){ 
-        break;
-      };
-      if(0x81 == nextOp){
-        break;
-      };
-      if(0xbd == nextOp){
-        break;
-      };
-    }*/
-    //switch(script.scriptState_04.scriptPtr_14.getOp(script.commandOffset_0c+1)){
-
-
+    
     //LAB_800cd9f4
     return FlowControl.CONTINUE;
   }

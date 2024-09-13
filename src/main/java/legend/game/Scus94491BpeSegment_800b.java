@@ -122,11 +122,6 @@ public final class Scus94491BpeSegment_800b {
     Arrays.setAll(soundFiles_800bcf80, i -> new SoundFile());
   }
 
-  public static SoundFile[] playerSoundFiles_800bcf80 = new SoundFile[13]; /*gets overwriten during serialization, greytodo: replace with dynamic array*/
-  static {
-    Arrays.setAll(soundFiles_800bcf80, i -> new SoundFile());
-  }
-
   public static int _800bd0f0;
 
   /** .8 */

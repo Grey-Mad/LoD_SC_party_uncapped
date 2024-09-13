@@ -2044,18 +2044,25 @@ public final class Scus94491BpeSegment {
   public static void charSoundEffectsLoaded(final List<FileData> files, final int charSlot,final SoundFile sound) {
     final int charId = gameState_800babc8.charIds_88[charSlot];
     
-    //find way to load bent via charslot
-    //LAB_8001cb34
-    //final int index = characterSoundFileIndices_800500f8[charSlot]; //find way to make sound part of model and or combatant
-    //final SoundFile sound = soundFiles_800bcf80[index];
-
     sound.name = "Char slot %d sound effects".formatted(charSlot);
     sound.id_02 = charId;
     sound.indices_08 = SoundFileIndices.load(files.get(1));
 
     //LAB_8001cc48
     //LAB_8001cc50
-    sound.playableSound_10 = loadSshdAndSoundbank(sound.name, files.get(3), new Sshd(files.get(2)), charSlotSpuOffsets_80050190[charSlot]);
+    final PlayableSound0c playableSound = new PlayableSound0c();
+    playableSound.name = sound.name;
+    playableSound.used_00 = true;
+    playableSound.sshdPtr_04 = new Sshd(files.get(2));
+    playableSound.soundBufferPtr_08 = charSlotSpuOffsets_80050190[charSlot] / 8;
+
+    if(playableSound.sshdPtr_04.soundBankSize_04 != 0) {
+      SPU.directWrite(charSlotSpuOffsets_80050190[charSlot], files.get(3).getBytes());
+    }
+
+    playableSounds_800c43d0.add(playableSound);
+
+    sound.playableSound_10 = playableSound;
     sound.used_00 = true;
 
     if(charSlot == 0 || charSlot == 1) {
@@ -2356,17 +2363,6 @@ public final class Scus94491BpeSegment {
 
     //LAB_8001df9c
     loadedDrgnFiles_800bcf78.updateAndGet(val -> val | 0x8);
-
-    // Player combat sounds for current party composition (example file: 764)
-    /*for(int charSlot = 0; charSlot < gameState_800babc8.charIds_88.length; charSlot++) {
-      final int charIndex = gameState_800babc8.charIds_88[charSlot];
-
-      if(charIndex != -1) {
-        final String name = getCharacterName(charIndex).toLowerCase();
-        final int finalCharSlot = charSlot;
-        loadDir("characters/%s/sounds/combat".formatted(name), files -> charSoundEffectsLoaded(files, finalCharSlot));
-      }
-    }*/
 
     loadMonsterSounds();
   }
