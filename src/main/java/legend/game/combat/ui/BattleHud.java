@@ -721,7 +721,12 @@ public class BattleHud {
             for(int i = 0; i < 4; i++) {
               final int offsetX = displayStats.x_00 - centreScreenX_1f8003dc;
               final int offsetY = displayStats.y_02 - centreScreenY_1f8003de;
-              this.drawLine(spBarBorderMetrics_800fb46c[i].x1_00*this.uiScaleFactor + offsetX, spBarBorderMetrics_800fb46c[i].y1_01*this.uiScaleFactor + offsetY, spBarBorderMetrics_800fb46c[i].x2_02*this.uiScaleFactor + offsetX, spBarBorderMetrics_800fb46c[i].y2_03*this.uiScaleFactor + offsetY, 0x60, 0x60, 0x60, false);
+              this.drawLine(
+                ((int)(spBarBorderMetrics_800fb46c[i].x1_00*this.uiScaleFactor)) + offsetX, 
+                ((int)(spBarBorderMetrics_800fb46c[i].y1_01*this.uiScaleFactor)) + offsetY, 
+                ((int)(spBarBorderMetrics_800fb46c[i].x2_02*this.uiScaleFactor)) + offsetX, 
+                ((int)(spBarBorderMetrics_800fb46c[i].y2_03*this.uiScaleFactor)) + offsetY,
+                 0x60, 0x60, 0x60, false);
             }
 
             //Full SP meter
@@ -730,7 +735,12 @@ public class BattleHud {
               for(int i = 0; i < 4; i++) {
                 final int offsetX = displayStats.x_00 - centreScreenX_1f8003dc;
                 final int offsetY = displayStats.y_02 - centreScreenY_1f8003de;
-                this.drawLine(spBarFlashingBorderMetrics_800fb47c[i].x1_00*this.uiScaleFactor + offsetX, spBarFlashingBorderMetrics_800fb47c[i].y1_01*this.uiScaleFactor + offsetY, spBarFlashingBorderMetrics_800fb47c[i].x2_02*this.uiScaleFactor + offsetX, spBarFlashingBorderMetrics_800fb47c[i].y2_03*this.uiScaleFactor + offsetY, 0x80, 0, 0, false);
+                this.drawLine(
+                  ((int)(spBarFlashingBorderMetrics_800fb47c[i].x1_00*this.uiScaleFactor)) + offsetX, 
+                  ((int)(spBarFlashingBorderMetrics_800fb47c[i].y1_01*this.uiScaleFactor)) + offsetY, 
+                  ((int)(spBarFlashingBorderMetrics_800fb47c[i].x2_02*this.uiScaleFactor)) + offsetX, 
+                  ((int)(spBarFlashingBorderMetrics_800fb47c[i].y2_03*this.uiScaleFactor)) + offsetY, 
+                  0x80, 0, 0, false);
             }
           }
         }

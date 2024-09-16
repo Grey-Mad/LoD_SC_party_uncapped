@@ -165,7 +165,7 @@ public class BattleStateEf4 {
   public int _2e4;
   /** Indexed by char slot */
   public final int[] _2e8 = new int[gameState_800babc8.charIds_88.length];
-  public int _2e8Offset = _294Offset + _294.length;
+  public int _2e8Offset = _294Offset + dragoonTurnsRemaining_294.length;
   public int _2f4;
   public int _2f8;
   public int _2fc;

@@ -3,7 +3,6 @@ package legend.game.combat;
 import legend.core.Config;
 import legend.core.MathHelper;
 import legend.core.Random;
-import legend.core.gpu.Bpp;
 import legend.core.gpu.GpuCommandCopyVramToVram;
 import legend.core.gpu.Rect4i;
 import legend.core.gte.GsCOORDINATE2;
@@ -151,6 +150,7 @@ import static legend.core.GameEngine.GTE;
 import static legend.core.GameEngine.REGISTRIES;
 import static legend.core.GameEngine.RENDERER;
 import static legend.core.GameEngine.SCRIPTS;
+import static legend.core.GameEngine.SPU;
 import static legend.game.SItem.loadCharacterStats;
 import static legend.game.Scus94491BpeSegment.charSoundEffectsLoaded;
 import static legend.game.Scus94491BpeSegment.FUN_80013404;
@@ -196,7 +196,6 @@ import static legend.game.Scus94491BpeSegment_8002.scriptDeallocateAllTextboxes;
 import static legend.game.Scus94491BpeSegment_8002.sortItems;
 import static legend.game.Scus94491BpeSegment_8002.sssqResetStuff;
 import static legend.game.Scus94491BpeSegment_8002.takeItemId;
-import static legend.game.Scus94491BpeSegment_8003.GetTPage;
 import static legend.game.Scus94491BpeSegment_8003.GsGetLw;
 import static legend.game.Scus94491BpeSegment_8003.GsGetLws;
 import static legend.game.Scus94491BpeSegment_8003.GsInitCoordinate2;
@@ -211,8 +210,6 @@ import static legend.game.Scus94491BpeSegment_8004.doNothingScript_8004f650;
 import static legend.game.Scus94491BpeSegment_8004.previousEngineState_8004dd28;
 import static legend.game.Scus94491BpeSegment_8004.sssqFadeOut;
 import static legend.game.Scus94491BpeSegment_8004.stopSoundSequence;
-import static legend.game.Scus94491BpeSegment_8005.characterSoundFileIndices_800500f8;
-import static legend.game.Scus94491BpeSegment_8005.monsterSoundFileIndices_800500e8;
 import static legend.game.Scus94491BpeSegment_8005.submapCut_80052c30;
 import static legend.game.Scus94491BpeSegment_8005.submapScene_80052c34;
 //import static legend.game.Scus94491BpeSegment_8005.vramSlots_8005027c;
@@ -1751,6 +1748,11 @@ public class Battle extends EngineState {
 
   @Method(0x800c82b8L)
   public void deallocateCombat() {
+
+    synchronized(SPU){
+      SPU.clearCombatSounds();
+    }
+
     if(fullScreenEffect_800bb140.currentColour_28 == 0xff) {
       this.updateGameStateAndDeallocateMenu();
       this.setStageHasNoModel();
@@ -3933,15 +3935,15 @@ public class Battle extends EngineState {
 
     final int[] opOffsetsToCheck = {1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30};//27?
     for(int i = 0;i<opOffsetsToCheck.length; i++){
-
-    switch(script.scriptState_04.scriptPtr_14.getOp(script.commandOffset_0c+opOffsetsToCheck[i])){
-      case 69 -> script.scriptState_04.scriptPtr_14.setOp(script.commandOffset_0c+opOffsetsToCheck[i], battleState_8006e398._294Offset);
-      case 90 -> script.scriptState_04.scriptPtr_14.setOp(script.commandOffset_0c+opOffsetsToCheck[i], battleState_8006e398._2e8Offset);
-      case 109 -> script.scriptState_04.scriptPtr_14.setOp(script.commandOffset_0c+opOffsetsToCheck[i], battleState_8006e398._334Offset);
-      case 115 -> script.scriptState_04.scriptPtr_14.setOp(script.commandOffset_0c+opOffsetsToCheck[i], battleState_8006e398._34cOffset);
-      case 129 -> script.scriptState_04.scriptPtr_14.setOp(script.commandOffset_0c+opOffsetsToCheck[i], battleState_8006e398._384Offset);
-      case 184 -> script.scriptState_04.scriptPtr_14.setOp(script.commandOffset_0c+opOffsetsToCheck[i], battleState_8006e398._460Offset);
-      case 189 -> script.scriptState_04.scriptPtr_14.setOp(script.commandOffset_0c+opOffsetsToCheck[i], battleState_8006e398._474Offset);
+      
+    switch(script.scriptState_04.frame().file.getOp(script.commandOffset_0c+opOffsetsToCheck[i])){
+      case 69 -> script.scriptState_04.frame().file.setOp(script.commandOffset_0c+opOffsetsToCheck[i], battleState_8006e398._294Offset);
+      case 90 -> script.scriptState_04.frame().file.setOp(script.commandOffset_0c+opOffsetsToCheck[i], battleState_8006e398._2e8Offset);
+      case 109 -> script.scriptState_04.frame().file.setOp(script.commandOffset_0c+opOffsetsToCheck[i], battleState_8006e398._334Offset);
+      case 115 -> script.scriptState_04.frame().file.setOp(script.commandOffset_0c+opOffsetsToCheck[i], battleState_8006e398._34cOffset);
+      case 129 -> script.scriptState_04.frame().file.setOp(script.commandOffset_0c+opOffsetsToCheck[i], battleState_8006e398._384Offset);
+      case 184 -> script.scriptState_04.frame().file.setOp(script.commandOffset_0c+opOffsetsToCheck[i], battleState_8006e398._460Offset);
+      case 189 -> script.scriptState_04.frame().file.setOp(script.commandOffset_0c+opOffsetsToCheck[i], battleState_8006e398._474Offset);
     }}
     
     //LAB_800cd9f4

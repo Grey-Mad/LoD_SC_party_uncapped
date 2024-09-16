@@ -7,9 +7,11 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.Marker;
 import org.apache.logging.log4j.MarkerManager;
+import legend.game.sound.PlayableSound0c;
 
 import static legend.core.GameEngine.AUDIO_THREAD;
 import static org.lwjgl.openal.AL10.AL_FORMAT_STEREO16;
+import static legend.game.Scus94491BpeSegment_800c.playableSounds_800c43d0;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,7 +26,7 @@ public class Spu {
   private GenericSource source;
 
   private final short[] spuOutput = new short[SAMPLES_PER_TICK * 2];
-  public byte[] ram = new byte[0x8_0000]; //  spu 0x8_0000 
+  public byte[] ram = new byte[512 * 1024]; // 0x8_0000
 
   private final float[] reverbWorkArea = new float[0x4_0000];
   public final Voice[] voices = new Voice[24];
@@ -52,10 +54,12 @@ public class Spu {
   public List<Integer> attackSoundsBentSlots = new ArrayList<>();
   public List<Integer> attackSoundsBentOffsets = new ArrayList<>();
   public List<Integer> attackSpuRamSizes = new ArrayList<>();
+  public List<PlayableSound0c> attackPlayableSounds = new ArrayList<>();
 
   public List<Integer> effectSoundsBentSlots = new ArrayList<>();
   public List<Integer> effectSoundsBentOffsets = new ArrayList<>();
   public List<Integer> effectSpuRamSizes = new ArrayList<>();
+  public List<PlayableSound0c> effectPlayableSounds = new ArrayList<>();
 
   public Spu() {
     for(int i = 0; i < this.voices.length; i++) {
@@ -511,6 +515,103 @@ public class Spu {
       this.noiseFrequencyShift = packed >> 2 & 0xf;
       this.noiseFrequencyStep = packed & 0x3;
     }
+  }
+
+  public void removeCombatEffectSoundByBentSlot(int slot) {
+    if (this.effectSoundsBentSlots.contains(slot)){
+      byte[] spuRamOld = this.ram;
+      int index = this.effectSoundsBentSlots.indexOf(slot);
+      this.ram = new byte[spuRamOld.length - this.effectSpuRamSizes.get(index)];
+      System.arraycopy(spuRamOld, 0, this.ram, 0, this.effectSoundsBentOffsets.get(index));
+      System.arraycopy(spuRamOld, this.effectSoundsBentOffsets.get(index)+this.effectSpuRamSizes.get(index), this.ram, this.effectSoundsBentOffsets.get(index), spuRamOld.length - (this.effectSoundsBentOffsets.get(index)+this.effectSpuRamSizes.get(index))); 
+      for (int i=0; i<this.effectSoundsBentSlots.size(); i++){
+        if (this.effectSoundsBentOffsets.get(i)>this.effectSoundsBentOffsets.get(index)){
+          this.effectSoundsBentOffsets.set(i, this.effectSoundsBentOffsets.get(i)-this.effectSpuRamSizes.get(index));
+        }
+      }
+      playableSounds_800c43d0.remove(effectPlayableSounds.get(slot));
+      PlayableSound0c[] sounds = new PlayableSound0c[playableSounds_800c43d0.size()];
+      playableSounds_800c43d0.toArray(sounds);
+
+      for (int i=0; i<sounds.length; i++){
+        if (sounds[i].soundBufferPtr_08*8 > this.effectSoundsBentOffsets.get(index)){
+          PlayableSound0c sound = sounds[i];
+          playableSounds_800c43d0.remove(sound);
+          sound.soundBufferPtr_08 = (sound.soundBufferPtr_08*8-this.effectSpuRamSizes.get(index))/8;
+          playableSounds_800c43d0.add(sound);
+        }
+      }
+      this.effectSoundsBentSlots.remove(index);
+      this.effectSoundsBentOffsets.remove(index);
+      this.effectSpuRamSizes.remove(index);
+      this.effectPlayableSounds.remove(index);
+    }
+  }
+
+  public void removeCombatAttackSoundByBentSlot(int slot) {
+    if (this.attackSoundsBentSlots.contains(slot)){
+      byte[] spuRamOld = this.ram;
+      int index = this.attackSoundsBentSlots.indexOf(slot);
+      this.ram = new byte[spuRamOld.length - this.attackSpuRamSizes.get(index)];
+      System.arraycopy(spuRamOld, 0, this.ram, 0, this.attackSoundsBentOffsets.get(index));
+      System.arraycopy(spuRamOld, this.attackSoundsBentOffsets.get(index)+this.attackSpuRamSizes.get(index), this.ram, this.attackSoundsBentOffsets.get(index), spuRamOld.length - (this.attackSoundsBentOffsets.get(index)+this.attackSpuRamSizes.get(index))); 
+      for (int i=0; i<this.attackSoundsBentSlots.size(); i++){
+        if (this.attackSoundsBentOffsets.get(i)>this.attackSoundsBentOffsets.get(index)){
+          this.attackSoundsBentOffsets.set(i, this.attackSoundsBentOffsets.get(i)-this.attackSpuRamSizes.get(index));
+        }
+      }
+      playableSounds_800c43d0.remove(attackPlayableSounds.get(slot));
+      PlayableSound0c[] sounds = new PlayableSound0c[playableSounds_800c43d0.size()];
+      playableSounds_800c43d0.toArray(sounds);
+
+      for (int i=0; i<sounds.length; i++){
+        if (sounds[i].soundBufferPtr_08*8 > this.attackSoundsBentOffsets.get(index)){
+          PlayableSound0c sound = sounds[i];
+          playableSounds_800c43d0.remove(sound);
+          sound.soundBufferPtr_08 = (sound.soundBufferPtr_08*8-this.attackSpuRamSizes.get(index))/8;
+          playableSounds_800c43d0.add(sound);
+        }
+      }
+      this.attackSoundsBentSlots.remove(index);
+      this.attackSoundsBentOffsets.remove(index);
+      this.attackSpuRamSizes.remove(index);
+      this.attackPlayableSounds.remove(index);
+    }
+  }
+
+  public void clearCombatSounds() {
+    while (this.effectSoundsBentSlots.size() != 0){
+      byte[] spuRamOld = this.ram;
+      this.ram = new byte[spuRamOld.length - this.effectSpuRamSizes.get(0)];
+      System.arraycopy(spuRamOld, 0, this.ram, 0, this.effectSoundsBentOffsets.get(0));
+      System.arraycopy(spuRamOld, this.effectSoundsBentOffsets.get(0)+this.effectSpuRamSizes.get(0), this.ram, this.effectSoundsBentOffsets.get(0), spuRamOld.length - (this.effectSoundsBentOffsets.get(0)+this.effectSpuRamSizes.get(0))); 
+      for (int i=0; i<this.effectSoundsBentSlots.size(); i++){
+        if (this.effectSoundsBentOffsets.get(i)>this.effectSoundsBentOffsets.get(0)){
+          this.effectSoundsBentOffsets.set(i, this.effectSoundsBentOffsets.get(i)-this.effectSpuRamSizes.get(0));
+        }
+      }
+      this.effectSoundsBentSlots.remove(0);
+      this.effectSoundsBentOffsets.remove(0);
+      this.effectSpuRamSizes.remove(0);
+      playableSounds_800c43d0.remove(effectPlayableSounds.get(0));
+      this.effectPlayableSounds.remove(0);
+    }
+    while (this.attackSoundsBentSlots.size() != 0){
+      byte[] spuRamOld = this.ram;
+      this.ram = new byte[spuRamOld.length - this.attackSpuRamSizes.get(0)];
+      System.arraycopy(spuRamOld, 0, this.ram, 0, this.attackSoundsBentOffsets.get(0));
+      System.arraycopy(spuRamOld, this.attackSoundsBentOffsets.get(0)+this.attackSpuRamSizes.get(0), this.ram, this.attackSoundsBentOffsets.get(0), spuRamOld.length - (this.attackSoundsBentOffsets.get(0)+this.attackSpuRamSizes.get(0))); 
+      for (int i=0; i<this.attackSoundsBentSlots.size(); i++){
+        if (this.attackSoundsBentOffsets.get(i)>this.attackSoundsBentOffsets.get(0)){
+          this.attackSoundsBentOffsets.set(i, this.attackSoundsBentOffsets.get(i)-this.attackSpuRamSizes.get(0));
+        }
+      }
+      this.attackSoundsBentSlots.remove(0);
+      this.attackSoundsBentOffsets.remove(0);
+      this.attackSpuRamSizes.remove(0);
+      playableSounds_800c43d0.remove(attackPlayableSounds.get(0));
+      this.attackPlayableSounds.remove(0);
+    }  
   }
 
   private static final double[][] interpolationWeights = new double[512][];

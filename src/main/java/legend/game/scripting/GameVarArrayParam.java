@@ -130,8 +130,8 @@ public class GameVarArrayParam extends Param {
 
       //260
       int indexOffset = Scus94491BpeSegment_8006.battleState_8006e398._294Offset;
-      if((index>=indexOffset) && (index<(indexOffset+Scus94491BpeSegment_8006.battleState_8006e398._294.length))){
-        return Scus94491BpeSegment_8006.battleState_8006e398._294[index - indexOffset];
+      if((index>=indexOffset) && (index<(indexOffset+Scus94491BpeSegment_8006.battleState_8006e398.dragoonTurnsRemaining_294.length))){
+        return Scus94491BpeSegment_8006.battleState_8006e398.dragoonTurnsRemaining_294[index - indexOffset];
       }
       //270
       indexOffset = Scus94491BpeSegment_8006.battleState_8006e398._2e8Offset;
@@ -237,9 +237,6 @@ public class GameVarArrayParam extends Param {
       case 68 -> Scus94491BpeSegment_8006.battleState_8006e398._290;
 
       case 71 -> Scus94491BpeSegment_8006.battleState_8006e398._294Offset;
-      /*case 69 -> Scus94491BpeSegment_8006.battleState_8006e398.dragoonTurnsRemaining_294[0];
-      case 70 -> Scus94491BpeSegment_8006.battleState_8006e398.dragoonTurnsRemaining_294[1];
-      case 71 -> Scus94491BpeSegment_8006.battleState_8006e398.dragoonTurnsRemaining_294[2];*/
       case 72 -> Scus94491BpeSegment_8006.battleState_8006e398._2a0;
       case 73 -> Scus94491BpeSegment_8006.battleState_8006e398._2a4;
       case 74 -> Scus94491BpeSegment_8006.battleState_8006e398._2a8;
@@ -415,8 +412,8 @@ public class GameVarArrayParam extends Param {
 
   private void writeCombatVar(final int index, final int val) {
     int indexOffset = Scus94491BpeSegment_8006.battleState_8006e398._294Offset;
-    if((index>=indexOffset) && (index<(indexOffset+Scus94491BpeSegment_8006.battleState_8006e398._294.length))){
-      Scus94491BpeSegment_8006.battleState_8006e398._294[index - indexOffset] = val;
+    if((index>=indexOffset) && (index<(indexOffset+Scus94491BpeSegment_8006.battleState_8006e398.dragoonTurnsRemaining_294.length))){
+      Scus94491BpeSegment_8006.battleState_8006e398.dragoonTurnsRemaining_294[index - indexOffset] = val;
       return;
     }
     indexOffset = Scus94491BpeSegment_8006.battleState_8006e398._2e8Offset;
