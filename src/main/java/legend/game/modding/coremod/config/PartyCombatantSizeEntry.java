@@ -1,10 +1,6 @@
 package legend.game.modding.coremod.config;
 
 import static legend.game.Scus94491BpeSegment_800b.gameState_800babc8;
-import static legend.game.Scus94491BpeSegment_800b.soundFiles_800bcf80;
-
-
-import java.util.Arrays;
 
 import legend.core.IoHelper;
 import legend.core.MathHelper;
@@ -12,7 +8,6 @@ import legend.game.inventory.screens.controls.NumberSpinner;
 import legend.game.saves.ConfigCategory;
 import legend.game.saves.ConfigEntry;
 import legend.game.saves.ConfigStorageLocation;
-import legend.game.sound.SoundFile;
 
 public class PartyCombatantSizeEntry extends ConfigEntry<Integer> {
   public PartyCombatantSizeEntry() {
@@ -47,18 +42,6 @@ public class PartyCombatantSizeEntry extends ConfigEntry<Integer> {
         gameState_800babc8.charIds_88 = charIds_replacement;
         updateStateGamestateCharIdsDepentedValues();
       }
-
-      if(soundFiles_800bcf80.length > (val+10)){/*greytodo: see about replacing soundFiles_800bcf80 with a dyanimic array*/
-        SoundFile[] soundFilesReplacement = new SoundFile[val+10]; 
-        Arrays.setAll(soundFilesReplacement, i -> new SoundFile()); 
-        java.lang.System.arraycopy(soundFiles_800bcf80, 0, soundFilesReplacement, 0, val+10);
-        soundFiles_800bcf80 = soundFilesReplacement;
-      }else if(soundFiles_800bcf80.length < (val+10)){
-        SoundFile[] soundFilesReplacement = new SoundFile[val+10];
-        Arrays.setAll(soundFilesReplacement, i -> new SoundFile()); 
-        java.lang.System.arraycopy(soundFiles_800bcf80, 0, soundFilesReplacement, 0, soundFiles_800bcf80.length);
-        soundFiles_800bcf80 = soundFilesReplacement;
-      }
       
     return data;
   }
@@ -83,16 +66,6 @@ public class PartyCombatantSizeEntry extends ConfigEntry<Integer> {
     //spGained_800bc950 = new int[gameState_800babc8.charIds_88.length];
     //livingCharIds_800bc968 = new int[gameState_800babc8.charIds_88.length];
 
-    if(soundFiles_800bcf80.length > (gameState_800babc8.charIds_88.length+10)){ //4 sound files are for the monsters
-      SoundFile[] soundFilesReplacement = new SoundFile[gameState_800babc8.charIds_88.length+10]; //4 sound files are for the monsters
-      Arrays.setAll(soundFilesReplacement, i -> new SoundFile()); 
-      java.lang.System.arraycopy(soundFiles_800bcf80, 0, soundFilesReplacement, 0, gameState_800babc8.charIds_88.length+10); //4 sound files are for the monsters
-      soundFiles_800bcf80 = soundFilesReplacement;
-    }else if(soundFiles_800bcf80.length < (gameState_800babc8.charIds_88.length+10)){ //4 sound files are for the monsters
-      SoundFile[] soundFilesReplacement = new SoundFile[gameState_800babc8.charIds_88.length+10]; //4 sound files are for the monsters
-      Arrays.setAll(soundFilesReplacement, i -> new SoundFile()); 
-      java.lang.System.arraycopy(soundFiles_800bcf80, 0, soundFilesReplacement, 0, soundFiles_800bcf80.length); //4 sound files are for the monsters
-      soundFiles_800bcf80 = soundFilesReplacement;
-    }
+    
   }
 }

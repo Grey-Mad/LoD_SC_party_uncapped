@@ -117,7 +117,7 @@ public final class Scus94491BpeSegment_800b {
    */
   public static final AtomicInteger loadedDrgnFiles_800bcf78 = new AtomicInteger();
 
-  public static SoundFile[] soundFiles_800bcf80 = new SoundFile[13]; /*gets overwriten during serialization, greytodo: replace with dynamic array*/
+  public static SoundFile[] soundFiles_800bcf80 = new SoundFile[13];
   static {
     Arrays.setAll(soundFiles_800bcf80, i -> new SoundFile());
   }

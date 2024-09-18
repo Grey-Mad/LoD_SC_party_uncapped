@@ -100,12 +100,9 @@ public class Model124 {
   public byte[] effectSpuRam = new byte[0x7530];
   public int effectSpuRamOffest = 0;
 
-  public SoundFile attackSounds = new SoundFile();
-  public final byte[] attackSpuRam = new byte[0x7530];
-  public int attackSpuRamOffest = 0;
-
-
-  public SoundFile dragoonSounds = new SoundFile();
+  public SoundFile extraSounds = new SoundFile();
+  public byte[] extraSpuRam = new byte[0x7530];
+  public int extraSpuRamOffest = 0;
 
   public Model124(final String name) {
     this.name = name;

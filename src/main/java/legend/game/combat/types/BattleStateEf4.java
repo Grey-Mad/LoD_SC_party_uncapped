@@ -19,7 +19,7 @@ import static legend.game.Scus94491BpeSegment.simpleRand;
 import static legend.game.Scus94491BpeSegment_800b.gameState_800babc8;
 
 public class BattleStateEf4 {
-  public final StatusConditions20[] statusConditions_00 = new StatusConditions20[12]; //7+5? players + monsters?
+  public final StatusConditions20[] statusConditions_00 = new StatusConditions20[12]; //greytodo: 7+5? players + monsters?
 
   public int _180;
   /**

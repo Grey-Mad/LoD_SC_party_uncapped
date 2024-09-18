@@ -7,7 +7,6 @@ import legend.game.saves.ConfigCollection;
 import legend.game.saves.ConfigStorage;
 import legend.game.saves.ConfigStorageLocation;
 import legend.game.saves.SavedGame;
-import legend.game.sound.SoundFile;
 import legend.game.types.ActiveStatsa0;
 import legend.game.types.CharacterData2c;
 import legend.game.EngineStateEnum;
@@ -20,7 +19,6 @@ import static legend.core.GameEngine.CONFIG;
 import static legend.game.Scus94491BpeSegment_8004.engineState_8004dd20;
 import static legend.game.Scus94491BpeSegment_800b.continentIndex_800bf0b0;
 import static legend.game.Scus94491BpeSegment_800b.livingCharIds_800bc968;
-import static legend.game.Scus94491BpeSegment_800b.soundFiles_800bcf80;
 import static legend.game.Scus94491BpeSegment_800b.spGained_800bc950;
 import static legend.game.Scus94491BpeSegment_800b.submapId_800bd808;
 import static legend.game.Scus94491BpeSegment_800b.unlockedUltimateAddition_800bc910;
@@ -74,18 +72,6 @@ public final class V4Serializer {
       unlockedUltimateAddition_800bc910=new ArrayList<Boolean>(Arrays.asList(new Boolean[charSlotCount]));
       spGained_800bc950=new ArrayList<Integer>(Arrays.asList(new Integer[charSlotCount]));
       livingCharIds_800bc968=new ArrayList<Integer>(Arrays.asList(new Integer[charSlotCount]));
-
-      if(soundFiles_800bcf80.length > (state.charIds_88.length+10)){/*greytodo: see about replacing soundFiles_800bcf80 with a dyanimic array*/
-        SoundFile[] soundFilesReplacement = new SoundFile[state.charIds_88.length+10]; 
-        Arrays.setAll(soundFilesReplacement, i -> new SoundFile()); 
-        java.lang.System.arraycopy(soundFiles_800bcf80, 0, soundFilesReplacement, 0, state.charIds_88.length+10);
-        soundFiles_800bcf80 = soundFilesReplacement;
-      }else if(soundFiles_800bcf80.length < (state.charIds_88.length+10)){
-        SoundFile[] soundFilesReplacement = new SoundFile[state.charIds_88.length+10];
-        Arrays.setAll(soundFilesReplacement, i -> new SoundFile()); 
-        java.lang.System.arraycopy(soundFiles_800bcf80, 0, soundFilesReplacement, 0, soundFiles_800bcf80.length);
-        soundFiles_800bcf80 = soundFilesReplacement;
-      }
     }
 
     state.charIds_88 = new int[charSlotCount];

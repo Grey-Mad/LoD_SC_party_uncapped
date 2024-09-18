@@ -17,6 +17,7 @@ import legend.core.opengl.MatrixStack;
 import legend.core.opengl.Obj;
 import legend.core.opengl.QuadBuilder;
 import legend.core.opengl.ScissorStack;
+import legend.core.spu.Spu;
 import legend.core.spu.Voice;
 import legend.game.combat.Battle;
 import legend.game.combat.bent.BattleEntity27c;
@@ -2050,9 +2051,9 @@ public final class Scus94491BpeSegment {
   public static void charSoundEffectsLoaded(final List<FileData> files, final int charSlot, final BattleEntity27c bent) {
     final int charId = gameState_800babc8.charIds_88[charSlot];
     
-    synchronized(SPU){
-      SPU.removeCombatEffectSoundByBentSlot(bent.bentSlot_274);
-    }
+    
+    SPU.removeCombatEffectSoundByBentSlot(bent.bentSlot_274);
+    
 
     bent.model_148.effectSounds.name = "Char slot %d sound effects".formatted(charSlot);
     bent.model_148.effectSounds.id_02 = charId;
@@ -2101,12 +2102,10 @@ public final class Scus94491BpeSegment {
   public static void loadCharAttackSounds(final int bentIndex, final int type) {
     final BattleEntity27c bent = (BattleEntity27c)scriptStatePtrArr_800bc1c0[bentIndex].innerStruct_00;
    
-    if (bent.model_148.attackSounds.playableSound_10 == null){
-      bent.model_148.attackSounds.playableSound_10 = new PlayableSound0c();
+    if (bent.model_148.effectSounds.playableSound_10 == null){
+      bent.model_148.effectSounds.playableSound_10 = new PlayableSound0c();
     }
-    //sssqUnloadPlayableSound(bent.model_148.attackSounds.playableSound_10);
-    //playableSounds_800c43d0.remove(bent.model_148.effectSounds.playableSound_10);
-    bent.model_148.attackSounds.used_00 = false;
+    bent.model_148.effectSounds.used_00 = false;
 
     loadedDrgnFiles_800bcf78.updateAndGet(val -> val | 0x8);
 
@@ -2131,43 +2130,46 @@ public final class Scus94491BpeSegment {
   @Method(0x8001ce98L)
   public static void charAttackSoundsLoaded(final List<FileData> files, final String soundName, final BattleEntity27c bent) {
 
-  synchronized(SPU) {
-    SPU.removeCombatAttackSoundByBentSlot(bent.bentSlot_274);
-  }
+  
+  SPU.removeCombatEffectSoundByBentSlot(bent.bentSlot_274);
+  
 
 
-    bent.model_148.attackSounds.name = soundName;
-    bent.model_148.attackSounds.indices_08 = SoundFileIndices.load(files.get(1));
-    bent.model_148.attackSounds.id_02 = files.get(0).readShort(0);
+    bent.model_148.effectSounds.name = soundName;
+    bent.model_148.effectSounds.indices_08 = SoundFileIndices.load(files.get(1));
+    bent.model_148.effectSounds.id_02 = files.get(0).readShort(0);
 
     final PlayableSound0c sound = new PlayableSound0c();
-    sound.name = bent.model_148.attackSounds.name;
+    sound.name = bent.model_148.effectSounds.name;
     sound.used_00 = true;
     Sshd sshd = new Sshd(files.get(2));
     sound.sshdPtr_04 = sshd;
+
+    synchronized(Spu.class) {
     sound.soundBufferPtr_08 = SPU.ram.length/8;
-    bent.model_148.attackSpuRamOffest = SPU.ram.length;
+    bent.model_148.effectSpuRamOffest = SPU.ram.length;
+    bent.model_148.effectSpuRam = new byte[files.get(3).getBytes().length];
+    System.arraycopy(files.get(3).getBytes(), 0, bent.model_148.effectSpuRam, 0, files.get(3).getBytes().length);
 
-    System.arraycopy(files.get(3).getBytes(), 0, bent.model_148.attackSpuRam, 0, files.get(3).getBytes().length);
-
+    
     if(sshd.soundBankSize_04 != 0) {
       byte[] spuRamOld = SPU.ram;
-      SPU.ram = new byte[SPU.ram.length + bent.model_148.attackSpuRam.length];
-      System.arraycopy(spuRamOld, 0, SPU.ram, 0, bent.model_148.attackSpuRamOffest);
-      System.arraycopy(bent.model_148.attackSpuRam, 0, SPU.ram, bent.model_148.attackSpuRamOffest, bent.model_148.attackSpuRam.length); 
+      SPU.ram = new byte[SPU.ram.length + bent.model_148.effectSpuRam.length];
+      System.arraycopy(spuRamOld, 0, SPU.ram, 0, bent.model_148.effectSpuRamOffest);
+      System.arraycopy(bent.model_148.effectSpuRam, 0, SPU.ram, bent.model_148.effectSpuRamOffest, bent.model_148.effectSpuRam.length); 
 
-      SPU.attackSoundsBentSlots.add(bent.bentSlot_274);
-      SPU.attackSoundsBentOffsets.add(bent.model_148.attackSpuRamOffest);
-      SPU.attackSpuRamSizes.add(bent.model_148.attackSpuRam.length);
-      SPU.attackPlayableSounds.add(sound);
-    }
+      SPU.effectSoundsBentSlots.add(bent.bentSlot_274);
+      SPU.effectSoundsBentOffsets.add(bent.model_148.effectSpuRamOffest);
+      SPU.effectSpuRamSizes.add(bent.model_148.effectSpuRam.length);
+      SPU.effectPlayableSounds.add(sound);
+    }}
 
-    bent.model_148.attackSounds.playableSound_10 = sound;
-    bent.model_148.attackSounds.used_00 = true;
+    bent.model_148.effectSounds.playableSound_10 = sound;
+    bent.model_148.effectSounds.used_00 = true;
     playableSounds_800c43d0.add(sound);
 
     cleanUpCharAttackSounds();
-    setSoundSequenceVolume(bent.model_148.attackSounds.playableSound_10, 0x7f);
+    setSoundSequenceVolume(bent.model_148.effectSounds.playableSound_10, 0x7f);
 
 
   }
@@ -2310,12 +2312,7 @@ public final class Scus94491BpeSegment {
         v1 = v1 - 17008;
       }
       
-      
-      synchronized(SPU){
-        SPU.removeCombatEffectSoundByBentSlot(bent.bentSlot_274);
-      }
-
-
+      SPU.removeCombatEffectSoundByBentSlot(bent.bentSlot_274);
 
       bent.model_148.effectSounds.name = soundName;
       bent.model_148.effectSounds.indices_08 = SoundFileIndices.load(files.get(1));
@@ -2327,10 +2324,9 @@ public final class Scus94491BpeSegment {
       Sshd sshd = new Sshd(files.get(2));
       sound.sshdPtr_04 = sshd;
 
-      synchronized(SPU){
+      synchronized(Spu.class){
         sound.soundBufferPtr_08 = SPU.ram.length/8;
         bent.model_148.effectSpuRamOffest = SPU.ram.length;
-    
         bent.model_148.effectSpuRam = new byte[files.get(3).size()];
         System.arraycopy(files.get(3).getBytes(), 0, bent.model_148.effectSpuRam, 0, files.get(3).getBytes().length);
     
@@ -2815,8 +2811,9 @@ public final class Scus94491BpeSegment {
     return FlowControl.CONTINUE;
   }
 
-  @Method(0x8001f0dcL)
+  @Method(0x8001f0dcL)//called durning dragoon attack
   public static void monsterAttackSoundsLoaded(final List<FileData> files, final String soundName) {
+
     final SoundFile sound = soundFiles_800bcf80[10];//when is this used
     sound.name = soundName;
     sound.used_00 = true;

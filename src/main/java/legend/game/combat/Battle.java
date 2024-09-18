@@ -15,6 +15,7 @@ import legend.core.memory.Method;
 import legend.core.memory.types.FloatRef;
 import legend.core.opengl.McqBuilder;
 import legend.core.opengl.TmdObjLoader;
+import legend.core.spu.Spu;
 import legend.game.EngineState;
 import legend.game.EngineStateEnum;
 import legend.game.Scus94491BpeSegment;
@@ -238,7 +239,6 @@ import static legend.game.Scus94491BpeSegment_800b.pregameLoadingStage_800bb10c;
 import static legend.game.Scus94491BpeSegment_800b.press_800bee94;
 import static legend.game.Scus94491BpeSegment_800b.queuedSounds_800bd110;
 import static legend.game.Scus94491BpeSegment_800b.scriptStatePtrArr_800bc1c0;
-import static legend.game.Scus94491BpeSegment_800b.soundFiles_800bcf80;
 import static legend.game.Scus94491BpeSegment_800b.spGained_800bc950;
 import static legend.game.Scus94491BpeSegment_800b.stage_800bda0c;
 import static legend.game.Scus94491BpeSegment_800b.stats_800be5f8;
@@ -1112,9 +1112,9 @@ public class Battle extends EngineState {
     final BattleEntity27c bent = state.innerStruct_00;
     
     SoundFile soundFile = bent.model_148.effectSounds;
-    if (type == 1){
+    /*if (type == 1){
        if (((PlayerBattleEntity)bent).isDragoon()){ soundFile = bent.model_148.attackSounds;}
-      }
+      }*/
 
     // Retail bug: one of the Divine Dragon Spirit's attack scripts tries to play soundIndex 10 but there are only 10 elements in the patch/sequence file (DRGN0.1225.1.1)
     if(soundIndex < soundFile.indices_08.length) {
@@ -1348,7 +1348,7 @@ public class Battle extends EngineState {
     final AtomicInteger soundbankOffset = new AtomicInteger();
     int phase = 0;
 
-    for(int i = 0; i < 6; i++) { //why 6? 3monsters + 3 players? or players*2, changing to 14 caused pc to attack allies.
+    for(int i = 0; i < 6; i++) { //5
       final EncounterData38.EnemyInfo08 s5 = fp.encounterData_00.enemyInfo_08[i];
       final int charIndex = s5.index_00 & 0x1ff;
       if(charIndex == 0x1ff) {
@@ -1370,8 +1370,8 @@ public class Battle extends EngineState {
       battleState_8006e398.addMonster(state);
       this.loadMonster(state);
 
-      bent.model_148.attackSounds.id_02 = -1;
-      bent.model_148.attackSounds.used_00 = false;
+      bent.model_148.effectSounds.id_02 = -1;
+      bent.model_148.effectSounds.used_00 = false;
       final int finalMonsterSlot = bent.charId_272;
 
       if (encounterId_800bb0f8 == 390|| encounterId_800bb0f8 == 431 || encounterId_800bb0f8 == 443 ){
@@ -1749,7 +1749,7 @@ public class Battle extends EngineState {
   @Method(0x800c82b8L)
   public void deallocateCombat() {
 
-    synchronized(SPU){
+    synchronized(Spu.class){
       SPU.clearCombatSounds();
     }
 
@@ -6730,7 +6730,8 @@ public class Battle extends EngineState {
     effect.tmdType_04 = null;
     effect.extTmd_08 = null;
     effect.anim_0c = null;
-    effect.model_134 = ((BattleEntity27c)scriptStatePtrArr_800bc1c0[id].innerStruct_00).model_148;
+    //effect.model_134 = ((BattleEntity27c)scriptStatePtrArr_800bc1c0[id].innerStruct_00).model_148;
+    effect.model_134 = effect.model_10;
 
     if((id & 0xff00_0000) == 0x700_0000) {
       this.copyBattleStageModel(effect.model_10, battlePreloadedEntities_1f8003f4.stage_963c);
