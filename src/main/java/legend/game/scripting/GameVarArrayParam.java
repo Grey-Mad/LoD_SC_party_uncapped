@@ -57,8 +57,15 @@ public class GameVarArrayParam extends Param {
       case 135 -> this.readStatusConditionsVar(7, this.arrIndex);
       case 136 -> this.readStatusConditionsVar(8, this.arrIndex);
       case 137 -> this.readStatusConditionsVar(9, this.arrIndex);
-      case 138 -> this.readStatusConditionsVar(9, this.arrIndex);
-      case 139 -> this.readStatusConditionsVar(9, this.arrIndex);
+      case 138 -> this.readStatusConditionsVar(10, this.arrIndex);
+      case 139 -> this.readStatusConditionsVar(11, this.arrIndex);
+      case 140 -> this.readStatusConditionsVar(12, this.arrIndex);
+      case 141 -> this.readStatusConditionsVar(13, this.arrIndex);
+      case 142 -> this.readStatusConditionsVar(14, this.arrIndex);
+      case 143 -> this.readStatusConditionsVar(15, this.arrIndex);
+      case 144 -> this.readStatusConditionsVar(16, this.arrIndex);
+      case 145 -> this.readStatusConditionsVar(17, this.arrIndex);
+      case 146 -> this.readStatusConditionsVar(18, this.arrIndex);
 
       default -> throw new IllegalArgumentException("Unknown game data index " + this.varIndex);
     };
@@ -85,7 +92,7 @@ public class GameVarArrayParam extends Param {
       case 114 -> Scus94491BpeSegment_800b.gameState_800babc8.goods_19c[this.arrIndex] = val;
       case 126 -> Scus94491BpeSegment_800b.gameState_800babc8._1a4[this.arrIndex] = val;
       case 127 -> Scus94491BpeSegment_800b.gameState_800babc8.chestFlags_1c4[this.arrIndex] = val;
-      case 128 -> this.writeStatusConditionsVar(0, this.arrIndex, val);
+      case 128 -> this.writeStatusConditionsVar(0, this.arrIndex, val); //needs pc count + monster count
       case 129 -> this.writeStatusConditionsVar(1, this.arrIndex, val);
       case 130 -> this.writeStatusConditionsVar(2, this.arrIndex, val);
       case 131 -> this.writeStatusConditionsVar(3, this.arrIndex, val);
@@ -97,6 +104,13 @@ public class GameVarArrayParam extends Param {
       case 137 -> this.writeStatusConditionsVar(9, this.arrIndex, val);
       case 138 -> this.writeStatusConditionsVar(10, this.arrIndex, val);
       case 139 -> this.writeStatusConditionsVar(11, this.arrIndex, val);
+      case 140 -> this.writeStatusConditionsVar(12, this.arrIndex, val);
+      case 141 -> this.writeStatusConditionsVar(13, this.arrIndex, val);
+      case 142 -> this.writeStatusConditionsVar(14, this.arrIndex, val);
+      case 143 -> this.writeStatusConditionsVar(15, this.arrIndex, val);
+      case 144 -> this.writeStatusConditionsVar(16, this.arrIndex, val);
+      case 145 -> this.writeStatusConditionsVar(17, this.arrIndex, val);
+      case 146 -> this.writeStatusConditionsVar(18, this.arrIndex, val);
 
       default -> throw new IllegalArgumentException("Unknown game data index " + this.varIndex);
     }
@@ -519,9 +533,6 @@ public class GameVarArrayParam extends Param {
       case 66 -> Scus94491BpeSegment_8006.battleState_8006e398.counterAttackStage_288 = val;
       case 67 -> Scus94491BpeSegment_8006.battleState_8006e398._28c = val;
       case 68 -> Scus94491BpeSegment_8006.battleState_8006e398._290 = val;
-      /*case 69 -> Scus94491BpeSegment_8006.battleState_8006e398._294[0] = val;
-      case 70 -> Scus94491BpeSegment_8006.battleState_8006e398._294[1] = val;
-      case 71 -> Scus94491BpeSegment_8006.battleState_8006e398._294[2] = val;*/
       /*case 69 -> Scus94491BpeSegment_8006.battleState_8006e398.dragoonTurnsRemaining_294[0] = val;
       case 70 -> Scus94491BpeSegment_8006.battleState_8006e398.dragoonTurnsRemaining_294[1] = val;
       case 71 -> Scus94491BpeSegment_8006.battleState_8006e398.dragoonTurnsRemaining_294[2] = val;*/

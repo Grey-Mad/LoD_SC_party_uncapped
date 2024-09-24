@@ -461,13 +461,13 @@ public class Battle extends EngineState {
   public static final int[] postCombatActionFrames_800fa6d0 = {0, 30, 45, 30, 45, 30};
 
   public int mcqColour_800fa6dc = 0x80;
-  public static final Rect4i[] combatantTimRects_800fa6e0 = {
+  /*public static final Rect4i[] combatantTimRects_800fa6e0 = {
     new Rect4i(0, 0, 0, 0), new Rect4i(320, 256, 64, 256),
     new Rect4i(384, 256, 64, 256), new Rect4i(448, 256, 64, 256),
     new Rect4i(512, 256, 64, 256), new Rect4i(576, 256, 64, 256),
     new Rect4i(640, 256, 64, 256), new Rect4i(512, 0, 64, 256),
     new Rect4i(576, 0, 64, 256), new Rect4i(640, 0, 64, 256),
-  };
+  };*/
 
   public static final Random seed_800fa754 = new Random();
 
@@ -1232,6 +1232,7 @@ public class Battle extends EngineState {
 
   @Method(0x800c7524L)
   public void initBattle() {
+    //greytodo read max mosters in encounter and set vals in battlestate accordingly
     this.FUN_800c8624();
 
     gameState_800babc8._b4++;
@@ -1334,8 +1335,16 @@ public class Battle extends EngineState {
     final BattlePreloadedEntities_18cb0 fp = battlePreloadedEntities_1f8003f4;
 
     //LAB_801095a0
-    for(int i = 0; i < 3; i++) {
-      final int enemyIndex = fp.encounterData_00.enemyIndices_00[i] & 0x1ff;
+    //Scus94491BpeSegment_8006.battleState_8006e398.setMonsterBentLimit(8);
+    for(int i = 0; i < 3; i++) { //greytodo 
+      int enemyIndex = fp.encounterData_00.enemyIndices_00[i] & 0x1ff;//[i]
+      /*if (i == 1){enemyIndex = 1;};
+      if (i == 2){enemyIndex = 2;};
+      if (i == 3){enemyIndex = 3;};
+      if (i == 4){enemyIndex = 4;};
+      if (i == 5){enemyIndex = 5;};
+      if (i == 6){enemyIndex = 6;};
+      if (i == 7){enemyIndex = 7;};*/
       if(enemyIndex == 0x1ff) {
         break;
       }
@@ -1348,9 +1357,22 @@ public class Battle extends EngineState {
     final AtomicInteger soundbankOffset = new AtomicInteger();
     int phase = 0;
 
-    for(int i = 0; i < 6; i++) { //5
+
+    for(int i = 0; i < 6; i++) { //6
+      
       final EncounterData38.EnemyInfo08 s5 = fp.encounterData_00.enemyInfo_08[i];
-      final int charIndex = s5.index_00 & 0x1ff;
+      //final EncounterData38.EnemyInfo08 s5 = fp.encounterData_00.enemyInfo_08[0];
+      int charIndex = s5.index_00 & 0x1ff;
+      
+      /*if (i == 1){charIndex = 1;s5.pos_02.z = 0x500;};
+      if (i == 2){charIndex = 2;s5.pos_02.z = 0x0;};
+      if (i == 3){charIndex = 3;s5.pos_02.z = -0x500;};
+      if (i == 4){charIndex = 4;s5.pos_02.z = -0x500*2;};
+      if (i == 5){charIndex = 5;s5.pos_02.z =  0x500*2;};
+      if (i == 6){charIndex = 6;s5.pos_02.z =  0x500*3;};
+      if (i == 7){charIndex = 7;s5.pos_02.z = -0x500*3;};*/
+
+
       if(charIndex == 0x1ff) {
         break;
       }
@@ -1421,9 +1443,11 @@ public class Battle extends EngineState {
     //LAB_800fbe70
     for(int charSlot = 0; charSlot < charCount; charSlot++) {
       final int charIndex = gameState_800babc8.charIds_88[charSlot];
-      final String name = "Char ID " + charIndex + " (bent + " + (charSlot + 16) + ')';//changed 6 to 16, if this value is too low there are issues, needed min of 15 for virage 2.
-      final PlayerBattleEntity bent = new PlayerBattleEntity(name, charSlot + 16, this.playerBattleScript_800c66fc);
-      final ScriptState<PlayerBattleEntity> state = SCRIPTS.allocateScriptState(charSlot + 16, name, bent);
+      //final ScriptState<PlayerBattleEntity> = SCRIPTS.allocateScriptState(name, bent);
+      final int freeScript = SCRIPTS.findFreeScriptState();
+      final String name = "Char ID " + charIndex + " (bent + " + (freeScript) + ')';//changed 6 to 16, if this value is too low there are issues, needed min of 15 for virage 2.
+      final PlayerBattleEntity bent = new PlayerBattleEntity(name, freeScript, this.playerBattleScript_800c66fc);
+      final ScriptState<PlayerBattleEntity> state = SCRIPTS.allocateScriptState(freeScript, name, bent);
       state.setTicker(bent::bentLoadingTicker);
       state.setDestructor(bent::bentDestructor);
       bent.element = characterElements_800c706c[charIndex].get();
@@ -1865,6 +1889,8 @@ public class Battle extends EngineState {
   public void FUN_800c8624() {
     battlePreloadedEntities_1f8003f4 = new BattlePreloadedEntities_18cb0();
     battleState_8006e398 = new BattleStateEf4();
+    //battleState_8006e398.setMonsterBentLimit(battleState_8006e398.monsterBents_e50.length);
+
     this.targetBents_800c71f0 = new ScriptState[][] {battleState_8006e398.playerBents_e40, battleState_8006e398.aliveMonsterBents_ebc, battleState_8006e398.aliveBents_e78};
   }
 
@@ -6576,7 +6602,7 @@ public class Battle extends EngineState {
   @Method(0x800e9854L)
   public FlowControl FUN_800e9854(final RunningScript<? extends BattleObject> script) {
     final DeffPart.AnimatedTmdType animatedTmdType = (DeffPart.AnimatedTmdType)deffManager_800c693c.getDeffPart(script.params_20[1].get() | 0x200_0000);
-
+    
     final ModelEffect13c effect = new ModelEffect13c("Script " + script.scriptState_04.index);
 
     final ScriptState<EffectManagerData6c<EffectManagerParams.AnimType>> state = allocateEffectManager(
@@ -6595,7 +6621,6 @@ public class Battle extends EngineState {
     effect.anim_0c = animatedTmdType.anim_14;
     effect.model_134 = effect.model_10;
     final Model124 model = effect.model_134;
-    //find way to add texture to .model_134
 
     // Retail bug? Trying to read textureInfo from a DEFF container that doesn't have it
     if(animatedTmdType.textureInfo_08 != null) {

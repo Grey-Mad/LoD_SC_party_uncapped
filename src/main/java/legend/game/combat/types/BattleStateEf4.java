@@ -19,7 +19,8 @@ import static legend.game.Scus94491BpeSegment.simpleRand;
 import static legend.game.Scus94491BpeSegment_800b.gameState_800babc8;
 
 public class BattleStateEf4 {
-  public final StatusConditions20[] statusConditions_00 = new StatusConditions20[12]; //greytodo: 7+5? players + monsters?
+  public final StatusConditions20[] statusConditions_00 = new StatusConditions20[15]; //players + monsters
+  public int monsterBentsLength = 8;
 
   public int _180;
   /**
@@ -216,7 +217,7 @@ public class BattleStateEf4 {
   public int _378;
   public int _37c;
   public int scriptEffectTableJumpIndex_380;
-  public final Status04[] status_384 = new Status04[5  + gameState_800babc8.charIds_88.length];
+  public Status04[] status_384 = new Status04[monsterBentsLength  + gameState_800babc8.charIds_88.length];
   public int _384Offset = _34cOffset + _34c.length;
   public int _3a4;
   public int _3a8;
@@ -275,7 +276,7 @@ public class BattleStateEf4 {
   public int _46c;
   /** Used in player combat script, one bit for each player bent slot */
   public int _470;
-  public final AdditionExtra04[] additionExtra_474 = new AdditionExtra04[5  + gameState_800babc8.charIds_88.length];
+  public AdditionExtra04[] additionExtra_474 = new AdditionExtra04[monsterBentsLength  + gameState_800babc8.charIds_88.length];
   public int _474Offset = _460Offset + _460.length;
 
   //public int playerCombatantBentIndexOffset = _474Offset + additionExtra_474;
@@ -829,5 +830,13 @@ public class BattleStateEf4 {
 
     //LAB_800cada8
     asset.state_04 = 0;
+  }
+
+  public void setMonsterBentLimit(final int limit) {
+    status_384 = new Status04[limit  + gameState_800babc8.charIds_88.length]; 
+    _384Offset = _34cOffset + _34c.length; 
+    _460Offset = _384Offset + status_384.length; 
+    additionExtra_474 = new AdditionExtra04[limit  + gameState_800babc8.charIds_88.length]; 
+    _474Offset = _460Offset + _460.length;
   }
 }

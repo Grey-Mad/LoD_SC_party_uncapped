@@ -106,7 +106,7 @@ public class ScriptManager {
     }
   }
 
-  private int findFreeScriptState() {
+  public int findFreeScriptState() {
     this.upperBound++;
 
     if(this.upperBound >= scriptStatePtrArr_800bc1c0.length) {
