@@ -3123,7 +3123,7 @@ public class Battle extends EngineState {
     final float x = script.params_20[3].get() - vec.x;
     final float y = script.params_20[4].get() - vec.y;
     final float z = script.params_20[5].get() - vec.z;
-    this.FUN_800cdc1c(state, vec.x, vec.y, vec.z, x, y, z, 0, Math.round(Math.sqrt(x * x + y * y + z * z) / script.params_20[2].get()));
+    this.FUN_800cdc1c(state, vec.x, vec.y, vec.z, script.params_20[3].get(), script.params_20[4].get(), script.params_20[5].get(), 0, Math.round(Math.sqrt(x * x + y * y + z * z) / script.params_20[2].get()));
     state.setTempTicker(this::FUN_800cb250);
     return FlowControl.CONTINUE;
   }
@@ -7970,7 +7970,7 @@ public class Battle extends EngineState {
       //LAB_800f2224
       attacker.status_0e |= 0x800;
     } else {
-      final Element attackElement = magicType == 1 ? attacker.spell_94.element_08 : attacker.item_d4.getAttackElement();
+      final Element attackElement = magicType == 1 ? attacker.spell_94.element_08.get() : attacker.item_d4.getAttackElement();
       final AttackType attackType = magicType == 1 ? AttackType.DRAGOON_MAGIC_STATUS_ITEMS : AttackType.ITEM_MAGIC;
 
       //LAB_800f2238
@@ -8035,7 +8035,7 @@ public class Battle extends EngineState {
       attacker.status_0e &= 0xf7ff;
     } else {
       damage = defender.applyDamageResistanceAndImmunity(damage, AttackType.DRAGOON_MAGIC_STATUS_ITEMS);
-      damage = defender.applyElementalResistanceAndImmunity(damage, attacker.spell_94.element_08);
+      damage = defender.applyElementalResistanceAndImmunity(damage, attacker.spell_94.element_08.get());
     }
 
     damage = EVENTS.postEvent(new AttackEvent(attacker, defender, AttackType.DRAGOON_MAGIC_STATUS_ITEMS, damage)).damage;
