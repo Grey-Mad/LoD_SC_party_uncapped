@@ -1,6 +1,12 @@
 package legend.game.modding.coremod.config;
 
 import static legend.game.Scus94491BpeSegment_800b.gameState_800babc8;
+import static legend.game.Scus94491BpeSegment_800b.livingCharIds_800bc968;
+import static legend.game.Scus94491BpeSegment_800b.spGained_800bc950;
+import static legend.game.Scus94491BpeSegment_800b.unlockedUltimateAddition_800bc910;
+
+import java.util.ArrayList;
+import java.util.Arrays;
 
 import legend.core.IoHelper;
 import legend.core.MathHelper;
@@ -61,11 +67,8 @@ public class PartyCombatantSizeEntry extends ConfigEntry<Integer> {
   }
 
   private static void updateStateGamestateCharIdsDepentedValues() { 
-    
-    //unlockedUltimateAddition_800bc910 = new boolean[gameState_800babc8.charIds_88.length];
-    //spGained_800bc950 = new int[gameState_800babc8.charIds_88.length];
-    //livingCharIds_800bc968 = new int[gameState_800babc8.charIds_88.length];
-
-    
+    unlockedUltimateAddition_800bc910=new ArrayList<Boolean>(Arrays.asList(new Boolean[gameState_800babc8.charIds_88.length]));
+    spGained_800bc950=new ArrayList<Integer>(Arrays.asList(new Integer[gameState_800babc8.charIds_88.length]));
+    livingCharIds_800bc968=new ArrayList<Integer>(Arrays.asList(new Integer[gameState_800babc8.charIds_88.length]));    
   }
 }
