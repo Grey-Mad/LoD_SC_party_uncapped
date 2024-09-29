@@ -3944,13 +3944,16 @@ public class Battle extends EngineState {
       //LAB_800cd8fc
       return FlowControl.PAUSE_AND_REWIND;
     }
+    
+    final int combatantIndex = script.params_20[0].get();
+    if (combatantIndex == -1){
+      return FlowControl.PAUSE;
+    }
+    //int getBentIndexFromCombatantIndex(combatantIndex);
+    final BattleEntity27c bent = battleState_8006e398.allBents_e0c[combatantIndex].innerStruct_00;
 
-    //final int combatantIndex = script.params_20[0].get();
-    //final CombatantStruct1a8 combatant = combatantIndex >= 0 ? this.combatants_8005e398[combatantIndex] : null; // Not sure if the else case actually happens
-    
-    final BattleEntity27c bent = (BattleEntity27c)scriptStatePtrArr_800bc1c0[script.params_20[0].get()].innerStruct_00;
-    
     this.loadCombatantTim(bent, a1.data_00);
+    
 
     //LAB_800cd900
     return FlowControl.PAUSE;
