@@ -9,6 +9,7 @@ import legend.game.modding.coremod.config.AdditionModeConfigEntry;
 import legend.game.modding.coremod.config.AdditionOverlayConfigEntry;
 import legend.game.modding.coremod.config.AllowWidescreenConfigEntry;
 import legend.game.modding.coremod.config.AudioDeviceConfig;
+import legend.game.modding.coremod.config.BattleTransitionModeConfigEntry;
 import legend.game.modding.coremod.config.ControllerConfigEntry;
 import legend.game.modding.coremod.config.ControllerDeadzoneConfigEntry;
 import legend.game.modding.coremod.config.ControllerKeybindConfigEntry;
@@ -120,6 +121,7 @@ public class CoreMod {
   public static final RegistryDelegate<PartyCombatantSizeEntry> PLAYER_COMBATANT_SIZE_CONFIG = CONFIG_REGISTRAR.register("party_combat_size", PartyCombatantSizeEntry::new);
   public static final RegistryDelegate<MashModeConfigEntry> MASH_MODE_CONFIG = CONFIG_REGISTRAR.register("mash_mode", MashModeConfigEntry::new);
   public static final RegistryDelegate<SecondaryCharacterXpMultiplierConfigEntry> SECONDARY_CHARACTER_XP_MULTIPLIER_CONFIG = CONFIG_REGISTRAR.register("secondary_character_xp_multiplier", SecondaryCharacterXpMultiplierConfigEntry::new);
+  public static final RegistryDelegate<BattleTransitionModeConfigEntry> BATTLE_TRANSITION_MODE_CONFIG = CONFIG_REGISTRAR.register("battle_transition_mode", BattleTransitionModeConfigEntry::new);
 
   public static final Formula<Integer, Integer> PHYSICAL_DAMAGE_FORMULA = Formula.make(PhysicalDamageFormula::calculatePhysicalDamage, builder -> builder
     .then(PhysicalDamageFormula::applyElementalInteractions)
