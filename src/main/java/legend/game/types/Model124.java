@@ -6,14 +6,9 @@ import legend.game.combat.deff.Cmb;
 import legend.game.combat.deff.Lmb;
 import legend.game.tmd.UvAdjustmentMetrics14;
 import org.joml.Vector3f;
-import legend.core.opengl.Texture;
 import java.util.Arrays;
 
-import static org.lwjgl.opengl.GL30C.GL_R32UI;
-import static org.lwjgl.opengl.GL30C.GL_RED_INTEGER;
-import static org.lwjgl.opengl.GL11C.GL_UNSIGNED_INT;
-import static org.lwjgl.opengl.GL12C.GL_UNSIGNED_INT_8_8_8_8_REV;
-import static org.lwjgl.opengl.GL11C.GL_RGBA;
+
 import legend.game.sound.SoundFile;
 
 
@@ -87,13 +82,6 @@ public class Model124 {
   public final Vector3f shadowSize_10c = new Vector3f();
   public final Vector3f shadowOffset_118 = new Vector3f();
 
-  public int textureW;
-  public int textureH;
-  public int[] textureVram24 = new int[256 * 64];
-  public int[] textureVram15 = new int[256 * 64];
-  public Texture texture15;
-  public Texture texture24;
-  
 
 
   public SoundFile effectSounds = new SoundFile();
@@ -186,11 +174,7 @@ public class Model124 {
     this.tpage_108 = other.tpage_108;
     this.shadowSize_10c.set(other.shadowSize_10c);
     this.shadowOffset_118.set(other.shadowOffset_118);
-    this.textureH = other.textureH;
-    this.textureW = other.textureW;
-    this.textureVram15 = other.textureVram15;
-    this.textureVram24 = other.textureVram24;
-    this.createTextureFromTim();
+
 
   }
 
@@ -202,22 +186,5 @@ public class Model124 {
     }
   }
 
-  public void createTextureFromTim() {
-    this.texture15= Texture.create(builder -> {
-      builder.size(this.textureW, this.textureH);
-      builder.data(this.textureVram15, this.textureW, this.textureH);
-      builder.internalFormat(GL_R32UI);
-      builder.dataFormat(GL_RED_INTEGER);
-      builder.dataType(GL_UNSIGNED_INT);
-    });
 
-    this.texture24 = Texture.create(builder -> {
-      builder.size(this.textureW, this.textureH);
-      builder.data(this.textureVram24, this.textureW, this.textureH);
-      builder.internalFormat(GL_RGBA);
-      builder.dataFormat(GL_RGBA);
-      builder.dataType(GL_UNSIGNED_INT_8_8_8_8_REV);
-    });
-
-  }
 }

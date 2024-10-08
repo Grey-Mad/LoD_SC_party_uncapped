@@ -23,7 +23,6 @@ import legend.game.combat.Battle;
 import legend.game.combat.BattleTransitionMode;
 import legend.game.combat.bent.BattleEntity27c;
 import legend.game.combat.environment.BattlePreloadedEntities_18cb0;
-import legend.game.combat.environment.EncounterData38;
 import legend.game.combat.environment.StageData2c;
 import legend.game.debugger.Debugger;
 import legend.game.inventory.WhichMenu;
@@ -49,26 +48,21 @@ import legend.game.types.BattleUiParts;
 import legend.game.types.CharacterData2c;
 import legend.game.types.Flags;
 import legend.game.types.McqHeader;
-import legend.game.types.Model124;
 import legend.game.types.OverlayStruct;
 import legend.game.types.TextboxBorderMetrics0c;
 import legend.game.types.Translucency;
 import legend.game.unpacker.FileData;
 import legend.game.unpacker.Unpacker;
-import legend.game.combat.bent.MonsterBattleEntity;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import javax.annotation.Nullable;
 
-import java.io.ByteArrayOutputStream;
-import java.util.ArrayList;
 import java.util.EnumMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
@@ -139,8 +133,6 @@ import static legend.game.Scus94491BpeSegment_8004.width_8004dd34;
 //import static legend.game.Scus94491BpeSegment_8005.charSlotSpuOffsets_80050190;
 import static legend.game.Scus94491BpeSegment_8005.combatMusicFileIndices_800501bc;
 import static legend.game.Scus94491BpeSegment_8005.combatSoundEffectsTypes_8005019c;
-import static legend.game.Scus94491BpeSegment_8005.monsterSoundFileIndices_800500e8;
-import static legend.game.Scus94491BpeSegment_8006.battleState_8006e398;
 import static legend.game.Scus94491BpeSegment_8007.clearRed_8007a3a8;
 import static legend.game.Scus94491BpeSegment_8007.vsyncMode_8007a3b8;
 import static legend.game.Scus94491BpeSegment_800b._800bc9a8;
@@ -180,7 +172,7 @@ import static org.lwjgl.glfw.GLFW.GLFW_KEY_F12;
 import static org.lwjgl.glfw.GLFW.GLFW_KEY_Q;
 import static org.lwjgl.glfw.GLFW.GLFW_KEY_W;
 import static org.lwjgl.glfw.GLFW.GLFW_MOD_CONTROL;
-import static org.lwjgl.opengl.GL30C.nglUniform1uiv;
+
 
 public final class Scus94491BpeSegment {
   private Scus94491BpeSegment() { }
@@ -2083,7 +2075,8 @@ public final class Scus94491BpeSegment {
   public static void charSoundEffectsLoaded(final List<FileData> files, final int charSlot, final BattleEntity27c bent) {
     final int charId = gameState_800babc8.charIds_88[charSlot];
     
-    
+    //greytodo: fix forever expanding spu, would 
+    synchronized(Spu.class){
     SPU.removeCombatEffectSoundByBentSlot(bent.bentSlot_274);
     
 
@@ -2129,6 +2122,7 @@ public final class Scus94491BpeSegment {
       FUN_8001e8d4();
     }
   }
+  }
 
   @Method(0x8001cce8L)
   public static void loadCharAttackSounds(final int bentIndex, final int type) {
@@ -2161,50 +2155,44 @@ public final class Scus94491BpeSegment {
 
   @Method(0x8001ce98L)
   public static void charAttackSoundsLoaded(final List<FileData> files, final String soundName, final BattleEntity27c bent) {
+    synchronized(Spu.class){
+      SPU.removeCombatEffectSoundByBentSlot(bent.bentSlot_274);
 
-  
-  SPU.removeCombatEffectSoundByBentSlot(bent.bentSlot_274);
-  
+      bent.model_148.effectSounds.name = soundName;
+      bent.model_148.effectSounds.indices_08 = SoundFileIndices.load(files.get(1));
+      bent.model_148.effectSounds.id_02 = files.get(0).readShort(0);
 
+      final PlayableSound0c sound = new PlayableSound0c();
+      sound.name = bent.model_148.effectSounds.name;
+      sound.used_00 = true;
+      Sshd sshd = new Sshd(files.get(2));
+      sound.sshdPtr_04 = sshd;
 
-    bent.model_148.effectSounds.name = soundName;
-    bent.model_148.effectSounds.indices_08 = SoundFileIndices.load(files.get(1));
-    bent.model_148.effectSounds.id_02 = files.get(0).readShort(0);
+      sound.soundBufferPtr_08 = SPU.ram.length/8;
+      bent.model_148.effectSpuRamOffest = SPU.ram.length;
+      bent.model_148.effectSpuRam = new byte[files.get(3).getBytes().length];
+      System.arraycopy(files.get(3).getBytes(), 0, bent.model_148.effectSpuRam, 0, files.get(3).getBytes().length);
 
-    final PlayableSound0c sound = new PlayableSound0c();
-    sound.name = bent.model_148.effectSounds.name;
-    sound.used_00 = true;
-    Sshd sshd = new Sshd(files.get(2));
-    sound.sshdPtr_04 = sshd;
+      if(sshd.soundBankSize_04 != 0) {
+        byte[] spuRamOld = SPU.ram;
+        SPU.ram = new byte[SPU.ram.length + bent.model_148.effectSpuRam.length];
+        System.arraycopy(spuRamOld, 0, SPU.ram, 0, bent.model_148.effectSpuRamOffest);
+        System.arraycopy(bent.model_148.effectSpuRam, 0, SPU.ram, bent.model_148.effectSpuRamOffest, bent.model_148.effectSpuRam.length); 
 
-    synchronized(Spu.class) {
-    sound.soundBufferPtr_08 = SPU.ram.length/8;
-    bent.model_148.effectSpuRamOffest = SPU.ram.length;
-    bent.model_148.effectSpuRam = new byte[files.get(3).getBytes().length];
-    System.arraycopy(files.get(3).getBytes(), 0, bent.model_148.effectSpuRam, 0, files.get(3).getBytes().length);
+        SPU.effectSoundsBentSlots.add(bent.bentSlot_274);
+        SPU.effectSoundsBentOffsets.add(bent.model_148.effectSpuRamOffest);
+        SPU.effectSpuRamSizes.add(bent.model_148.effectSpuRam.length);
+        SPU.effectPlayableSounds.add(sound);
+      }
 
-    
-    if(sshd.soundBankSize_04 != 0) {
-      byte[] spuRamOld = SPU.ram;
-      SPU.ram = new byte[SPU.ram.length + bent.model_148.effectSpuRam.length];
-      System.arraycopy(spuRamOld, 0, SPU.ram, 0, bent.model_148.effectSpuRamOffest);
-      System.arraycopy(bent.model_148.effectSpuRam, 0, SPU.ram, bent.model_148.effectSpuRamOffest, bent.model_148.effectSpuRam.length); 
+      bent.model_148.effectSounds.playableSound_10 = sound;
+      bent.model_148.effectSounds.used_00 = true;
+      playableSounds_800c43d0.add(sound);
 
-      SPU.effectSoundsBentSlots.add(bent.bentSlot_274);
-      SPU.effectSoundsBentOffsets.add(bent.model_148.effectSpuRamOffest);
-      SPU.effectSpuRamSizes.add(bent.model_148.effectSpuRam.length);
-      SPU.effectPlayableSounds.add(sound);
-    }}
-
-    bent.model_148.effectSounds.playableSound_10 = sound;
-    bent.model_148.effectSounds.used_00 = true;
-    playableSounds_800c43d0.add(sound);
-
-    cleanUpCharAttackSounds();
-    setSoundSequenceVolume(bent.model_148.effectSounds.playableSound_10, 0x7f);
-
-
+      cleanUpCharAttackSounds();
+      setSoundSequenceVolume(bent.model_148.effectSounds.playableSound_10, 0x7f);
   }
+}
 
   /**
    * <ol start="0">
@@ -2245,91 +2233,7 @@ public final class Scus94491BpeSegment {
     //LAB_8001d1b0
   }
 
-  /*@Method(0x8001d1c4L)
-  public static void loadMonsterSounds() {
-    final int encounterId = encounterId_800bb0f8;
-    switch(encounterId) {
-      case 390 -> loadBattlePhaseSounds("doel", 0);
-      case 431 -> loadBattlePhaseSounds("zackwell", 0);
-      case 443 -> loadBattlePhaseSounds("melbu", 0);
-      default -> loadEncounterSounds(encounterId);
-    }
-  }*/
 
-  @Method(0x8001d2d8L)
-  public static void loadMonsterSoundsWithPhases() {
-    switch(encounterId_800bb0f8) {
-      case 390 -> loadBattlePhaseSounds("doel", battleState_8006e398.battlePhase_eec);
-      case 431 -> loadBattlePhaseSounds("zackwell", battleState_8006e398.battlePhase_eec);
-      case 443 -> loadBattlePhaseSounds("melbu", battleState_8006e398.battlePhase_eec);
-      default -> loadEncounterSounds(encounterId_800bb0f8);
-    }
-  }
-
-  private static void loadBattlePhaseSounds(final String boss, final int phase) {
-    loadedDrgnFiles_800bcf78.updateAndGet(val -> val | 0x10);
-    final AtomicInteger soundbankOffset = new AtomicInteger();
-    final AtomicInteger count = new AtomicInteger(0);
-
-    for(int monsterSlot = 0; monsterSlot < 4; monsterSlot++) {
-      if(Unpacker.exists("monsters/phases/%s/%d/%d".formatted(boss, phase, monsterSlot))) {
-        count.incrementAndGet();
-      }
-    }
-
-    for(int monsterSlot = 0; monsterSlot < 4; monsterSlot++) {
-      final SoundFile file = soundFiles_800bcf80[monsterSoundFileIndices_800500e8[monsterSlot]];
-      file.id_02 = -1;
-      file.used_00 = false;
-
-      if(Unpacker.exists("monsters/phases/%s/%d/%d".formatted(boss, phase, monsterSlot))) {
-        final int finalMonsterSlot = monsterSlot;
-        loadDir("monsters/phases/%s/%d/%d".formatted(boss, phase, monsterSlot), files -> {
-          final int offset = soundbankOffset.getAndUpdate(val -> val + MathHelper.roundUp(files.get(3).size(), 0x10));
-          //monsterSoundLoaded(files, "Monster slot %d (file %s/%d)".formatted(finalMonsterSlot, boss, phase), finalMonsterSlot, offset);
-
-          if(count.decrementAndGet() == 0) {
-            loadedDrgnFiles_800bcf78.updateAndGet(val -> val & ~0x10);
-          }
-        });
-      }
-    }
-  }
-
-  private static void loadEncounterSounds(final int encounterId) {
-    loadedDrgnFiles_800bcf78.updateAndGet(val -> val | 0x10);
-
-    loadFile("encounters", file -> {
-      final AtomicInteger soundbankOffset = new AtomicInteger();
-      final AtomicInteger count = new AtomicInteger(0);
-
-      final EncounterData38 encounterData = new EncounterData38(file.getBytes(), encounterId * 0x38);
-
-      for(int monsterSlot = 0; monsterSlot < 4; monsterSlot++) {
-        if(monsterSlot < encounterData.enemyIndices_00.length && encounterData.enemyIndices_00[monsterSlot] != -1 && Unpacker.exists("monsters/" + encounterData.enemyIndices_00[monsterSlot] + "/sounds")) {
-          count.incrementAndGet();
-        }
-      }
-
-      for(int monsterSlot = 0; monsterSlot < 4; monsterSlot++) {
-        final SoundFile soundFile = soundFiles_800bcf80[monsterSoundFileIndices_800500e8[monsterSlot]];
-        soundFile.id_02 = -1;
-        soundFile.used_00 = false;
-
-        if(monsterSlot < encounterData.enemyIndices_00.length && encounterData.enemyIndices_00[monsterSlot] != -1 && Unpacker.exists("monsters/" + encounterData.enemyIndices_00[monsterSlot] + "/sounds")) {
-          final int finalMonsterSlot = monsterSlot;
-          loadDir("monsters/" + encounterData.enemyIndices_00[monsterSlot] + "/sounds", files -> {
-            final int offset = soundbankOffset.getAndUpdate(val -> val + MathHelper.roundUp(files.get(3).size(), 0x10));
-            //monsterSoundLoaded(files, "Monster slot %d (file %d)".formatted(finalMonsterSlot, encounterData.enemyIndices_00[finalMonsterSlot]), finalMonsterSlot, offset);
-
-            if(count.decrementAndGet() == 0) {
-              loadedDrgnFiles_800bcf78.updateAndGet(val -> val & ~0x10);
-            }
-          });
-        }
-      }
-    });
-  }
 
   @Method(0x8001d51cL)
   public static void monsterSoundLoaded(final List<FileData> files, final String soundName, final int monsterSlot, final int soundBufferOffset,  final BattleEntity27c bent) {
@@ -2564,21 +2468,7 @@ public final class Scus94491BpeSegment {
       }
 
       case 1 -> {
-        /*int charIds_88Length; 
-        if (gameState_800babc8 == null){
-          charIds_88Length = 3;
-        }else{
-          charIds_88Length =gameState_800babc8.charIds_88.length;
-        }
-        
-        for(int charSlot = 0; charSlot <  charIds_88Length; charSlot++) {
-          final int index = characterSoundFileIndices_800500f8[charSlot];
 
-          if((soundFiles_800bcf80.length > index) && soundFiles_800bcf80[index].used_00) {
-            sssqUnloadPlayableSound(soundFiles_800bcf80[index].playableSound_10);
-            soundFiles_800bcf80[index].used_00 = false;
-          }
-        }*/
       }
 
       case 2 -> {
@@ -2589,17 +2479,7 @@ public final class Scus94491BpeSegment {
       }
 
       case 3 -> {
-        //LAB_8001e3dc
-        /*for(int monsterIndex = 0; monsterIndex < 4; monsterIndex++) {
-          final int index = monsterSoundFileIndices_800500e8[monsterIndex];
-
-          if(soundFiles_800bcf80[index].used_00) {
-            sssqUnloadPlayableSound(soundFiles_800bcf80[index].playableSound_10);
-            soundFiles_800bcf80[index].used_00 = false;
-          }
-
-          //LAB_8001e450
-        }*/
+       
       }
 
       case 4 -> {

@@ -1,0 +1,105 @@
+--- original
++++ modified
+@@ -456,3 +456,6 @@
+ call 618, stor[18], inl[:LABEL_212]
+-mov stor[18], var[45][194]
++mov 0x1, stor[10]
++add var[45][196], stor[10]
++add var[45][191], stor[10]
++mov stor[18], var[45][stor[10]]
+ mov var[45][11], stor[10]
+@@ -471,3 +471,6 @@
+ call 618, stor[18], inl[:LABEL_212]
+-mov stor[18], var[45][196]
++mov 0x3, stor[31]
++add var[45][196], stor[31]
++add var[45][191], stor[31]
++mov stor[18], var[45][stor[31]]
+ mov var[45][14], stor[31]
+@@ -518,3 +518,6 @@
+ yield
+-mov var[45][194], stor[18]
++mov 0x1, stor[8]
++add var[45][196], stor[8]
++add var[45][191], stor[8]
++mov var[45][stor[8]], stor[18]
+ deallocate_other stor[18]
+@@ -556,3 +556,6 @@
+ call 138, stor[11], 0x0
+-mov var[45][196], stor[18]
++mov 0x3, stor[12]
++add var[45][196], stor[12]
++add var[45][191], stor[12]
++mov var[45][stor[12]], stor[18]
+ call 551, stor[18], 0xffffffff, 0x0, 0x0, 0x0
+@@ -689,3 +689,6 @@
+ mov stor[18], var[45][201]
+-mov var[45][196], stor[18]
++mov 0x3, stor[31]
++add var[45][196], stor[31]
++add var[45][191], stor[31]
++mov var[45][stor[31]], stor[18]
+ call 551, stor[18], 0xffffffff, 0x40, 0x40, 0x40
+@@ -758,3 +758,6 @@
+ call 545, stor[18], stor[29], 0x0, 0x0, 0x0
+-mov stor[18], var[45][194]
++mov 0x1, stor[13]
++add var[45][196], stor[13]
++add var[45][191], stor[13]
++mov stor[18], var[45][stor[13]]
+ mov var[45][13], stor[30]
+@@ -863,3 +863,6 @@
+ gosub inl[:LABEL_179]
+-mov var[45][194], stor[18]
++mov 0x1, stor[13]
++add var[45][196], stor[13]
++add var[45][191], stor[13]
++mov var[45][stor[13]], stor[18]
+ deallocate_other stor[18]
+@@ -937,3 +937,6 @@
+ call 545, stor[18], stor[10], 0x0, 0x0, 0x0
+-mov stor[18], var[45][194]
++mov 0x1, stor[17]
++add var[45][196], stor[17]
++add var[45][191], stor[17]
++mov stor[18], var[45][stor[17]]
+ call 600, stor[18]
+@@ -963,3 +963,6 @@
+ call 588, stor[19], 0x3
+-mov var[45][194], stor[18]
++mov 0x1, stor[17]
++add var[45][196], stor[17]
++add var[45][191], stor[17]
++mov var[45][stor[17]], stor[18]
+ deallocate_other stor[18]
+@@ -1319,3 +1319,6 @@
+ call 618, stor[18], inl[:LABEL_212]
+-mov stor[18], var[45][195]
++mov 0x2, stor[11]
++add var[45][196], stor[11]
++add var[45][191], stor[11]
++mov stor[18], var[45][stor[11]]
+ mov var[45][12], stor[11]
+@@ -1344,3 +1344,6 @@
+ LABEL_91:
+-mov var[45][195], stor[18]
++mov 0x2, stor[9]
++add var[45][196], stor[9]
++add var[45][191], stor[9]
++mov var[45][stor[9]], stor[18]
+ deallocate_other stor[18]
+@@ -1711,3 +1711,6 @@
+ call 352, stor[30], 0x12, 0x0
+-mov var[45][196], stor[18]
++mov 0x3, stor[17]
++add var[45][196], stor[17]
++add var[45][191], stor[17]
++mov var[45][stor[17]], stor[18]
+ deallocate_other stor[18]
+@@ -1989,3 +1989,6 @@
+ mov 0x400, stor[9]
+-mov 0xc0, stor[12]
++mov var[45][196], stor[12]
++add var[45][191], stor[12]
++sub 0x1, stor[12]
+ mov 0x1, stor[10]

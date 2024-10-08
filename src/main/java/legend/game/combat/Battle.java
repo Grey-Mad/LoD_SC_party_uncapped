@@ -1588,7 +1588,7 @@ public class Battle extends EngineState {
       final int enemyIndex = a0.charIndex_1a2 & 0x1ff;
 
       if(Unpacker.exists("monsters/%d/textures/combat".formatted(enemyIndex))) {
-        loadFile("monsters/%d/textures/combat".formatted(enemyIndex), files -> this.loadCombatantTim(data, files));
+        loadFile("monsters/%d/textures/combat".formatted(enemyIndex), files -> this.loadCombatantTim(a0, files));
       }
     }
   }
@@ -1609,7 +1609,7 @@ public class Battle extends EngineState {
   @Method(0x800fc548L)
   public void loadCharacterTim(final FileData file, final int charSlot) {
     final BattleEntity27c bent = battleState_8006e398.playerBents_e40[charSlot].innerStruct_00;
-    this.loadCombatantTim(bent, file);
+    this.loadCombatantTim(bent.combatant_144, file);
   }
 
   /** Pulled from S_ITEM */
@@ -2624,10 +2624,10 @@ public class Battle extends EngineState {
         }
 
         final String charName = getCharacterName(fileIndex).toLowerCase();
-        loadFile("characters/%s/textures/dragoon".formatted(charName), files -> this.loadCombatantTim(bent, files));
-      } else {
+        loadFile("characters/%s/textures/dragoon".formatted(charName), files -> this.loadCombatantTim(bent.combatant_144, files));
+        } else {
         final String charName = getCharacterName(fileIndex).toLowerCase();
-        loadFile("characters/%s/textures/combat".formatted(charName), files -> this.loadCombatantTim(bent, files));
+        loadFile("characters/%s/textures/combat".formatted(charName), files -> this.loadCombatantTim(bent.combatant_144, files));
       }
     }
 
@@ -2635,31 +2635,26 @@ public class Battle extends EngineState {
   }
 
   @Method(0x800ca75cL)
-  public void loadCombatantTim(@Nullable final BattleEntity27c bent, final FileData timFile) {
-    if(timFile.size() == 0) {
-        return;
-      }
-    
+  public void loadCombatantTim(@Nullable final CombatantStruct1a8 combatant, final FileData timFile) {
+    if(timFile.size() == 0){return;}
     final Tim tim = new Tim(timFile);
     
-    if(bent.combatant_144 != null) {
-      bent.model_148.textureW = tim.getImageRect().w();
-      bent.model_148.textureH = tim.getImageRect().h();
+    if(combatant != null) {
+      combatant.textureW = tim.getImageRect().w();
+      combatant.textureH = tim.getImageRect().h();
       
       int i = 0;
-      for(int y = 0; y < bent.model_148.textureH; y++) {
-        for(int x = 0; x < bent.model_148.textureW; x++) {
+      for(int y = 0; y < combatant.textureH; y++) {
+        for(int x = 0; x < combatant.textureW; x++) {
           if(i + 1 >= tim.getImageData().size()) {
             break;
           }
 
           final int packed = tim.getImageData().readUShort(i);
           final int unpacked = MathHelper.colour15To24(packed);
-            
-          final int index = y * bent.model_148.textureW + x;
-          bent.model_148.textureVram24[index] = unpacked;
-          bent.model_148.textureVram15[index] = packed;
-          
+          final int index = y * combatant.textureW + x;
+          combatant.textureVram24[index] = unpacked;
+          combatant.textureVram15[index] = packed;
           i += 2;
         }
       }
@@ -2674,16 +2669,14 @@ public class Battle extends EngineState {
             }
             final int packed = tim.getClutData().readUShort(j);
             final int unpacked = MathHelper.colour15To24(packed);
-            final int index = y * bent.model_148.textureW + x;
+            final int index = y * combatant.textureW + x;
   
-            bent.model_148.textureVram24[index] = unpacked;
-            bent.model_148.textureVram15[index] = packed;
+            combatant.textureVram24[index] = unpacked;
+            combatant.textureVram15[index] = packed;
             j += 2;
           }
         }
       }
-      bent.generateTexture();
-       
     } else {
       final Rect4i imageRect = tim.getImageRect();
   
@@ -2693,6 +2686,7 @@ public class Battle extends EngineState {
   
       GPU.uploadData15(tim.getImageRect(), tim.getImageData());
     }
+    combatant.recreateTexture = true;
   }
 
   @Method(0x800ca89cL)
@@ -3946,18 +3940,14 @@ public class Battle extends EngineState {
     }
     
     final int combatantIndex = script.params_20[0].get();
-    if (combatantIndex == -1){
-      return FlowControl.PAUSE;
-    }
-    //int getBentIndexFromCombatantIndex(combatantIndex);
-    final BattleEntity27c bent = battleState_8006e398.allBents_e0c[combatantIndex].innerStruct_00;
-
-    this.loadCombatantTim(bent, a1.data_00);
-    
+    final CombatantStruct1a8 combatant = combatantIndex >= 0 ? this.combatants_8005e398[combatantIndex] : null; // Not sure if the else case actually happens
+  
+    this.loadCombatantTim(combatant, a1.data_00);
 
     //LAB_800cd900
     return FlowControl.PAUSE;
   }
+
 
   @ScriptDescription("Unknown, loads files")
   @ScriptParam(direction = ScriptParam.Direction.IN, type = ScriptParam.Type.INT, name = "drgnIndex", description = "The DRGN#.BIN index")
@@ -6688,8 +6678,9 @@ public class Battle extends EngineState {
     effect._00 = 0;
     effect.tmdType_04 = null;
     effect.extTmd_08 = null;
-    effect.anim_0c = null;
-    //effect.model_134 = ((BattleEntity27c)scriptStatePtrArr_800bc1c0[id].innerStruct_00).model_148;
+    effect.texture15 = ((BattleEntity27c)scriptStatePtrArr_800bc1c0[id].innerStruct_00).combatant_144.texture15;
+    effect.texture24 =((BattleEntity27c)scriptStatePtrArr_800bc1c0[id].innerStruct_00).combatant_144.texture24;
+    effect.textured = true;
     effect.model_134 = effect.model_10;
 
     if((id & 0xff00_0000) == 0x700_0000) {

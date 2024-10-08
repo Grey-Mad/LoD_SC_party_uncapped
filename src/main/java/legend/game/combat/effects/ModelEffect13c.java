@@ -3,6 +3,7 @@ package legend.game.combat.effects;
 import legend.core.gte.MV;
 import legend.core.gte.ModelPart10;
 import legend.core.memory.Method;
+import legend.core.opengl.Texture;
 import legend.game.combat.Battle;
 import legend.game.combat.deff.Anim;
 import legend.game.combat.deff.DeffPart;
@@ -40,7 +41,9 @@ public class ModelEffect13c implements Effect<EffectManagerParams.AnimType> {
   public Anim anim_0c;
   public final Model124 model_10;
   public Model124 model_134;
-
+  public Texture texture15;
+  public Texture texture24;
+  public boolean textured = false;
 
   public ModelEffect13c(final String name) {
     this.model_10 = new Model124(name);
@@ -89,7 +92,7 @@ public class ModelEffect13c implements Effect<EffectManagerParams.AnimType> {
         zMax_1f8003cc = oldZMax;
         zMin = oldZMin;
 
-        if (this.model_134.textureH != 0 && this.model_134.textureW != 0){
+        if (textured){
           // used durning dragoon attack 
           if(part.obj != null) {
             RENDERER.queueModel(part.obj, lw)
@@ -99,8 +102,8 @@ public class ModelEffect13c implements Effect<EffectManagerParams.AnimType> {
               .ctmdFlags((part.attribute_00 & 0x4000_0000) != 0 ? 0x12 : 0x0)
               .tmdTranslucency(tmdGp0Tpage_1f8003ec >>> 5 & 0b11)
               .battleColour(((Battle)currentEngineState_8004dd04)._800c6930.colour_00)
-              .texture(model_134.texture24,0)
-              .texture(model_134.texture15,1);
+              .texture(this.texture24,0)
+              .texture(this.texture15,1);
             }
         }else{
           // used durning dragoon transformation or magic 
@@ -182,7 +185,6 @@ public class ModelEffect13c implements Effect<EffectManagerParams.AnimType> {
       }
 
       //LAB_800ea598
-      this.model_134.createTextureFromTim();
       FUN_800dd89c(model, manager.params_10.flags_00);
 
       model.tpage_108 = oldTpage;

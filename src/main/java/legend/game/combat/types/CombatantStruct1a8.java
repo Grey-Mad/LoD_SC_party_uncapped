@@ -1,10 +1,17 @@
 package legend.game.combat.types;
 
 import legend.core.memory.Method;
+import legend.core.opengl.Texture;
 import legend.game.inventory.InventoryEntry;
 import legend.game.scripting.ScriptFile;
 import legend.game.types.CContainer;
 import legend.game.unpacker.FileData;
+
+import static org.lwjgl.opengl.GL30C.GL_R32UI;
+import static org.lwjgl.opengl.GL30C.GL_RED_INTEGER;
+import static org.lwjgl.opengl.GL11C.GL_UNSIGNED_INT;
+import static org.lwjgl.opengl.GL12C.GL_UNSIGNED_INT_8_8_8_8_REV;
+import static org.lwjgl.opengl.GL11C.GL_RGBA;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,6 +50,13 @@ public class CombatantStruct1a8 {
   public int _1a4;
   public int _1a6;
 
+  public int textureW;
+  public int textureH;
+  public int[] textureVram24 = new int[256 * 64];
+  public int[] textureVram15 = new int[256 * 64];
+  public Texture texture15;
+  public Texture texture24;
+  public boolean recreateTexture;
 
   @Method(0x800c90b0L)
   public boolean isModelLoaded() {
@@ -67,4 +81,23 @@ public class CombatantStruct1a8 {
 
   public record ItemDrop(int chance, InventoryEntry item) {
   }
+
+  public void createTextureFromTim() {
+    this.texture15= Texture.create(builder -> {
+      builder.size(this.textureW, this.textureH);
+      builder.data(this.textureVram15, this.textureW, this.textureH);
+      builder.internalFormat(GL_R32UI);
+      builder.dataFormat(GL_RED_INTEGER);
+      builder.dataType(GL_UNSIGNED_INT);
+    });
+
+    this.texture24 = Texture.create(builder -> {
+      builder.size(this.textureW, this.textureH);
+      builder.data(this.textureVram24, this.textureW, this.textureH);
+      builder.internalFormat(GL_RGBA);
+      builder.dataFormat(GL_RGBA);
+      builder.dataType(GL_UNSIGNED_INT_8_8_8_8_REV);
+    });
+  }
+
 }

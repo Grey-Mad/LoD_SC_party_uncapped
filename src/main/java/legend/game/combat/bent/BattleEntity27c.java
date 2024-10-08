@@ -5,6 +5,7 @@ import legend.core.gpu.Rect4i;
 import legend.core.gte.MV;
 import legend.core.gte.ModelPart10;
 import legend.core.memory.Method;
+import legend.core.opengl.Texture;
 import legend.game.characters.Element;
 import legend.game.characters.ElementSet;
 import legend.game.characters.StatCollection;
@@ -223,6 +224,8 @@ public abstract class BattleEntity27c extends BattleObject {
   public final Rect4i scissor = new Rect4i();
   public boolean useScissor;
 
+  private Texture combatantTexture15;
+  private Texture combatantTexture24;
   private boolean recreateTexture = true;
 
   public BattleEntity27c(final BattleEntityType type, final String name) {
@@ -628,6 +631,16 @@ public abstract class BattleEntity27c extends BattleObject {
 
   @Method(0x800cb024L)
   protected void bentRenderer(final ScriptState<? extends BattleEntity27c> state, final BattleEntity27c bent) {
+    
+    if (this.recreateTexture || combatant_144.recreateTexture){ //greytodo: find way to remove and this.recreateTexture
+      state.innerStruct_00.combatant_144.createTextureFromTim();
+      this.combatantTexture15 = state.innerStruct_00.combatant_144.texture15;
+      this.combatantTexture24 = state.innerStruct_00.combatant_144.texture24;
+      this.recreateTexture = false;
+      combatant_144.recreateTexture = false;
+    }
+
+
     if((state.storage_44[7] & 0x211) == 0) {
       this.renderBttlModel(this.model_148);
     }
@@ -660,8 +673,6 @@ public abstract class BattleEntity27c extends BattleObject {
     final MV lw = new MV();
     final MV ls = new MV();
 
-    if (this.recreateTexture){this.model_148.createTextureFromTim(); this.recreateTexture = false;}
-
     //LAB_800ec9d0
     for(int i = 0; i < model.modelParts_00.length; i++) {
       if((model.partInvisible_f4 & 1L << i) == 0) {
@@ -680,8 +691,8 @@ public abstract class BattleEntity27c extends BattleObject {
             .ctmdFlags((part.attribute_00 & 0x4000_0000) != 0 ? 0x12 : 0x0)
             .tmdTranslucency(tmdGp0Tpage_1f8003ec >>> 5 & 0b11)
             .battleColour(((Battle)currentEngineState_8004dd04)._800c6930.colour_00)
-            .texture(model.texture24,0)
-            .texture(model.texture15,1);
+            .texture(this.combatantTexture24,0)
+            .texture(this.combatantTexture15,1);
 
           if(this.useScissor) {
             queue.scissor(this.scissor);
@@ -731,9 +742,5 @@ public abstract class BattleEntity27c extends BattleObject {
   public void setActiveSpell(final int spellId) {
     this.spellId_4e = spellId;
     this.setTempSpellStats();
-  }
-
-  public void generateTexture() {
-    this.recreateTexture = true;
   }
 }

@@ -130,52 +130,38 @@ public class GameVarArrayParam extends Param {
 
   private int readBattleVar(final int index) {
 
-      //repatch the script for the wardeness in frugerel I
-      //
-      //0x45        | 0x5a        | 0x6d         | 0x73         | 0x81         | 0xb8         | 0xbd         |
-      //69          | 90          | 109          | 115          | 129          | 184          | 189          |
-      //var[45][71] | var[45][92] | var[45][111] | var[45][117] | var[45][136] | var[45][186] | var[45][196] |
-      
-      
-      //needs fixes
-      //File 5520/1[addr 0x5ad8] post Kongol cuttsceen 
-      //
-      
 
-      //260
+    
       int indexOffset = Scus94491BpeSegment_8006.battleState_8006e398._294Offset;
       if((index>=indexOffset) && (index<(indexOffset+Scus94491BpeSegment_8006.battleState_8006e398.dragoonTurnsRemaining_294.length))){
         return Scus94491BpeSegment_8006.battleState_8006e398.dragoonTurnsRemaining_294[index - indexOffset];
       }
-      //270
       indexOffset = Scus94491BpeSegment_8006.battleState_8006e398._2e8Offset;
       if((index>=indexOffset) && (index<(indexOffset+Scus94491BpeSegment_8006.battleState_8006e398._2e8.length))){
         return Scus94491BpeSegment_8006.battleState_8006e398._2e8[index - indexOffset];
       }
-      //280
       indexOffset = Scus94491BpeSegment_8006.battleState_8006e398._334Offset;
       if((index>=indexOffset) && (index<(indexOffset+Scus94491BpeSegment_8006.battleState_8006e398._334.length))){
         return Scus94491BpeSegment_8006.battleState_8006e398._334[index - indexOffset];
       }
-      //290
       indexOffset = Scus94491BpeSegment_8006.battleState_8006e398._34cOffset;
       if((index>=indexOffset) && (index<(indexOffset+Scus94491BpeSegment_8006.battleState_8006e398._34c.length))){
         return Scus94491BpeSegment_8006.battleState_8006e398._34c[index - indexOffset];
       }
-      //300
       indexOffset = Scus94491BpeSegment_8006.battleState_8006e398._384Offset;
       if((index>=indexOffset) && (index<(indexOffset+Scus94491BpeSegment_8006.battleState_8006e398.status_384.length))){
         return Scus94491BpeSegment_8006.battleState_8006e398.status_384[index - indexOffset].pack();
       }
-      //320
       indexOffset = Scus94491BpeSegment_8006.battleState_8006e398._460Offset;
       if((index>=indexOffset) && (index<(indexOffset+Scus94491BpeSegment_8006.battleState_8006e398._460.length))){
         return Scus94491BpeSegment_8006.battleState_8006e398._460[index - indexOffset];
       }
-      //330
       indexOffset = Scus94491BpeSegment_8006.battleState_8006e398._474Offset;
       if((index>=indexOffset) && (index<(indexOffset+Scus94491BpeSegment_8006.battleState_8006e398.additionExtra_474.length))){
         return Scus94491BpeSegment_8006.battleState_8006e398.additionExtra_474[index - indexOffset].pack();
+      }
+      if(index ==194){ //fixes issues with file 5520/1[addr 0x5ad8] post Kongol cuttsceen
+        return Scus94491BpeSegment_8006.battleState_8006e398.additionExtra_474[Scus94491BpeSegment_8006.battleState_8006e398.additionExtra_474.length - Scus94491BpeSegment_8006.battleState_8006e398._460.length + 1].pack();
       }
 
 
@@ -359,6 +345,9 @@ public class GameVarArrayParam extends Param {
       case 187 -> Scus94491BpeSegment_8006.battleState_8006e398._46c;
       case 188 -> Scus94491BpeSegment_8006.battleState_8006e398._470;
 
+      case 190 -> Scus94491BpeSegment_8006.battleState_8006e398.dragoonTurnsRemaining_294.length; //max players
+      case 191 -> Scus94491BpeSegment_8006.battleState_8006e398.status_384.length-Scus94491BpeSegment_8006.battleState_8006e398.dragoonTurnsRemaining_294.length; //max monsters
+      
       case 196 -> Scus94491BpeSegment_8006.battleState_8006e398._474Offset;
       case 197 -> Scus94491BpeSegment_8006.battleState_8006e398._494;
       case 198 -> Scus94491BpeSegment_8006.battleState_8006e398._498;
@@ -419,6 +408,7 @@ public class GameVarArrayParam extends Param {
       case 253 -> Scus94491BpeSegment_8006.battleState_8006e398._574;
       case 254 -> Scus94491BpeSegment_8006.battleState_8006e398._578;
       case 255 -> Scus94491BpeSegment_8006.battleState_8006e398._57c;
+      
 
       default -> throw new IllegalArgumentException("Unknown combat var index " + index);
     };
@@ -461,8 +451,6 @@ public class GameVarArrayParam extends Param {
       Scus94491BpeSegment_8006.battleState_8006e398.additionExtra_474[index - indexOffset].unpack(val);
       return;
     }
-
-
     switch(index) {
       case 0 -> Scus94491BpeSegment_8006.battleState_8006e398._180 = val;
       case 1 -> Scus94491BpeSegment_8006.battleState_8006e398.combatantBentIndex_184 = val;

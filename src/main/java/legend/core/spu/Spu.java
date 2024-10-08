@@ -527,14 +527,16 @@ public class Spu {
           this.effectSoundsBentOffsets.set(i, this.effectSoundsBentOffsets.get(i)-this.effectSpuRamSizes.get(index));
         }
       }
-      playableSounds_800c43d0.remove(effectPlayableSounds.get(slot));
+      playableSounds_800c43d0.remove(effectPlayableSounds.get(index));
       PlayableSound0c[] sounds = new PlayableSound0c[playableSounds_800c43d0.size()];
       playableSounds_800c43d0.toArray(sounds);
 
       for (int i=0; i<sounds.length; i++){
         if (sounds[i].soundBufferPtr_08*8 > this.effectSoundsBentOffsets.get(index)){
           PlayableSound0c sound = sounds[i];
-          playableSounds_800c43d0.remove(sound);
+          if (playableSounds_800c43d0.contains(sound)){
+            playableSounds_800c43d0.remove(sound);
+          }
           sound.soundBufferPtr_08 = (sound.soundBufferPtr_08*8-this.effectSpuRamSizes.get(index))/8;
           playableSounds_800c43d0.add(sound);
         }
@@ -547,6 +549,7 @@ public class Spu {
   }
   
   public void clearCombatSounds() {
+    synchronized(Spu.class){
     while (this.effectSoundsBentSlots.size() != 0){
       byte[] spuRamOld = this.ram;
       this.ram = new byte[spuRamOld.length - this.effectSpuRamSizes.get(0)];
@@ -562,7 +565,8 @@ public class Spu {
       this.effectSpuRamSizes.remove(0);
       playableSounds_800c43d0.remove(effectPlayableSounds.get(0));
       this.effectPlayableSounds.remove(0);
-    }
+    }}
+
   }
 
   private static final double[][] interpolationWeights = new double[512][];

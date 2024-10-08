@@ -1,0 +1,22 @@
+--- original
++++ modified
+@@ -1611,8 +1611,8 @@
+ mov 0x0, stor[19]
+ mov var[51], stor[23]
+ LABEL_38:
+-mov var[50][stor[19]], stor[stor[0], 20 + stor[19]]
+-mov stor[stor[0], 20 + stor[19]], stor[28]
++mov var[50][stor[19]], stor[29]
++mov stor[29], stor[28]
+ mov 0x78, stor[8]
+ gosub inl[:LABEL_0]
+ fork_reenter stor[28], 0x2, stor[8]
+@@ -1621,7 +1621,7 @@
+ jmp_cmp !=, stor[19], stor[23], inl[:LABEL_38]
+ mov 0x0, stor[19]
+ LABEL_39:
+-mov stor[stor[0], 20 + stor[19]], stor[28]
++mov stor[29], stor[28]
+ LABEL_40:
+ yield
+ gosub inl[:LABEL_7]
