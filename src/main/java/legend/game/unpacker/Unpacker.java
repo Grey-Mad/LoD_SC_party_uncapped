@@ -1291,6 +1291,9 @@ public final class Unpacker {
     if(monsters != null && index < monsters.length && monsters[index] != -1) {
       transformations.addNode("monsters/" + monsters[index] + "/textures/combat", node.data);
     }
+    if (fileId - 2625 == 385){
+      transformations.addNode("monsters/" + 273 + "/textures/combat", node.data);
+    }
   }
 
   private static int[] battleAssetIdentifier(final int encounterId) {

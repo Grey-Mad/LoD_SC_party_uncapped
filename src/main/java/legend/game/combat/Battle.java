@@ -1143,13 +1143,14 @@ public class Battle extends EngineState {
       }*/
 
     // Retail bug: one of the Divine Dragon Spirit's attack scripts tries to play soundIndex 10 but there are only 10 elements in the patch/sequence file (DRGN0.1225.1.1)
+    if (soundFile.indices_08 != null){
     if(soundIndex < soundFile.indices_08.length) {
       final QueuedSound28 queuedSound = new QueuedSound28();
       queuedSounds_800bd110.add(queuedSound);
 
       playSound(type, soundFile, soundIndex, queuedSound, soundFile.playableSound_10, soundFile.indices_08[soundIndex], 0, (short)-1, (short)-1, (short)-1, (short)repeatDelay, (short)initialDelay, bent);
     }
-
+  }
     //LAB_80019f9c
   }
 
@@ -2677,6 +2678,7 @@ public class Battle extends EngineState {
           }
         }
       }
+      combatant.recreateTexture = true;
     } else {
       final Rect4i imageRect = tim.getImageRect();
   
@@ -2686,7 +2688,7 @@ public class Battle extends EngineState {
   
       GPU.uploadData15(tim.getImageRect(), tim.getImageData());
     }
-    combatant.recreateTexture = true;
+    
   }
 
   @Method(0x800ca89cL)

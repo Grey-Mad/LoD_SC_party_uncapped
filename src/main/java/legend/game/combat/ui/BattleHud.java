@@ -55,6 +55,7 @@ import static legend.game.Scus94491BpeSegment_800b.tickCount_800bb0fc;
 import static legend.game.combat.Battle.melbuStageToMonsterNameIndices_800c6f30;
 import static legend.game.combat.ui.BattleMenuStruct58.battleMenuIconMetrics_800fb674;
 
+
 public class BattleHud {
   private static final CombatPortraitBorderMetrics0c[] combatPortraitBorderVertexCoords_800c6e9c = {
     new CombatPortraitBorderMetrics0c(0, 0, 1, 1, 0, 0, 0, 0, -1, -1, 1, -1),
@@ -155,9 +156,10 @@ public class BattleHud {
 
   public int currentCameraPositionIndicesIndex_800c66b0;
 
+  ;
   /** Only ever set to 1. 0 will set it to the top of the screen. */
   private int battleHudYOffsetIndex_800c6c38;
-
+  
   private final FloatingNumberC4[] floatingNumbers_800c6b5c = new FloatingNumberC4[12];
   private int countCameraPositionIndicesIndices_800c6ba0;
   private int currentCameraPositionIndicesIndicesIndex_800c6ba1;
@@ -187,7 +189,7 @@ public class BattleHud {
   private final MV spBarTransforms = new MV();
   private final MV lineTransforms = new MV();
   private boolean uiScaleApplied = false;
-  private final float uiScaleFactor = (288/(94f*(gameState_800babc8.charIds_88.length/3f)))/3f;
+  private float uiScaleFactor = (288/(94f*(gameState_800babc8.charIds_88.length/3f)))/3f;
   
   public BattleHud(final Battle battle) {
     this.battle = battle;
@@ -351,6 +353,10 @@ public class BattleHud {
 
   @Method(0x800ef8d8L)
   public void initCharacterDisplay(final int charSlot) {
+    
+    if (battleState_8006e398.getAlivePlayerCount()>3){
+      uiScaleFactor = (288/(94f*(battleState_8006e398.getAlivePlayerCount()/3f)))/3f;
+    }
 
     
 
