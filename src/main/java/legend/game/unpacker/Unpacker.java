@@ -1269,6 +1269,20 @@ public final class Unpacker {
     if(monsters!= null && index < monsters.length && monsters[index] != -1) {
       transformations.addNode("monsters/" + monsters[index] + "/sounds/", node.data);
     }
+
+    if(monsters!= null && fileId - 778 == 420) {
+      transformations.addNode("monsters/" + 344 + "/sounds/", node.data);
+    }
+    if (monsters!= null && fileId - 778 == 385){
+      transformations.addNode("monsters/" + 273 + "/sounds/", node.data);
+    }
+    if (monsters!= null && fileId - 778 == 418){
+      transformations.addNode("monsters/" + 343 + "/sounds/", node.data);
+    }
+    if (monsters!= null && fileId - 778 == 442){
+      transformations.addNode("monsters/" + 387 + "/sounds/", node.data);
+    }
+
   }
 
   private static boolean monsterTextureDiscriminator(final PathNode node, final Set<String> flags) {
@@ -1291,9 +1305,7 @@ public final class Unpacker {
     if(monsters != null && index < monsters.length && monsters[index] != -1) {
       transformations.addNode("monsters/" + monsters[index] + "/textures/combat", node.data);
     }
-    if (fileId - 2625 == 385){
-      transformations.addNode("monsters/" + 273 + "/textures/combat", node.data);
-    }
+
   }
 
   private static int[] battleAssetIdentifier(final int encounterId) {

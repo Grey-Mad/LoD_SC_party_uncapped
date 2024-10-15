@@ -27,7 +27,6 @@ public class Spu {
 
   private final short[] spuOutput = new short[SAMPLES_PER_TICK * 2];
   public byte[] ram = new byte[512 * 1024]; // 0x8_0000
-
   private final float[] reverbWorkArea = new float[0x4_0000];
   public final Voice[] voices = new Voice[24];
 
@@ -47,11 +46,6 @@ public class Spu {
   private int noiseFrequencyShift;
   private int noiseFrequencyStep;
   private final Reverb reverb = new Reverb();
-
-
-
-
-
 
   public List<Integer> effectSoundsBentSlots = new ArrayList<>();
   public List<Integer> effectSoundsBentOffsets = new ArrayList<>();

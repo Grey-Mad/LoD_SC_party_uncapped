@@ -24,7 +24,7 @@ public class GameVarArrayParam extends Param {
     this.varIndex = varIndex;
     this.arrIndex = arrIndex;
   }
-
+  
   @Override
   public int get() {
     return switch(this.varIndex) {
@@ -47,7 +47,7 @@ public class GameVarArrayParam extends Param {
       case 114 -> Scus94491BpeSegment_800b.gameState_800babc8.goods_19c[this.arrIndex];
       case 126 -> Scus94491BpeSegment_800b.gameState_800babc8._1a4[this.arrIndex];
       case 127 -> Scus94491BpeSegment_800b.gameState_800babc8.chestFlags_1c4[this.arrIndex];
-      case 128 -> this.readStatusConditionsVar(0, this.arrIndex);
+      case 128 -> this.readStatusConditionsVar(0, this.arrIndex);//greytodo: should this be an array or list?
       case 129 -> this.readStatusConditionsVar(1, this.arrIndex);
       case 130 -> this.readStatusConditionsVar(2, this.arrIndex);
       case 131 -> this.readStatusConditionsVar(3, this.arrIndex);
@@ -92,7 +92,7 @@ public class GameVarArrayParam extends Param {
       case 114 -> Scus94491BpeSegment_800b.gameState_800babc8.goods_19c[this.arrIndex] = val;
       case 126 -> Scus94491BpeSegment_800b.gameState_800babc8._1a4[this.arrIndex] = val;
       case 127 -> Scus94491BpeSegment_800b.gameState_800babc8.chestFlags_1c4[this.arrIndex] = val;
-      case 128 -> this.writeStatusConditionsVar(0, this.arrIndex, val); //needs pc count + monster count
+      case 128 -> this.writeStatusConditionsVar(0, this.arrIndex, val); //needs pc count + monster count?
       case 129 -> this.writeStatusConditionsVar(1, this.arrIndex, val);
       case 130 -> this.writeStatusConditionsVar(2, this.arrIndex, val);
       case 131 -> this.writeStatusConditionsVar(3, this.arrIndex, val);
@@ -159,9 +159,6 @@ public class GameVarArrayParam extends Param {
       indexOffset = Scus94491BpeSegment_8006.battleState_8006e398._474Offset;
       if((index>=indexOffset) && (index<(indexOffset+Scus94491BpeSegment_8006.battleState_8006e398.additionExtra_474.length))){
         return Scus94491BpeSegment_8006.battleState_8006e398.additionExtra_474[index - indexOffset].pack();
-      }
-      if(index ==194){ //fixes issues with file 5520/1[addr 0x5ad8] post Kongol cuttsceen
-        return Scus94491BpeSegment_8006.battleState_8006e398.additionExtra_474[Scus94491BpeSegment_8006.battleState_8006e398.additionExtra_474.length - Scus94491BpeSegment_8006.battleState_8006e398._460.length + 1].pack();
       }
 
 

@@ -301,10 +301,10 @@ public final class Scus94491BpeSegment_8002 {
       //case 1290 -> path = "monsters/phases/doel/0";
       case 1291 -> bent = battleState_8006e398.monsterBents_e50[1].innerStruct_00;
       //case 1292 -> path = "monsters/phases/melbu/0";
-      /*case 1293 -> path = "monsters/phases/melbu/1";
-      case 1294 -> path = "monsters/phases/melbu/4";
-      case 1295 -> path = "monsters/phases/melbu/6";*/
-      //case 1296 -> path = "monsters/phases/zackwell/0";
+      case 1293 -> bent = battleState_8006e398.monsterBents_e50[0].innerStruct_00;
+      case 1294 -> bent = battleState_8006e398.monsterBents_e50[0].innerStruct_00;
+      case 1295 -> bent  = battleState_8006e398.monsterBents_e50[0].innerStruct_00;
+      //case 1296 -> bent =  battleState_8006e398.monsterBents_e50[0].innerStruct_00;//"monsters/phases/zackwell/0";
       case 1297 -> bent = battleState_8006e398.monsterBents_e50[1].innerStruct_00;
       default -> throw new IllegalArgumentException("Unknown battle phase file index " + fileIndex);
     }

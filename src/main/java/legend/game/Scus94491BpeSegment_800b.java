@@ -63,7 +63,7 @@ public final class Scus94491BpeSegment_800b {
   public static final List<Item> itemOverflow = new ArrayList<>();
   public static final List<Equipment> equipmentOverflow = new ArrayList<>();
   public static boolean battleLoaded_800bc94c;
-  public static List<Integer> spGained_800bc950;//=new ArrayList<Integer>(Arrays.asList(new Integer[gameState_800babc8.charIds_88.length]));
+  public static List<Integer> spGained_800bc950;
 
   public static int totalXpFromCombat_800bc95c;
   /**
@@ -82,7 +82,7 @@ public final class Scus94491BpeSegment_800b {
    */
   public static int battleFlags_800bc960;
 
-  public static List<Integer> livingCharIds_800bc968;//=new ArrayList<Integer>(Arrays.asList(new Integer[gameState_800babc8.charIds_88.length]));
+  public static List<Integer> livingCharIds_800bc968;
   /**
    * <ol>
    *   <li value="1">Combat victory</li>

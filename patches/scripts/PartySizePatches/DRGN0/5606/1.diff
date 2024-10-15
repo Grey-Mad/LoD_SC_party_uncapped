@@ -1,0 +1,42 @@
+--- original
++++ modified
+@@ -1040,3 +1040,6 @@
+ call 545, stor[18], 0xffffffff, 0x640, 0xfffffd44, 0x384
+-mov stor[18], var[45][195]
++mov 0x2, stor[9]
++add var[45][196], stor[9]
++add var[45][191], stor[9]
++mov stor[18], var[45][stor[9]]
+ call 627, stor[18], 0x4
+@@ -1087,3 +1087,6 @@
+ LABEL_53:
+-mov var[45][195], stor[18]
++mov 0x2, stor[9]
++add var[45][196], stor[9]
++add var[45][191], stor[9]
++mov var[45][stor[9]], stor[18]
+ call 627, stor[18], 0x0
+@@ -1123,3 +1123,6 @@
+ mov stor[18], var[45][198]
+-mov var[45][195], stor[18]
++mov 0x2, stor[9]
++add var[45][196], stor[9]
++add var[45][191], stor[9]
++mov var[45][stor[9]], stor[18]
+ call 551, stor[18], 0xffffffff, 0x40, 0x40, 0x40
+@@ -1222,3 +1222,6 @@
+ LABEL_60:
+-mov var[45][195], stor[18]
++mov 0x2, stor[9]
++add var[45][196], stor[9]
++add var[45][191], stor[9]
++mov var[45][stor[9]], stor[18]
+ deallocate_other stor[18]
+@@ -2329,3 +2329,6 @@
+ call 551, stor[18], 0xffffffff, 0x40, 0x40, 0x40
+-mov stor[18], var[45][195]
++mov 0x2, stor[17]
++add var[45][196], stor[17]
++add var[45][191], stor[17]
++mov stor[18], var[45][stor[17]]
+ call 128, stor[9], 0x6a4, 0x0, 0x0

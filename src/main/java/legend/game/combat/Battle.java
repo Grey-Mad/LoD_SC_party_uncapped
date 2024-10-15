@@ -1262,9 +1262,16 @@ public class Battle extends EngineState {
     //greytodo read max mosters in encounter and set vals in battlestate accordingly
     this.FUN_800c8624();
 
+    spGained_800bc950 = new ArrayList<Integer>(Arrays.asList(new Integer[gameState_800babc8.charIds_88.length]));
+    Collections.fill(spGained_800bc950, 0);
+    livingCharIds_800bc968 = new ArrayList<Integer>(Arrays.asList(new Integer[gameState_800babc8.charIds_88.length]));
+    
     gameState_800babc8._b4++;
+    unlockedUltimateAddition_800bc910=new ArrayList<Boolean>(Arrays.asList(new Boolean[gameState_800babc8.charIds_88.length]));
     Collections.fill(unlockedUltimateAddition_800bc910, false);
     goldGainedFromCombat_800bc920 = 0;
+
+
 
     for(int charSlot = 0; charSlot < gameState_800babc8.charIds_88.length; charSlot++) {
       spGained_800bc950.set(charSlot,0);
@@ -1423,12 +1430,10 @@ public class Battle extends EngineState {
       bent.model_148.effectSounds.used_00 = false;
       final int finalMonsterSlot = bent.charId_272;
 
-      if (encounterId_800bb0f8 == 390|| encounterId_800bb0f8 == 431 || encounterId_800bb0f8 == 443 ){
+      if (encounterId_800bb0f8 == 390){//greytodo: is this needed
         String boss = "";
         switch(encounterId_800bb0f8) {
           case 390 -> boss = "doel";
-          case 431 -> boss = "zackwell";
-          case 443 -> boss = "melbu";
         }
         final String bossFinal = boss;
         final int phaseFinal = phase;
@@ -2864,14 +2869,16 @@ public class Battle extends EngineState {
   public FlowControl FUN_800cb618(final RunningScript<?> script) {
     final ScriptState<?> a1 = scriptStatePtrArr_800bc1c0[script.params_20[0].get()];
 
+    //greytodo: fix div dragon a1 = null 
     //LAB_800cb668
+    
     if(script.params_20[1].get() != 0) {
-      a1.storage_44[7] &= ~0x10;
+        a1.storage_44[7] &= ~0x10;
     } else {
       //LAB_800cb65c
       a1.storage_44[7] |= 0x10;
     }
-
+    
     return FlowControl.CONTINUE;
   }
 
