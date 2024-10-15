@@ -413,4 +413,6 @@ diff,SECT/DRGN1.BIN/398,scripts/PartySizePatches/DRGN1/398.diff,"Party Size Patc
 diff,SECT/DRGN1.BIN/399,scripts/PartySizePatches/DRGN1/399.diff,"Party Size Patches"
 diff,SECT/DRGN1.BIN/400,scripts/PartySizePatches/DRGN1/400.diff,"Party Size Patches"
 diff,SECT/DRGN0.BIN/5034/1,scripts/PartySizePatches/DRGN0/5034/1.diff,"Party size patch for Regole eye laser"
-diff,SECT/DRGN0.BIN/5520/1,scripts/PartySizePatches/DRGN0/5520/1.diff,"Kongol I party size cutsceen patch"
+diff,SECT/DRGN0.BIN/5286/1,scripts/PartySizePatches/DRGN0/5286/1.diff,"Party size patch for spirit Regole eye laser"
+diff,SECT/DRGN0.BIN/5520/1,scripts/PartySizePatches/DRGN0/5520/1.diff,"Kongol I party size patch"
+diff,SECT/DRGN0.BIN/5606/1,scripts/PartySizePatches/DRGN0/5606/1.diff,"Party size patch for zackwell"

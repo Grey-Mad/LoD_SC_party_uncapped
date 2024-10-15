@@ -5831,22 +5831,16 @@ call Battle::scriptTickDeffLoadingStage, 0x2 ; loadingStage
 call Battle::scriptTickDeffLoadingStage, 0x3 ; loadingStage
 call Battle::scriptGetBentStat, stor[0], FOOT_MODEL_PART, inl[:ACTION_SPECIAL_FOOT_MODEL_PART_INDEX]
 call Battle::scriptAttachShadowToBentModelPart, stor[0], inl[:ACTION_SPECIAL_FOOT_MODEL_PART_INDEX] ; bentIndex, modelPartAttachmentIndex
-call Scus94491BpeSegment::scriptWaitForFilesToLoad ; index
-call Scus94491BpeSegment::scriptLoadCharAttackSounds, var[34][0], 0x0 ; bentIndex, type
+call Scus94491BpeSegment::scriptWaitForFilesToLoad ; index 
+mov 0x0, stor[28]
+LOAD_D_ATTACK_SOUNDS_LOOP:
+call Scus94491BpeSegment::scriptLoadCharAttackSounds, var[34][stor[28]], 0x0 ; bentIndex, type
 LABEL_540:
 yield
 call Scus94491BpeSegment::scriptGetLoadedSoundFiles, stor[31] ; flags
 jmp_cmp &, 0x8, stor[31], inl[:LABEL_540] ; operand, left, right, addr
-call Scus94491BpeSegment::scriptLoadCharAttackSounds, var[34][1], 0x0 ; bentIndex, type
-LABEL_541:
-yield
-call Scus94491BpeSegment::scriptGetLoadedSoundFiles, stor[31] ; flags
-jmp_cmp &, 0x8, stor[31], inl[:LABEL_541] ; operand, left, right, addr
-call Scus94491BpeSegment::scriptLoadCharAttackSounds, var[34][2], 0x0 ; bentIndex, type
-LABEL_542:
-yield
-call Scus94491BpeSegment::scriptGetLoadedSoundFiles, stor[31] ; flags
-jmp_cmp &, 0x8, stor[31], inl[:LABEL_542] ; operand, left, right, addr
+incr stor[28]
+jmp_cmp ==, var[35], stor[28], inl[:LOAD_D_ATTACK_SOUNDS_LOOP] ;
 gosub inl[:GET_MY_CHAR_ID] ; addr
 call Battle::scriptSetDragoonSpaceElementIndex, stor[8] ; charId
 mov inl[:SPECIAL_TRANSFORM_STAGE[stor[8]]], stor[8] ; source, dest
@@ -5868,19 +5862,18 @@ LABEL_543:
 yield
 jmp_cmp ==, 0x0, stor[31], inl[:LABEL_543] ; operand, left, right, addr
 or 0x4, var[45][245] ; right, left
-mov var[34][0], stor[29] ; source, dest
-jmp_cmp !=, stor[29], stor[30], inl[:LABEL_544] ; operand, left, right, addr
-mov var[34][1], stor[29] ; source, dest
+mov 0x0, stor[26]
+LABEL_LOOP_D:
+mov var[34][stor[26]], stor[29]
+jmp_cmp ==, stor[29], stor[30], inl[:LABEL_544]
+gosub inl[:LABEL_546]
 LABEL_544:
-gosub inl[:LABEL_546] ; addr
-mov var[34][2], stor[29] ; source, dest
-jmp_cmp !=, stor[29], stor[30], inl[:LABEL_545] ; operand, left, right, addr
-mov var[34][1], stor[29] ; source, dest
-LABEL_545:
-gosub inl[:LABEL_546] ; addr
+incr stor[26]
+jmp_cmp !=, stor[26], var[35], inl[:LABEL_LOOP_D]
 and 0xfffffffb, var[45][245] ; right, left
 yield
 deallocate
+
 
 ; SUBROUTINE
 LABEL_546:
@@ -5954,7 +5947,7 @@ return
 ; SUBROUTINE
 ; @return bool s8 can use special transform
 CAN_USE_SPECIAL_TRANSFORM:
-jmp_cmp !=, 0x3, var[35], inl[:CAN_USE_SPECIAL_TRANSFORM_NOPE] ; not 3 players
+jmp_cmp >=, 0x3, var[35], inl[:CAN_USE_SPECIAL_TRANSFORM_NOPE] ; not 3 players
 
 mov 0x0, stor[8] ; loop counter, bent slot
 mov 0x0, stor[11] ; number of characters who are dead
