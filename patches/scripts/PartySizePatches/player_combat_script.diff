@@ -1,0 +1,215 @@
+--- original
++++ modified
+@@ -310,3 +310,3 @@
+ call Battle::scriptGetBentSlot, stor[28], stor[9], 0x1 ; bentIndex, charOrBentSlot, mode
+-add 69, stor[9] ; amount, operand
++add var[45][71], stor[9] ; amount, operand
+ add stor[8], var[45][stor[9]] ; amount, operand
+@@ -353,3 +353,3 @@
+ call Battle::scriptGetBentSlot, stor[28], stor[9], 0x0 ; bentIndex, charOrBentSlot, mode
+-add 0x81, stor[9] ; amount, operand
++add var[45][136], stor[9] ; amount, operand
+ mov 0x0, var[45][stor[9]] ; source, dest
+@@ -561,3 +561,3 @@
+ call Battle::scriptGetBentSlot, stor[0], stor[8], 0x0 ; bentIndex, charOrBentSlot, mode
+-add 0x81, stor[9] ; amount, operand
++add var[45][136], stor[8] ; amount, operand
+ or 0xf00, var[45][stor[8]] ; right, left
+@@ -653,3 +653,3 @@
+ call Battle::scriptGetBentSlot, stor[28], stor[9], 0x0 ; bentIndex, charOrBentSlot, mode
+-add 0x81, stor[9] ; amount, operand
++add var[45][136], stor[9] ; amount, operand
+ mov var[45][stor[9]], stor[10] ; source, dest
+@@ -691,3 +691,3 @@
+ call Battle::scriptGetBentSlot, stor[28], stor[9], 0x0 ; bentIndex, charOrBentSlot, mode
+-add 129, stor[9] ; amount, operand
++add var[45][136], stor[9] ; amount, operand
+ mov var[45][stor[9]], stor[10] ; source, dest
+@@ -709,3 +709,3 @@
+ call Battle::scriptGetBentSlot, stor[0], stor[9], 0x0 ; bentIndex, charOrBentSlot, mode
+-add 129, stor[9] ; amount, operand
++add var[45][136], stor[9] ; amount, operand
+ mov var[45][stor[9]], stor[10] ; source, dest
+@@ -1007,3 +1007,3 @@
+ call Battle::scriptGetBentSlot, stor[0], stor[31], 0x1 ; bentIndex, charOrBentSlot, mode
+-add 0x73, stor[31] ; amount, operand
++add var[45][117], stor[31] ; amount, operand
+ add stor[8], var[45][stor[31]] ; amount, operand
+@@ -1656,3 +1656,3 @@
+ call Battle::scriptGetBentSlot, stor[0], stor[8], 0x0 ; bentIndex, charOrBentSlot, mode
+-add 0xbd, stor[8] ; amount, operand
++add var[45][196], stor[8] ; amount, operand
+ mov var[45][stor[8]], stor[8] ; source, dest
+@@ -1667,3 +1667,3 @@
+ call Battle::scriptGetBentSlot, stor[0], stor[8], 0x0 ; bentIndex, charOrBentSlot, mode
+-add 0xbd, stor[8] ; amount, operand
++add var[45][196], stor[8] ; amount, operand
+ mov var[45][stor[8]], stor[8] ; source, dest
+@@ -3680,3 +3680,3 @@
+ call Battle::scriptGetBentSlot, stor[0], stor[31], 0x1 ; bentIndex, charOrBentSlot, mode
+-add 0x73, stor[31] ; amount, operand
++add var[45][117], stor[31] ; amount, operand
+ add stor[8], var[45][stor[31]] ; amount, operand
+@@ -4479,3 +4479,3 @@
+ call Battle::scriptGetBentSlot, stor[0], stor[9], 0x0 ; bentIndex, charOrBentSlot, mode
+-add 0x81, stor[9] ; amount, operand
++add var[45][136], stor[9] ; amount, operand
+ call Battle::scriptGetBentStat, stor[0], STATUS, stor[8] ; bentIndex, statIndex, value
+@@ -4530,3 +4530,3 @@
+ call Battle::scriptGetBentSlot, stor[0], stor[10], 0x1 ; bentIndex, charOrBentSlot, mode
+-add 0xb8, stor[10] ; amount, operand
++add var[45][186], stor[10] ; amount, operand
+ mov stor[8], var[45][stor[10]] ; source, dest
+@@ -4578,3 +4578,3 @@
+ call Battle::scriptGetBentSlot, stor[0], stor[11], 0x1 ; bentIndex, charOrBentSlot, mode
+-add 0x6d, stor[11] ; amount, operand
++add var[45][111], stor[11] ; amount, operand
+ jmp_cmp &, 0x0, var[45][stor[11]], inl[:LABEL_431] ; operand, left, right, addr
+@@ -4596,3 +4596,3 @@
+ call Battle::scriptGetBentSlot, stor[0], stor[9], 0x0 ; bentIndex, charOrBentSlot, mode
+-add 0x81, stor[9] ; amount, operand
++add var[45][136], stor[9] ; amount, operand
+ jmp_cmp &, 0x80, var[45][stor[9]], inl[:LABEL_433] ; operand, left, right, addr
+@@ -4631,3 +4631,3 @@
+ call Battle::scriptGetBentSlot, stor[28], stor[9], 0x0 ; bentIndex, charOrBentSlot, mode
+-add 0x81, stor[9] ; amount, operand
++add var[45][136], stor[9] ; amount, operand
+ gosub inl[:LABEL_438] ; addr
+@@ -4704,3 +4704,3 @@
+ call Battle::scriptGetBentSlot, stor[28], stor[8], 0x1 ; bentIndex, charOrBentSlot, mode
+-add 0xb8, stor[8] ; amount, operand
++add var[45][186], stor[8] ; amount, operand
+ mov var[45][stor[8]], stor[8] ; source, dest
+@@ -5084,3 +5084,3 @@
+ call Battle::scriptGetBentSlot, stor[0], stor[9], 0x0 ; bentIndex, charOrBentSlot, mode
+-add 129, stor[9] ; amount, operand
++add var[45][136], stor[9] ; amount, operand
+ jmp_cmp !&, 0x80, var[45][stor[9]], inl[:LABEL_467] ; operand, left, right, addr
+
+@@ -5095,3 +5095,3 @@
+ call Battle::scriptGetBentSlot, stor[0], stor[9], 0x0 ; bentIndex, charOrBentSlot, mode
+-add 129, stor[9] ; amount, operand
++add var[45][136], stor[9] ; amount, operand
+ mov 0x0, var[45][stor[9]] ; source, dest
+@@ -5107,3 +5107,3 @@
+ call Battle::scriptGetBentSlot, stor[0], stor[9], 0x0 ; bentIndex, charOrBentSlot, mode
+-add 129, stor[9] ; amount, operand
++add var[45][136], stor[9] ; amount, operand
+ jmp_cmp !&, 0x80, var[45][stor[9]], inl[:LABEL_470] ; operand, left, right, addr
+@@ -5129,3 +5129,3 @@
+ call Battle::scriptGetBentSlot, stor[10], stor[9], 0x0 ; s9 = bent[s10].slot
+-add 129, stor[9] ; amount, operand
++add var[45][136], stor[9] ; amount, operand
+ jmp_cmp !&, 0x80, var[45][stor[9]], inl[:LABEL_473] ; operand, left, right, addr
+@@ -5144,3 +5144,3 @@
+ call Battle::scriptGetBentSlot, stor[0], stor[9], 0x0 ; bentIndex, charOrBentSlot, mode
+-add 129, stor[9] ; amount, operand
++add var[45][136], stor[9] ; amount, operand
+ return
+@@ -5224,3 +5224,3 @@
+ call Battle::scriptGetBentSlot, stor[0], stor[8], 0x1 ; bentIndex, charOrBentSlot, mode
+-add 109, stor[8] ; amount, operand
++add var[45][111], stor[8] ; amount, operand
+ mov 0x1, var[45][stor[8]] ; source, dest
+@@ -5232,3 +5232,3 @@
+ call Battle::scriptGetBentSlot, stor[0], stor[8], 0x1 ; bentIndex, charOrBentSlot, mode
+-add 109, stor[8] ; amount, operand
++add var[45][111], stor[8] ; amount, operand
+ mov 0x0, var[45][stor[8]] ; source, dest
+@@ -5278,3 +5278,3 @@
+ call Battle::scriptGetBentSlot, stor[0], stor[9], 0x0 ; bentIndex, charOrBentSlot, mode
+-add 0x81, stor[9] ; amount, operand
++add var[45][136], stor[9] ; amount, operand
+ mov var[45][stor[9]], stor[8] ; source, dest
+@@ -5301,3 +5301,3 @@
+ call Battle::scriptGetBentSlot, stor[0], stor[8], 0x1 ; bentIndex, charOrBentSlot, mode
+-add 69, stor[8] ; amount, operand
++add var[45][71], stor[8] ; amount, operand
+ decr var[45][stor[8]] ; decrease dragoon turns remaining
+@@ -5801,3 +5801,3 @@
+ call Battle::scriptGetBentSlot, stor[11], stor[10], 0x1 ; bentIndex, charOrBentSlot, mode
+-add 0x45, stor[10] ; amount, operand
++add var[45][71], stor[10] ; amount, operand
+ mov stor[9], var[45][stor[10]] ; source, dest
+
+@@ -5834,17 +5834,11 @@
+ call Scus94491BpeSegment::scriptWaitForFilesToLoad ; index
+-call Scus94491BpeSegment::scriptLoadCharAttackSounds, var[34][0], 0x0 ; bentIndex, type
+-LABEL_540:
+-yield
+-call Scus94491BpeSegment::scriptGetLoadedSoundFiles, stor[31] ; flags
+-jmp_cmp &, 0x8, stor[31], inl[:LABEL_540] ; operand, left, right, addr
+-call Scus94491BpeSegment::scriptLoadCharAttackSounds, var[34][1], 0x0 ; bentIndex, type
+-LABEL_541:
+-yield
+-call Scus94491BpeSegment::scriptGetLoadedSoundFiles, stor[31] ; flags
+-jmp_cmp &, 0x8, stor[31], inl[:LABEL_541] ; operand, left, right, addr
+-call Scus94491BpeSegment::scriptLoadCharAttackSounds, var[34][2], 0x0 ; bentIndex, type
+-LABEL_542:
+-yield
+-call Scus94491BpeSegment::scriptGetLoadedSoundFiles, stor[31] ; flags
+-jmp_cmp &, 0x8, stor[31], inl[:LABEL_542] ; operand, left, right, addr
++mov 0x0, stor[28]
++LOAD_D_ATTACK_SOUNDS_LOOP:
++call Scus94491BpeSegment::scriptLoadCharAttackSounds, var[34][stor[28]], 0x0 ; bentIndex, type
++LOAD_D_ATTACK_SOUND_LOADED:
++yield
++call Scus94491BpeSegment::scriptGetLoadedSoundFiles, stor[31] ; flags
++jmp_cmp &, 0x8, stor[31], inl[:LOAD_D_ATTACK_SOUND_LOADED] ; operand, left, right, addr
++incr stor[28]
++jmp_cmp ==, var[35], stor[28], inl[:LOAD_D_ATTACK_SOUNDS_LOOP] ;
+ gosub inl[:GET_MY_CHAR_ID] ; addr
+@@ -5911,3 +5905,3 @@
+ call Battle::scriptGetBentSlot, stor[0], stor[8], 0x1 ; bentIndex, charOrBentSlot, mode
+-add 0x45, stor[8] ; amount, operand
++add var[45][71], stor[8] ; amount, operand
+ mov stor[9], var[45][stor[8]] ; source, dest
+@@ -5956,3 +5950,3 @@
+ CAN_USE_SPECIAL_TRANSFORM:
+-jmp_cmp !=, 0x3, var[35], inl[:CAN_USE_SPECIAL_TRANSFORM_NOPE] ; not 3 players
++jmp_cmp >=, 0x3, var[35], inl[:CAN_USE_SPECIAL_TRANSFORM_NOPE] ; not 3 players
+ mov 0x0, stor[8] ; loop counter, bent slot
+@@ -6251,3 +6245,3 @@
+ call Battle::scriptGetBentSlot, stor[0], stor[8], 0x0 ; bentIndex, charOrBentSlot, mode
+-add 0xbd, stor[8] ; amount, operand
++add var[45][196], stor[8] ; amount, operand
+ mov var[45][stor[8]], var[45][227] ; source, dest
+@@ -6256,3 +6250,3 @@
+ call Battle::scriptGetBentSlot, stor[0], stor[8], 0x0 ; bentIndex, charOrBentSlot, mode
+-add 0xbd, stor[8] ; amount, operand
++add var[45][196], stor[8] ; amount, operand
+ mov var[45][227], var[45][stor[8]] ; source, dest
+@@ -6840,3 +6834,3 @@
+ mov stor[8], stor[11] ; source, dest
+-add 69, stor[8] ; amount, operand
+-add 90, stor[9] ; amount, operand
+-add 115, stor[10] ; amount, operand
+-add 184, stor[11] ; amount, operand
++add var[45][71], stor[8] ; amount, operand
++add var[45][92], stor[9] ; amount, operand
++add var[45][117], stor[10] ; amount, operand
++add var[45][186], stor[11] ; amount, operand
+ mov 0x0, var[45][stor[8]] ; source, dest
+@@ -6868,4 +6862,4 @@
+ mov 0xffffffff, var[128 + stor[8]][4] ; source, dest
+-add 129, stor[8] ; amount, operand
++add var[45][136], stor[8] ; amount, operand
+ mov 0x0, var[45][stor[8]] ; source, dest
+-add 129, stor[8] ; amount, operand
++add var[45][196], stor[9] ; amount, operand
+ mov 0x0, var[45][stor[9]] ; source, dest
+@@ -6966,3 +6960,3 @@
+ call Battle::scriptGetBentSlot, stor[28], stor[10], 0x0 ; bentIndex, charOrBentSlot, mode
+-add 0x81, stor[10] ; amount, operand
++add var[45][136], stor[10] ; amount, operand
+ mov var[45][stor[10]], stor[9] ; source, dest
+@@ -7048,3 +7042,3 @@
+ call Battle::scriptGetBentSlot, stor[0], stor[9], 0x1 ; bentIndex, charOrBentSlot, mode
+-add 184, stor[9] ; amount, operand
++add var[45][186], stor[9] ; amount, operand
+ mov 0xffffffff, var[45][stor[9]] ; source, dest
+@@ -7112,3 +7106,3 @@
+ call Battle::scriptGetBentSlot, stor[0], stor[9], 0x0 ; bentIndex, charOrBentSlot, mode
+-add 129, stor[9] ; amount, operand
++add var[45][136], stor[9] ; amount, operand
+ mov 0x0, var[45][stor[9]] ; source, dest
