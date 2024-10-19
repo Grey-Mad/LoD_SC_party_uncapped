@@ -356,6 +356,8 @@ public class BattleHud {
     
     if (battleState_8006e398.getAlivePlayerCount()>3){
       uiScaleFactor = (288/(94f*(battleState_8006e398.getAlivePlayerCount()/3f)))/3f;
+    }else{
+      uiScaleFactor = 1f;
     }
 
     
@@ -587,16 +589,16 @@ public class BattleHud {
             final int v1_0 = (6 - charDisplay._14[2]) * 8 + 100;
             final int x = displayStats.x_00 - centreScreenX_1f8003dc + Math.round(namePortraitMetrics.portraitW_06*this.uiScaleFactor)/ 2 - Math.round(44*this.uiScaleFactor);
             final int y = displayStats.y_02 - centreScreenY_1f8003de + Math.round(namePortraitMetrics.portraitH_07*this.uiScaleFactor) / 2 - Math.round(22*this.uiScaleFactor);
-            int dimVertexPositionModifier = (namePortraitMetrics.portraitW_06 + 2) * v1_0 / 100 / 2;
+            int dimVertexPositionModifier = (namePortraitMetrics.portraitW_06 + Math.round(2*this.uiScaleFactor)) * v1_0 / 100 / 2;
             
             final int x0 = x - Math.round(dimVertexPositionModifier*this.uiScaleFactor);
-            final int x1 = x + Math.round(dimVertexPositionModifier*this.uiScaleFactor) - 1;
+            final int x1 = x + Math.round((dimVertexPositionModifier - 1)*this.uiScaleFactor);
             
             final short[] xs = {(short)x0, (short)x1, (short)x0, (short)x1};
 
-            dimVertexPositionModifier = (namePortraitMetrics.portraitH_07 + 2) * v1_0 / 100 / 2;
+            dimVertexPositionModifier = (namePortraitMetrics.portraitH_07 + Math.round(2*this.uiScaleFactor)) * v1_0 / 100 / 2;
             final int y0 = y - Math.round(dimVertexPositionModifier*this.uiScaleFactor);
-            final int y1 = y + Math.round(dimVertexPositionModifier*this.uiScaleFactor) - 1;
+            final int y1 = y + Math.round((dimVertexPositionModifier - 1)*this.uiScaleFactor);
 
             final short[] ys = {(short)y0, (short)y0, (short)y1, (short)y1};
 
@@ -1384,7 +1386,7 @@ public class BattleHud {
     this.battleMenu_800c6c34.state_00 = 1;
     this.battleMenu_800c6c34.highlightState_02 = 2;
     this.battleMenu_800c6c34.x_06 = 160;
-    this.battleMenu_800c6c34.y_08 = 172;
+    this.battleMenu_800c6c34.y_08 = (short)(172 +26- Math.round(26*this.uiScaleFactor));
     this.battleMenu_800c6c34.selectedIcon_22 = 0;
     this.battleMenu_800c6c34.currentIconStateTick_24 = 0;
     this.battleMenu_800c6c34.iconStateIndex_26 = 0;
