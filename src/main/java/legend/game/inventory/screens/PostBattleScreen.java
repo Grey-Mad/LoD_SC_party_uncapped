@@ -319,7 +319,7 @@ public class PostBattleScreen extends MenuScreen {
         break;
 
       case DRAGOON_LEVEL_UPS_10:
-        for(int charSlot = 0; charSlot < 3; charSlot++) {
+        for(int charSlot = 0; charSlot < gameState_800babc8.charIds_88.length; charSlot++) {
           if(this.characterIsAlive(charSlot)) {
             this.levelUpDragoon(gameState_800babc8.charIds_88[charSlot], charSlot);
           }
