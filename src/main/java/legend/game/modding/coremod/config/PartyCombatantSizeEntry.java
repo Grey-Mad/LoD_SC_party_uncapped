@@ -34,7 +34,7 @@ public class PartyCombatantSizeEntry extends ConfigEntry<Integer> {
         int[] charIds_replacement = new int[val];
         java.lang.System.arraycopy(gameState_800babc8.charIds_88, 0, charIds_replacement, 0,val);
         for(int i=val; i<gameState_800babc8.charIds_88.length; i++){
-          if (i != -1){
+          if (i != -1 && gameState_800babc8.charIds_88[i] != -1){
           gameState_800babc8.charData_32c[gameState_800babc8.charIds_88[i]].partyFlags_04 |= 0x2;}
         }
         gameState_800babc8.charIds_88 = charIds_replacement;
