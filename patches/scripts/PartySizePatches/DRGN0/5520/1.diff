@@ -1,6 +1,42 @@
 --- original
 +++ modified
-@@ -456,3 +456,6 @@
+@@ -282,6 +282,14 @@
+ data 0xa
+ data 0x0
+ data 0x16a
++data 0x2
++data 0xc
++data 0x13d
++data 0x13b
++data 0x4
++data 0xe
++data 0x14b
++data 0x149
+ LABEL_10:
+ call 600, stor[23]
+ mov 0x0, stor[stor[stor[0], 23], 14]
+@@ -375,12 +383,20 @@
+ mov 0x3, stor[stor[stor[0], 23], 24]
+ call 618, stor[23], inl[:LABEL_206]
+ return
++LOAD_ALLIES:
++call 600, stor[23]
++mov 0x25, stor[stor[stor[0], 23], 14]
++mov 0x2, stor[stor[stor[0], 23], 24]
++call 618, stor[23], inl[:LABEL_206]
++return
+ LABEL_25:
+ mov var[36][0], stor[23]
+ call 370, stor[23], stor[8]
+ mov stor[8], var[45][1]
+ mov stor[23], var[45][11]
+ call 138, stor[23], 0x0
++gosub inl[:LOAD_ALLIES]
++return
+ mov var[34][0], stor[27]
+ call 370, stor[27], stor[8]
+ mov stor[8], var[45][2]
+@@ -456,3 +472,6 @@
  call 618, stor[18], inl[:LABEL_212]
 -mov stor[18], var[45][194]
 +mov 0x1, stor[10]
@@ -8,7 +44,7 @@
 +add var[45][191], stor[10]
 +mov stor[18], var[45][stor[10]]
  mov var[45][11], stor[10]
-@@ -471,3 +471,6 @@
+@@ -471,3 +490,6 @@
  call 618, stor[18], inl[:LABEL_212]
 -mov stor[18], var[45][196]
 +mov 0x3, stor[31]
@@ -16,7 +52,7 @@
 +add var[45][191], stor[31]
 +mov stor[18], var[45][stor[31]]
  mov var[45][14], stor[31]
-@@ -518,3 +518,6 @@
+@@ -518,3 +540,6 @@
  yield
 -mov var[45][194], stor[18]
 +mov 0x1, stor[8]
@@ -24,7 +60,7 @@
 +add var[45][191], stor[8]
 +mov var[45][stor[8]], stor[18]
  deallocate_other stor[18]
-@@ -556,3 +556,6 @@
+@@ -556,3 +581,6 @@
  call 138, stor[11], 0x0
 -mov var[45][196], stor[18]
 +mov 0x3, stor[12]
@@ -32,7 +68,7 @@
 +add var[45][191], stor[12]
 +mov var[45][stor[12]], stor[18]
  call 551, stor[18], 0xffffffff, 0x0, 0x0, 0x0
-@@ -689,3 +689,6 @@
+@@ -689,3 +717,6 @@
  mov stor[18], var[45][201]
 -mov var[45][196], stor[18]
 +mov 0x3, stor[31]
@@ -40,7 +76,7 @@
 +add var[45][191], stor[31]
 +mov var[45][stor[31]], stor[18]
  call 551, stor[18], 0xffffffff, 0x40, 0x40, 0x40
-@@ -758,3 +758,6 @@
+@@ -758,3 +789,6 @@
  call 545, stor[18], stor[29], 0x0, 0x0, 0x0
 -mov stor[18], var[45][194]
 +mov 0x1, stor[13]
@@ -48,7 +84,7 @@
 +add var[45][191], stor[13]
 +mov stor[18], var[45][stor[13]]
  mov var[45][13], stor[30]
-@@ -863,3 +863,6 @@
+@@ -863,3 +897,6 @@
  gosub inl[:LABEL_179]
 -mov var[45][194], stor[18]
 +mov 0x1, stor[13]
@@ -56,7 +92,7 @@
 +add var[45][191], stor[13]
 +mov var[45][stor[13]], stor[18]
  deallocate_other stor[18]
-@@ -937,3 +937,6 @@
+@@ -937,3 +974,6 @@
  call 545, stor[18], stor[10], 0x0, 0x0, 0x0
 -mov stor[18], var[45][194]
 +mov 0x1, stor[17]
@@ -64,7 +100,7 @@
 +add var[45][191], stor[17]
 +mov stor[18], var[45][stor[17]]
  call 600, stor[18]
-@@ -963,3 +963,6 @@
+@@ -963,3 +1003,6 @@
  call 588, stor[19], 0x3
 -mov var[45][194], stor[18]
 +mov 0x1, stor[17]
@@ -72,7 +108,7 @@
 +add var[45][191], stor[17]
 +mov var[45][stor[17]], stor[18]
  deallocate_other stor[18]
-@@ -1319,3 +1319,6 @@
+@@ -1319,3 +1362,6 @@
  call 618, stor[18], inl[:LABEL_212]
 -mov stor[18], var[45][195]
 +mov 0x2, stor[11]
@@ -80,7 +116,7 @@
 +add var[45][191], stor[11]
 +mov stor[18], var[45][stor[11]]
  mov var[45][12], stor[11]
-@@ -1344,3 +1344,6 @@
+@@ -1344,3 +1390,6 @@
  LABEL_91:
 -mov var[45][195], stor[18]
 +mov 0x2, stor[9]
@@ -88,7 +124,7 @@
 +add var[45][191], stor[9]
 +mov var[45][stor[9]], stor[18]
  deallocate_other stor[18]
-@@ -1711,3 +1711,6 @@
+@@ -1711,3 +1760,6 @@
  call 352, stor[30], 0x12, 0x0
 -mov var[45][196], stor[18]
 +mov 0x3, stor[17]
@@ -96,10 +132,37 @@
 +add var[45][191], stor[17]
 +mov var[45][stor[17]], stor[18]
  deallocate_other stor[18]
-@@ -1989,3 +1989,6 @@
+@@ -1989,3 +2041,6 @@
  mov 0x400, stor[9]
 -mov 0xc0, stor[12]
 +mov var[45][196], stor[12]
 +add var[45][191], stor[12]
 +sub 0x1, stor[12]
  mov 0x1, stor[10]
+@@ -3523,7 +3578,7 @@
+ incr stor[18]
+ call 354, 0x0, stor[18], stor[9]
+ call 355, stor[9]
+-call 364, stor[8], stor[9]
++gosub inl[:LOAD_SLOTTED_TEXTURES]
+ call 356, stor[9]
+ call 354, 0x0, stor[16], stor[9]
+ call 355, stor[9]
+@@ -4028,3 +4083,17 @@
+ data 0x14
+ LABEL_233:
+ data 0x1
++LOAD_SLOTTED_TEXTURES:
++jmp_cmp ==, stor[13], 0xc, inl[:LOAD_PLAYER_TEXTURE]
++jmp_cmp ==, stor[13], 0xe, inl[:LOAD_PLAYER_TEXTURE]
++LOAD_ENEMY_TEXTURE:
++call 364, stor[8], stor[9]
++return
++LOAD_PLAYER_TEXTURE:
++call 1020, stor[8], inl[:CHAR_INDEX]
++call 364, stor[8], stor[9]
++call 1020, stor[8], 0xffffffff
++incr inl[:CHAR_INDEX]
++return
++CHAR_INDEX:
++data 0x0

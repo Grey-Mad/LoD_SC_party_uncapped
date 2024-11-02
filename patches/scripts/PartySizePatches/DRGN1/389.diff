@@ -107,3 +107,29 @@
  jmp_cmp !&, 0x80, var[45][stor[9]], inl[:LABEL_209]
  and 0xffffff7f, var[45][stor[9]]
  or 0x10000, var[45][stor[9]]
+@@ -4317,17 +4317,25 @@
+ mov var[34][0], stor[8]
+ call 158, stor[8]
+ mov var[34][1], stor[8]
++jmp_cmp ==, stor[8], 0xffffffff, inl[:SKIP_UNK_LOADER_0]
+ call 158, stor[8]
++SKIP_UNK_LOADER_0:
+ mov var[34][2], stor[8]
++jmp_cmp ==, stor[8], 0xffffffff, inl[:SKIP_UNK_LOADER_1]
+ call 158, stor[8]
++SKIP_UNK_LOADER_1:
+ return
+ LABEL_289:
+ mov var[34][0], stor[8]
+ call 159, stor[8]
+ mov var[34][1], stor[8]
++jmp_cmp ==, stor[8], 0xffffffff, inl[:SKIP_ATT_LOADER_0]
+ call 159, stor[8]
++SKIP_ATT_LOADER_0:
+ mov var[34][2], stor[8]
++jmp_cmp ==, stor[8], 0xffffffff, inl[:SKIP_ATT_LOADER_1]
+ call 159, stor[8]
++SKIP_ATT_LOADER_1:
+ return
+ LABEL_290:
+ mov 0xd, var[46][6]

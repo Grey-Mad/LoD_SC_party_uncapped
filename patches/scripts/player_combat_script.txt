@@ -308,7 +308,7 @@ call Battle::scriptRenderRecover, stor[28], stor[8], 0xd ; bentIndex, amount, co
 jmp_cmp !&, 0x2, stor[stor[stor[0], 28], 7], inl[:RECOVER_SP_EXIT] ; operand, left, right, addr
 div 100, stor[8] ; amount, operand
 call Battle::scriptGetBentSlot, stor[28], stor[9], 0x1 ; bentIndex, charOrBentSlot, mode
-add 69, stor[9] ; amount, operand
+add var[45][71], stor[9] ; amount, operand
 add stor[8], var[45][stor[9]] ; amount, operand
 RECOVER_SP_EXIT:
 return
@@ -706,7 +706,7 @@ mov 0x0, stor[8] ; source, dest
 
 ; s10 = my status index
 call Battle::scriptGetBentSlot, stor[0], stor[9], 0x0 ; bentIndex, charOrBentSlot, mode
-add 129, stor[9] ; amount, operand
+add var[45][136], stor[9] ; amount, operand
 mov var[45][stor[9]], stor[10] ; source, dest
 and 0xf, stor[10] ; right, left
 
@@ -5081,7 +5081,7 @@ return
 ; SUBROUTINE
 LABEL_466:
 call Battle::scriptGetBentSlot, stor[0], stor[9], 0x0 ; bentIndex, charOrBentSlot, mode
-add 129, stor[9] ; amount, operand
+add var[45][136], stor[9] ; amount, operand
 jmp_cmp !&, 0x80, var[45][stor[9]], inl[:LABEL_467] ; operand, left, right, addr
 or 0x40, var[45][stor[9]] ; right, left
 LABEL_467:
@@ -5092,7 +5092,7 @@ return
 ; SUBROUTINE
 CLEAR_MY_STATUS:
 call Battle::scriptGetBentSlot, stor[0], stor[9], 0x0 ; bentIndex, charOrBentSlot, mode
-add 129, stor[9] ; amount, operand
+add var[45][136], stor[9] ; amount, operand
 mov 0x0, var[45][stor[9]] ; source, dest
 call Battle::scriptGetBentStat, stor[0], STATUS, stor[8] ; bentIndex, statIndex, value
 and 0xffffff00, stor[8] ; right, left
@@ -5107,7 +5107,7 @@ LABEL_469:
 call Battle::scriptGetBentSlot, stor[0], stor[9], 0x0 ; bentIndex, charOrBentSlot, mode
 
 ; if unknown flag 0x80 on my battle var status is not set
-add 129, stor[9] ; amount, operand
+add var[45][136], stor[9] ; amount, operand
 jmp_cmp !&, 0x80, var[45][stor[9]], inl[:LABEL_470] ; operand, left, right, addr
 
 ; clear flag 0x80 on my battle var status
@@ -5127,7 +5127,7 @@ mov 0x0, stor[8] ; source, dest
 LABEL_472:
 mov var[32][stor[8]], stor[10] ; s10 = allbent[s8]
 call Battle::scriptGetBentSlot, stor[10], stor[9], 0x0 ; s9 = bent[s10].slot
-add 129, stor[9] ; amount, operand
+add var[45][136], stor[9] ; amount, operand
 jmp_cmp !&, 0x80, var[45][stor[9]], inl[:LABEL_473] ; operand, left, right, addr
 and 0xffffff7f, var[45][stor[9]] ; right, left
 or 0x10000, var[45][stor[9]] ; right, left
@@ -5141,7 +5141,7 @@ return
 ; SUBROUTINE
 LABEL_474:
 call Battle::scriptGetBentSlot, stor[0], stor[9], 0x0 ; bentIndex, charOrBentSlot, mode
-add 129, stor[9] ; amount, operand
+add var[45][136], stor[9] ; amount, operand
 return
 
 
@@ -5222,7 +5222,7 @@ mov 0x0, var[45][120] ; source, dest
 
 ; set my char loading to 1
 call Battle::scriptGetBentSlot, stor[0], stor[8], 0x1 ; bentIndex, charOrBentSlot, mode
-add 109, stor[8] ; amount, operand
+add var[45][111], stor[8] ; amount, operand
 mov 0x1, var[45][stor[8]] ; source, dest
 
 gosub inl[:INIT_PLAYER] ; addr
@@ -5230,7 +5230,7 @@ gosub inl[:HANDLE_STATUS_CONDITIONS] ; addr
 
 ; set my char loading to 0
 call Battle::scriptGetBentSlot, stor[0], stor[8], 0x1 ; bentIndex, charOrBentSlot, mode
-add 109, stor[8] ; amount, operand
+add var[45][111], stor[8] ; amount, operand
 mov 0x0, var[45][stor[8]] ; source, dest
 
 MAIN_LOOP:
@@ -5299,7 +5299,7 @@ jmp_cmp ==, 0x2, var[45][242], inl[:MAIN_LOOP_SKIP_DRAGOON] ; operand, left, rig
 
 ; tick dragoon sp
 call Battle::scriptGetBentSlot, stor[0], stor[8], 0x1 ; bentIndex, charOrBentSlot, mode
-add 69, stor[8] ; amount, operand
+add var[45][71], stor[8] ; amount, operand
 decr var[45][stor[8]] ; decrease dragoon turns remaining
 mov var[45][stor[8]], stor[9] ; source, dest
 call Battle::scriptGiveSp, stor[0], 0x0, stor[10] ; s10 = current sp
@@ -5840,7 +5840,7 @@ yield
 call Scus94491BpeSegment::scriptGetLoadedSoundFiles, stor[31] ; flags
 jmp_cmp &, 0x8, stor[31], inl[:LABEL_540] ; operand, left, right, addr
 incr stor[28]
-jmp_cmp ==, var[35], stor[28], inl[:LOAD_D_ATTACK_SOUNDS_LOOP] ;
+jmp_cmp !=, var[35], stor[28], inl[:LOAD_D_ATTACK_SOUNDS_LOOP] ;
 gosub inl[:GET_MY_CHAR_ID] ; addr
 call Battle::scriptSetDragoonSpaceElementIndex, stor[8] ; charId
 mov inl[:SPECIAL_TRANSFORM_STAGE[stor[8]]], stor[8] ; source, dest
@@ -6833,10 +6833,10 @@ mov stor[8], stor[10] ; source, dest
 mov stor[8], stor[11] ; source, dest
 
 ; make some battle var array indices
-add 69, stor[8] ; amount, operand
-add 90, stor[9] ; amount, operand
-add 115, stor[10] ; amount, operand
-add 184, stor[11] ; amount, operand
+add var[45][71], stor[8] ; amount, operand
+add var[45][92], stor[9] ; amount, operand
+add var[45][117], stor[10] ; amount, operand
+add var[45][186], stor[11] ; amount, operand
 
 ; clear my slot in a few more battle var arrays
 mov 0x0, var[45][stor[8]] ; source, dest
@@ -6861,11 +6861,11 @@ mov 0x0, var[128 + stor[8]][6] ; source, dest
 mov 0xffffffff, var[128 + stor[8]][4] ; source, dest
 
 ; clear my status
-add 129, stor[8] ; amount, operand
+add var[45][136], stor[8] ; amount, operand
 mov 0x0, var[45][stor[8]] ; source, dest
 
 ; clear my special weapon flags (destroyer mace, wargod, etc)
-add 189, stor[9] ; amount, operand
+add var[45][196], stor[9] ; amount, operand
 mov 0x0, var[45][stor[9]] ; source, dest
 
 gosub inl[:CACHE_SPECIAL_EQUIPMENT_FLAGS] ; addr
@@ -7039,7 +7039,7 @@ call Battle::scriptGetBentStat, stor[0], STATUS, stor[9] ; bentIndex, statIndex,
 jmp_cmp &, 0x2, stor[9], inl[:LABEL_658] ; operand, left, right, addr
 mov 0xffffffff, var[128 + stor[8]][4] ; source, dest
 call Battle::scriptGetBentSlot, stor[0], stor[9], 0x1 ; bentIndex, charOrBentSlot, mode
-add 184, stor[9] ; amount, operand
+add var[45][186], stor[9] ; amount, operand
 mov 0xffffffff, var[45][stor[9]] ; source, dest
 LABEL_658:
 
@@ -7102,7 +7102,7 @@ APPLY_STATUS_CONDITION:
 call Battle::scriptGetBentSlot, stor[0], stor[9], 0x0 ; bentIndex, charOrBentSlot, mode
 
 ; clear my battle var status
-add 129, stor[9] ; amount, operand
+add var[45][136], stor[9] ; amount, operand
 mov 0x0, var[45][stor[9]] ; source, dest
 
 ; set my battle var status turns to 3
