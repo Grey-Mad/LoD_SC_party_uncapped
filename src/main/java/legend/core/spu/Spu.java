@@ -538,6 +538,7 @@ public class Spu {
       this.effectSoundsBentSlots.remove(index);
       this.effectSoundsBentOffsets.remove(index);
       this.effectSpuRamSizes.remove(index);
+      playableSounds_800c43d0.remove(effectPlayableSounds.get(index));
       this.effectPlayableSounds.remove(index);
     }}
   }
