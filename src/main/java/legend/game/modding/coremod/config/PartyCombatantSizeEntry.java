@@ -20,7 +20,7 @@ public class PartyCombatantSizeEntry extends ConfigEntry<Integer> {
     super(3, ConfigStorageLocation.CAMPAIGN, ConfigCategory.GAMEPLAY, PartyCombatantSizeEntry::serializer, PartyCombatantSizeEntry::deserializer);
 
     this.setEditControl((number, gameState) -> {
-      final NumberSpinner<Integer> spinner = NumberSpinner.intSpinner(number, 3, 7);
+      final NumberSpinner<Integer> spinner = NumberSpinner.intSpinner(number, 3, 9);
       spinner.onChange(val -> gameState.setConfig(this, val));
       return spinner;
     });
@@ -35,7 +35,7 @@ public class PartyCombatantSizeEntry extends ConfigEntry<Integer> {
         java.lang.System.arraycopy(gameState_800babc8.charIds_88, 0, charIds_replacement, 0,val);
         for(int i=val; i<gameState_800babc8.charIds_88.length; i++){
           if (i != -1 && gameState_800babc8.charIds_88[i] != -1){
-          gameState_800babc8.charData_32c[gameState_800babc8.charIds_88[i]].partyFlags_04 |= 0x2;}
+            gameState_800babc8.charData_32c.get(gameState_800babc8.charIds_88[i]).setPartyFlags(gameState_800babc8.charData_32c.get(gameState_800babc8.charIds_88[i]).getPartyFlags() | 0x2);}
         }
         gameState_800babc8.charIds_88 = charIds_replacement;
         updateStateGamestateCharIdsDepentedValues();

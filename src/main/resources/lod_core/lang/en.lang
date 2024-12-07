@@ -70,6 +70,7 @@ lod_core.config.battle_transition_mode.label=Battle Transition
 lod_core.config.battle_transition_mode.NORMAL=Normal
 lod_core.config.battle_transition_mode.FAST=Fast
 lod_core.config.battle_transition_mode.INSTANT=Instant
+lod_core.config.party_combat_size.label=Party Size Combat Max 
 lod_core.config.unlock_party.label=Unlock Party
 
 lod_core.keybind.help=Press DEL when done
@@ -94,3 +95,23 @@ lod_core.keybind.DPAD_LEFT=Left
 lod_core.keybind.pause=Pause
 lod_core.keybind.debugger=Debugger
 lod_core.keybind.kill_sound=Kill Stuck Sounds
+
+lod.config.force_remove_and_block_dart.label=remove and block Dart
+lod.config.force_remove_and_block_lavitz.label=remove and block Lavitz
+lod.config.force_remove_and_block_shana.label=remove and block Shana
+lod.config.force_remove_and_block_rose.label=remove and block Rose
+lod.config.force_remove_and_block_haschel.label=remove and block Haschel
+lod.config.force_remove_and_block_albert.label=remove and block Albert
+lod.config.force_remove_and_block_meru.label=remove and block Meru
+lod.config.force_remove_and_block_kongol.label=remove and block Kongol
+lod.config.force_remove_and_block_miranda.label=remove and block Miranda
+
+lod.config.force_add_and_keep_dart.label=add and keep Dart
+lod.config.force_add_and_keep_lavitz.label=add and keep Lavitz
+lod.config.force_add_and_keep_shana.label=add and keep Shana
+lod.config.force_add_and_keep_rose.label=add and keep Rose
+lod.config.force_add_and_keep_haschel.label=add and keep Haschel
+lod.config.force_add_and_keep_albert.label=add and keep Albert
+lod.config.force_add_and_keep_meru.label=add and keep Meru
+lod.config.force_add_and_keep_kongol.label=add and keep Kongol
+lod.config.force_add_and_keep_miranda.label=add and keep Miranda
