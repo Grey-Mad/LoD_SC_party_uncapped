@@ -92,7 +92,7 @@ public class GameVarArrayParam extends Param {
       case 114 -> Scus94491BpeSegment_800b.gameState_800babc8.goods_19c[this.arrIndex] = val;
       case 126 -> Scus94491BpeSegment_800b.gameState_800babc8._1a4[this.arrIndex] = val;
       case 127 -> Scus94491BpeSegment_800b.gameState_800babc8.chestFlags_1c4[this.arrIndex] = val;
-      case 128 -> this.writeStatusConditionsVar(0, this.arrIndex, val); //needs pc count + monster count?
+      case 128 -> this.writeStatusConditionsVar(0, this.arrIndex, val); //greytodo: how big should this be 
       case 129 -> this.writeStatusConditionsVar(1, this.arrIndex, val);
       case 130 -> this.writeStatusConditionsVar(2, this.arrIndex, val);
       case 131 -> this.writeStatusConditionsVar(3, this.arrIndex, val);

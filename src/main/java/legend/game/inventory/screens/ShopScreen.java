@@ -350,7 +350,7 @@ public class ShopScreen extends MenuScreen {
     if(charIndex != -1) {
       final ActiveStatsa0 oldStats = new ActiveStatsa0(stats_800be5f8[charIndex]);
 
-      final Map<EquipmentSlot, Equipment> oldEquipment = new EnumMap<>(gameState_800babc8.charData_32c[charIndex].equipment_14);
+      final Map<EquipmentSlot, Equipment> oldEquipment = new EnumMap<>(gameState_800babc8.charData_32c.get(charIndex).equipment_14);
 
       if(equipItem(equipment, charIndex).success) {
         allocateOneFrameGlyph(0x67, 210, 127);
@@ -375,8 +375,8 @@ public class ShopScreen extends MenuScreen {
         renderText(Cannot_be_armed_with_8011c6d4, 228, 137, TextColour.BROWN);
       }
 
-      gameState_800babc8.charData_32c[charIndex].equipment_14.clear();
-      gameState_800babc8.charData_32c[charIndex].equipment_14.putAll(oldEquipment);
+      gameState_800babc8.charData_32c.get(charIndex).equipment_14.clear();
+      gameState_800babc8.charData_32c.get(charIndex).equipment_14.putAll(oldEquipment);
 
       loadCharacterStats();
     }

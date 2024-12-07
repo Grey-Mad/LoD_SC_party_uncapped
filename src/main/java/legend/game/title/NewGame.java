@@ -3,7 +3,7 @@ package legend.game.title;
 import legend.core.memory.Method;
 import legend.game.EngineState;
 import legend.game.EngineStateEnum;
-import legend.game.types.CharacterData2c;
+import legend.game.characters.CharacterData;
 import legend.game.modding.coremod.CoreMod;
 
 import static legend.game.SItem.levelStuff_80111cfc;
@@ -33,16 +33,16 @@ public class NewGame extends EngineState {
 
     //LAB_800c723c
     for(int charIndex = 0; charIndex < 9; charIndex++) {
-      final CharacterData2c charData = gameState_800babc8.charData_32c[charIndex];
+      final CharacterData charData = gameState_800babc8.charData_32c.get(charIndex);
       final int level = characterStartingLevels[charIndex];
-      charData.xp_00 = xpTables[charIndex][level];
-      charData.hp_08 = levelStuff_80111cfc[charIndex][level].hp_00;
-      charData.mp_0a = magicStuff_80111d20[charIndex][1].mp_00;
-      charData.sp_0c = 0;
-      charData.dlevelXp_0e = 0;
-      charData.status_10 = 0;
-      charData.level_12 = level;
-      charData.dlevel_13 = 1;
+      charData.setXp(xpTables[charIndex][level]);
+      charData.setHp(levelStuff_80111cfc[charIndex][level].hp_00);
+      charData.setMp(magicStuff_80111d20[charIndex][1].mp_00);
+      charData.setSp(0);
+      charData.setDlevelXp(0);
+      charData.setStatus (0);
+      charData.setLevel(level);
+      charData.setDlevel(1);
 
       //LAB_800c7294
       for(int additionIndex = 0; additionIndex < 8; additionIndex++) {
@@ -68,7 +68,7 @@ public class NewGame extends EngineState {
       charData.selectedAddition_19 = startingAddition_800ce758[charIndex];
     }
 
-    gameState_800babc8.charData_32c[0].partyFlags_04 = 0x3;
+    gameState_800babc8.charData_32c.get(0).setPartyFlags(0x3);
   }
 
   @Override

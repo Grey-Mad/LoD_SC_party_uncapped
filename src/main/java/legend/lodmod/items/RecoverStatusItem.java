@@ -33,7 +33,7 @@ public class RecoverStatusItem extends BattleItem {
     if(location == UsageLocation.MENU) {
       int allStatus = 0;
       for(int i = 0; i < characterCount_8011d7c4; i++) {
-        allStatus |= gameState_800babc8.charData_32c[characterIndices_800bdbb8[i]].status_10;
+        allStatus |= gameState_800babc8.charData_32c.get(characterIndices_800bdbb8[i]).getStatus();
       }
 
       return (this.status & allStatus) != 0;
@@ -45,11 +45,11 @@ public class RecoverStatusItem extends BattleItem {
   @Override
   @Method(0x80022d88L)
   public void useInMenu(final UseItemResponse response, final int charId) {
-    final int status = gameState_800babc8.charData_32c[charId].status_10;
+    final int status = gameState_800babc8.charData_32c.get(charId).getStatus();
 
     if((this.status & status) != 0) {
       response.value_04 = status;
-      gameState_800babc8.charData_32c[charId].status_10 &= ~status;
+      gameState_800babc8.charData_32c.get(charId).setStatus(gameState_800babc8.charData_32c.get(charId).getStatus() & ~status);
     }
 
     response._00 = 7;

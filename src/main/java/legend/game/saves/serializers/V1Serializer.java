@@ -2,7 +2,7 @@ package legend.game.saves.serializers;
 
 import legend.game.saves.ConfigCollection;
 import legend.game.saves.SavedGame;
-import legend.game.types.CharacterData2c;
+import legend.game.characters.CharacterData;
 import legend.game.types.GameState52c;
 import legend.game.unpacker.FileData;
 
@@ -25,9 +25,9 @@ public final class V1Serializer {
 
   public static SavedGame fromV1(final String name, final FileData data) {
     final GameState52c state = deserializeRetailGameState(data.slice(0x30));
-    final CharacterData2c charData = state.charData_32c[state.charIds_88[0]];
-    final int maxHp = levelStuff_80111cfc[state.charIds_88[0]][charData.level_12].hp_00;
-    final int maxMp = magicStuff_80111d20[state.charIds_88[0]][charData.dlevel_13].mp_00;
+    final CharacterData charData = state.charData_32c.get(state.charIds_88[0]);
+    final int maxHp = levelStuff_80111cfc[state.charIds_88[0]][charData.getLevel()].hp_00;
+    final int maxMp = magicStuff_80111d20[state.charIds_88[0]][charData.getDlevel()].mp_00;
     return new SavedGame(name, name, data.readUByte(0x2d), data.readUByte(0x2c), state, new ConfigCollection(), maxHp, maxMp);
   }
 }

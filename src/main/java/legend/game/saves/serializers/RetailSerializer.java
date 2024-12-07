@@ -1,8 +1,8 @@
 package legend.game.saves.serializers;
 
+import legend.game.characters.CharacterData;
 import legend.game.saves.ConfigCollection;
 import legend.game.saves.SavedGame;
-import legend.game.types.CharacterData2c;
 import legend.game.types.EquipmentSlot;
 import legend.game.types.GameState52c;
 import legend.game.unpacker.FileData;
@@ -25,9 +25,9 @@ public final class RetailSerializer {
 
   public static SavedGame fromRetail(final String name, final FileData data) {
     final GameState52c state = deserializeRetailGameState(data.slice(0x1fc));
-    final CharacterData2c charData = state.charData_32c[state.charIds_88[0]];
-    final int maxHp = levelStuff_80111cfc[state.charIds_88[0]][charData.level_12].hp_00;
-    final int maxMp = magicStuff_80111d20[state.charIds_88[0]][charData.dlevel_13].mp_00;
+    final CharacterData charData = state.charData_32c.get(state.charIds_88[0]);
+    final int maxHp = levelStuff_80111cfc[state.charIds_88[0]][charData.getLevel()].hp_00;
+    final int maxMp = magicStuff_80111d20[state.charIds_88[0]][charData.getDlevel()].mp_00;
     return new SavedGame(name, name, data.readUByte(0x1a9), data.readUByte(0x1a8), state, new ConfigCollection(), maxHp, maxMp);
   }
 
@@ -104,18 +104,18 @@ public final class RetailSerializer {
     }
 
     for(int charSlot = 0; charSlot < 9; charSlot++) {
-      final CharacterData2c charData = state.charData_32c[charSlot];
+      final CharacterData charData = state.charData_32c.get(charSlot);
       final FileData charSlice = data.slice(0x32c + charSlot * 0x2c, 0x2c);
 
-      charData.xp_00 = charSlice.readInt(0x0);
-      charData.partyFlags_04 = charSlice.readInt(0x4);
-      charData.hp_08 = charSlice.readUShort(0x8);
-      charData.mp_0a = charSlice.readUShort(0xa);
-      charData.sp_0c = charSlice.readUShort(0xc);
-      charData.dlevelXp_0e = charSlice.readUShort(0xe);
-      charData.status_10 = charSlice.readUShort(0x10);
-      charData.level_12 = charSlice.readUByte(0x12);
-      charData.dlevel_13 = charSlice.readUByte(0x13);
+      charData.setXp(charSlice.readInt(0x0));
+      charData.setPartyFlags(charSlice.readInt(0x4));
+      charData.setHp(charSlice.readUShort(0x8));
+      charData.setMp(charSlice.readUShort(0xa));
+      charData.setSp(charSlice.readUShort(0xc));
+      charData.setDlevelXp(charSlice.readUShort(0xe));
+      charData.setStatus(charSlice.readUShort(0x10));
+      charData.setLevel(charSlice.readUByte(0x12));
+      charData.setDlevel(charSlice.readUByte(0x13));
 
       for(int i = 0; i < 5; i++) {
         charData.equipmentIds_14.put(EquipmentSlot.fromLegacy(i), charSlice.readUByte(0x14 + i));

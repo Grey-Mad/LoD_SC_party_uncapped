@@ -45,7 +45,7 @@ import legend.game.sound.Sshd;
 import legend.game.types.BattleReportOverlay0e;
 import legend.game.types.BattleReportOverlayList10;
 import legend.game.types.BattleUiParts;
-import legend.game.types.CharacterData2c;
+import legend.game.characters.CharacterData;
 import legend.game.types.Flags;
 import legend.game.types.McqHeader;
 import legend.game.types.OverlayStruct;
@@ -1002,9 +1002,9 @@ public final class Scus94491BpeSegment {
 
     //LAB_800174a4
     if((gameState_800babc8.goods_19c[0] & 0xff) >>> 7 != 0) {
-      final CharacterData2c charData = gameState_800babc8.charData_32c[0];
-      charData.dlevelXp_0e = 0x7fff;
-      charData.dlevel_13 = 5;
+      final CharacterData charData = gameState_800babc8.charData_32c.get(0);
+      charData.setDlevelXp(0x7fff);
+      charData.setDlevel(5);
     }
 
     //LAB_800174d0
@@ -1079,8 +1079,8 @@ public final class Scus94491BpeSegment {
 
     //LAB_80017614
     if((gameState_800babc8.goods_19c[0] & 0xff) >>> 7 != 0) {
-      gameState_800babc8.charData_32c[0].dlevel_13 = 5;
-      gameState_800babc8.charData_32c[0].dlevelXp_0e = 0x7fff;
+      gameState_800babc8.charData_32c.get(0).setDlevel(5);
+      gameState_800babc8.charData_32c.get(0).setDlevelXp(0x7fff);
     }
 
     //LAB_80017640
@@ -2232,8 +2232,6 @@ public final class Scus94491BpeSegment {
 
     //LAB_8001d1b0
   }
-
-
 
   @Method(0x8001d51cL)
   public static void monsterSoundLoaded(final List<FileData> files, final String soundName, final int monsterSlot, final int soundBufferOffset,  final BattleEntity27c bent) {

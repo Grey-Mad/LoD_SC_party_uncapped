@@ -3,12 +3,12 @@ package legend.game.saves.serializers;
 import legend.game.inventory.Equipment;
 import legend.game.inventory.Item;
 import legend.game.inventory.WhichMenu;
+import legend.game.characters.CharacterData;
 import legend.game.saves.ConfigCollection;
 import legend.game.saves.ConfigStorage;
 import legend.game.saves.ConfigStorageLocation;
 import legend.game.saves.SavedGame;
 import legend.game.types.ActiveStatsa0;
-import legend.game.types.CharacterData2c;
 import legend.game.EngineStateEnum;
 import legend.game.types.EquipmentSlot;
 import legend.game.types.GameState52c;
@@ -18,14 +18,10 @@ import org.legendofdragoon.modloader.registries.RegistryId;
 import static legend.core.GameEngine.CONFIG;
 import static legend.game.Scus94491BpeSegment_8004.engineState_8004dd20;
 import static legend.game.Scus94491BpeSegment_800b.continentIndex_800bf0b0;
-import static legend.game.Scus94491BpeSegment_800b.livingCharIds_800bc968;
-import static legend.game.Scus94491BpeSegment_800b.spGained_800bc950;
 import static legend.game.Scus94491BpeSegment_800b.submapId_800bd808;
-import static legend.game.Scus94491BpeSegment_800b.unlockedUltimateAddition_800bc910;
 import static legend.game.Scus94491BpeSegment_800b.whichMenu_800bdc38;
 
-import java.util.ArrayList;
-import java.util.Arrays;
+
 
 public final class V4Serializer {
   private V4Serializer() { }
@@ -67,12 +63,6 @@ public final class V4Serializer {
 
     final int charSlotCount = data.readByte(offset);
     offset++;
-    
-    /*if (charSlotCount != 3){  //remove this section if able
-      unlockedUltimateAddition_800bc910=new ArrayList<Boolean>(Arrays.asList(new Boolean[charSlotCount]));
-      spGained_800bc950=new ArrayList<Integer>(Arrays.asList(new Integer[charSlotCount]));
-      livingCharIds_800bc968=new ArrayList<Integer>(Arrays.asList(new Integer[charSlotCount]));
-    }*/
 
     state.charIds_88 = new int[charSlotCount];
     for(int i = 0; i < charSlotCount; i++) {
@@ -152,27 +142,28 @@ public final class V4Serializer {
       offset += itemId.toString().length() + 3;
     }
 
-    final int charDataCount = data.readUShort(offset); // Not yet used
+    final int charDataCount = data.readUShort(offset);
     offset += 2;
 
-    for(final CharacterData2c charData : state.charData_32c) {
-      charData.xp_00 = data.readInt(offset);
+    for(int j = 0; j<charDataCount; j++){
+      CharacterData charData = new CharacterData();
+      charData.setXp(data.readInt(offset));
       offset += 4;
-      charData.partyFlags_04 = data.readInt(offset);
+      charData.setPartyFlagsFromSerializer(data.readInt(offset));
       offset += 4;
-      charData.hp_08 = data.readInt(offset);
+      charData.setHp(data.readInt(offset));
       offset += 4;
-      charData.mp_0a = data.readInt(offset);
+      charData.setMp(data.readInt(offset));
       offset += 4;
-      charData.sp_0c = data.readInt(offset);
+      charData.setSp(data.readInt(offset));
       offset += 4;
-      charData.dlevelXp_0e = data.readInt(offset);
+      charData.setDlevelXp(data.readInt(offset));
       offset += 4;
-      charData.status_10 = data.readInt(offset);
+      charData.setStatus(data.readInt(offset));
       offset += 4;
-      charData.level_12 = data.readUShort(offset);
+      charData.setLevel(data.readUShort(offset));
       offset += 2;
-      charData.dlevel_13 = data.readUShort(offset);
+      charData.setDlevel(data.readUShort(offset));
       offset += 2;
 
       final int equipmentSlotCount = data.readByte(offset);
@@ -202,8 +193,11 @@ public final class V4Serializer {
         charData.additionXp_22[additionSlot] = data.readInt(offset);
         offset += 4;
       }
+      //greytodo: fills with the correct data but will be empty
+      charData.setCharId(j);
+      state.charData_32c.add(charData);
     }
-
+    
     for(int i = 0; i < 8; i++) {
 //      state._4b8[i] = data.readInt(offset);
       offset += 4;
@@ -365,27 +359,27 @@ public final class V4Serializer {
       offset += item.getRegistryId().toString().length() + 3;
     }
 
-    data.writeShort(offset, state.charData_32c.length);
+    data.writeShort(offset, state.charData_32c.size());
     offset += 2;
 
-    for(final CharacterData2c charData : state.charData_32c) {
-      data.writeInt(offset, charData.xp_00);
+    for(final CharacterData charData : state.charData_32c) {
+      data.writeInt(offset, charData.getXp());
       offset += 4;
-      data.writeInt(offset, charData.partyFlags_04);
+      data.writeInt(offset, charData.getPartyFlags());
       offset += 4;
-      data.writeInt(offset, charData.hp_08);
+      data.writeInt(offset, charData.getHp());
       offset += 4;
-      data.writeInt(offset, charData.mp_0a);
+      data.writeInt(offset, charData.getMp());
       offset += 4;
-      data.writeInt(offset, charData.sp_0c);
+      data.writeInt(offset, charData.getSp());
       offset += 4;
-      data.writeInt(offset, charData.dlevelXp_0e);
+      data.writeInt(offset, charData.getDlevelXp());
       offset += 4;
-      data.writeInt(offset, charData.status_10);
+      data.writeInt(offset, charData.getStatus());
       offset += 4;
-      data.writeShort(offset, charData.level_12);
+      data.writeShort(offset, charData.getLevel());
       offset += 2;
-      data.writeShort(offset, charData.dlevel_13);
+      data.writeShort(offset, charData.getDlevel());
       offset += 2;
 
       data.writeByte(offset, charData.equipment_14.size());

@@ -18,6 +18,7 @@ import legend.core.opengl.Texture;
 import legend.core.opengl.TmdObjLoader;
 import legend.game.EngineState;
 import legend.game.EngineStateEnum;
+import legend.game.Scus94491BpeSegment_800b;
 import legend.game.fmv.Fmv;
 import legend.game.input.Input;
 import legend.game.input.InputAction;
@@ -37,7 +38,7 @@ import legend.game.types.AnmFile;
 import legend.game.types.AnmSpriteGroup;
 import legend.game.types.AnmSpriteMetrics14;
 import legend.game.types.CContainer;
-import legend.game.types.CharacterData2c;
+import legend.game.characters.CharacterData;
 import legend.game.types.GsF_LIGHT;
 import legend.game.types.LodString;
 import legend.game.types.Model124;
@@ -437,6 +438,10 @@ public class SMap extends EngineState {
 
     functions[18] = this::scriptGetCharAddition;
     functions[19] = this::scriptMaxOutDartDragoon;
+
+    functions[70] = this::scriptSetPartyMemberFlags;
+    functions[71] = this::scriptGetPartyMemberFlags;
+    functions[72] = this::scriptFillOpenPartySlots;
 
     functions[96] = this::scriptSelfLoadSobjModelAndAnimation;
     functions[97] = this::scriptSelfLoadSobjAnimation;
@@ -846,17 +851,17 @@ public class SMap extends EngineState {
 
     if(charId >= 0) {
       final ActiveStatsa0 stats = stats_800be5f8[charId];
-      final CharacterData2c charData = gameState_800babc8.charData_32c[charId];
-      charData.hp_08 = stats.maxHp_66;
-      charData.mp_0a = stats.maxMp_6e;
+      final CharacterData charData = gameState_800babc8.charData_32c.get(charId);
+      charData.setHp(stats.maxHp_66);
+      charData.setMp(stats.maxMp_6e);
     } else {
       //LAB_800d9b70
       //LAB_800d9b84
       for(int charSlot = 0; charSlot < 9; charSlot++) {
         final ActiveStatsa0 stats = stats_800be5f8[charSlot];
-        final CharacterData2c charData = gameState_800babc8.charData_32c[charSlot];
-        charData.hp_08 = stats.maxHp_66;
-        charData.mp_0a = stats.maxMp_6e;
+        final CharacterData charData = gameState_800babc8.charData_32c.get(charSlot);
+        charData.setHp(stats.maxHp_66);
+        charData.setMp(stats.maxMp_6e);
       }
     }
   }
@@ -873,7 +878,7 @@ public class SMap extends EngineState {
   private FlowControl scriptClearStatusEffects(final RunningScript<?> script) {
     //LAB_800d9c04
     for(int i = 0; i < 9; i++) {
-      gameState_800babc8.charData_32c[i].status_10 = 0;
+      gameState_800babc8.charData_32c.get(i).setStatus(0);
     }
 
     return FlowControl.CONTINUE;
@@ -885,7 +890,9 @@ public class SMap extends EngineState {
   @Method(0x800d9c1cL)
   private FlowControl scriptCloneCharacterData(final RunningScript<?> script) {
     //LAB_800d9c78
-    gameState_800babc8.charData_32c[script.params_20[1].get()].set(gameState_800babc8.charData_32c[script.params_20[0].get()]);
+
+    gameState_800babc8.charData_32c.set(script.params_20[1].get(), gameState_800babc8.charData_32c.get(script.params_20[0].get()));
+    //gameState_800babc8.charData_32c[script.params_20[1].get()].set(gameState_800babc8.charData_32c[script.params_20[0].get()]);
     this.restoreCharDataVitals(script.params_20[1].get());
     return FlowControl.CONTINUE;
   }
@@ -895,7 +902,7 @@ public class SMap extends EngineState {
   @ScriptParam(direction = ScriptParam.Direction.IN, type = ScriptParam.Type.INT, name = "additionId", description = "The addition ID")
   @Method(0x800d9ce4L)
   private FlowControl scriptSetCharAddition(final RunningScript<?> script) {
-    gameState_800babc8.charData_32c[script.params_20[0].get()].selectedAddition_19 = script.params_20[1].get();
+    gameState_800babc8.charData_32c.get(script.params_20[0].get()).selectedAddition_19 = script.params_20[1].get();
     return FlowControl.CONTINUE;
   }
 
@@ -904,7 +911,7 @@ public class SMap extends EngineState {
   @ScriptParam(direction = ScriptParam.Direction.OUT, type = ScriptParam.Type.INT, name = "additionId", description = "The addition ID")
   @Method(0x800d9d20L)
   private FlowControl scriptGetCharAddition(final RunningScript<?> script) {
-    script.params_20[1].set(gameState_800babc8.charData_32c[script.params_20[0].get()].selectedAddition_19);
+    script.params_20[1].set(gameState_800babc8.charData_32c.get(script.params_20[0].get()).selectedAddition_19);
     return FlowControl.CONTINUE;
   }
 
@@ -912,12 +919,12 @@ public class SMap extends EngineState {
   @ScriptDescription("Maxes out Dart's Dragoon and fully restores his HP/MP/SP")
   @Method(0x800d9d60L)
   private FlowControl scriptMaxOutDartDragoon(final RunningScript<?> script) {
-    if(gameState_800babc8.charData_32c[0].dlevelXp_0e < 63901) {
-      gameState_800babc8.charData_32c[0].dlevelXp_0e = 63901;
+    if(gameState_800babc8.charData_32c.get(0).getDlevelXp() < 63901) {
+      gameState_800babc8.charData_32c.get(0).setDlevelXp(63901);
     }
 
     //LAB_800d9d90
-    gameState_800babc8.charData_32c[0].dlevel_13 = 5;
+    gameState_800babc8.charData_32c.get(0).setDlevel(5);
 
     this.restoreVitalsAndSp(0);
     return FlowControl.CONTINUE;
@@ -925,7 +932,7 @@ public class SMap extends EngineState {
 
   @Method(0x800d9dc0L)
   private void restoreVitalsAndSp(final int charIndex) {
-    gameState_800babc8.charData_32c[charIndex].sp_0c = 500;
+    gameState_800babc8.charData_32c.get(charIndex).setSp(500);
     this.restoreCharDataVitals(-1);
   }
 
@@ -2497,6 +2504,73 @@ public class SMap extends EngineState {
   @Method(0x800e0cb8L)
   private FlowControl FUN_800e0cb8(final RunningScript<?> script) {
     throw new RuntimeException("Not implemented");
+  }
+
+  @ScriptDescription("sets the party flags of the given CharId")
+  @ScriptParam(direction = ScriptParam.Direction.IN, type = ScriptParam.Type.INT, name = "charId", description = "charId of character targeted")
+  @ScriptParam(direction = ScriptParam.Direction.IN, type = ScriptParam.Type.INT, name = "partyFlags", description = "value that character's flags will be set to")
+  private FlowControl scriptSetPartyMemberFlags(final RunningScript<?> script) {
+    final int charId = script.params_20[0].get();
+    final int partyMemberFlags = script.params_20[1].get();
+    Scus94491BpeSegment_800b.gameState_800babc8.charData_32c.get(charId).setPartyFlags(partyMemberFlags);
+    return FlowControl.CONTINUE;
+  }
+
+  @ScriptDescription("gets the party flags of the given CharId")
+  @ScriptParam(direction = ScriptParam.Direction.IN, type = ScriptParam.Type.INT, name = "charId", description = "charId of character targeted")
+  @ScriptParam(direction = ScriptParam.Direction.OUT, type = ScriptParam.Type.INT, name = "PartyFlags", description = "value of character's flags")
+  private FlowControl scriptGetPartyMemberFlags(final RunningScript<?> script) {
+    final int charId = script.params_20[0].get();
+    script.params_20[1].set(Scus94491BpeSegment_800b.gameState_800babc8.charData_32c.get(charId).getPartyFlags());
+    return FlowControl.CONTINUE;
+  }
+
+
+  @ScriptDescription("fills var17 with party members") 
+  @ScriptParam(direction = ScriptParam.Direction.IN, type = ScriptParam.Type.INT, name = "flag", description = "none")
+  private FlowControl scriptFillOpenPartySlots(final RunningScript<?> script) {
+    boolean[] isSlotOpen = new boolean[Scus94491BpeSegment_800b.gameState_800babc8.charData_32c.size()];
+    for (int i = 0; i < isSlotOpen.length; i++){ 
+      isSlotOpen[i] = true;
+    }
+
+    for (int i = 0; i < Scus94491BpeSegment_800b.gameState_800babc8.charIds_88.length; i++){
+      if (Scus94491BpeSegment_800b.gameState_800babc8.charIds_88[i] != -1 && Scus94491BpeSegment_800b.gameState_800babc8.charData_32c.get(i).getPartyFlags() == 0x0){
+        Scus94491BpeSegment_800b.gameState_800babc8.charIds_88[i] = -1;
+      }
+      isSlotOpen[i] = false;
+    }
+
+
+
+   
+
+    for (int i = 0; i < Scus94491BpeSegment_800b.gameState_800babc8.charIds_88.length; i++){
+      for(int j = 0; j <Scus94491BpeSegment_800b.gameState_800babc8.charData_32c.size(); j++){
+        if (isSlotOpen[j]){
+          final int partFlags = Scus94491BpeSegment_800b.gameState_800babc8.charData_32c.get(j).getPartyFlags();
+          if (Scus94491BpeSegment_800b.gameState_800babc8.charIds_88[i] == -1 && partFlags == 0x23){
+            Scus94491BpeSegment_800b.gameState_800babc8.charIds_88[i] = j;
+            isSlotOpen[j] = false;
+            break;
+          }
+        }
+      }
+    }
+
+    for (int i = 0; i < Scus94491BpeSegment_800b.gameState_800babc8.charIds_88.length; i++){
+      for(int j = 0; j <Scus94491BpeSegment_800b.gameState_800babc8.charData_32c.size(); j++){
+        if (isSlotOpen[j]){
+          final int partFlags = Scus94491BpeSegment_800b.gameState_800babc8.charData_32c.get(j).getPartyFlags();
+          if (Scus94491BpeSegment_800b.gameState_800babc8.charIds_88[i] == -1 && partFlags == 0x3){
+            Scus94491BpeSegment_800b.gameState_800babc8.charIds_88[i] = j;
+            isSlotOpen[j] = false;
+            break;
+          }
+        }
+      }
+    }
+    return FlowControl.CONTINUE;
   }
 
   @Method(0x800e0d18L)

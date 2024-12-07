@@ -1,5 +1,8 @@
 package legend.core;
 
+import legend.game.characters.CharacterData;
+import legend.game.characters.CharacterDataRegistry;
+import legend.game.characters.CharacterDataRegistryEvent;
 import legend.game.characters.Element;
 import legend.game.characters.ElementRegistry;
 import legend.game.characters.ElementRegistryEvent;
@@ -42,6 +45,7 @@ public class Registries extends org.legendofdragoon.modloader.registries.Registr
   public final Registry<Spell> spell = this.addRegistry(new SpellRegistry(), SpellRegistryEvent::new);
   public final Registry<ConfigEntry<?>> config = this.addRegistry(new ConfigRegistry(), ConfigRegistryEvent::new);
   public final Registry<DeffPackage> deff = this.addRegistry(new DeffRegistry(), RegisterDeffsEvent::new);
+  public final Registry<CharacterData> charactersData = this.addRegistry(new CharacterDataRegistry(), CharacterDataRegistryEvent::new);
 
   protected Registries(final EventManager events, final Consumer<Access> access) {
     super(events, access);

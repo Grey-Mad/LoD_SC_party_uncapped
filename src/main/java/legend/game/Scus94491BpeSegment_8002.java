@@ -17,6 +17,7 @@ import legend.core.opengl.QuadBuilder;
 import legend.core.opengl.fonts.FontManager;
 import legend.game.combat.types.EnemyDrop;
 import legend.game.i18n.I18n;
+import legend.game.characters.CharacterData;
 import legend.game.input.Input;
 import legend.game.input.InputAction;
 import legend.game.inventory.Equipment;
@@ -51,7 +52,6 @@ import legend.game.tim.Tim;
 import legend.game.tmd.UvAdjustmentMetrics14;
 import legend.game.types.ActiveStatsa0;
 import legend.game.types.CContainer;
-import legend.game.types.CharacterData2c;
 import legend.game.types.InventoryMenuState;
 import legend.game.types.LodString;
 import legend.game.types.MagicStuff08;
@@ -1040,26 +1040,26 @@ public final class Scus94491BpeSegment_8002 {
    */
   @Method(0x80022b50L)
   public static int addHp(final int charIndex, final int amount) {
-    final CharacterData2c charData = gameState_800babc8.charData_32c[charIndex];
+    final CharacterData charData = gameState_800babc8.charData_32c.get(charIndex);
     final ActiveStatsa0 stats = stats_800be5f8[charIndex];
 
-    if(charData.hp_08 == stats.maxHp_66) {
+    if(charData.getHp() == stats.maxHp_66) {
       return -2;
     }
 
     //LAB_80022bb4
     final int ret;
     if(amount == -1) {
-      charData.hp_08 = stats.maxHp_66;
+      charData.setHp(stats.maxHp_66);
       ret = -1;
     } else {
       //LAB_80022bc8
-      charData.hp_08 += amount;
+      charData.setHp(charData.getHp() + amount);
 
-      if(charData.hp_08 < stats.maxHp_66) {
+      if(charData.getHp() < stats.maxHp_66) {
         ret = amount;
       } else {
-        charData.hp_08 = stats.maxHp_66;
+        charData.setHp(stats.maxHp_66);
         ret = -1;
       }
     }
@@ -1077,26 +1077,26 @@ public final class Scus94491BpeSegment_8002 {
    */
   @Method(0x80022c08L)
   public static int addMp(final int charIndex, final int amount) {
-    final CharacterData2c charData = gameState_800babc8.charData_32c[charIndex];
+    final CharacterData charData = gameState_800babc8.charData_32c.get(charIndex);
     final ActiveStatsa0 stats = stats_800be5f8[charIndex];
 
-    if(stats.maxMp_6e == 0 || charData.mp_0a == stats.maxMp_6e) {
+    if(stats.maxMp_6e == 0 || charData.getMp() == stats.maxMp_6e) {
       return -2;
     }
 
     //LAB_80022c78
     final int ret;
     if(amount == -1) {
-      charData.mp_0a = stats.maxMp_6e;
+      charData.setMp(stats.maxMp_6e);
       ret = -1;
     } else {
       //LAB_80022c8c
-      charData.mp_0a += amount;
+      charData.setMp(charData.getMp() + amount);
 
-      if(charData.mp_0a < stats.maxMp_6e) {
+      if(charData.getMp() < stats.maxMp_6e) {
         ret = amount;
       } else {
-        charData.mp_0a = stats.maxMp_6e;
+        charData.setMp(stats.maxMp_6e);
         ret = -1;
       }
     }
