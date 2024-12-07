@@ -1,0 +1,102 @@
+--- original
++++ modified
+@@ -908,88 +908,11 @@
+-LABEL_94:
+-mov stor[24], stor[25]
+-mul 0xa, stor[25]
+-mov 0x0, stor[26]
+-return
+-LABEL_95:
+-jmp_cmp ==, stor[24], 0x23, inl[:LABEL_104]
+-gosub inl[:LABEL_94]
+-LABEL_96:
+-mov var[115 + stor[26]], stor[28]
+-and 0x40, stor[28]
+-mov inl[:LABEL_93[stor[25]]], var[115 + stor[26]]
+-or stor[28], var[115 + stor[26]]
+-incr stor[26]
+-incr stor[25]
+-jmp_cmp !=, 0x9, stor[26], inl[:LABEL_96]
+-jmp_cmp ==, 0x0, inl[:LABEL_93[stor[25]]], inl[:LABEL_99]
+-mov 0xffffffff, var[17][0]
+-mov 0xffffffff, var[17][1]
+-mov 0xffffffff, var[17][2]
+-gosub inl[:LABEL_94]
+-mov 0x0, stor[28]
+-LABEL_97:
+-mov inl[:LABEL_93[stor[25]]], stor[27]
+-and 0x20, stor[27]
+-jmp_cmp ==, 0x0, stor[27], inl[:LABEL_98]
+-mov stor[25], stor[27]
+-mod 0xa, stor[27]
+-mov stor[27], var[17][stor[28]]
+-incr stor[28]
+-LABEL_98:
+-incr stor[26]
+-incr stor[25]
+-jmp_cmp !=, 0x9, stor[26], inl[:LABEL_97]
+-jmp inl[:LABEL_103]
+-LABEL_99:
+-gosub inl[:LABEL_94]
+-LABEL_100:
+-mov inl[:LABEL_93[stor[25]]], stor[27]
+-and 0x2, stor[27]
+-jmp_cmp !=, 0x0, stor[27], inl[:LABEL_102]
+-mov 0x0, stor[28]
+-jmp_cmp ==, stor[26], var[17][stor[28]], inl[:LABEL_101]
+-incr stor[28]
+-jmp_cmp ==, stor[26], var[17][stor[28]], inl[:LABEL_101]
+-incr stor[28]
+-jmp_cmp ==, stor[26], var[17][stor[28]], inl[:LABEL_101]
+-jmp inl[:LABEL_102]
+-LABEL_101:
+-mov 0xffffffff, var[17][stor[28]]
+-LABEL_102:
+-incr stor[26]
+-incr stor[25]
+-jmp_cmp !=, 0x9, stor[26], inl[:LABEL_100]
+-LABEL_103:
+-mov 0x0, stor[28]
+-LABEL_104:
+-jmp_cmp !=, 0xffffffff, var[17][stor[28]], inl[:LABEL_103]
+-gosub inl[:LABEL_94]
+-LABEL_105:
+-mov inl[:LABEL_93[stor[25]]], stor[27]
+-and 0x2, stor[27]
+-jmp_cmp ==, 0x0, stor[27], inl[:LABEL_106]
+-jmp_cmp ==, stor[26], var[17][0], inl[:LABEL_106]
+-jmp_cmp ==, stor[26], var[17][1], inl[:LABEL_106]
+-jmp_cmp ==, stor[26], var[17][2], inl[:LABEL_106]
+-mov stor[26], var[17][stor[28]]
+-jmp inl[:LABEL_103]
+-LABEL_106:
+-incr stor[25]
+-incr stor[26]
+-jmp_cmp !=, 0x9, stor[26], inl[:LABEL_105]
+-jmp inl[:LABEL_104]
+-LABEL_103:
+-incr stor[28]
+-jmp_cmp !=, 0x3, stor[28], inl[:LABEL_104]
+-LABEL_104:
+-call 5, 0x3c5, stor[27]
+-jmp_cmp !=, 0x0, stor[27], inl[:LABEL_105]
+-mov var[115 + 7], stor[27]
+-and 0x1, stor[27]
+-jmp_cmp ==, 0x0, stor[27], inl[:LABEL_105]
+-LABEL_105:
+-jmp_cmp !=, 0xffffffff, var[17][1], inl[:LABEL_106]
+-jmp_cmp ==, 0xffffffff, var[17][2], inl[:LABEL_106]
+-mov var[17][2], var[17][1]
+-mov 0xffffffff, var[17][2]
+-LABEL_106:
++LABEL_95:
++call 70, 0x0, 0x23;
++call 70, 0x1, 0x3;
++call 70, 0x2, 0x3;
++call 70, 0x3, 0x0;
++call 70, 0x4, 0x0;
++call 70, 0x5, 0x0;
++call 70, 0x6, 0x0;
++call 70, 0x7, 0x0;
++call 70, 0x8, 0x0;
++call 72, 0x0;

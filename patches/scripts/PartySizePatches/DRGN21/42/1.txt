@@ -1,0 +1,3359 @@
+entrypoint :ENTRYPOINT_0
+entrypoint :ENTRYPOINT_1
+entrypoint :ENTRYPOINT_2
+entrypoint :ENTRYPOINT_3
+entrypoint :ENTRYPOINT_4
+entrypoint :ENTRYPOINT_5
+entrypoint :ENTRYPOINT_6
+entrypoint :ENTRYPOINT_7
+entrypoint :ENTRYPOINT_8
+entrypoint :ENTRYPOINT_9
+entrypoint :ENTRYPOINT_10
+entrypoint :ENTRYPOINT_11
+entrypoint :ENTRYPOINT_12
+entrypoint :ENTRYPOINT_13
+entrypoint :ENTRYPOINT_14
+entrypoint :ENTRYPOINT_15
+
+; SUBROUTINE
+LABEL_0:
+jmp_cmp !=, 0xffffffff, var[73][31], inl[:LABEL_1] ; operand, left, right, addr
+mov 0x0, var[73][31] ; source, dest
+jmp inl[:LABEL_3] ; addr
+LABEL_1:
+mov var[3], stor[24] ; source, dest
+and 0xf000, stor[24] ; and, operand
+jmp_cmp ==, 0x0, stor[24], inl[:LABEL_2] ; operand, left, right, addr
+mov 0x0, var[73][31] ; source, dest
+jmp inl[:LABEL_3] ; addr
+LABEL_2:
+incr var[73][31] ; operand
+jmp_cmp >=, 0x12c, var[73][31], inl[:LABEL_3] ; operand, left, right, addr
+call SMap::scriptSelfGetSobjAnimation, stor[24] ; animIndex
+jmp_cmp ==, 0x1f, stor[24], inl[:LABEL_10] ; operand, left, right, addr
+call SMap::scriptSelfLoadSobjAnimation, 0x1f ; animIndex
+jmp inl[:LABEL_10] ; addr
+LABEL_3:
+mov 0x0, stor[25] ; source, dest
+mov 0x0, stor[26] ; source, dest
+mov 0x0, stor[27] ; source, dest
+jmp_cmp ==, 0x0, var[27], inl[:LABEL_4] ; operand, left, right, addr
+jmp_cmp ==, 0x0, var[31], inl[:LABEL_4] ; operand, left, right, addr
+mov var[3], stor[29] ; source, dest
+and 0xf000, stor[29] ; and, operand
+jmp_cmp ==, 0x0, stor[29], inl[:LABEL_7] ; operand, left, right, addr
+mov 0x4, stor[25] ; source, dest
+mov 0x1, stor[27] ; source, dest
+mov var[28], stor[28] ; source, dest
+jmp_cmp <, var[31], 0x7f, inl[:LABEL_7] ; operand, left, right, addr
+mov 0x2, stor[27] ; source, dest
+mov 0xc, stor[25] ; source, dest
+jmp inl[:LABEL_7] ; addr
+LABEL_4:
+mov 0x0, stor[28] ; source, dest
+mov var[3], stor[29] ; source, dest
+and 0xf000, stor[29] ; and, operand
+jmp_cmp ==, 0x0, stor[29], inl[:LABEL_7] ; operand, left, right, addr
+LABEL_5:
+mov inl[:LABEL_11[stor[28]]], stor[30] ; source, dest
+jmp_cmp ==, stor[30], 0xffffffff, inl[:LABEL_7] ; operand, left, right, addr
+jmp_cmp ==, stor[29], stor[30], inl[:LABEL_6] ; operand, left, right, addr
+incr stor[28] ; operand
+jmp inl[:LABEL_5] ; addr
+LABEL_6:
+mul 0x200, stor[28] ; amount, operand
+mov 0x4, stor[25] ; source, dest
+mov 0x1, stor[27] ; source, dest
+jmp_cmp !&, 0x40, var[3], inl[:LABEL_7] ; operand, left, right, addr
+mov 0x2, stor[27] ; source, dest
+mov 0xc, stor[25] ; source, dest
+LABEL_7:
+jmp_cmp ==, 0x0, stor[27], inl[:LABEL_9] ; operand, left, right, addr
+mov stor[28], stor[29] ; source, dest
+sin_12 stor[28], stor[28] ; angle, dest
+cos_12 stor[29], stor[29] ; angle, dest
+mov stor[25], stor[26] ; source, dest
+shl 0xc, stor[25] ; shift, val
+shl 0xc, stor[26] ; shift, val
+mul_12 stor[28], stor[25] ; amount, operand
+mul_12 stor[29], stor[26] ; amount, operand
+add 0x800, stor[25] ; amount, operand
+add 0x800, stor[26] ; amount, operand
+shr 0xc, stor[25] ; shift, val
+shr 0xc, stor[26] ; shift, val
+call SMap::scriptCheckPlayerCollision, stor[25], 0x0, stor[26], stor[28] ; deltaX, deltaY, deltaZ, collidee
+call SMap::scriptGetPlayerMovement, stor[29], stor[30], stor[31] ; x, y, z
+call SMap::scriptSelfFacePoint, stor[29], stor[30], stor[31] ; x, y, z
+jmp_cmp ==, stor[28], 0xffffffff, inl[:LABEL_8] ; operand, left, right, addr
+mov 0x0, stor[27] ; source, dest
+jmp inl[:LABEL_9] ; addr
+LABEL_8:
+call SMap::scriptMovePlayer, stor[25], 0x0, stor[26] ; x, y, z
+LABEL_9:
+call SMap::scriptSelfGetSobjAnimation, stor[28] ; animIndex
+jmp_cmp ==, stor[28], stor[27], inl[:LABEL_10] ; operand, left, right, addr
+call SMap::scriptSelfLoadSobjAnimation, stor[27] ; animIndex
+LABEL_10:
+return
+LABEL_11:
+data 0x1000
+data 0x3000
+data 0x2000
+data 0x6000
+data 0x4000
+data 0xc000
+data 0x8000
+data 0x9000
+data 0xffffffff
+data 0x0
+data 0x30238
+data 0x2000018
+data 0x2000019
+data 0x20242
+data 0x2000019
+data 0x900fffc
+data 0x49
+
+; SUBROUTINE
+LABEL_12:
+mov stor[25], stor[27] ; source, dest
+mov var[64][stor[24]], stor[28] ; source, dest
+call SMap::scriptReadModelPosition, stor[28], stor[24], stor[25], stor[26] ; scriptIndex, x, y, z
+call SMap::scriptReadModelPosition, stor[0], stor[28], stor[29], stor[30] ; scriptIndex, x, y, z
+sub stor[28], stor[24] ; amount, operand
+sub stor[30], stor[26] ; amount, operand
+atan2_12 stor[24], stor[26], stor[25] ; y, x, dest
+call SMap::scriptReadModelRotate, stor[0], stor[28], stor[29], stor[30] ; scriptIndex, x, y, z
+sub stor[29], stor[25] ; amount, operand
+add 0x800, stor[25] ; amount, operand
+jmp_cmp >=, stor[25], 0xfffff800, inl[:LABEL_13] ; operand, left, right, addr
+add 0x1000, stor[25] ; amount, operand
+jmp inl[:LABEL_14] ; addr
+LABEL_13:
+jmp_cmp <, stor[25], 0x800, inl[:LABEL_14] ; operand, left, right, addr
+sub 0x1000, stor[25] ; amount, operand
+LABEL_14:
+call SMap::scriptRotateSobj, stor[0], 0x0, stor[25], 0x0, stor[27] ; scriptIndex, x, y, z, frames
+wait stor[27] ; frames
+return
+
+; SUBROUTINE
+LABEL_15:
+call SMap::scriptReadModelPosition, stor[0], stor[8], stor[9], stor[10] ; scriptIndex, x, y, z
+call SMap::scriptSelfMoveToPosition, stor[8], stor[9], stor[10], 0x1 ; x, y, z, movementTicks
+yield
+mov 0x1, stor[25] ; source, dest
+mov inl[:LABEL_135], stor[26] ; source, dest
+shl 0x1, stor[26] ; shift, val
+incr stor[26] ; operand
+call SMap::scriptCheckSelfCollision, stor[24] ; collisionPrimitiveIndex
+LABEL_16:
+jmp_cmp ==, stor[24], inl[:LABEL_135[stor[25]]], inl[:LABEL_17] ; operand, left, right, addr
+add 0x2, stor[25] ; amount, operand
+jmp_cmp <, stor[25], stor[26], inl[:LABEL_16] ; operand, left, right, addr
+jmp inl[:LABEL_18] ; addr
+LABEL_17:
+incr stor[25] ; operand
+mov inl[:LABEL_135[stor[25]]], stor[25] ; source, dest
+call SMap::scriptGetCollisionPrimitivePos, stor[25], stor[8], stor[9], stor[10] ; collisionPrimitiveIndex, x, y, z
+call SMap::scriptSelfFacePoint, stor[8], stor[9], stor[10] ; x, y, z
+LABEL_18:
+return
+
+; SUBROUTINE
+LABEL_19:
+call Scus94491BpeSegment::scriptSetGlobalFlag1, stor[24], 0x0 ; flag, value
+incr stor[24] ; operand
+jmp_cmp <=, stor[24], stor[25], inl[:LABEL_19] ; operand, left, right, addr
+return
+
+; SUBROUTINE
+LABEL_20:
+call Scus94491BpeSegment_8002::scriptGetFreeTextboxIndex, stor[26] ; textboxIndex
+jmp_cmp ==, 0xffffffff, stor[26], inl[:LABEL_23] ; operand, left, right, addr
+mov var[64][stor[25]], stor[25] ; source, dest
+memcpy 0x2, inl[:LABEL_162[:LABEL_162[stor[24]]]], stor[27] ; size, src, dest
+jmp_cmp <=, stor[27], 0x24, inl[:LABEL_21] ; operand, left, right, addr
+mov 0x24, stor[27] ; source, dest
+LABEL_21:
+jmp_cmp <=, stor[28], 0x4, inl[:LABEL_22] ; operand, left, right, addr
+mov 0x4, stor[28] ; source, dest
+LABEL_22:
+call SMap::scriptAddSobjTextbox, stor[26], stor[25], 0x121, stor[27], stor[28], inl[:LABEL_161[:LABEL_161[stor[24]]]] ; index, submapObjectIndex, packedData, width, height, text
+LABEL_23:
+mov stor[26], stor[24] ; source, dest
+return
+
+; SUBROUTINE
+LABEL_24:
+mov 0x0, stor[24] ; source, dest
+LABEL_25:
+call Scus94491BpeSegment_8002::scriptIsTextboxInitialized, stor[24], stor[25] ; index, initialized
+jmp_cmp !=, 0x0, stor[25], inl[:LABEL_26] ; operand, left, right, addr
+incr stor[24] ; operand
+jmp_cmp <=, stor[24], 0x4, inl[:LABEL_25] ; operand, left, right, addr
+jmp inl[:LABEL_27] ; addr
+LABEL_26:
+yield
+call Scus94491BpeSegment_8002::scriptIsTextboxInitialized, stor[24], stor[25] ; index, initialized
+jmp_cmp !=, 0x0, stor[25], inl[:LABEL_26] ; operand, left, right, addr
+LABEL_27:
+return
+data 0x208
+data 0x7001940
+data 0x2000019
+data 0x7d0538
+data 0x2000019
+data 0x200001b
+data 0x200001b
+data 0x200001b
+data 0x200001c
+data 0x40341
+data 0x82
+data 0x200001c
+data 0x9000027
+
+; SUBROUTINE
+LABEL_28:
+call Scus94491BpeSegment_8002::scriptIsTextboxInitialized, 0x5, stor[25] ; index, initialized
+jmp_cmp !=, 0x0, stor[25], inl[:LABEL_29] ; operand, left, right, addr
+call Scus94491BpeSegment_8002::scriptDeallocateTextbox, 0x6 ; index
+call Scus94491BpeSegment_8002::scriptAddTextbox, 0x5, 0x1011, 0xb6, 0x38, 0x24, 0x4, inl[:LABEL_161[:LABEL_161[stor[24]]]] ; index, packedData, x, y, width, height, text
+LABEL_29:
+call Scus94491BpeSegment_8002::scriptAddTextbox, 0x4, 0x400, 0xb6, 0x38, 0x24, 0x4, inl[:LABEL_161[:LABEL_161[stor[24]]]] ; index, packedData, x, y, width, height, text
+mov 0x4, stor[24] ; source, dest
+jmp inl[:LABEL_32] ; addr
+
+; SUBROUTINE
+LABEL_30:
+call Scus94491BpeSegment_8002::scriptIsTextboxInitialized, 0x6, stor[25] ; index, initialized
+jmp_cmp !=, 0x0, stor[25], inl[:LABEL_31] ; operand, left, right, addr
+call Scus94491BpeSegment_8002::scriptDeallocateTextbox, 0x5 ; index
+call Scus94491BpeSegment_8002::scriptAddTextbox, 0x6, 0x1011, 0xb6, 0xb8, 0x24, 0x4, inl[:LABEL_161[:LABEL_161[stor[24]]]] ; index, packedData, x, y, width, height, text
+LABEL_31:
+call Scus94491BpeSegment_8002::scriptAddTextbox, 0x4, 0x400, 0xb6, 0xb8, 0x24, 0x4, inl[:LABEL_161[:LABEL_161[stor[24]]]] ; index, packedData, x, y, width, height, text
+mov 0x4, stor[24] ; source, dest
+LABEL_32:
+return
+data 0x208
+data 0x2000019
+data 0x200001f
+data 0x10b0438
+data 0x2000018
+data 0x2000019
+data 0x200001a
+data 0x200001b
+data 0x660438
+data 0x2000000
+data 0x200001c
+data 0x200001d
+data 0x200001e
+data 0x219
+data 0x200001c
+data 0x2000019
+data 0x219
+data 0x200001e
+data 0x200001b
+data 0x334
+data 0x2000019
+data 0x200001b
+data 0x2000019
+data 0x680438
+data 0x2000000
+data 0x200001c
+data 0x200001d
+data 0x200001e
+data 0x219
+data 0x200001d
+data 0x2000019
+data 0x218
+data 0x1000000
+data 0x800
+data 0x2000019
+data 0x50341
+data 0x2000019
+data 0x1000000
+data 0xfffff800
+data 0x900000b
+data 0x218
+data 0x1000000
+data 0x1000
+data 0x2000019
+data 0x140
+data 0x900000b
+data 0x10341
+data 0x2000019
+data 0x1000000
+data 0x800
+data 0x9000009
+data 0x219
+data 0x1000000
+data 0x1000
+data 0x2000019
+data 0x780538
+data 0x2000000
+data 0x1000000
+data 0x0
+data 0x2000019
+data 0x1000000
+data 0x0
+data 0x200001f
+data 0x102
+data 0x200001f
+data 0x49
+
+; SUBROUTINE
+LABEL_33:
+call SMap::scriptSelfSetSobjFlag, 0x15, 0x1 ; bitIndex, value
+call SMap::scriptSelfSetSobjFlag, 0x18, 0x1 ; bitIndex, value
+call SMap::scriptSetSobjCollision2, stor[0], 0x14, 0x28, 0xa ; sobjIndex, horizontalSize, verticalSize, reach
+call SMap::scriptSetSobjPlayerCollisionMetrics, stor[0], 0xa, 0x28, 0xa ; sobjIndex, horizontalSize, verticalSize, reach
+return
+
+; SUBROUTINE
+LABEL_34:
+mov var[64][stor[24]], stor[24] ; source, dest
+LABEL_35:
+yield
+call SMap::scriptReadModelPosition, stor[24], stor[26], stor[27], stor[28] ; scriptIndex, x, y, z
+call SMap::scriptSelfFacePoint, stor[26], stor[27], stor[28] ; x, y, z
+call Scus94491BpeSegment::scriptReadGlobalFlag1, stor[25], stor[29] ; flag, value
+jmp_cmp ==, 0x0, stor[29], inl[:LABEL_35] ; operand, left, right, addr
+return
+
+; SUBROUTINE
+LABEL_36:
+mov 0x0, stor[24] ; source, dest
+call SMap::scriptCheckSelfCollision, stor[25] ; collisionPrimitiveIndex
+LABEL_37:
+mov inl[:LABEL_138[stor[24]]], stor[26] ; source, dest
+jmp_cmp ==, 0xffffffff, stor[26], inl[:LABEL_39] ; operand, left, right, addr
+jmp_cmp ==, stor[25], stor[26], inl[:LABEL_38] ; operand, left, right, addr
+incr stor[24] ; operand
+jmp inl[:LABEL_37] ; addr
+LABEL_38:
+gosub_table stor[24], inl[:LABEL_139] ; index, table
+LABEL_39:
+return
+
+; SUBROUTINE
+LABEL_40:
+call Scus94491BpeSegment_8002::scriptDeallocateTextbox, 0x5 ; index
+call Scus94491BpeSegment_8002::scriptDeallocateTextbox, 0x6 ; index
+return
+
+; SUBROUTINE
+LABEL_43: 
+call 70, 0x0, 0x23;
+call 70, 0x1, 0x0;
+call 70, 0x2, 0x3;
+call 70, 0x3, 0x3;
+call 70, 0x4, 0x3;
+call 70, 0x5, 0x3;
+call 70, 0x6, 0x0;
+call 70, 0x7, 0x0;
+call 70, 0x8, 0x0;
+call 72, 0x0;
+return
+data 0x80238
+data 0x0
+data 0x3
+data 0x208
+data 0x2
+data 0x2000018
+data 0x102
+data 0x2000018
+data 0x80238
+data 0x0
+data 0x0
+data 0x49
+
+; SUBROUTINE
+LABEL_59:
+call SMap::scriptSelfToggleAnimationDisabled, 0x0 ; disabled
+jmp_cmp >, 0x0, stor[24], inl[:LABEL_60] ; operand, left, right, addr
+call SMap::scriptSelfLoadSobjAnimation, stor[24] ; animIndex
+jmp inl[:LABEL_61] ; addr
+LABEL_60:
+neg stor[24] ; operand
+call SMap::loadUninterpolatedSobjAnimation, stor[0], stor[24] ; sobjIndex, animIndex
+LABEL_61:
+yield
+call SMap::scriptSelfIsAnimationFinished, stor[24] ; value
+jmp_cmp ==, 0x0, stor[24], inl[:LABEL_61] ; operand, left, right, addr
+jmp_cmp ==, stor[25], 0xffffffff, inl[:LABEL_62] ; operand, left, right, addr
+call SMap::scriptSelfLoadSobjAnimation, stor[25] ; animIndex
+return
+LABEL_62:
+call SMap::scriptSelfToggleAnimationDisabled, 0x1 ; disabled
+return
+
+; SUBROUTINE
+LABEL_63:
+call SMap::scriptReadModelPosition, stor[0], stor[29], stor[30], stor[31] ; scriptIndex, x, y, z
+sub stor[24], stor[29] ; amount, operand
+sub stor[25], stor[30] ; amount, operand
+sub stor[26], stor[31] ; amount, operand
+mul stor[29], stor[29] ; amount, operand
+mul stor[30], stor[30] ; amount, operand
+mul stor[31], stor[31] ; amount, operand
+add stor[29], stor[30] ; amount, operand
+add stor[30], stor[31] ; amount, operand
+sqrt stor[31], stor[31] ; val, dest
+incr stor[27] ; operand
+jmp_cmp >, stor[27], stor[31], inl[:LABEL_66] ; operand, left, right, addr
+decr stor[27] ; operand
+div stor[27], stor[31] ; amount, operand
+call SMap::scriptSelfMoveToPosition, stor[24], stor[25], stor[26], stor[31] ; x, y, z, movementTicks
+jmp_cmp ==, 0xffffffff, stor[28], inl[:LABEL_64] ; operand, left, right, addr
+jmp_cmp ==, 0xfffffffe, stor[28], inl[:LABEL_65] ; operand, left, right, addr
+call SMap::scriptSelfToggleAnimationDisabled, 0x0 ; disabled
+call SMap::scriptSelfLoadSobjAnimation, stor[28] ; animIndex
+call SMap::scriptSelfFacePoint, stor[24], stor[25], stor[26] ; x, y, z
+wait stor[31] ; frames
+call SMap::scriptSelfLoadSobjAnimation, 0x0 ; animIndex
+jmp inl[:LABEL_67] ; addr
+LABEL_64:
+mov stor[31], stor[24] ; source, dest
+jmp inl[:LABEL_67] ; addr
+LABEL_65:
+call SMap::scriptSelfFacePoint, stor[24], stor[25], stor[26] ; x, y, z
+wait stor[31] ; frames
+jmp inl[:LABEL_67] ; addr
+LABEL_66:
+call SMap::scriptReadModelPosition, stor[0], stor[24], stor[25], stor[26] ; scriptIndex, x, y, z
+call SMap::scriptSelfMoveToPosition, stor[24], stor[25], stor[26], 0x1 ; x, y, z, movementTicks
+mov 0x0, stor[24] ; source, dest
+jmp_cmp >, 0x0, stor[28], inl[:LABEL_67] ; operand, left, right, addr
+call SMap::scriptSelfLoadSobjAnimation, 0x0 ; animIndex
+jmp inl[:LABEL_67] ; addr
+LABEL_67:
+return
+
+; SUBROUTINE
+LABEL_68:
+call SMap::scriptReadModelPosition, stor[0], stor[28], stor[30], stor[29] ; scriptIndex, x, y, z
+sub stor[28], stor[24] ; amount, operand
+sub stor[29], stor[25] ; amount, operand
+atan2_12 stor[24], stor[25], stor[24] ; y, x, dest
+call SMap::scriptReadModelRotate, stor[0], stor[28], stor[25], stor[28] ; scriptIndex, x, y, z
+and 0xfff, stor[25] ; and, operand
+sub stor[25], stor[24] ; amount, operand
+add 0x800, stor[24] ; amount, operand
+jmp_cmp >=, stor[24], 0xfffff800, inl[:LABEL_69] ; operand, left, right, addr
+add 0x1000, stor[24] ; amount, operand
+jmp inl[:LABEL_70] ; addr
+LABEL_69:
+jmp_cmp <, stor[24], 0x800, inl[:LABEL_70] ; operand, left, right, addr
+sub 0x1000, stor[24] ; amount, operand
+LABEL_70:
+call SMap::scriptRotateSobj, stor[0], 0x0, stor[24], 0x0, stor[26] ; scriptIndex, x, y, z, frames
+jmp_cmp ==, 0xffffffff, stor[27], inl[:LABEL_71] ; operand, left, right, addr
+jmp_cmp ==, 0xfffffffe, stor[27], inl[:LABEL_72] ; operand, left, right, addr
+call SMap::scriptSelfToggleAnimationDisabled, 0x0 ; disabled
+call SMap::scriptSelfLoadSobjAnimation, stor[27] ; animIndex
+wait stor[26] ; frames
+call SMap::scriptSelfLoadSobjAnimation, 0x0 ; animIndex
+jmp inl[:LABEL_73] ; addr
+LABEL_71:
+jmp inl[:LABEL_73] ; addr
+LABEL_72:
+wait stor[26] ; frames
+jmp inl[:LABEL_73] ; addr
+LABEL_73:
+return
+
+; SUBROUTINE
+LABEL_74:
+call SMap::scriptSelfAttachCameraToSobj, 0x0 ; attach
+call SMap::scriptGetCameraOffset, stor[27], stor[28] ; x, y
+sub stor[27], stor[24] ; amount, operand
+sub stor[28], stor[25] ; amount, operand
+shl 0x10, stor[24] ; shift, val
+shl 0x10, stor[25] ; shift, val
+shl 0x10, stor[27] ; shift, val
+shl 0x10, stor[28] ; shift, val
+div stor[26], stor[24] ; amount, operand
+div stor[26], stor[25] ; amount, operand
+LABEL_75:
+add stor[24], stor[27] ; amount, operand
+add stor[25], stor[28] ; amount, operand
+mov stor[27], stor[29] ; source, dest
+mov stor[28], stor[30] ; source, dest
+shr 0x10, stor[29] ; shift, val
+shr 0x10, stor[30] ; shift, val
+call SMap::scriptSetModeParamForNextCallToScriptSetCameraOffsetOrHideSubmapForegroundObject, 0x2, 0x0, 0x0 ; mode, foregroundObjectIndex, out
+call SMap::scriptSetCameraOffset, stor[29], stor[30] ; x, y
+yield
+while stor[26], inl[:LABEL_75] ; counter, addr
+return
+
+; SUBROUTINE
+LABEL_76:
+call SMap::scriptSelfAttachCameraToSobj, 0x0 ; attach
+call SMap::scriptGetCameraOffset, stor[27], stor[28] ; x, y
+LABEL_77:
+jmp_cmp ==, stor[24], stor[27], inl[:LABEL_81] ; operand, left, right, addr
+jmp_cmp <, stor[24], stor[27], inl[:LABEL_79] ; operand, left, right, addr
+mov stor[24], stor[29] ; source, dest
+sub stor[27], stor[29] ; amount, operand
+jmp_cmp <, stor[26], stor[29], inl[:LABEL_78] ; operand, left, right, addr
+mov stor[24], stor[27] ; source, dest
+jmp inl[:LABEL_81] ; addr
+LABEL_78:
+add stor[26], stor[27] ; amount, operand
+jmp inl[:LABEL_81] ; addr
+LABEL_79:
+mov stor[27], stor[29] ; source, dest
+sub stor[24], stor[29] ; amount, operand
+jmp_cmp <, stor[26], stor[29], inl[:LABEL_80] ; operand, left, right, addr
+mov stor[24], stor[27] ; source, dest
+jmp inl[:LABEL_81] ; addr
+LABEL_80:
+sub stor[26], stor[27] ; amount, operand
+jmp inl[:LABEL_81] ; addr
+LABEL_81:
+jmp_cmp ==, stor[25], stor[28], inl[:LABEL_85] ; operand, left, right, addr
+jmp_cmp <, stor[25], stor[28], inl[:LABEL_83] ; operand, left, right, addr
+mov stor[25], stor[29] ; source, dest
+sub stor[28], stor[29] ; amount, operand
+jmp_cmp <, stor[26], stor[29], inl[:LABEL_82] ; operand, left, right, addr
+mov stor[25], stor[28] ; source, dest
+jmp inl[:LABEL_85] ; addr
+LABEL_82:
+add stor[26], stor[28] ; amount, operand
+jmp inl[:LABEL_85] ; addr
+LABEL_83:
+mov stor[28], stor[29] ; source, dest
+sub stor[25], stor[29] ; amount, operand
+jmp_cmp <, stor[26], stor[29], inl[:LABEL_84] ; operand, left, right, addr
+mov stor[25], stor[28] ; source, dest
+jmp inl[:LABEL_85] ; addr
+LABEL_84:
+sub stor[26], stor[28] ; amount, operand
+jmp inl[:LABEL_85] ; addr
+LABEL_85:
+call SMap::scriptSetModeParamForNextCallToScriptSetCameraOffsetOrHideSubmapForegroundObject, 0x2, 0x0, 0x0 ; mode, foregroundObjectIndex, out
+call SMap::scriptSetCameraOffset, stor[27], stor[28] ; x, y
+yield
+jmp_cmp !=, stor[27], stor[24], inl[:LABEL_77] ; operand, left, right, addr
+jmp_cmp !=, stor[28], stor[25], inl[:LABEL_77] ; operand, left, right, addr
+return
+
+; SUBROUTINE
+LABEL_86:
+jmp_cmp !&, 0x20, var[4], inl[:LABEL_90] ; operand, left, right, addr
+mov 0x0, stor[24] ; source, dest
+call SMap::scriptReadModelPosition, stor[0], stor[25], stor[26], stor[27] ; scriptIndex, x, y, z
+call SMap::scriptReadModelRotate, stor[0], stor[31], stor[28], stor[31] ; scriptIndex, x, y, z
+and 0xfff, stor[28] ; and, operand
+add 0x800, stor[28] ; amount, operand
+sin_12 stor[28], stor[29] ; angle, dest
+cos_12 stor[28], stor[30] ; angle, dest
+mov 0x28, stor[28] ; source, dest
+mul_12 stor[28], stor[29] ; amount, operand
+mul_12 stor[28], stor[30] ; amount, operand
+add stor[29], stor[25] ; amount, operand
+add stor[30], stor[27] ; amount, operand
+LABEL_87:
+mov stor[24], stor[28] ; source, dest
+add 0x5, stor[28] ; amount, operand
+jmp_cmp ==, 0xffffffff, inl[:LABEL_157[stor[28]]], inl[:LABEL_90] ; operand, left, right, addr
+decr stor[28] ; operand
+jmp_cmp >, 0x1c3, inl[:LABEL_157[stor[28]]], inl[:LABEL_88] ; operand, left, right, addr
+jmp_cmp <, 0x1f4, inl[:LABEL_157[stor[28]]], inl[:LABEL_88] ; operand, left, right, addr
+call Scus94491BpeSegment::scriptReadGlobalFlag2, inl[:LABEL_157[stor[28]]], stor[31] ; flag, value
+jmp_cmp !=, 0x0, stor[31], inl[:LABEL_89] ; operand, left, right, addr
+LABEL_88:
+sub 0x3, stor[28] ; amount, operand
+mov inl[:LABEL_157[stor[28]]], stor[31] ; source, dest
+sub stor[26], stor[31] ; amount, operand
+jmp_cmp <, 0x14, stor[31], inl[:LABEL_89] ; operand, left, right, addr
+neg stor[31] ; operand
+jmp_cmp <, 0x14, stor[31], inl[:LABEL_89] ; operand, left, right, addr
+decr stor[28] ; operand
+mov inl[:LABEL_157[stor[28]]], stor[30] ; source, dest
+add 0x2, stor[28] ; amount, operand
+mov inl[:LABEL_157[stor[28]]], stor[31] ; source, dest
+sub stor[25], stor[30] ; amount, operand
+sub stor[27], stor[31] ; amount, operand
+mul stor[30], stor[30] ; amount, operand
+mul stor[31], stor[31] ; amount, operand
+add stor[30], stor[31] ; amount, operand
+sqrt stor[31], stor[31] ; val, dest
+incr stor[28] ; operand
+jmp_cmp >=, inl[:LABEL_157[stor[28]]], stor[31], inl[:LABEL_91] ; operand, left, right, addr
+LABEL_89:
+add 0x6, stor[24] ; amount, operand
+jmp inl[:LABEL_87] ; addr
+LABEL_90:
+return
+LABEL_91:
+gosub inl[:LABEL_92] ; addr
+jmp inl[:LABEL_90] ; addr
+
+; SUBROUTINE
+LABEL_92:
+mov stor[24], stor[28] ; source, dest
+call Scus94491BpeSegment::scriptSetIndicatorsDisabled, 0x1 ; disabled
+call SMap::scriptSelfLoadSobjAnimation, 0x0 ; animIndex
+add 0x4, stor[28] ; amount, operand
+jmp_cmp >, 0x1c3, inl[:LABEL_157[stor[28]]], inl[:LABEL_93] ; operand, left, right, addr
+jmp_cmp <, 0x1f4, inl[:LABEL_157[stor[28]]], inl[:LABEL_93] ; operand, left, right, addr
+call Scus94491BpeSegment::scriptReadGlobalFlag2, inl[:LABEL_157[stor[28]]], stor[31] ; flag, value
+jmp_cmp !=, 0x0, stor[31], inl[:LABEL_93] ; operand, left, right, addr
+jmp inl[:LABEL_94] ; addr
+LABEL_93:
+incr stor[28] ; operand
+mov inl[:LABEL_157[stor[28]]], stor[24] ; source, dest
+mov 0x0, stor[25] ; source, dest
+gosub inl[:LABEL_20] ; addr
+gosub inl[:LABEL_24] ; addr
+jmp inl[:LABEL_95] ; addr
+LABEL_94:
+call Scus94491BpeSegment::scriptSetGlobalFlag2, inl[:LABEL_157[stor[28]]], 0x1 ; flag, value
+incr var[19] ; operand
+incr stor[28] ; operand
+mov inl[:LABEL_157[stor[28]]], stor[24] ; source, dest
+mov 0x0, stor[25] ; source, dest
+gosub inl[:LABEL_20] ; addr
+gosub inl[:LABEL_24] ; addr
+call Scus94491BpeSegment::scriptPlaySound, 0x8, 0x2c, 0x0, 0x0, 0x0, 0x0 ; soundFileIndex, soundIndex, unused1, unused2, initialDelay, repeatDelay
+memcpy 0x2, inl[:LABEL_164], stor[27] ; size, src, dest
+call SMap::scriptAddSobjTextbox, 0x0, var[64][0], 0x121, stor[27], stor[28], inl[:LABEL_163] ; index, submapObjectIndex, packedData, width, height, text
+gosub inl[:LABEL_24] ; addr
+jmp inl[:LABEL_95] ; addr
+LABEL_95:
+call Scus94491BpeSegment::scriptSetIndicatorsDisabled, 0x0 ; disabled
+return
+
+; SUBROUTINE
+LABEL_96:
+gosub inl[:LABEL_100] ; addr
+LABEL_97:
+yield
+gosub inl[:LABEL_98] ; addr
+jmp_cmp !=, 0x0, stor[27], inl[:LABEL_97] ; operand, left, right, addr
+return
+
+; SUBROUTINE
+LABEL_98:
+sub stor[28], stor[11] ; amount, operand
+sub stor[29], stor[12] ; amount, operand
+sub stor[30], stor[13] ; amount, operand
+sub stor[26], stor[29] ; amount, operand
+mov stor[11], stor[8] ; source, dest
+mov stor[12], stor[9] ; source, dest
+mov stor[13], stor[10] ; source, dest
+shr 0xc, stor[8] ; shift, val
+shr 0xc, stor[9] ; shift, val
+shr 0xc, stor[10] ; shift, val
+call SMap::scriptSetModelPosition, stor[24], stor[8], stor[9], stor[10] ; scriptIndex, x, y, z
+while stor[27], inl[:LABEL_99] ; counter, addr
+call SMap::FUN_800e0184, stor[24], 0x0 ; scriptIndex, value
+LABEL_99:
+return
+
+; SUBROUTINE
+LABEL_100:
+call SMap::FUN_800e0184, stor[24], 0x1 ; scriptIndex, value
+call SMap::scriptReadModelPosition, stor[24], stor[28], stor[29], stor[30] ; scriptIndex, x, y, z
+sub stor[8], stor[28] ; amount, operand
+mul stor[28], stor[28] ; amount, operand
+sub stor[9], stor[29] ; amount, operand
+mul stor[29], stor[29] ; amount, operand
+sub stor[10], stor[30] ; amount, operand
+mul stor[30], stor[30] ; amount, operand
+add stor[28], stor[29] ; amount, operand
+add stor[29], stor[30] ; amount, operand
+sqrt stor[30], stor[30] ; val, dest
+shl 0xc, stor[30] ; shift, val
+add 0xfff, stor[30] ; amount, operand
+div stor[25], stor[30] ; amount, operand
+jmp_cmp >, stor[27], stor[30], inl[:LABEL_101] ; operand, left, right, addr
+mov stor[30], stor[27] ; source, dest
+LABEL_101:
+mov stor[27], stor[28] ; source, dest
+mov stor[27], stor[29] ; source, dest
+mul stor[27], stor[28] ; amount, operand
+decr stor[29] ; operand
+shl 0xe, stor[29] ; shift, val
+div stor[28], stor[29] ; amount, operand
+mul stor[29], stor[26] ; amount, operand
+call SMap::scriptReadModelPosition, stor[24], stor[28], stor[29], stor[30] ; scriptIndex, x, y, z
+memcpy 0x3, stor[28], stor[11] ; size, src, dest
+sub stor[8], stor[28] ; amount, operand
+sub stor[9], stor[29] ; amount, operand
+sub stor[10], stor[30] ; amount, operand
+shl 0xc, stor[28] ; shift, val
+div stor[27], stor[28] ; amount, operand
+shl 0xc, stor[29] ; shift, val
+div stor[27], stor[29] ; amount, operand
+shl 0xc, stor[30] ; shift, val
+div stor[27], stor[30] ; amount, operand
+add stor[26], stor[29] ; amount, operand
+shl 0x1, stor[26] ; shift, val
+decr stor[27] ; operand
+div stor[27], stor[26] ; amount, operand
+incr stor[27] ; operand
+shl 0xc, stor[11] ; shift, val
+shl 0xc, stor[12] ; shift, val
+shl 0xc, stor[13] ; shift, val
+return
+
+; SUBROUTINE
+LABEL_102:
+jmp_cmp !&, 0x20, var[4], inl[:LABEL_103] ; operand, left, right, addr
+call SMap::scriptGetSobjCollidedWith2, stor[0], stor[24] ; sobjIndex, collided
+jmp_cmp ==, 0xffffffff, stor[24], inl[:LABEL_103] ; operand, left, right, addr
+call SMap::scriptSelfLoadSobjAnimation, 0x0 ; animIndex
+mov 0x0, stor[25] ; source, dest
+mov 0xff, stor[26] ; source, dest
+mov 0x1, stor[27] ; source, dest
+gosub inl[:LABEL_104] ; addr
+LABEL_103:
+return
+
+; SUBROUTINE
+LABEL_104:
+jmp_cmp !=, 0x1, stor[24], inl[:LABEL_105] ; operand, left, right, addr
+gosub inl[:LABEL_142] ; addr
+LABEL_105:
+mov stor[stor[stor[0], 23], 8], stor[31] ; source, dest
+mul stor[stor[stor[0], 23], 31], stor[31] ; amount, operand
+add stor[24], stor[31] ; amount, operand
+shl 0x1, stor[31] ; shift, val
+jmp_cmp ==, 0xffffffff, inl[:LABEL_156[stor[31]]], inl[:LABEL_113] ; operand, left, right, addr
+call Scus94491BpeSegment::scriptSetIndicatorsDisabled, 0x1 ; disabled
+mov var[64][stor[24]], stor[30] ; source, dest
+call SMap::scriptReadModelPosition, stor[30], stor[28], stor[31], stor[31] ; scriptIndex, x, y, z
+call SMap::scriptReadModelPosition, stor[0], stor[29], stor[31], stor[31] ; scriptIndex, x, y, z
+sub stor[29], stor[28] ; amount, operand
+call SMap::scriptReadModelPosition, stor[30], stor[31], stor[31], stor[29] ; scriptIndex, x, y, z
+call SMap::scriptReadModelPosition, stor[0], stor[31], stor[31], stor[30] ; scriptIndex, x, y, z
+sub stor[30], stor[29] ; amount, operand
+atan2_12 stor[28], stor[29], stor[28] ; y, x, dest
+call SMap::scriptReadModelRotate, stor[0], stor[31], stor[29], stor[31] ; scriptIndex, x, y, z
+and 0xfff, stor[29] ; and, operand
+sub stor[29], stor[28] ; amount, operand
+add 0x800, stor[28] ; amount, operand
+jmp_cmp >=, stor[28], 0xfffff800, inl[:LABEL_106] ; operand, left, right, addr
+add 0x1000, stor[28] ; amount, operand
+jmp inl[:LABEL_107] ; addr
+LABEL_106:
+jmp_cmp <, stor[28], 0x800, inl[:LABEL_107] ; operand, left, right, addr
+sub 0x1000, stor[28] ; amount, operand
+LABEL_107:
+call SMap::scriptRotateSobj, stor[0], 0x0, stor[28], 0x0, 0x4 ; scriptIndex, x, y, z, frames
+call Scus94491BpeSegment::scriptSetGlobalFlag1, stor[26], 0x0 ; flag, value
+mov var[64][stor[24]], stor[31] ; source, dest
+fork_reenter stor[31], stor[27], stor[25] ; index, entrypoint, stor[32] value
+mov stor[stor[stor[0], 23], 8], stor[31] ; source, dest
+mul stor[stor[stor[0], 23], 31], stor[31] ; amount, operand
+add stor[24], stor[31] ; amount, operand
+shl 0x1, stor[31] ; shift, val
+mov inl[:LABEL_156[stor[31]]], stor[30] ; source, dest
+call Scus94491BpeSegment::scriptReadGlobalFlag1, stor[30], stor[29] ; flag, value
+incr stor[31] ; operand
+add inl[:LABEL_156[stor[31]]], stor[29] ; amount, operand
+call Scus94491BpeSegment::scriptSetGlobalFlag1, stor[30], 0x1 ; flag, value
+memcpy 0x2, inl[:LABEL_162[:LABEL_162[stor[29]]]], stor[27] ; size, src, dest
+jmp_cmp <=, stor[27], 0x24, inl[:LABEL_108] ; operand, left, right, addr
+mov 0x24, stor[27] ; source, dest
+LABEL_108:
+jmp_cmp <=, stor[28], 0x4, inl[:LABEL_109] ; operand, left, right, addr
+mov 0x4, stor[28] ; source, dest
+LABEL_109:
+mov var[64][stor[24]], stor[24] ; source, dest
+call SMap::scriptAddSobjTextbox, stor[25], stor[24], 0x121, stor[27], stor[28], inl[:LABEL_161[:LABEL_161[stor[29]]]] ; index, submapObjectIndex, packedData, width, height, text
+LABEL_110:
+call Scus94491BpeSegment::scriptReadGlobalFlag1, stor[26], stor[31] ; flag, value
+jmp_cmp !=, 0x0, stor[31], inl[:LABEL_111] ; operand, left, right, addr
+yield
+jmp inl[:LABEL_110] ; addr
+LABEL_111:
+call Scus94491BpeSegment_8002::scriptIsTextboxInitialized, stor[25], stor[31] ; index, initialized
+jmp_cmp ==, 0x0, stor[31], inl[:LABEL_112] ; operand, left, right, addr
+yield
+jmp inl[:LABEL_111] ; addr
+LABEL_112:
+call Scus94491BpeSegment::scriptSetIndicatorsDisabled, 0x0 ; disabled
+LABEL_113:
+return
+data 0x221
+data 0x1000000
+data 0x2
+data 0x2000018
+data 0x630138
+data 0x1000000
+data 0x0
+data 0x0
+data 0x630138
+data 0x1000000
+data 0x1
+data 0x0
+data 0x11c
+data 0x2000018
+data 0x30242
+data 0x2000018
+data 0x900fff6
+data 0x49
+ENTRYPOINT_0:
+ENTRYPOINT_1:
+ENTRYPOINT_2:
+ENTRYPOINT_3:
+ENTRYPOINT_4:
+ENTRYPOINT_5:
+ENTRYPOINT_6:
+ENTRYPOINT_7:
+ENTRYPOINT_8:
+ENTRYPOINT_9:
+ENTRYPOINT_10:
+ENTRYPOINT_11:
+ENTRYPOINT_12:
+ENTRYPOINT_13:
+ENTRYPOINT_14:
+ENTRYPOINT_15:
+call SMap::scriptSelfLoadSobjAnimation, 0x0 ; animIndex
+mov var[65], stor[23] ; source, dest
+incr stor[stor[stor[0], 23], 8] ; operand
+gosub_table stor[stor[stor[0], 23], 31], inl[:LABEL_115] ; index, table
+LABEL_114:
+gosub_table stor[stor[stor[0], 23], 31], inl[:LABEL_136] ; index, table
+yield
+jmp inl[:LABEL_114] ; addr
+
+; SUBROUTINE TABLE
+LABEL_115:
+rel :JMP_2470_0
+rel :JMP_2470_1
+rel :JMP_2470_2
+rel :JMP_2470_3
+rel :JMP_2470_4
+rel :JMP_2470_3
+rel :JMP_2470_3
+
+; SUBROUTINE
+JMP_2470_0:
+call Scus94491BpeSegment::scriptStopSoundsAndSequences ; index
+call Scus94491BpeSegment::scriptReadGlobalFlag1, 0x18, stor[24] ; flag, value
+jmp_cmp !=, 0x0, stor[24], inl[:LABEL_147] ; operand, left, right, addr
+mov 0x2, var[47] ; source, dest
+LABEL_116:
+call SMap::scriptAllocateSmokePlumeEffectData, inl[:LABEL_158] ; smokeData
+call SMap::scriptSelfAttachCameraToSobj, 0x1 ; attach
+call SMap::FUN_800df530, 0x0 ; value
+call SMap::scriptSelfSetSobjHidden, 0x0 ; value
+call SMap::scriptGetSetEncountersDisabled, 0x1, 0x1, stor[24] ; set, apply, value
+call SMap::scriptSetModelRotate, stor[0], 0x0, 0x0, 0x0 ; scriptIndex, x, y, z
+call SMap::scriptEnableShadow, stor[0] ; sobjIndex
+gosub inl[:LABEL_33] ; addr
+call SMap::scriptAddTriangleIndicators, inl[:LABEL_159] ; dataStream
+call Scus94491BpeSegment::scriptSetIndicatorsDisabled, 0x0 ; disabled
+call SMap::scriptReadModelPosition, stor[0], stor[8], stor[9], stor[10] ; scriptIndex, x, y, z
+call SMap::scriptSobjMoveToPosition, stor[0], stor[8], stor[9], stor[10], 0x1 ; scriptIndex, x, y, z, movementTicks
+yield
+call SMap::scriptCheckSelfCollision, stor[12] ; collisionPrimitiveIndex
+gosub inl[:LABEL_15] ; addr
+return
+
+; SUBROUTINE
+JMP_2470_1:
+call Scus94491BpeSegment::scriptReadGlobalFlag1, 0x18, stor[24] ; flag, value
+jmp_cmp !=, 0x0, stor[24], inl[:LABEL_147] ; operand, left, right, addr
+mov 0x2, var[47] ; source, dest
+LABEL_117:
+call SMap::scriptAllocateSmokePlumeEffectData, inl[:LABEL_158] ; smokeData
+call Scus94491BpeSegment::scriptStopSoundsAndSequences ; index
+call SMap::scriptSelfAttachCameraToSobj, 0x1 ; attach
+call SMap::FUN_800df530, 0x0 ; value
+call SMap::scriptSelfSetSobjHidden, 0x0 ; value
+call SMap::scriptGetSetEncountersDisabled, 0x1, 0x1, stor[24] ; set, apply, value
+call SMap::scriptEnableShadow, stor[0] ; sobjIndex
+gosub inl[:LABEL_33] ; addr
+call SMap::scriptAddTriangleIndicators, inl[:LABEL_159] ; dataStream
+call Scus94491BpeSegment::scriptSetIndicatorsDisabled, 0x0 ; disabled
+call SMap::scriptSetModelRotate, stor[0], 0x0, 0x0, 0x0 ; scriptIndex, x, y, z
+call SMap::scriptReadModelPosition, stor[0], stor[8], stor[9], stor[10] ; scriptIndex, x, y, z
+call SMap::scriptSobjMoveToPosition, stor[0], stor[8], stor[9], stor[10], 0x1 ; scriptIndex, x, y, z, movementTicks
+yield
+call SMap::scriptCheckSelfCollision, stor[12] ; collisionPrimitiveIndex
+gosub inl[:LABEL_15] ; addr
+mov 0x0, var[72] ; source, dest
+return
+
+; SUBROUTINE
+JMP_2470_2:
+call Scus94491BpeSegment::scriptStopSoundsAndSequences ; index
+call SMap::scriptSelfAttachCameraToSobj, 0x1 ; attach
+call SMap::FUN_800df530, 0x0 ; value
+call SMap::scriptSelfSetSobjHidden, 0x0 ; value
+call SMap::scriptGetSetEncountersDisabled, 0x1, 0x1, stor[24] ; set, apply, value
+call SMap::scriptEnableShadow, stor[0] ; sobjIndex
+gosub inl[:LABEL_33] ; addr
+call SMap::scriptAddTriangleIndicators, inl[:LABEL_159] ; dataStream
+call Scus94491BpeSegment::scriptSetIndicatorsDisabled, 0x0 ; disabled
+call SMap::scriptSetModelRotate, stor[0], 0x0, 0x0, 0x0 ; scriptIndex, x, y, z
+call SMap::scriptReadModelPosition, stor[0], stor[8], stor[9], stor[10] ; scriptIndex, x, y, z
+call SMap::scriptSobjMoveToPosition, stor[0], stor[8], stor[9], stor[10], 0x1 ; scriptIndex, x, y, z, movementTicks
+yield
+call SMap::scriptCheckSelfCollision, stor[12] ; collisionPrimitiveIndex
+gosub inl[:LABEL_15] ; addr
+gosub inl[:LABEL_118] ; addr
+mov 0x0, var[72] ; source, dest
+return
+
+; SUBROUTINE
+LABEL_118:
+call Scus94491BpeSegment::scriptReadGlobalFlag2, 0x2a7, stor[24] ; flag, value
+jmp_cmp !=, 0x0, stor[24], inl[:LABEL_125] ; operand, left, right, addr
+call Scus94491BpeSegment::scriptReadGlobalFlag2, 0xe4, stor[24] ; flag, value
+jmp_cmp !=, 0x0, stor[24], inl[:LABEL_127] ; operand, left, right, addr
+call Scus94491BpeSegment::scriptReadGlobalFlag2, 0x36, stor[24] ; flag, value
+jmp_cmp ==, 0x0, stor[24], inl[:LABEL_119] ; operand, left, right, addr
+call Scus94491BpeSegment::scriptReadGlobalFlag2, 0x3f, stor[24] ; flag, value
+jmp_cmp ==, 0x0, stor[24], inl[:LABEL_120] ; operand, left, right, addr
+LABEL_119:
+call Scus94491BpeSegment::scriptReadGlobalFlag2, 0x2a8, stor[24] ; flag, value
+jmp_cmp !=, 0x0, stor[24], inl[:LABEL_120] ; operand, left, right, addr
+call Scus94491BpeSegment::scriptReadGlobalFlag2, 0x45, stor[24] ; flag, value
+jmp_cmp !=, 0x0, stor[24], inl[:LABEL_120] ; operand, left, right, addr
+gosub inl[:LABEL_134] ; addr
+LABEL_120:
+call Scus94491BpeSegment::scriptReadGlobalFlag2, 0x57, stor[24] ; flag, value
+jmp_cmp !=, 0x0, stor[24], inl[:LABEL_121] ; operand, left, right, addr
+call Scus94491BpeSegment::scriptReadGlobalFlag2, 0x2aa, stor[24] ; flag, value
+jmp_cmp !=, 0x0, stor[24], inl[:LABEL_129] ; operand, left, right, addr
+jmp inl[:LABEL_129] ; addr
+LABEL_121:
+call Scus94491BpeSegment::scriptReadGlobalFlag2, 0x2a9, stor[24] ; flag, value
+jmp_cmp !=, 0x0, stor[24], inl[:LABEL_123] ; operand, left, right, addr
+call Scus94491BpeSegment::scriptReadGlobalFlag1, 0x64, stor[24] ; flag, value
+jmp_cmp !=, 0x0, stor[24], inl[:LABEL_122] ; operand, left, right, addr
+gosub inl[:LABEL_133] ; addr
+jmp inl[:LABEL_131] ; addr
+LABEL_122:
+gosub inl[:LABEL_0] ; addr
+gosub inl[:LABEL_102] ; addr
+gosub inl[:LABEL_86] ; addr
+yield
+call SMap::scriptCheckSelfCollision, stor[31] ; collisionPrimitiveIndex
+jmp_cmp ==, 0x35, stor[31], inl[:LABEL_155] ; operand, left, right, addr
+jmp inl[:LABEL_122] ; addr
+LABEL_123:
+gosub inl[:LABEL_132] ; addr
+call SMap::scriptAddTriangleIndicators, inl[:LABEL_160] ; dataStream
+LABEL_124:
+gosub inl[:LABEL_0] ; addr
+gosub inl[:LABEL_102] ; addr
+gosub inl[:LABEL_86] ; addr
+yield
+call SMap::scriptCheckSelfCollision, stor[31] ; collisionPrimitiveIndex
+jmp_cmp ==, 0x35, stor[31], inl[:LABEL_155] ; operand, left, right, addr
+jmp inl[:LABEL_124] ; addr
+LABEL_125:
+gosub inl[:LABEL_132] ; addr
+call SMap::scriptAddTriangleIndicators, inl[:LABEL_160] ; dataStream
+LABEL_126:
+gosub inl[:LABEL_0] ; addr
+gosub inl[:LABEL_102] ; addr
+gosub inl[:LABEL_86] ; addr
+yield
+call SMap::scriptCheckSelfCollision, stor[31] ; collisionPrimitiveIndex
+jmp_cmp ==, 0x35, stor[31], inl[:LABEL_155] ; operand, left, right, addr
+jmp inl[:LABEL_126] ; addr
+LABEL_127:
+gosub inl[:LABEL_132] ; addr
+call SMap::scriptAddTriangleIndicators, inl[:LABEL_160] ; dataStream
+LABEL_128:
+gosub inl[:LABEL_0] ; addr
+gosub inl[:LABEL_102] ; addr
+gosub inl[:LABEL_86] ; addr
+yield
+call SMap::scriptCheckSelfCollision, stor[31] ; collisionPrimitiveIndex
+jmp_cmp ==, 0x35, stor[31], inl[:LABEL_155] ; operand, left, right, addr
+jmp inl[:LABEL_128] ; addr
+LABEL_129:
+call SMap::scriptAddTriangleIndicators, inl[:LABEL_160] ; dataStream
+LABEL_130:
+gosub inl[:LABEL_0] ; addr
+gosub inl[:LABEL_102] ; addr
+gosub inl[:LABEL_86] ; addr
+yield
+call SMap::scriptCheckSelfCollision, stor[31] ; collisionPrimitiveIndex
+jmp_cmp ==, 0x35, stor[31], inl[:LABEL_155] ; operand, left, right, addr
+jmp inl[:LABEL_130] ; addr
+LABEL_131:
+return
+
+; SUBROUTINE
+LABEL_132:
+call SMap::scriptSetModelPosition, var[64][2], 0x154, 0x0, 0xfffffc78 ; scriptIndex, x, y, z
+call SMap::scriptSetModelPosition, var[64][13], 0x180, 0x0, 0xfffffc54 ; scriptIndex, x, y, z
+call SMap::scriptSetModelRotate, var[64][2], 0x0, 0xf00, 0x0 ; scriptIndex, x, y, z
+call SMap::scriptSetModelRotate, var[64][13], 0x0, 0xf00, 0x0 ; scriptIndex, x, y, z
+call SMap::scriptEnableShadow, var[64][2] ; sobjIndex
+call SMap::scriptEnableShadow, var[64][13] ; sobjIndex
+call SMap::FUN_800e0184, var[64][2], 0x1 ; scriptIndex, value
+call SMap::FUN_800e0184, var[64][13], 0x1 ; scriptIndex, value
+call SMap::scriptSetSobjHidden, var[64][2], 0x0 ; scriptIndex, hidden
+call SMap::scriptSetSobjHidden, var[64][13], 0x0 ; scriptIndex, hidden
+call SMap::scriptSetAmbientColour, var[64][2], 0x1300, 0x1300, 0x1300 ; sobjIndex, r, g, b
+call SMap::scriptSetAmbientColour, var[64][13], 0x1500, 0x1500, 0x1500 ; sobjIndex, r, g, b
+return
+
+; SUBROUTINE
+LABEL_133:
+call Scus94491BpeSegment::scriptSetIndicatorsDisabled, 0x1 ; disabled
+mov 0x11f, stor[24] ; source, dest
+mov 0x0, stor[25] ; source, dest
+mov 0x2c1, stor[26] ; source, dest
+mov 0x5, stor[27] ; source, dest
+mov 0x1, stor[28] ; source, dest
+gosub inl[:LABEL_63] ; addr
+mov 0x98, stor[24] ; source, dest
+mov 0x2, stor[25] ; source, dest
+gosub inl[:LABEL_20] ; addr
+mov 0x99, stor[24] ; source, dest
+mov 0x3, stor[25] ; source, dest
+gosub inl[:LABEL_20] ; addr
+gosub inl[:LABEL_24] ; addr
+gosub inl[:LABEL_40] ; addr
+mov 0x46, stor[24] ; source, dest
+wait stor[24] ; frames
+call Scus94491BpeSegment::scriptSetGlobalFlag1, 0x0, 0x1 ; flag, value
+mov 0x9a, stor[24] ; source, dest
+gosub inl[:LABEL_30] ; addr
+gosub inl[:LABEL_24] ; addr
+gosub inl[:LABEL_40] ; addr
+call Scus94491BpeSegment::scriptSetGlobalFlag1, 0x1, 0x1 ; flag, value
+mov 0x9b, stor[24] ; source, dest
+gosub inl[:LABEL_30] ; addr
+gosub inl[:LABEL_24] ; addr
+gosub inl[:LABEL_40] ; addr
+call Scus94491BpeSegment::scriptSetGlobalFlag1, 0x2, 0x1 ; flag, value
+mov 0x9c, stor[24] ; source, dest
+gosub inl[:LABEL_30] ; addr
+gosub inl[:LABEL_24] ; addr
+gosub inl[:LABEL_40] ; addr
+call Scus94491BpeSegment::scriptSetGlobalFlag1, 0x3, 0x1 ; flag, value
+mov 0x14, stor[24] ; source, dest
+wait stor[24] ; frames
+mov 0xf4, stor[24] ; source, dest
+mov 0x0, stor[25] ; source, dest
+mov 0x1d4, stor[26] ; source, dest
+mov 0x5, stor[27] ; source, dest
+mov 0x1, stor[28] ; source, dest
+gosub inl[:LABEL_63] ; addr
+mov 0x9d, stor[24] ; source, dest
+mov 0x2, stor[25] ; source, dest
+gosub inl[:LABEL_20] ; addr
+gosub inl[:LABEL_24] ; addr
+gosub inl[:LABEL_40] ; addr
+mov 0x15c, stor[24] ; source, dest
+mov 0x2e8, stor[25] ; source, dest
+mov 0xa, stor[26] ; source, dest
+mov 0x1, stor[27] ; source, dest
+gosub inl[:LABEL_68] ; addr
+call Scus94491BpeSegment::scriptSetGlobalFlag1, 0x4, 0x1 ; flag, value
+mov 0x9e, stor[24] ; source, dest
+mov 0x3, stor[25] ; source, dest
+gosub inl[:LABEL_20] ; addr
+gosub inl[:LABEL_24] ; addr
+gosub inl[:LABEL_40] ; addr
+call Scus94491BpeSegment::scriptSetGlobalFlag1, 0x5, 0x1 ; flag, value
+mov 0x1e, stor[24] ; source, dest
+wait stor[24] ; frames
+mov 0x130, stor[24] ; source, dest
+mov 0x1d0, stor[25] ; source, dest
+mov 0x28, stor[26] ; source, dest
+mov 0x0, stor[27] ; source, dest
+gosub inl[:LABEL_68] ; addr
+mov 0xec, stor[24] ; source, dest
+mov 0x58, stor[25] ; source, dest
+mov 0x14, stor[26] ; source, dest
+mov 0x0, stor[27] ; source, dest
+gosub inl[:LABEL_68] ; addr
+mov 0x64, stor[24] ; source, dest
+mov 0xffffff18, stor[25] ; source, dest
+mov 0xa, stor[26] ; source, dest
+mov 0x0, stor[27] ; source, dest
+gosub inl[:LABEL_68] ; addr
+mov 0x9c, stor[24] ; source, dest
+mov 0x0, stor[25] ; source, dest
+mov 0x90, stor[26] ; source, dest
+mov 0x5, stor[27] ; source, dest
+mov 0x2, stor[28] ; source, dest
+gosub inl[:LABEL_63] ; addr
+rewind
+data 0x49
+
+; SUBROUTINE
+LABEL_134:
+call Scus94491BpeSegment::scriptSetIndicatorsDisabled, 0x1 ; disabled
+call Scus94491BpeSegment::scriptSetGlobalFlag1, 0x0, 0x1 ; flag, value
+mov 0x138, stor[24] ; source, dest
+mov 0x0, stor[25] ; source, dest
+mov 0x298, stor[26] ; source, dest
+mov 0x5, stor[27] ; source, dest
+mov 0x1, stor[28] ; source, dest
+gosub inl[:LABEL_63] ; addr
+mov 0x1e, stor[24] ; source, dest
+wait stor[24] ; frames
+mov 0x170, stor[24] ; source, dest
+mov 0x35c, stor[25] ; source, dest
+mov 0xa, stor[26] ; source, dest
+mov 0x1, stor[27] ; source, dest
+gosub inl[:LABEL_68] ; addr
+mov 0xb, stor[24] ; source, dest
+mov 0x1, stor[25] ; source, dest
+gosub inl[:LABEL_34] ; addr
+mov 0xe, stor[24] ; source, dest
+mov 0xffffffff, stor[25] ; source, dest
+gosub inl[:LABEL_59] ; addr
+mov 0x32, stor[24] ; source, dest
+wait stor[24] ; frames
+mov 0x84, stor[24] ; source, dest
+mov 0x11c, stor[25] ; source, dest
+mov 0x5, stor[26] ; source, dest
+mov 0x0, stor[27] ; source, dest
+gosub inl[:LABEL_68] ; addr
+mov 0xa, stor[24] ; source, dest
+mov 0xffffffff, stor[25] ; source, dest
+gosub inl[:LABEL_59] ; addr
+mov 0x97, stor[24] ; source, dest
+mov 0x0, stor[25] ; source, dest
+gosub inl[:LABEL_20] ; addr
+mov 0xd, stor[24] ; source, dest
+mov 0xffffffff, stor[25] ; source, dest
+gosub inl[:LABEL_59] ; addr
+gosub inl[:LABEL_24] ; addr
+gosub inl[:LABEL_40] ; addr
+call Scus94491BpeSegment::scriptSetGlobalFlag1, 0x2, 0x1 ; flag, value
+mov 0x104, stor[24] ; source, dest
+mov 0x0, stor[25] ; source, dest
+mov 0x1a4, stor[26] ; source, dest
+mov 0x5, stor[27] ; source, dest
+mov 0x2, stor[28] ; source, dest
+gosub inl[:LABEL_63] ; addr
+rewind
+data 0x49
+
+; SUBROUTINE
+JMP_2470_4:
+mov 0x0, stor[24] ; source, dest
+mov 0xff, stor[25] ; source, dest
+gosub inl[:LABEL_19] ; addr
+call Scus94491BpeSegment::scriptSetIndicatorsDisabled, 0x1 ; disabled
+mov 0x8, stor[24] ; source, dest
+gosub inl[:LABEL_43] ; addr
+call Scus94491BpeSegment::scriptStopSoundsAndSequences ; index
+call SMap::FUN_800df530, 0x1 ; value
+call SMap::scriptSelfSetSobjHidden, 0x1 ; value
+call SMap::scriptGetSetEncountersDisabled, 0x1, 0x1, stor[24] ; set, apply, value
+call SMap::scriptSetModelRotate, stor[0], 0x0, 0x0, 0x0 ; scriptIndex, x, y, z
+call Scus94491BpeSegment::scriptSetIndicatorsDisabled, 0x1 ; disabled
+mov 0xb2, stor[24] ; source, dest
+mov 0x7a, stor[25] ; source, dest
+mov 0x64, stor[26] ; source, dest
+gosub inl[:LABEL_76] ; addr
+call SMap::scriptReadModelPosition, stor[0], stor[8], stor[9], stor[10] ; scriptIndex, x, y, z
+call SMap::scriptSobjMoveToPosition, stor[0], stor[8], stor[9], stor[10], 0x1 ; scriptIndex, x, y, z, movementTicks
+yield
+call SMap::scriptCheckSelfCollision, stor[12] ; collisionPrimitiveIndex
+gosub inl[:LABEL_15] ; addr
+return
+
+; SUBROUTINE
+JMP_2470_3:
+call Scus94491BpeSegment::scriptStopSoundsAndSequences ; index
+call SMap::scriptSelfAttachCameraToSobj, 0x1 ; attach
+call SMap::FUN_800df530, 0x0 ; value
+call SMap::scriptSelfSetSobjHidden, 0x0 ; value
+call SMap::scriptGetSetEncountersDisabled, 0x1, 0x1, stor[24] ; set, apply, value
+call SMap::scriptSetModelRotate, stor[0], 0x0, 0x0, 0x0 ; scriptIndex, x, y, z
+call SMap::scriptEnableShadow, stor[0] ; sobjIndex
+gosub inl[:LABEL_33] ; addr
+call SMap::scriptAddTriangleIndicators, inl[:LABEL_159] ; dataStream
+call Scus94491BpeSegment::scriptSetGlobalFlag1, 0x96, 0x1 ; flag, value
+call Scus94491BpeSegment::scriptSetIndicatorsDisabled, 0x0 ; disabled
+call SMap::scriptReadModelPosition, stor[0], stor[8], stor[9], stor[10] ; scriptIndex, x, y, z
+call SMap::scriptSobjMoveToPosition, stor[0], stor[8], stor[9], stor[10], 0x1 ; scriptIndex, x, y, z, movementTicks
+yield
+call SMap::scriptCheckSelfCollision, stor[12] ; collisionPrimitiveIndex
+gosub inl[:LABEL_15] ; addr
+gosub inl[:LABEL_118] ; addr
+mov 0x0, var[72] ; source, dest
+return
+LABEL_135:
+data 0x3
+data 0x25
+data 0x16
+data 0x5
+data 0x20
+data 0x12
+data 0x29
+
+; SUBROUTINE TABLE
+LABEL_136:
+rel :JMP_3450_0
+rel :JMP_3450_1
+rel :JMP_3450_2
+rel :JMP_3450_2
+rel :JMP_3450_4
+rel :JMP_3450_2
+rel :JMP_3450_6
+
+; SUBROUTINE
+JMP_3450_0:
+gosub inl[:LABEL_86] ; addr
+gosub inl[:LABEL_0] ; addr
+gosub inl[:LABEL_102] ; addr
+gosub inl[:LABEL_36] ; addr
+call Scus94491BpeSegment::scriptReadGlobalFlag2, 0x1, stor[24] ; flag, value
+jmp_cmp ==, 0x0, stor[24], inl[:LABEL_137] ; operand, left, right, addr
+return
+LABEL_137:
+call SMap::scriptCheckSelfCollision, stor[31] ; collisionPrimitiveIndex
+jmp_cmp ==, 0x1e, stor[31], inl[:LABEL_140] ; operand, left, right, addr
+return
+LABEL_138:
+data 0x26
+data 0xffffffff
+
+; SUBROUTINE TABLE
+LABEL_139:
+rel :JMP_34d4_0
+LABEL_140:
+call SMap::scriptSelfToggleAnimationDisabled, 0x1 ; disabled
+call Scus94491BpeSegment::scriptStopSoundsAndSequences ; index
+call Scus94491BpeSegment::scriptSetFlag, var[126], 0x3, 0x1 ; flags, flag, value
+call SMap::scriptMapTransition, 0x2e6, 0x0 ; submapCut, submapScene
+rewind
+data 0x49
+
+; SUBROUTINE
+JMP_34d4_0:
+call Scus94491BpeSegment::scriptSetIndicatorsDisabled, 0x1 ; disabled
+call SMap::scriptSelfLoadSobjAnimation, 0x0 ; animIndex
+mov 0x0, stor[24] ; source, dest
+mov 0x0, stor[25] ; source, dest
+gosub inl[:LABEL_20] ; addr
+call Scus94491BpeSegment::scriptSetGlobalFlag1, 0x32, 0x1 ; flag, value
+mov 0xc, stor[24] ; source, dest
+wait stor[24] ; frames
+mov 0x1, stor[24] ; source, dest
+mov 0x4, stor[25] ; source, dest
+gosub inl[:LABEL_20] ; addr
+call Scus94491BpeSegment::scriptPlaySound, 0x8, 0x4, 0x0, 0x0, 0x0, 0x0 ; soundFileIndex, soundIndex, unused1, unused2, initialDelay, repeatDelay
+call SMap::scriptSelfLoadSobjAnimation, 0x7 ; animIndex
+call SMap::scriptDisableShadow, stor[0] ; sobjIndex
+mov 0x180, stor[8] ; source, dest
+mov 0x0, stor[9] ; source, dest
+mov 0xfffffc10, stor[10] ; source, dest
+mov stor[0], stor[24] ; source, dest
+mov 0xf000, stor[25] ; source, dest
+mov 0x46, stor[26] ; source, dest
+mov 0xf, stor[27] ; source, dest
+gosub inl[:LABEL_96] ; addr
+call SMap::scriptEnableShadow, stor[0] ; sobjIndex
+call SMap::scriptSelfLoadSobjAnimation, 0x0 ; animIndex
+mov 0x5, stor[24] ; source, dest
+wait stor[24] ; frames
+mov 0x11c, stor[24] ; source, dest
+mov 0xfffffc2d, stor[25] ; source, dest
+mov 0x5, stor[26] ; source, dest
+mov 0x1, stor[27] ; source, dest
+gosub inl[:LABEL_68] ; addr
+mov 0xa, stor[24] ; source, dest
+mov 0xffffffff, stor[25] ; source, dest
+gosub inl[:LABEL_59] ; addr
+mov 0x2d, stor[24] ; source, dest
+wait stor[24] ; frames
+call Scus94491BpeSegment::scriptSetGlobalFlag1, 0x33, 0x1 ; flag, value
+mov 0x2, stor[24] ; source, dest
+mov 0x3, stor[25] ; source, dest
+gosub inl[:LABEL_20] ; addr
+mov 0x1f0, stor[24] ; source, dest
+mov 0xfffffce4, stor[25] ; source, dest
+mov 0x5, stor[26] ; source, dest
+mov 0x1, stor[27] ; source, dest
+gosub inl[:LABEL_68] ; addr
+mov 0x14, stor[24] ; source, dest
+wait stor[24] ; frames
+mov 0x1d8, stor[8] ; source, dest
+mov 0x0, stor[9] ; source, dest
+mov 0xfffffc00, stor[10] ; source, dest
+mov stor[0], stor[24] ; source, dest
+mov 0xf000, stor[25] ; source, dest
+mov 0x14, stor[26] ; source, dest
+mov 0x5, stor[27] ; source, dest
+gosub inl[:LABEL_96] ; addr
+mov 0x10c, stor[24] ; source, dest
+mov 0xfffffc04, stor[25] ; source, dest
+mov 0x5, stor[26] ; source, dest
+mov 0xa, stor[27] ; source, dest
+gosub inl[:LABEL_68] ; addr
+mov 0x1e, stor[24] ; source, dest
+wait stor[24] ; frames
+mov 0x3, stor[24] ; source, dest
+gosub inl[:LABEL_28] ; addr
+mov 0x4, stor[24] ; source, dest
+mov 0xffffffff, stor[25] ; source, dest
+gosub inl[:LABEL_59] ; addr
+gosub inl[:LABEL_24] ; addr
+gosub inl[:LABEL_40] ; addr
+mov 0x32, stor[24] ; source, dest
+wait stor[24] ; frames
+call Scus94491BpeSegment::scriptSetGlobalFlag1, 0x34, 0x1 ; flag, value
+mov 0x32, stor[24] ; source, dest
+wait stor[24] ; frames
+mov 0x4, stor[24] ; source, dest
+gosub inl[:LABEL_28] ; addr
+gosub inl[:LABEL_24] ; addr
+gosub inl[:LABEL_40] ; addr
+mov 0x5, stor[24] ; source, dest
+wait stor[24] ; frames
+mov 0xfffffffa, stor[24] ; source, dest
+mov 0xffffffff, stor[25] ; source, dest
+gosub inl[:LABEL_59] ; addr
+mov 0x4, stor[24] ; source, dest
+mov 0x5, stor[25] ; source, dest
+gosub inl[:LABEL_12] ; addr
+mov 0xa, stor[24] ; source, dest
+wait stor[24] ; frames
+mov 0x3, stor[24] ; source, dest
+mov 0x5, stor[25] ; source, dest
+gosub inl[:LABEL_12] ; addr
+mov 0xa, stor[24] ; source, dest
+wait stor[24] ; frames
+mov 0x5, stor[24] ; source, dest
+gosub inl[:LABEL_28] ; addr
+mov 0xc, stor[24] ; source, dest
+mov 0xffffffff, stor[25] ; source, dest
+gosub inl[:LABEL_59] ; addr
+gosub inl[:LABEL_24] ; addr
+gosub inl[:LABEL_40] ; addr
+call Scus94491BpeSegment::scriptSetGlobalFlag1, 0x35, 0x1 ; flag, value
+mov 0x6, stor[24] ; source, dest
+gosub inl[:LABEL_28] ; addr
+gosub inl[:LABEL_24] ; addr
+gosub inl[:LABEL_40] ; addr
+mov 0x7, stor[24] ; source, dest
+gosub inl[:LABEL_28] ; addr
+mov 0xfffffffa, stor[24] ; source, dest
+mov 0xffffffff, stor[25] ; source, dest
+gosub inl[:LABEL_59] ; addr
+gosub inl[:LABEL_24] ; addr
+gosub inl[:LABEL_40] ; addr
+call Scus94491BpeSegment::scriptSetGlobalFlag1, 0x37, 0x1 ; flag, value
+mov 0x8, stor[24] ; source, dest
+gosub inl[:LABEL_28] ; addr
+gosub inl[:LABEL_24] ; addr
+gosub inl[:LABEL_40] ; addr
+mov 0x1a4, stor[24] ; source, dest
+mov 0xfffffbd0, stor[25] ; source, dest
+mov 0xa, stor[26] ; source, dest
+mov 0x0, stor[27] ; source, dest
+gosub inl[:LABEL_68] ; addr
+mov 0x9, stor[24] ; source, dest
+gosub inl[:LABEL_28] ; addr
+mov 0x3, stor[24] ; source, dest
+mov 0xffffffff, stor[25] ; source, dest
+gosub inl[:LABEL_59] ; addr
+gosub inl[:LABEL_24] ; addr
+gosub inl[:LABEL_40] ; addr
+mov 0x5, stor[24] ; source, dest
+wait stor[24] ; frames
+call Scus94491BpeSegment::scriptSetGlobalFlag1, 0x39, 0x1 ; flag, value
+mov 0xa, stor[24] ; source, dest
+gosub inl[:LABEL_28] ; addr
+gosub inl[:LABEL_24] ; addr
+gosub inl[:LABEL_40] ; addr
+call Scus94491BpeSegment::scriptSetGlobalFlag1, 0x3a, 0x1 ; flag, value
+mov 0x1e, stor[24] ; source, dest
+wait stor[24] ; frames
+mov 0xb, stor[24] ; source, dest
+gosub inl[:LABEL_28] ; addr
+mov 0xd, stor[24] ; source, dest
+mov 0xffffffff, stor[25] ; source, dest
+gosub inl[:LABEL_59] ; addr
+gosub inl[:LABEL_24] ; addr
+gosub inl[:LABEL_40] ; addr
+call Scus94491BpeSegment::scriptSetGlobalFlag1, 0x3b, 0x1 ; flag, value
+mov 0x1e0, stor[24] ; source, dest
+mov 0xfffffcd4, stor[25] ; source, dest
+mov 0xa, stor[26] ; source, dest
+mov 0x1, stor[27] ; source, dest
+gosub inl[:LABEL_68] ; addr
+mov 0xc, stor[24] ; source, dest
+gosub inl[:LABEL_28] ; addr
+gosub inl[:LABEL_24] ; addr
+gosub inl[:LABEL_40] ; addr
+call Scus94491BpeSegment::scriptSetGlobalFlag1, 0x3c, 0x1 ; flag, value
+mov 0x3c, stor[24] ; source, dest
+wait stor[24] ; frames
+mov 0xd, stor[24] ; source, dest
+gosub inl[:LABEL_28] ; addr
+gosub inl[:LABEL_24] ; addr
+gosub inl[:LABEL_40] ; addr
+call Scus94491BpeSegment::scriptSetGlobalFlag1, 0x3d, 0x1 ; flag, value
+mov 0xf, stor[24] ; source, dest
+gosub inl[:LABEL_28] ; addr
+gosub inl[:LABEL_24] ; addr
+gosub inl[:LABEL_40] ; addr
+mov 0xfffffffa, stor[24] ; source, dest
+mov 0xffffffff, stor[25] ; source, dest
+gosub inl[:LABEL_59] ; addr
+call Scus94491BpeSegment::scriptSetGlobalFlag1, 0x3e, 0x1 ; flag, value
+call Scus94491BpeSegment::scriptSetIndicatorsDisabled, 0x0 ; disabled
+call SMap::scriptSelfToggleAnimationDisabled, 0x0 ; disabled
+call Scus94491BpeSegment::scriptSetGlobalFlag2, 0x283, 0x1 ; flag, value
+
+; SUBROUTINE
+JMP_3450_1:
+gosub inl[:LABEL_0] ; addr
+gosub inl[:LABEL_86] ; addr
+gosub inl[:LABEL_102] ; addr
+call Scus94491BpeSegment::scriptReadGlobalFlag2, 0x1, stor[24] ; flag, value
+jmp_cmp ==, 0x0, stor[24], inl[:LABEL_141] ; operand, left, right, addr
+return
+LABEL_141:
+call SMap::scriptCheckSelfCollision, stor[31] ; collisionPrimitiveIndex
+jmp_cmp ==, 0x1e, stor[31], inl[:LABEL_140] ; operand, left, right, addr
+return
+
+; SUBROUTINE
+LABEL_142:
+call Scus94491BpeSegment::scriptReadGlobalFlag2, 0xf3, stor[24] ; flag, value
+jmp_cmp !=, 0x0, stor[24], inl[:LABEL_150] ; operand, left, right, addr
+call Scus94491BpeSegment::scriptSetIndicatorsDisabled, 0x1 ; disabled
+mov 0x1, stor[24] ; source, dest
+mov 0x5, stor[25] ; source, dest
+gosub inl[:LABEL_12] ; addr
+mov 0x7a, stor[24] ; source, dest
+mov 0x0, stor[25] ; source, dest
+gosub inl[:LABEL_20] ; addr
+mov 0xd, stor[24] ; source, dest
+mov 0xffffffff, stor[25] ; source, dest
+gosub inl[:LABEL_59] ; addr
+gosub inl[:LABEL_24] ; addr
+gosub inl[:LABEL_40] ; addr
+call Scus94491BpeSegment::scriptSetGlobalFlag1, 0x16, 0x1 ; flag, value
+call SMap::scriptGetCameraOffset, stor[17], stor[18] ; x, y
+mov 0xffffffbc, stor[24] ; source, dest
+mov 0x4e, stor[25] ; source, dest
+mov 0x2, stor[26] ; source, dest
+gosub inl[:LABEL_76] ; addr
+mov 0x14, stor[24] ; source, dest
+wait stor[24] ; frames
+mov 0x7b, stor[24] ; source, dest
+gosub inl[:LABEL_30] ; addr
+gosub inl[:LABEL_24] ; addr
+gosub inl[:LABEL_40] ; addr
+mov 0x7c, stor[24] ; source, dest
+gosub inl[:LABEL_30] ; addr
+mov 0xd, stor[24] ; source, dest
+mov 0xffffffff, stor[25] ; source, dest
+gosub inl[:LABEL_59] ; addr
+gosub inl[:LABEL_24] ; addr
+gosub inl[:LABEL_40] ; addr
+call Scus94491BpeSegment::scriptSetGlobalFlag1, 0x2, 0x1 ; flag, value
+mov 0xa, stor[24] ; source, dest
+wait stor[24] ; frames
+mov 0x7d, stor[24] ; source, dest
+gosub inl[:LABEL_30] ; addr
+gosub inl[:LABEL_24] ; addr
+gosub inl[:LABEL_40] ; addr
+mov 0x1e, stor[24] ; source, dest
+wait stor[24] ; frames
+call Scus94491BpeSegment::scriptSetGlobalFlag1, 0xf, 0x1 ; flag, value
+mov 0x7e, stor[24] ; source, dest
+gosub inl[:LABEL_30] ; addr
+gosub inl[:LABEL_24] ; addr
+gosub inl[:LABEL_40] ; addr
+mov 0x1e, stor[24] ; source, dest
+wait stor[24] ; frames
+call Scus94491BpeSegment::scriptSetGlobalFlag1, 0x4, 0x1 ; flag, value
+mov 0x7f, stor[24] ; source, dest
+gosub inl[:LABEL_30] ; addr
+gosub inl[:LABEL_24] ; addr
+gosub inl[:LABEL_40] ; addr
+mov 0xfffffffa, stor[24] ; source, dest
+mov 0xffffffff, stor[25] ; source, dest
+gosub inl[:LABEL_59] ; addr
+mov 0x80, stor[24] ; source, dest
+gosub inl[:LABEL_30] ; addr
+mov 0xc, stor[24] ; source, dest
+mov 0xffffffff, stor[25] ; source, dest
+gosub inl[:LABEL_59] ; addr
+gosub inl[:LABEL_24] ; addr
+gosub inl[:LABEL_40] ; addr
+call Scus94491BpeSegment::scriptSetGlobalFlag1, 0x5, 0x1 ; flag, value
+mov 0x81, stor[24] ; source, dest
+gosub inl[:LABEL_30] ; addr
+gosub inl[:LABEL_24] ; addr
+gosub inl[:LABEL_40] ; addr
+mov 0x89, stor[24] ; source, dest
+mov 0x0, stor[25] ; source, dest
+call Scus94491BpeSegment_8002::scriptGetFreeTextboxIndex, stor[26] ; textboxIndex
+jmp_cmp ==, 0xffffffff, stor[26], inl[:LABEL_144] ; operand, left, right, addr
+mov var[64][stor[25]], stor[25] ; source, dest
+memcpy 0x2, inl[:LABEL_162[:LABEL_162[stor[24]]]], stor[27] ; size, src, dest
+jmp_cmp <=, stor[27], 0x24, inl[:LABEL_143] ; operand, left, right, addr
+LABEL_143:
+mov 0x2, stor[28] ; source, dest
+mov 0x24, stor[27] ; source, dest
+call Scus94491BpeSegment_8002::scriptAddTextbox, stor[26], 0x121, 0xbe, 0x82, stor[27], stor[28], inl[:LABEL_161[:LABEL_161[stor[24]]]] ; index, packedData, x, y, width, height, text
+LABEL_144:
+mov stor[26], stor[24] ; source, dest
+call Scus94491BpeSegment_8002::scriptAddSelectionTextbox, stor[24], 0x0, 0x1 ; index, minSelectionIndex, maxSelectionIndex
+mov stor[24], stor[12] ; source, dest
+gosub inl[:LABEL_24] ; addr
+gosub inl[:LABEL_40] ; addr
+call Scus94491BpeSegment_8002::scriptGetTextboxSelectionIndex, stor[12], stor[24] ; index, selectionIndex
+jmp_cmp !=, 0x0, stor[24], inl[:LABEL_145] ; operand, left, right, addr
+mov 0x3, stor[24] ; source, dest
+mov 0xffffffff, stor[25] ; source, dest
+gosub inl[:LABEL_59] ; addr
+mov 0x82, stor[24] ; source, dest
+gosub inl[:LABEL_30] ; addr
+mov 0xc, stor[24] ; source, dest
+mov 0xffffffff, stor[25] ; source, dest
+gosub inl[:LABEL_59] ; addr
+gosub inl[:LABEL_24] ; addr
+gosub inl[:LABEL_40] ; addr
+call Scus94491BpeSegment::scriptSetGlobalFlag1, 0xd, 0x1 ; flag, value
+mov 0x83, stor[24] ; source, dest
+gosub inl[:LABEL_30] ; addr
+gosub inl[:LABEL_24] ; addr
+gosub inl[:LABEL_40] ; addr
+call Scus94491BpeSegment::scriptSetGlobalFlag1, 0xe, 0x1 ; flag, value
+mov 0x84, stor[24] ; source, dest
+gosub inl[:LABEL_30] ; addr
+gosub inl[:LABEL_24] ; addr
+gosub inl[:LABEL_40] ; addr
+mov 0xfffffffa, stor[24] ; source, dest
+mov 0xffffffff, stor[25] ; source, dest
+gosub inl[:LABEL_59] ; addr
+call SMap::scriptSelfLoadSobjAnimation, 0x0 ; animIndex
+call Scus94491BpeSegment::scriptSetGlobalFlag2, 0xf3, 0x1 ; flag, value
+call SMap::scriptSelfToggleAnimationDisabled, 0x0 ; disabled
+call Scus94491BpeSegment::scriptSetGlobalFlag1, 0x3, 0x1 ; flag, value
+mov 0x14, stor[24] ; source, dest
+wait stor[24] ; frames
+mov stor[17], stor[24] ; source, dest
+mov stor[18], stor[25] ; source, dest
+mov 0x2, stor[26] ; source, dest
+gosub inl[:LABEL_76] ; addr
+call SMap::scriptSelfAttachCameraToSobj, 0x1 ; attach
+call Scus94491BpeSegment::scriptSetIndicatorsDisabled, 0x0 ; disabled
+call Scus94491BpeSegment::scriptSetGlobalFlag1, 0x2, 0x0 ; flag, value
+mov 0x4, stor[24] ; source, dest
+mov 0xf, stor[25] ; source, dest
+gosub inl[:LABEL_19] ; addr
+call Scus94491BpeSegment::scriptSetGlobalFlag1, 0x16, 0x0 ; flag, value
+call Scus94491BpeSegment::scriptSetGlobalFlag1, 0x17, 0x0 ; flag, value
+return
+LABEL_145:
+mov 0xfffffffa, stor[24] ; source, dest
+mov 0xffffffff, stor[25] ; source, dest
+gosub inl[:LABEL_59] ; addr
+mov 0x85, stor[24] ; source, dest
+gosub inl[:LABEL_30] ; addr
+mov 0xc, stor[24] ; source, dest
+mov 0xffffffff, stor[25] ; source, dest
+gosub inl[:LABEL_59] ; addr
+gosub inl[:LABEL_24] ; addr
+gosub inl[:LABEL_40] ; addr
+call Scus94491BpeSegment::scriptSetGlobalFlag1, 0xd, 0x1 ; flag, value
+mov 0x86, stor[24] ; source, dest
+gosub inl[:LABEL_30] ; addr
+gosub inl[:LABEL_24] ; addr
+gosub inl[:LABEL_40] ; addr
+call Scus94491BpeSegment::scriptSetGlobalFlag1, 0x18, 0x1 ; flag, value
+mov 0x87, stor[24] ; source, dest
+gosub inl[:LABEL_30] ; addr
+gosub inl[:LABEL_24] ; addr
+gosub inl[:LABEL_40] ; addr
+call Scus94491BpeSegment::scriptSetIndicatorsDisabled, 0x1 ; disabled
+call Scus94491BpeSegment::scriptSetGlobalFlag2, 0xf3, 0x1 ; flag, value
+call SMap::scriptGetCharAddition, 0x0, stor[24] ; charId, additionId
+jmp_cmp ==, 0x0, stor[24], inl[:LABEL_146] ; operand, left, right, addr
+call Scus94491BpeSegment::scriptSetGlobalFlag1, 0xf1, 0x1 ; flag, value
+call SMap::scriptSetCharAddition, 0x0, 0x1 ; charId, additionId
+call SMap::scriptMapTransition, 0xffffffff, 0x1c2 ; submapCut, submapScene
+rewind
+LABEL_146:
+call Scus94491BpeSegment::scriptSetGlobalFlag1, 0xf0, 0x1 ; flag, value
+call SMap::scriptSetCharAddition, 0x0, 0x1 ; charId, additionId
+call SMap::scriptMapTransition, 0xffffffff, 0x1c2 ; submapCut, submapScene
+rewind
+LABEL_147:
+call Scus94491BpeSegment::scriptReadGlobalFlag1, 0xf0, stor[24] ; flag, value
+jmp_cmp ==, 0x0, stor[24], inl[:LABEL_148] ; operand, left, right, addr
+call SMap::scriptSetCharAddition, 0x0, 0x0 ; charId, additionId
+jmp inl[:LABEL_149] ; addr
+LABEL_148:
+call SMap::scriptSetCharAddition, 0x0, 0x1 ; charId, additionId
+LABEL_149:
+call Scus94491BpeSegment::scriptSetGlobalFlag1, 0xf0, 0x0 ; flag, value
+call Scus94491BpeSegment::scriptSetGlobalFlag1, 0xf1, 0x0 ; flag, value
+call SMap::scriptSetModelPosition, stor[0], 0xd4, 0x0, 0x1b0 ; scriptIndex, x, y, z
+call SMap::scriptSetModelRotate, stor[0], 0x0, 0x680, 0x0 ; scriptIndex, x, y, z
+mov 0x1e, stor[24] ; source, dest
+wait stor[24] ; frames
+call Scus94491BpeSegment::scriptSetGlobalFlag1, 0xf, 0x1 ; flag, value
+mov 0x88, stor[24] ; source, dest
+gosub inl[:LABEL_30] ; addr
+gosub inl[:LABEL_24] ; addr
+gosub inl[:LABEL_40] ; addr
+mov 0xfffffffa, stor[24] ; source, dest
+mov 0xffffffff, stor[25] ; source, dest
+gosub inl[:LABEL_59] ; addr
+call SMap::scriptSelfLoadSobjAnimation, 0x0 ; animIndex
+call Scus94491BpeSegment::scriptSetGlobalFlag1, 0x3, 0x1 ; flag, value
+mov 0x14, stor[24] ; source, dest
+wait stor[24] ; frames
+call Scus94491BpeSegment::scriptSetGlobalFlag2, 0xf3, 0x1 ; flag, value
+call SMap::scriptSelfToggleAnimationDisabled, 0x0 ; disabled
+call Scus94491BpeSegment::scriptSetIndicatorsDisabled, 0x0 ; disabled
+call Scus94491BpeSegment::scriptSetGlobalFlag1, 0x2, 0x0 ; flag, value
+mov 0x4, stor[24] ; source, dest
+mov 0xf, stor[25] ; source, dest
+gosub inl[:LABEL_19] ; addr
+call Scus94491BpeSegment::scriptSetGlobalFlag1, 0x16, 0x0 ; flag, value
+call Scus94491BpeSegment::scriptSetGlobalFlag1, 0x17, 0x0 ; flag, value
+call Scus94491BpeSegment::scriptSetGlobalFlag1, 0x18, 0x0 ; flag, value
+call Scus94491BpeSegment::scriptReadGlobalFlag2, 0x283, stor[24] ; flag, value
+jmp_cmp !=, 0x0, stor[24], inl[:LABEL_117] ; operand, left, right, addr
+jmp inl[:LABEL_116] ; addr
+LABEL_150:
+call Scus94491BpeSegment::scriptSetIndicatorsDisabled, 0x1 ; disabled
+mov 0x1, stor[24] ; source, dest
+mov 0x5, stor[25] ; source, dest
+gosub inl[:LABEL_12] ; addr
+call Scus94491BpeSegment::scriptSetGlobalFlag1, 0x17, 0x1 ; flag, value
+call Scus94491BpeSegment::scriptSetGlobalFlag1, 0x16, 0x1 ; flag, value
+mov 0x14, stor[24] ; source, dest
+wait stor[24] ; frames
+mov 0x8a, stor[24] ; source, dest
+gosub inl[:LABEL_30] ; addr
+gosub inl[:LABEL_24] ; addr
+gosub inl[:LABEL_40] ; addr
+call Scus94491BpeSegment::scriptSetGlobalFlag1, 0x17, 0x0 ; flag, value
+mov 0x8d, stor[24] ; source, dest
+mov 0x0, stor[25] ; source, dest
+call Scus94491BpeSegment_8002::scriptGetFreeTextboxIndex, stor[26] ; textboxIndex
+jmp_cmp ==, 0xffffffff, stor[26], inl[:LABEL_152] ; operand, left, right, addr
+mov var[64][stor[25]], stor[25] ; source, dest
+memcpy 0x2, inl[:LABEL_162[:LABEL_162[stor[24]]]], stor[27] ; size, src, dest
+jmp_cmp <=, stor[27], 0x24, inl[:LABEL_151] ; operand, left, right, addr
+LABEL_151:
+mov 0x2, stor[28] ; source, dest
+mov 0x24, stor[27] ; source, dest
+call Scus94491BpeSegment_8002::scriptAddTextbox, stor[26], 0x121, 0xbe, 0x96, stor[27], stor[28], inl[:LABEL_161[:LABEL_161[stor[24]]]] ; index, packedData, x, y, width, height, text
+LABEL_152:
+mov stor[26], stor[24] ; source, dest
+call Scus94491BpeSegment_8002::scriptAddSelectionTextbox, stor[24], 0x0, 0x1 ; index, minSelectionIndex, maxSelectionIndex
+mov stor[24], stor[12] ; source, dest
+gosub inl[:LABEL_24] ; addr
+gosub inl[:LABEL_40] ; addr
+call Scus94491BpeSegment_8002::scriptGetTextboxSelectionIndex, stor[12], stor[24] ; index, selectionIndex
+jmp_cmp !=, 0x0, stor[24], inl[:LABEL_153] ; operand, left, right, addr
+mov 0x3, stor[24] ; source, dest
+mov 0xffffffff, stor[25] ; source, dest
+gosub inl[:LABEL_59] ; addr
+mov 0x8b, stor[24] ; source, dest
+gosub inl[:LABEL_30] ; addr
+gosub inl[:LABEL_24] ; addr
+gosub inl[:LABEL_40] ; addr
+call Scus94491BpeSegment::scriptSetGlobalFlag1, 0xd, 0x1 ; flag, value
+mov 0x92, stor[24] ; source, dest
+gosub inl[:LABEL_30] ; addr
+gosub inl[:LABEL_24] ; addr
+gosub inl[:LABEL_40] ; addr
+call Scus94491BpeSegment::scriptSetGlobalFlag1, 0xe, 0x1 ; flag, value
+mov 0x88, stor[24] ; source, dest
+gosub inl[:LABEL_30] ; addr
+gosub inl[:LABEL_24] ; addr
+gosub inl[:LABEL_40] ; addr
+mov 0xfffffffa, stor[24] ; source, dest
+mov 0xffffffff, stor[25] ; source, dest
+gosub inl[:LABEL_59] ; addr
+call Scus94491BpeSegment::scriptSetGlobalFlag1, 0x3, 0x1 ; flag, value
+mov 0x14, stor[24] ; source, dest
+wait stor[24] ; frames
+call SMap::scriptSelfToggleAnimationDisabled, 0x0 ; disabled
+call Scus94491BpeSegment::scriptSetIndicatorsDisabled, 0x0 ; disabled
+call Scus94491BpeSegment::scriptSetGlobalFlag1, 0x2, 0x0 ; flag, value
+mov 0x4, stor[24] ; source, dest
+mov 0xf, stor[25] ; source, dest
+gosub inl[:LABEL_19] ; addr
+call Scus94491BpeSegment::scriptSetGlobalFlag1, 0x16, 0x0 ; flag, value
+call Scus94491BpeSegment::scriptSetGlobalFlag1, 0x17, 0x0 ; flag, value
+return
+LABEL_153:
+mov 0xfffffffa, stor[24] ; source, dest
+mov 0xffffffff, stor[25] ; source, dest
+gosub inl[:LABEL_59] ; addr
+mov 0x8c, stor[24] ; source, dest
+gosub inl[:LABEL_30] ; addr
+mov 0xc, stor[24] ; source, dest
+mov 0xffffffff, stor[25] ; source, dest
+gosub inl[:LABEL_59] ; addr
+gosub inl[:LABEL_24] ; addr
+gosub inl[:LABEL_40] ; addr
+call Scus94491BpeSegment::scriptSetGlobalFlag1, 0xd, 0x1 ; flag, value
+mov 0x86, stor[24] ; source, dest
+gosub inl[:LABEL_30] ; addr
+gosub inl[:LABEL_24] ; addr
+gosub inl[:LABEL_40] ; addr
+call Scus94491BpeSegment::scriptSetGlobalFlag1, 0x18, 0x1 ; flag, value
+mov 0x93, stor[24] ; source, dest
+gosub inl[:LABEL_30] ; addr
+gosub inl[:LABEL_24] ; addr
+gosub inl[:LABEL_40] ; addr
+call Scus94491BpeSegment::scriptSetIndicatorsDisabled, 0x1 ; disabled
+call SMap::scriptGetCharAddition, 0x0, stor[24] ; charId, additionId
+jmp_cmp ==, 0x0, stor[24], inl[:LABEL_154] ; operand, left, right, addr
+call Scus94491BpeSegment::scriptSetGlobalFlag1, 0xf1, 0x1 ; flag, value
+call SMap::scriptSetCharAddition, 0x0, 0x1 ; charId, additionId
+call SMap::scriptMapTransition, 0xffffffff, 0x1c2 ; submapCut, submapScene
+rewind
+LABEL_154:
+call Scus94491BpeSegment::scriptSetGlobalFlag1, 0xf0, 0x1 ; flag, value
+call SMap::scriptSetCharAddition, 0x0, 0x1 ; charId, additionId
+call SMap::scriptMapTransition, 0xffffffff, 0x1c2 ; submapCut, submapScene
+rewind
+
+; SUBROUTINE
+JMP_3450_2:
+gosub inl[:LABEL_0] ; addr
+gosub inl[:LABEL_102] ; addr
+gosub inl[:LABEL_86] ; addr
+return
+
+; SUBROUTINE
+JMP_3450_6:
+gosub inl[:LABEL_0] ; addr
+gosub inl[:LABEL_102] ; addr
+gosub inl[:LABEL_86] ; addr
+call SMap::scriptCheckSelfCollision, stor[31] ; collisionPrimitiveIndex
+jmp_cmp ==, 0x35, stor[31], inl[:LABEL_155] ; operand, left, right, addr
+return
+LABEL_155:
+call Scus94491BpeSegment::scriptSetIndicatorsDisabled, 0x1 ; disabled
+call SMap::scriptSelfLoadSobjAnimation, 0x0 ; animIndex
+mov 0xffffff7e, stor[24] ; source, dest
+mov 0xffffffdb, stor[25] ; source, dest
+mov 0x2, stor[26] ; source, dest
+gosub inl[:LABEL_76] ; addr
+call SMap::scriptMapTransition, 0x39, 0x17 ; submapCut, submapScene
+rewind
+
+; SUBROUTINE
+JMP_3450_4:
+mov 0xffffff85, stor[24] ; source, dest
+mov 0xffffffc4, stor[25] ; source, dest
+mov 0x12c, stor[26] ; source, dest
+gosub inl[:LABEL_74] ; addr
+rewind
+data 0x49
+LABEL_156:
+data 0xffffffff
+data 0xffffffff
+data 0x19
+data 0x8d
+data 0xffffffff
+data 0xffffffff
+data 0xffffffff
+data 0xffffffff
+data 0xffffffff
+data 0xffffffff
+data 0x1b
+data 0x1b
+data 0x2c
+data 0x95
+data 0xf6
+data 0x1f
+data 0xffffffff
+data 0xffffffff
+data 0xffffffff
+data 0xffffffff
+data 0xffffffff
+data 0xffffffff
+data 0xffffffff
+data 0xffffffff
+data 0x1c
+data 0x21
+data 0xffffffff
+data 0xffffffff
+data 0xffffffff
+data 0xffffffff
+data 0xffffffff
+data 0xffffffff
+data 0xffffffff
+data 0xffffffff
+data 0xffffffff
+data 0xffffffff
+data 0xffffffff
+data 0xffffffff
+data 0x19
+data 0x8d
+data 0xffffffff
+data 0xffffffff
+data 0x1d
+data 0x8e
+data 0x27
+data 0x90
+data 0x1b
+data 0x1b
+data 0x2c
+data 0x95
+data 0xf6
+data 0x1f
+data 0xffffffff
+data 0xffffffff
+data 0xffffffff
+data 0xffffffff
+data 0xffffffff
+data 0xffffffff
+data 0xffffffff
+data 0xffffffff
+data 0x1c
+data 0x21
+data 0xffffffff
+data 0xffffffff
+data 0xffffffff
+data 0xffffffff
+data 0xffffffff
+data 0xffffffff
+data 0xffffffff
+data 0xffffffff
+data 0xffffffff
+data 0xffffffff
+data 0xffffffff
+data 0xffffffff
+data 0x19
+data 0x8d
+data 0xffffffff
+data 0xffffffff
+data 0x1c
+data 0x23
+data 0x1d
+data 0x25
+data 0x1b
+data 0x27
+data 0x1a
+data 0x29
+data 0x1e
+data 0x2b
+data 0xffffffff
+data 0xffffffff
+data 0xffffffff
+data 0xffffffff
+data 0xffffffff
+data 0xffffffff
+data 0xffffffff
+data 0xffffffff
+data 0x1f
+data 0x2d
+data 0xffffffff
+data 0xffffffff
+data 0xffffffff
+data 0xffffffff
+data 0xffffffff
+data 0xffffffff
+data 0xffffffff
+data 0xffffffff
+data 0xffffffff
+data 0xffffffff
+data 0xffffffff
+data 0xffffffff
+data 0xffffffff
+data 0xffffffff
+data 0xffffffff
+data 0xffffffff
+data 0x1c
+data 0x3d
+data 0x1d
+data 0x3f
+data 0x1b
+data 0x41
+data 0x1a
+data 0x43
+data 0x1e
+data 0x45
+data 0xffffffff
+data 0xffffffff
+data 0xffffffff
+data 0xffffffff
+data 0xffffffff
+data 0xffffffff
+data 0xffffffff
+data 0xffffffff
+data 0x1f
+data 0x47
+data 0xffffffff
+data 0xffffffff
+data 0xffffffff
+data 0xffffffff
+data 0xffffffff
+data 0xffffffff
+data 0xffffffff
+data 0xffffffff
+data 0xffffffff
+data 0xffffffff
+data 0xffffffff
+data 0xffffffff
+data 0xffffffff
+data 0xffffffff
+data 0xffffffff
+data 0xffffffff
+data 0x1c
+data 0x3d
+data 0x1d
+data 0x3f
+data 0x1b
+data 0x41
+data 0x1a
+data 0x43
+data 0x1e
+data 0x45
+data 0xffffffff
+data 0xffffffff
+data 0xffffffff
+data 0xffffffff
+data 0xffffffff
+data 0xffffffff
+data 0xffffffff
+data 0xffffffff
+data 0x1f
+data 0x47
+data 0xffffffff
+data 0xffffffff
+data 0xffffffff
+data 0xffffffff
+data 0xffffffff
+data 0xffffffff
+data 0xffffffff
+data 0xffffffff
+data 0xffffffff
+data 0xffffffff
+data 0xffffffff
+data 0xffffffff
+data 0xffffffff
+data 0xffffffff
+data 0xffffffff
+data 0xffffffff
+data 0x1c
+data 0x49
+data 0x1d
+data 0x4b
+data 0x1b
+data 0x4d
+data 0x1a
+data 0x4f
+data 0x1e
+data 0x51
+data 0xffffffff
+data 0xffffffff
+data 0xffffffff
+data 0xffffffff
+data 0xffffffff
+data 0xffffffff
+data 0xffffffff
+data 0xffffffff
+data 0x1f
+data 0x53
+data 0xffffffff
+data 0xffffffff
+data 0xffffffff
+data 0xffffffff
+data 0xffffffff
+data 0xffffffff
+data 0xffffffff
+data 0xffffffff
+data 0xffffffff
+data 0xffffffff
+data 0xffffffff
+data 0xffffffff
+data 0xffffffff
+data 0xffffffff
+data 0xffffffff
+data 0xffffffff
+data 0x1c
+data 0x55
+data 0x1d
+data 0x57
+data 0x1b
+data 0x59
+data 0x1a
+data 0x5b
+data 0x1e
+data 0x5d
+data 0xffffffff
+data 0xffffffff
+data 0xffffffff
+data 0xffffffff
+data 0xffffffff
+data 0xffffffff
+data 0xffffffff
+data 0xffffffff
+data 0x1f
+data 0x5f
+data 0xffffffff
+data 0xffffffff
+data 0xffffffff
+data 0xffffffff
+data 0xffffffff
+data 0xffffffff
+data 0xffffffff
+data 0xffffffff
+data 0xffffffff
+data 0xffffffff
+LABEL_157:
+data 0xfffffe4c
+data 0x0
+data 0x310
+data 0x32
+data 0x1c3
+data 0x30
+data 0xfffffe4c
+data 0x0
+data 0x310
+data 0x32
+data 0xffffffff
+data 0x2f
+data 0xfffffef9
+data 0x0
+data 0x2c9
+data 0x32
+data 0xffffffff
+data 0x2f
+data 0xffffff71
+data 0x0
+data 0x2ef
+data 0x32
+data 0xffffffff
+data 0x2f
+data 0xfffffdad
+data 0x0
+data 0x30c
+data 0x32
+data 0xffffffff
+data 0x2f
+data 0xfffffdf4
+data 0x0
+data 0x368
+data 0x32
+data 0xffffffff
+data 0x2f
+data 0xfffffeac
+data 0x0
+data 0x30d
+data 0x32
+data 0xffffffff
+data 0x2f
+data 0xffffff3f
+data 0x0
+data 0x2ee
+data 0x32
+data 0xffffffff
+data 0x2f
+data 0xffffffff
+data 0xffffffff
+data 0xffffffff
+data 0xffffffff
+data 0xffffffff
+data 0xffffffff
+LABEL_158:
+data 0x1a0
+data 0x0
+data 0xffffff0c
+data 0xf
+data 0x4
+data 0x20
+data 0x5
+data 0xfffffd64
+data 0x0
+data 0xffffffc0
+data 0xb
+data 0x4
+data 0x20
+data 0x5
+data 0xfffffdb0
+data 0x0
+data 0xfffffd44
+data 0xc
+data 0x8
+data 0x2e
+data 0x5
+data 0x14
+data 0x0
+data 0x3b0
+data 0x14
+data 0x4
+data 0x1e
+data 0x3
+data 0xffffffff
+LABEL_159:
+data 0x25
+data 0x0
+data 0x5
+data 0x0
+data 0xffffffff
+LABEL_160:
+data 0x35
+data 0x0
+data 0x5
+data 0x0
+data 0xffffffff
+LABEL_161:
+rel :PTR_5410_0
+rel :PTR_5410_1
+rel :PTR_5410_2
+rel :PTR_5410_3
+rel :PTR_5410_4
+rel :PTR_5410_5
+rel :PTR_5410_6
+rel :PTR_5410_7
+rel :PTR_5410_8
+rel :PTR_5410_9
+rel :PTR_5410_10
+rel :PTR_5410_11
+rel :PTR_5410_12
+rel :PTR_5410_13
+rel :PTR_5410_14
+rel :PTR_5410_15
+rel :PTR_5410_16
+rel :PTR_5410_17
+rel :PTR_5410_18
+rel :PTR_5410_19
+rel :PTR_5410_20
+rel :PTR_5410_21
+rel :PTR_5410_22
+rel :PTR_5410_23
+rel :PTR_5410_24
+rel :PTR_5410_25
+rel :PTR_5410_26
+rel :PTR_5410_27
+rel :PTR_5410_28
+rel :PTR_5410_29
+rel :PTR_5410_30
+rel :PTR_5410_31
+rel :PTR_5410_32
+rel :PTR_5410_33
+rel :PTR_5410_34
+rel :PTR_5410_35
+rel :PTR_5410_36
+rel :PTR_5410_37
+rel :PTR_5410_38
+rel :PTR_5410_39
+rel :PTR_5410_40
+rel :PTR_5410_41
+rel :PTR_5410_42
+rel :PTR_5410_43
+rel :PTR_5410_44
+rel :PTR_5410_45
+rel :PTR_5410_46
+rel :PTR_5410_47
+rel :PTR_5410_48
+rel :PTR_5410_49
+rel :PTR_5410_50
+rel :PTR_5410_51
+rel :PTR_5410_52
+rel :PTR_5410_53
+rel :PTR_5410_54
+rel :PTR_5410_55
+rel :PTR_5410_56
+rel :PTR_5410_57
+rel :PTR_5410_58
+rel :PTR_5410_59
+rel :PTR_5410_60
+rel :PTR_5410_61
+rel :PTR_5410_62
+rel :PTR_5410_63
+rel :PTR_5410_64
+rel :PTR_5410_65
+rel :PTR_5410_66
+rel :PTR_5410_67
+rel :PTR_5410_68
+rel :PTR_5410_69
+rel :PTR_5410_70
+rel :PTR_5410_71
+rel :PTR_5410_72
+rel :PTR_5410_73
+rel :PTR_5410_74
+rel :PTR_5410_75
+rel :PTR_5410_76
+rel :PTR_5410_77
+rel :PTR_5410_78
+rel :PTR_5410_79
+rel :PTR_5410_80
+rel :PTR_5410_81
+rel :PTR_5410_82
+rel :PTR_5410_83
+rel :PTR_5410_84
+rel :PTR_5410_85
+rel :PTR_5410_86
+rel :PTR_5410_87
+rel :PTR_5410_88
+rel :PTR_5410_89
+rel :PTR_5410_90
+rel :PTR_5410_91
+rel :PTR_5410_92
+rel :PTR_5410_93
+rel :PTR_5410_94
+rel :PTR_5410_95
+rel :PTR_5410_96
+rel :PTR_5410_97
+rel :PTR_5410_98
+rel :PTR_5410_99
+rel :PTR_5410_100
+rel :PTR_5410_101
+rel :PTR_5410_102
+rel :PTR_5410_103
+rel :PTR_5410_104
+rel :PTR_5410_105
+rel :PTR_5410_106
+rel :PTR_5410_107
+rel :PTR_5410_108
+rel :PTR_5410_109
+rel :PTR_5410_110
+rel :PTR_5410_111
+rel :PTR_5410_112
+rel :PTR_5410_113
+rel :PTR_5410_114
+rel :PTR_5410_115
+rel :PTR_5410_116
+rel :PTR_5410_117
+rel :PTR_5410_118
+rel :PTR_5410_119
+rel :PTR_5410_120
+rel :PTR_5410_121
+rel :PTR_5410_122
+rel :PTR_5410_123
+rel :PTR_5410_124
+rel :PTR_5410_125
+rel :PTR_5410_126
+rel :PTR_5410_127
+rel :PTR_5410_128
+rel :PTR_5410_129
+rel :PTR_5410_130
+rel :PTR_5410_131
+rel :PTR_5410_132
+rel :PTR_5410_133
+rel :PTR_5410_134
+rel :PTR_5410_135
+rel :PTR_5410_136
+rel :PTR_5410_137
+rel :PTR_5410_138
+rel :PTR_5410_139
+rel :PTR_5410_140
+rel :PTR_5410_141
+rel :PTR_5410_142
+rel :PTR_5410_143
+rel :PTR_5410_144
+rel :PTR_5410_145
+rel :PTR_5410_146
+rel :PTR_5410_147
+rel :PTR_5410_148
+rel :PTR_5410_149
+rel :PTR_5410_150
+rel :PTR_5410_151
+rel :PTR_5410_152
+rel :PTR_5410_153
+rel :PTR_5410_154
+rel :PTR_5410_155
+rel :PTR_5410_156
+rel :PTR_5410_157
+rel :PTR_5410_158
+LABEL_162:
+rel :PTR_568c_0
+rel :PTR_568c_1
+rel :PTR_568c_2
+rel :PTR_568c_3
+rel :PTR_568c_4
+rel :PTR_568c_5
+rel :PTR_568c_6
+rel :PTR_568c_7
+rel :PTR_568c_8
+rel :PTR_568c_9
+rel :PTR_568c_10
+rel :PTR_568c_11
+rel :PTR_568c_12
+rel :PTR_568c_13
+rel :PTR_568c_14
+rel :PTR_568c_15
+rel :PTR_568c_16
+rel :PTR_568c_17
+rel :PTR_568c_18
+rel :PTR_568c_19
+rel :PTR_568c_20
+data 0x203
+data 0x218
+data 0x225
+data 0x22b
+data 0x5c3
+data 0x5ca
+data 0x63e
+data 0x65a
+data 0x66c
+data 0x682
+data 0x6c2
+data 0x6de
+data 0x70d
+data 0x744
+data 0x7ee
+data 0x809
+data 0x814
+data 0x82c
+data 0x867
+data 0x894
+data 0x8bb
+data 0x8eb
+data 0x90b
+data 0x932
+data 0x950
+data 0x986
+data 0x752
+data 0xa44
+data 0xa11
+data 0xa1b
+data 0xa25
+data 0xa2f
+data 0x9b5
+data 0x9bf
+data 0x9c9
+data 0x9d3
+data 0x9dd
+data 0x9e7
+data 0x9f2
+data 0x9fd
+data 0xa58
+data 0xa69
+data 0xa7d
+data 0xa9e
+data 0xad1
+data 0xaf6
+data 0xb25
+data 0xb55
+data 0xb6c
+data 0xb96
+data 0xbc5
+data 0xbe7
+data 0xc03
+data 0xc19
+data 0xc28
+data 0xc37
+data 0xc5e
+data 0xc80
+data 0xcaf
+data 0xcdf
+data 0xd05
+data 0xd2b
+data 0xd6e
+data 0xd8b
+data 0xdac
+data 0xdd3
+data 0xde5
+data 0xdf4
+data 0xe35
+data 0xe4b
+data 0xe7a
+data 0xeaa
+data 0xed1
+data 0xef7
+data 0xf26
+data 0xf53
+data 0xf5d
+data 0xf67
+data 0xf71
+data 0xf7b
+data 0xf85
+data 0xf8f
+data 0xf99
+data 0xfa3
+data 0xfad
+data 0xfb7
+data 0xfc2
+data 0xfcd
+data 0xfd7
+data 0xfe1
+data 0xfeb
+data 0xff5
+data 0xfff
+data 0x1009
+data 0x1013
+data 0x101d
+data 0x1027
+data 0x1031
+data 0x103c
+data 0x1047
+data 0x22f
+data 0x23a
+data 0x24b
+data 0x258
+data 0x27e
+data 0x2a1
+data 0x2b7
+data 0x2cc
+data 0x302
+data 0x32c
+data 0x34e
+data 0x380
+data 0x390
+data 0x3c3
+data 0x3d2
+data 0x404
+data 0x41d
+data 0x434
+data 0x441
+data 0x44d
+data 0x45e
+data 0x5e6
+data 0x5f8
+data 0x609
+data 0x61c
+data 0x46d
+data 0x47c
+data 0x9ab
+data 0x79c
+data 0x7ce
+data 0x483
+data 0x489
+data 0x48f
+data 0x49c
+data 0x4ac
+data 0x4b6
+data 0x4be
+data 0x4c6
+PTR_5410_0:
+data str[<sauto=2>This is revenge for everyone!!]
+PTR_568c_0:
+data 0x1e
+data 0x1
+PTR_5410_1:
+data str[<sauto=1>!!]
+PTR_568c_1:
+data 0x2
+data 0x1
+PTR_5410_2:
+data str[<sauto=1>Revenge!!]
+PTR_568c_2:
+data 0x9
+data 0x1
+PTR_5410_3:
+data str[<speed=0>Dart<line>Stop it! It's me!]
+PTR_568c_3:
+data 0x11
+data 0x2
+PTR_5410_4:
+data str[<speed=0>Isha<line>Is it<speed=10>...<line><speed=0>Dart<speed=10>...<speed=0>?]
+PTR_568c_4:
+data 0x8
+data 0x3
+PTR_5410_5:
+data str[<speed=1>Dart<line>Both of you have grown up.]
+PTR_568c_5:
+data 0x1a
+data 0x2
+PTR_5410_6:
+data str[<speed=0>Isha<line>Dart! Sandora, Sandora<line>got everybody!!]
+PTR_568c_6:
+data 0x16
+data 0x3
+PTR_5410_7:
+data str[<speed=1>Dart<line>I got them.<line>Everything is okay now.]
+PTR_568c_7:
+data 0x17
+data 0x3
+PTR_5410_8:
+data str[<speed=0>Lowe<line>Everybody's dead.]
+PTR_568c_8:
+data 0x11
+data 0x2
+PTR_5410_9:
+data str[<speed=1>Dart<line>Not everybody.]
+PTR_568c_9:
+data 0xe
+data 0x2
+PTR_5410_10:
+data str[<speed=0>Lowe<line>What?]
+PTR_568c_10:
+data 0x5
+data 0x2
+PTR_5410_11:
+data str[<speed=1>Dart<line>Not everyone was killed.<line>So you have to help the<line>people in the village.<line>I will rescue ... Shana.]
+PTR_568c_11:
+data 0x18
+data 0x5
+PTR_5410_12:
+data str[<speed=0>Plos<line>Indeed.<line>Do what you can.]
+PTR_568c_12:
+data 0x10
+data 0x3
+PTR_5410_13:
+data str[<speed=0>Isha<line>I'll get medical herbs!!]
+PTR_568c_13:
+data 0x18
+data 0x2
+PTR_5410_14:
+data str[<speed=0>Isha<line>I'll get medical herbs!!]
+PTR_568c_14:
+data 0x18
+data 0x2
+PTR_5410_15:
+data str[<speed=0>Lowe<line>Me too!!]
+PTR_568c_15:
+data 0x8
+data 0x2
+PTR_5410_16:
+data str[<speed=0>(He already spent his last<line>breath.)]
+PTR_568c_16:
+data 0x1a
+data 0x2
+PTR_5410_17:
+data str[<speed=0>H, Help.]
+PTR_568c_17:
+data 0x8
+data 0x1
+PTR_5410_18:
+data str[<sauto=1>Sorry!<sauto=1>!]
+PTR_568c_18:
+data 0x7
+data 0x1
+PTR_5410_19:
+data str[<sauto=1>Get out of my way!<sauto=1>!]
+PTR_568c_19:
+data 0x13
+data 0x1
+PTR_5410_20:
+data str[<speed=0>Dart, Shana is in your hands.]
+PTR_568c_20:
+data 0x1d
+data 0x1
+PTR_5410_21:
+data str[<speed=0>(Doesn't answer.)]
+data 0x11
+data 0x1
+PTR_5410_22:
+data str[<speed=0>(Good, it seems he is still<line>alive.)]
+data 0x1b
+data 0x2
+PTR_5410_23:
+data str[<speed=0>Dart<line>Are you okay!?]
+data 0xe
+data 0x2
+PTR_5410_24:
+data str[<sauto=0>Dart<sauto=1>!]
+data 0x5
+data 0x1
+PTR_5410_121:
+data str[<sauto=1>!]
+data 0x1
+data 0x1
+PTR_5410_122:
+data str[<sauto=1>Master Tasman!!]
+data 0xf
+data 0x1
+PTR_5410_123:
+data str[<speed=0>Tasman<line>You ... you are Dart!]
+data 0x15
+data 0x2
+PTR_5410_124:
+data str[<speed=0>Dart<line>You are safe!!]
+data 0xe
+data 0x2
+PTR_5410_125:
+data str[<speed=0>Tasman<line>I taught you how to use the<line>sword. I won't be killed<line>so easily.]
+data 0x1b
+data 0x4
+PTR_5410_126:
+data str[<speed=0>Tasman<line>But, we were outnumbered.<line>I couldn't stop them<line>by myself.]
+data 0x19
+data 0x4
+PTR_5410_127:
+data str[<speed=0>Tasman<line>You already heard about<line>Shana?]
+data 0x17
+data 0x3
+PTR_5410_128:
+data str[<speed=0>Dart<line>I am ... heading to<line><colour=5>Hellena<colour=0>.]
+data 0x13
+data 0x3
+PTR_5410_129:
+data str[<speed=0>Tasman<line>Then have a match with me<line>before you go.<line>I want to see if you have<line>the ability to rescue Shana.]
+data 0x1c
+data 0x5
+PTR_5410_130:
+data str[<speed=0>Dart<line>Master, please don't be silly.<line>With that wound, you cannot<line>take my sword.]
+data 0x1e
+data 0x4
+PTR_5410_131:
+data str[<speed=0>Tasman<line>With that kind of confidence,<line>I guess I can be assured.]
+data 0x1d
+data 0x3
+PTR_5410_132:
+data str[<speed=0>Tasman<line>I am going to go on a journey<line>soon. If you think you need to<line>practice more, ask me now.]
+data 0x1e
+data 0x4
+PTR_5410_133:
+data str[<speed=0>Dart<line>Yes, Master. Please.]
+data 0x14
+data 0x2
+PTR_5410_134:
+data str[<speed=0>Tasman<line>Then show your true power!<line>Don't even think about being<line>easy on me because of my injury!]
+data 0x20
+data 0x4
+PTR_5410_135:
+data str[<speed=0>Tasman<line>Shall we begin!?]
+data 0x10
+data 0x2
+PTR_5410_136:
+data str[<speed=0>Tasman<line>I am going to go on a journey<line>soon. If you think you need to<line>practice more, ask me now.]
+data 0x1e
+data 0x4
+PTR_5410_137:
+data str[<sauto=1><line>Master, don't be silly.<line>Yes Master, please.]
+data 0x17
+data 0x3
+PTR_5410_138:
+data str[<speed=0>Tasman<line>Do you need to practice with me?]
+data 0x20
+data 0x2
+PTR_5410_139:
+data str[<speed=0>Dart<line>No, I am fine.]
+data 0xe
+data 0x2
+PTR_5410_140:
+data str[<speed=0>Dart<line>Yes, please.]
+data 0xc
+data 0x2
+PTR_5410_141:
+data str[<sauto=1><line>No, I am fine.<line>Yes, please.]
+data 0xe
+data 0x3
+PTR_5410_146:
+data str[<speed=0>Tasman<line>Hm, that's fine.]
+data 0x10
+data 0x2
+PTR_5410_147:
+data str[<speed=0>Tasman<line>Shall we begin!!]
+data 0x10
+data 0x2
+PTR_5410_151:
+data str[<sauto=1>Shana!!]
+data 0x7
+data 0x1
+PTR_5410_152:
+data str[<sauto=1>Dart!]
+data 0x5
+data 0x1
+PTR_5410_153:
+data str[<sauto=1>Shana!]
+data 0x6
+data 0x1
+PTR_5410_154:
+data str[<speed=0>Lowe<line>You know what!]
+data 0xe
+data 0x2
+PTR_5410_155:
+data str[<speed=0>Isha<line>Shana's mom and dad!]
+data 0x14
+data 0x2
+PTR_5410_156:
+data str[<speed=0>Lowe<line>are back!]
+data 0x9
+data 0x2
+PTR_5410_157:
+data str[<sauto=1>This way!]
+data 0x9
+data 0x1
+PTR_5410_158:
+data str[<sauto=1>Hurry up!]
+data 0x9
+data 0x1
+data 0x4d003c
+data 0x450045
+data 0x70051
+data 0x150021
+data 0x150016
+data 0x1b0007
+data 0x170007
+data 0xa0ff0015
+data 0xf
+data 0x1
+data 0x4d003c
+data 0x450045
+data 0x70051
+data 0x150021
+data 0x150016
+data 0x1b0007
+data 0x170007
+data 0xa0ff0016
+data 0xf
+data 0x1
+data 0x4d003c
+data 0x450045
+data 0x70051
+data 0x150021
+data 0x150016
+data 0x1b0007
+data 0x180007
+data 0xa0ff0015
+data 0xf
+data 0x1
+data 0x4d003c
+data 0x450045
+data 0x70051
+data 0x150021
+data 0x150016
+data 0x1b0007
+data 0x180007
+data 0xa0ff0016
+data 0xf
+data 0x1
+data 0x4d003c
+data 0x450045
+data 0x70051
+data 0x150021
+data 0x150016
+data 0x1b0007
+data 0x190007
+data 0xa0ff0015
+data 0xf
+data 0x1
+data 0x4d003c
+data 0x450045
+data 0x70051
+data 0x150021
+data 0x150016
+data 0x1b0007
+data 0x190007
+data 0xa0ff0016
+data 0xf
+data 0x1
+data 0x4d003c
+data 0x450045
+data 0x70051
+data 0x150021
+data 0x150016
+data 0x1b0007
+data 0x1a0007
+data 0xa0ff0015
+data 0xf
+data 0x1
+data 0x4d003c
+data 0x450045
+data 0x70051
+data 0x150021
+data 0x150016
+data 0x1b0007
+data 0x1a0007
+data 0xa0ff0016
+data 0xf
+data 0x1
+data 0x4d003c
+data 0x450045
+data 0x70051
+data 0x150021
+data 0x150016
+data 0x1b0007
+data 0x1b0007
+data 0xa0ff0015
+data 0xf
+data 0x1
+data 0x4d003c
+data 0x450045
+data 0x70051
+data 0x150021
+data 0x150016
+data 0x1b0007
+data 0x1b0007
+data 0xa0ff0016
+data 0xf
+data 0x1
+data 0x4d003c
+data 0x450045
+data 0x70051
+data 0x150021
+data 0x150016
+data 0x1b0007
+data 0x160007
+data 0x150016
+data 0xa0ff
+data 0x10
+data 0x1
+data 0x4d003c
+data 0x450045
+data 0x70051
+data 0x150021
+data 0x150016
+data 0x1b0007
+data 0x160007
+data 0x160016
+data 0xa0ff
+data 0x10
+data 0x1
+data 0x4d003c
+data 0x450045
+data 0x70051
+data 0x150021
+data 0x150016
+data 0x1c0007
+data 0x170007
+data 0xa0ff0015
+data 0xf
+data 0x1
+data 0x4d003c
+data 0x450045
+data 0x70051
+data 0x150021
+data 0x150016
+data 0x1c0007
+data 0x170007
+data 0xa0ff0016
+data 0xf
+data 0x1
+data 0x4d003c
+data 0x450045
+data 0x70051
+data 0x150021
+data 0x150016
+data 0x1c0007
+data 0x180007
+data 0xa0ff0015
+data 0xf
+data 0x1
+data 0x4d003c
+data 0x450045
+data 0x70051
+data 0x150021
+data 0x150016
+data 0x1c0007
+data 0x180007
+data 0xa0ff0016
+data 0xf
+data 0x1
+data 0x4d003c
+data 0x450045
+data 0x70051
+data 0x150021
+data 0x150016
+data 0x1c0007
+data 0x190007
+data 0xa0ff0015
+data 0xf
+data 0x1
+data 0x4d003c
+data 0x450045
+data 0x70051
+data 0x150021
+data 0x150016
+data 0x1c0007
+data 0x190007
+data 0xa0ff0016
+data 0xf
+data 0x1
+data 0x4d003c
+data 0x450045
+data 0x70051
+data 0x150021
+data 0x150016
+data 0x1c0007
+data 0x1a0007
+data 0xa0ff0015
+data 0xf
+data 0x1
+data 0x4d003c
+data 0x450045
+data 0x70051
+data 0x150021
+data 0x150016
+data 0x1c0007
+data 0x1a0007
+data 0xa0ff0016
+data 0xf
+data 0x1
+data 0x4d003c
+data 0x450045
+data 0x70051
+data 0x150021
+data 0x150016
+data 0x1c0007
+data 0x1b0007
+data 0xa0ff0015
+data 0xf
+data 0x1
+data 0x4d003c
+data 0x450045
+data 0x70051
+data 0x150021
+data 0x150016
+data 0x1c0007
+data 0x1b0007
+data 0xa0ff0016
+data 0xf
+data 0x1
+data 0x4d003c
+data 0x450045
+data 0x70051
+data 0x150021
+data 0x150016
+data 0x1c0007
+data 0x160007
+data 0x150016
+data 0xa0ff
+data 0x10
+data 0x1
+data 0x4d003c
+data 0x450045
+data 0x70051
+data 0x150021
+data 0x150016
+data 0x1c0007
+data 0x160007
+data 0x160016
+data 0xa0ff
+data 0x10
+data 0x1
+PTR_5410_25:
+data str[<speed=0>Ah. Ahh....]
+data 0xb
+data 0x1
+PTR_5410_26:
+data str[<sauto=0>Ahh....]
+data 0x7
+data 0x1
+PTR_5410_142:
+data str[<speed=0>Lowe and I can take care of<line>what's going on here!]
+data 0x1b
+data 0x2
+PTR_5410_143:
+data str[<sauto=0>Dart, please go rescue Shana!]
+data 0x1d
+data 0x1
+PTR_5410_144:
+data str[<speed=0>I wonder how Shana is doing?]
+data 0x1c
+data 0x1
+PTR_5410_145:
+data str[<sauto=0>Please go rescue Shana quickly!]
+data 0x1f
+data 0x1
+PTR_5410_27:
+data str[<speed=0>We can take care of the village.<line>Focus on Shana and yourself.]
+data 0x20
+data 0x2
+PTR_5410_28:
+data str[<sauto=0>We will take care of the village.<line>Good luck, Dart.]
+data 0x21
+data 0x2
+PTR_5410_29:
+data str[<speed=0>I can't breathe.... It hurts.]
+data 0x1d
+data 0x1
+PTR_5410_30:
+data str[<sauto=0>I, I don't want to ...<line>die ... yet....]
+data 0x16
+data 0x2
+PTR_5410_31:
+data str[<speed=0>Dart, you shamelessly came back!<line>Because you weren't here, I, damn!<line>What are you gonna do about my<line>feelings towards Shana!]
+data 0x22
+data 0x4
+PTR_5410_32:
+data str[<sauto=0>You should've come back<line>earlier! For Shana's sake!]
+data 0x1a
+data 0x2
+PTR_5410_33:
+data str[<speed=0>It was a nightmare.<line>The fires set by Sandora scorched<line>the entire village to the ground.]
+data 0x21
+data 0x3
+PTR_5410_34:
+data str[<sauto=0>Everybody ran away from the<line>village, but it was before dawn, and<line>I didn't know where everybody ran<line>to..]
+data 0x24
+data 0x4
+PTR_5410_47:
+data str[<sauto=0>I'm praying for them.]
+data 0x15
+data 0x1
+PTR_5410_149:
+data str[<speed=0>We wanted to ask for help from<line><colour=5>Indels Castle<colour=0>, but they say<line>there is a guardian living in the<line><colour=5>Limestone Cave<colour=0> on the way and<line>we couldn't go.]
+data 0x21
+data 0x5
+PTR_5410_150:
+data str[<sauto=0>If there was no guardian<line>living in the <colour=5>Limestone Cave<colour=0>,<line>I would go ask for help immediately.]
+data 0x24
+data 0x3
+PTR_5410_35:
+data str[<speed=0>I won't ... cry....<line>Cuz I know Daddy and Mommy are<line>alive.]
+data 0x1e
+data 0x3
+PTR_5410_36:
+data str[<sauto=0>If I cry,<line>Lowe cries too.<line>I won't cry ... never.]
+data 0x16
+data 0x3
+PTR_5410_37:
+data str[<speed=0>Shana is alive.]
+data 0xf
+data 0x1
+PTR_5410_38:
+data str[<sauto=0>Our Daddy and Mommy are alive<line>too, right?]
+data 0x1d
+data 0x2
+PTR_5410_39:
+data str[<speed=0>It seems everybody was able to<line>escape and there were much fewer<line>casualties than we expected.<line>It is consoling....]
+data 0x20
+data 0x4
+PTR_5410_40:
+data str[<sauto=0>From now on is the hardest part.<line>There are so many things to do just<line>to stay alive.]
+data 0x23
+data 0x3
+PTR_5410_41:
+data str[<speed=0>Master Tasman....<line>He left on an ascetic journey to<line>study swordsmanship.]
+data 0x20
+data 0x3
+PTR_5410_42:
+data str[<sauto=0>He regrets that he couldn't save<line><colour=5>Seles<colour=0>. I don't think he<line>should blame himself like that.]
+data 0x20
+data 0x3
+PTR_5410_43:
+data str[<speed=0>Sh, Shana!<line>I, I will find the Mayor,<line>your parents for you!]
+data 0x19
+data 0x3
+PTR_5410_44:
+data str[<sauto=0>I will find Shana's parents!<line>I cannot stand being second to<line>Dart, damn!]
+data 0x1e
+data 0x3
+PTR_5410_45:
+data str[<speed=0>Shana,<line>nobody knows where the Mayor<line>and his wife went.]
+data 0x1c
+data 0x3
+PTR_5410_46:
+data str[<sauto=0>Shana, the Mayor and his wife,<line>your parents, must be alive<line>somewhere! It's too early to give<line>up hope.]
+data 0x21
+data 0x4
+PTR_5410_148:
+data str[<sauto=0>Not many more graves,<line>I guess not as many people as I<line>thought died.]
+data 0x1f
+data 0x3
+PTR_5410_53:
+data str[dummy_C012_2_40]
+data 0xf
+data 0x1
+PTR_5410_54:
+data str[dummy_C012_2_41]
+data 0xf
+data 0x1
+PTR_5410_55:
+data str[dummy_C012_2_50]
+data 0xf
+data 0x1
+PTR_5410_56:
+data str[dummy_C012_2_51]
+data 0xf
+data 0x1
+PTR_5410_57:
+data str[dummy_C012_2_60]
+data 0xf
+data 0x1
+PTR_5410_58:
+data str[dummy_C012_2_61]
+data 0xf
+data 0x1
+PTR_5410_59:
+data str[dummy_C012_2_110]
+data 0x10
+data 0x1
+PTR_5410_60:
+data str[dummy_C012_2_111]
+data 0x10
+data 0x1
+data 0x4d003c
+data 0x450045
+data 0x70051
+data 0x150021
+data 0x170016
+data 0x170007
+data 0x160007
+data 0xa0ff0017
+data 0xf
+data 0x1
+PTR_5410_49:
+data str[dummy_C012_2_20]
+data 0xf
+data 0x1
+PTR_5410_50:
+data str[dummy_C012_2_21]
+data 0xf
+data 0x1
+PTR_5410_51:
+data str[dummy_C012_2_30]
+data 0xf
+data 0x1
+PTR_5410_52:
+data str[dummy_C012_2_31]
+data 0xf
+data 0x1
+data 0x4d003c
+data 0x450045
+data 0x70051
+data 0x150021
+data 0x170016
+data 0x170007
+data 0x160007
+data 0x150017
+data 0xa0ff
+data 0x10
+data 0x1
+PTR_5410_48:
+data str[<sauto=0>What's this!?]
+data 0xd
+data 0x1
+PTR_5410_61:
+data str[<speed=0>Daddy and ...<line>Mommy are ...<line>Alive!]
+data 0xd
+data 0x3
+PTR_5410_62:
+data str[<sauto=0>I'm so happy!<line>I'm so happy!]
+data 0xd
+data 0x2
+PTR_5410_63:
+data str[<speed=0>Yeepee!!<line>I found Daddy and Mommy!]
+data 0x18
+data 0x2
+PTR_5410_64:
+data str[<sauto=0>I was so lonely for so long!<line>But we'll be together forever!]
+data 0x1e
+data 0x2
+PTR_5410_65:
+data str[<speed=0>Two countries that used to be one<line>are beating, smashing and destroying<line>each other. And for what?]
+data 0x24
+data 0x3
+PTR_5410_66:
+data str[<sauto=0>What is this war about?<line>How come it has been going on for<line>20 years?]
+data 0x21
+data 0x3
+PTR_5410_67:
+data str[<speed=0>Oh, Master Tasman?<line>He left on an ascetic journey to<line>study swordsmanship a long time ago.]
+data 0x24
+data 0x3
+PTR_5410_68:
+data str[<sauto=0>He regrets that he couldn't save<line><colour=5>Seles<colour=0>. I don't think he<line>should blame himself like that.]
+data 0x20
+data 0x3
+PTR_5410_69:
+data str[<speed=0>I will find Shana's parents,<line>the Mayor!]
+data 0x1c
+data 0x2
+PTR_5410_70:
+data str[<sauto=0>I will find Shana's parents!<line>I cannot put up with being second to<line>Dart, damn!]
+data 0x24
+data 0x3
+PTR_5410_71:
+data str[<speed=0>Everybody is looking,<line>but we still don't know the<line>whereabouts of the Mayor and his<line>wife.]
+data 0x20
+data 0x4
+PTR_5410_72:
+data str[<sauto=0>We still don't know the<line>whereabouts of the Mayor and his<line>wife.]
+data 0x20
+data 0x3
+PTR_5410_73:
+data str[<speed=0>Dart!<line>Come back alive will you!<line>Promise me, Okay?]
+data 0x19
+data 0x3
+PTR_5410_74:
+data str[<sauto=0>Promise me!<line>Come back alive will you!]
+data 0x19
+data 0x2
+PTR_5410_75:
+data str[<speed=0>Shana! Dart!<line>Good Luck!]
+data 0xc
+data 0x2
+PTR_5410_76:
+data str[<sauto=0>Shana! Dart!<line>Good Luck!]
+data 0xc
+data 0x2
+PTR_5410_77:
+data str[<speed=0>We heard a rumor about a<line>warrior in red armor. Dart, maybe<line>that is you!?]
+data 0x21
+data 0x3
+PTR_5410_78:
+data str[<sauto=0>Dart, You can ...<line>you can save people and the<line>future of Basil!]
+data 0x1b
+data 0x3
+PTR_5410_79:
+data str[<speed=0>Oh, Master Tasman?<line>He left on an ascetic journey to<line>study swordsmanship a long time ago.]
+data 0x24
+data 0x3
+PTR_5410_80:
+data str[<sauto=0>He regrets that he couldn't save<line><colour=5>Seles<colour=0>. I don't think he<line>should blame himself like that.]
+data 0x20
+data 0x3
+PTR_5410_81:
+data str[<speed=0>The entire future of Serdio is<line>on you! You think it's cool, huh?<line>Damn!]
+data 0x21
+data 0x3
+PTR_5410_82:
+data str[<sauto=0>I'll restore <colour=5>Seles<colour=0>!<line>I cannot put up with being second to<line>Dart, damn!]
+data 0x24
+data 0x3
+PTR_5410_83:
+data str[<speed=0>We found out that the Mayor and<line>his wife, Shana's parents, are in<line>another village! They will be back<line>after this war is settled!]
+data 0x22
+data 0x4
+PTR_5410_84:
+data str[<sauto=0>Dart, we are counting on you!<line>Everything is on you!]
+data 0x1d
+data 0x2
+PTR_5410_85:
+data str[<speed=0>Everybody says they'll restore<line><colour=5>Seles<colour=0>! I'll help them too!]
+data 0x1e
+data 0x2
+PTR_5410_86:
+data str[<sauto=0>Come back as soon as possible,<line>Dart. Together let's all restore<line><colour=5>Seles<colour=0>!]
+data 0x20
+data 0x3
+PTR_5410_87:
+data str[<speed=0>Dart,<line>play with me, oh please!]
+data 0x18
+data 0x2
+PTR_5410_88:
+data str[<sauto=0>Play with me, oh please!]
+data 0x18
+data 0x1
+PTR_5410_89:
+data str[<speed=0>You will know many truths after<line>your journey. You may find out<line>truths that you don't want to know.<line>But don't lose yourself!]
+data 0x23
+data 0x4
+PTR_5410_90:
+data str[<sauto=0>Whatever happens, don't lose<line>yourself!]
+data 0x1c
+data 0x2
+PTR_5410_91:
+data str[<speed=0>Oh, Master Tasman?<line>He left on an ascetic journey to<line>study swordsmanship a long time ago.]
+data 0x24
+data 0x3
+PTR_5410_92:
+data str[<sauto=0>He regrets that he couldn't save<line><colour=5>Seles<colour=0>. I don't think he<line>should blame himself like that.]
+data 0x20
+data 0x3
+PTR_5410_93:
+data str[<speed=0>You are the only person<line>who can protect Shana.<line>Don't forget about this!!]
+data 0x19
+data 0x3
+PTR_5410_94:
+data str[<sauto=0>I'll restore <colour=5>Seles<colour=0>!<line>I cannot put up with being second to<line>Dart, damn!]
+data 0x24
+data 0x3
+PTR_5410_95:
+data str[<speed=0>Everything you see and touch<line>during the journey will be of<line>"value" to you. Remember it.]
+data 0x1d
+data 0x3
+PTR_5410_96:
+data str[<sauto=0>How much you will grow on this<line>journey is something I am looking<line>forward to seeing.]
+data 0x21
+data 0x3
+PTR_5410_97:
+data str[dummy_C012_6_20]
+data 0xf
+data 0x1
+PTR_5410_98:
+data str[dummy_C012_6_21]
+data 0xf
+data 0x1
+PTR_5410_99:
+data str[dummy_C012_6_30]
+data 0xf
+data 0x1
+PTR_5410_100:
+data str[dummy_C012_6_31]
+data 0xf
+data 0x1
+PTR_5410_101:
+data str[dummy_C012_6_40]
+data 0xf
+data 0x1
+PTR_5410_102:
+data str[dummy_C012_6_41]
+data 0xf
+data 0x1
+PTR_5410_103:
+data str[dummy_C012_6_50]
+data 0xf
+data 0x1
+PTR_5410_104:
+data str[dummy_C012_6_51]
+data 0xf
+data 0x1
+PTR_5410_105:
+data str[dummy_C012_6_60]
+data 0xf
+data 0x1
+PTR_5410_106:
+data str[dummy_C012_6_61]
+data 0xf
+data 0x1
+PTR_5410_107:
+data str[dummy_C012_6_110]
+data 0x10
+data 0x1
+PTR_5410_108:
+data str[dummy_C012_6_111]
+data 0x10
+data 0x1
+PTR_5410_109:
+data str[dummy_C012_7_20]
+data 0xf
+data 0x1
+PTR_5410_110:
+data str[dummy_C012_7_21]
+data 0xf
+data 0x1
+PTR_5410_111:
+data str[dummy_C012_7_30]
+data 0xf
+data 0x1
+PTR_5410_112:
+data str[dummy_C012_7_31]
+data 0xf
+data 0x1
+PTR_5410_113:
+data str[dummy_C012_7_40]
+data 0xf
+data 0x1
+PTR_5410_114:
+data str[dummy_C012_7_41]
+data 0xf
+data 0x1
+PTR_5410_115:
+data str[dummy_C012_7_50]
+data 0xf
+data 0x1
+PTR_5410_116:
+data str[dummy_C012_7_51]
+data 0xf
+data 0x1
+PTR_5410_117:
+data str[dummy_C012_7_60]
+data 0xf
+data 0x1
+PTR_5410_118:
+data str[dummy_C012_7_61]
+data 0xf
+data 0x1
+PTR_5410_119:
+data str[dummy_C012_7_110]
+data 0x10
+data 0x1
+PTR_5410_120:
+data str[dummy_C012_7_111]
+data 0x10
+data 0x1
+LABEL_163:
+data str[<sauto=0>Acquired <colour=5>Stardust<colour=0> ]
+LABEL_164:
+data 0x12
+data 0x1

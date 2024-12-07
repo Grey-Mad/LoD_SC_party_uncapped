@@ -1,0 +1,71 @@
+--- original
++++ modified
+@@ -1570,9 +1570,11 @@
+ LABEL_29:
+-mov var[34][0], stor[28]
+-return
+-LABEL_30:
+-mov var[34][2], stor[28]
+-return
+-LABEL_31:
+-mov var[34][1], stor[28]
++LOOP:
++mov var[34][stor[3]], stor[28]
++incr stor[3]
++jmp_cmp ==, 0xffffffff, var[34][stor[3]], inl[:BREAK_LOOP] 
++incr stor[3]
++jmp_cmp ==, 0xffffffff, var[34][stor[3]], inl[:BREAK_LOOP] 
++incr stor[3]
++jmp_cmp ==, 0xffffffff, var[34][stor[3]], inl[:BREAK_LOOP] 
++rand 0x2, stor[2]
++jmp_cmp !=, 0x1, stor[2], inl[:LOOP] 
++BREAK_LOOP:
+ return
+@@ -1872,6 +1874,10 @@
+ call 141, stor[27]
+ call 142, stor[27]
+ call 146, stor[27], 0x0
++jmp_cmp ==, var[35], 0x1, inl[:THIRD_ROCK_ON_BOBJ_0]
++jmp_cmp ==, var[35], 0x2, inl[:FIRST_ROCK_ON_BOBJ_1]
++jmp_cmp ==, var[35], 0x3, inl[:FIRST_ROCK_ON_BOBJ_1]
++FIRST_ROCK_ON_BOBJ_1:
+ mov 0x16, stor[23]
+ wait stor[23]
+ mov 0x8, stor[23]
+@@ -1899,6 +1905,8 @@
+ call 600, stor[18]
+ mov 0x4, stor[stor[stor[0], 18], 23]
+ call 618, stor[18], inl[:LABEL_55]
++jmp_cmp ==, var[35], 0x2, inl[:THIRD_ROCK_ON_BOBJ_0]
++SECOND_ROCK_ON_BOBJ_2:
+ mov 0xe, stor[23]
+ wait stor[23]
+ mov 0x8, stor[23]
+@@ -1927,6 +1935,7 @@
+ call 600, stor[18]
+ mov 0x4, stor[stor[stor[0], 18], 23]
+ call 618, stor[18], inl[:LABEL_55]
++THIRD_ROCK_ON_BOBJ_0:
+ mov 0xe, stor[23]
+ wait stor[23]
+ mov 0x8, stor[23]
+@@ -1974,4 +1983,5 @@
+ LABEL_49:
+ wait stor[23]
++mov 0x0, stor[3]
+ gosub inl[:LABEL_29]
+ call 600, stor[18]
+@@ -2002,4 +2012,5 @@
+ LABEL_51:
+ wait stor[23]
+-gosub inl[:LABEL_31]
++mov 0x1, stor[3]
++gosub inl[:LABEL_29]
+ call 600, stor[18]
+@@ -2030,4 +2041,5 @@
+ LABEL_53:
+ wait stor[23]
+-gosub inl[:LABEL_30]
++mov 0x2, stor[3]
++gosub inl[:LABEL_29]
+ call 600, stor[18]
