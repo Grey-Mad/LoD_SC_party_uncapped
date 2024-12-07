@@ -1280,12 +1280,6 @@ public class Battle extends EngineState {
     Collections.fill(unlockedUltimateAddition_800bc910, false);
     goldGainedFromCombat_800bc920 = 0;
 
-
-
-    for(int charSlot = 0; charSlot < gameState_800babc8.charIds_88.length; charSlot++) {
-      spGained_800bc950.set(charSlot,0);
-    }
-
     totalXpFromCombat_800bc95c = 0;
     battleFlags_800bc960 = 0;
     postBattleAction_800bc974 = 0;
@@ -1379,15 +1373,8 @@ public class Battle extends EngineState {
 
     //LAB_801095a0
     //Scus94491BpeSegment_8006.battleState_8006e398.setMonsterBentLimit(8);
-    for(int i = 0; i < 3; i++) { //greytodo 
-      int enemyIndex = fp.encounterData_00.enemyIndices_00[i] & 0x1ff;//[i]
-      /*if (i == 1){enemyIndex = 1;};
-      if (i == 2){enemyIndex = 2;};
-      if (i == 3){enemyIndex = 3;};
-      if (i == 4){enemyIndex = 4;};
-      if (i == 5){enemyIndex = 5;};
-      if (i == 6){enemyIndex = 6;};
-      if (i == 7){enemyIndex = 7;};*/
+    for(int i = 0; i < 3; i++) {
+      int enemyIndex = fp.encounterData_00.enemyIndices_00[i] & 0x1ff;
       if(enemyIndex == 0x1ff) {
         break;
       }
@@ -1401,29 +1388,19 @@ public class Battle extends EngineState {
     int phase = 0;
 
 
-    for(int i = 0; i < 6; i++) { //6
+    for(int i = 0; i < 6; i++) {
       
       final EncounterData38.EnemyInfo08 s5 = fp.encounterData_00.enemyInfo_08[i];
-      //final EncounterData38.EnemyInfo08 s5 = fp.encounterData_00.enemyInfo_08[0];
       int charIndex = s5.index_00 & 0x1ff;
-      
-      /*if (i == 1){charIndex = 1;s5.pos_02.z = 0x500;};
-      if (i == 2){charIndex = 2;s5.pos_02.z = 0x0;};
-      if (i == 3){charIndex = 3;s5.pos_02.z = -0x500;};
-      if (i == 4){charIndex = 4;s5.pos_02.z = -0x500*2;};
-      if (i == 5){charIndex = 5;s5.pos_02.z =  0x500*2;};
-      if (i == 6){charIndex = 6;s5.pos_02.z =  0x500*3;};
-      if (i == 7){charIndex = 7;s5.pos_02.z = -0x500*3;};*/
-
 
       if(charIndex == 0x1ff) {
         break;
       }
-
+      final int freeScript = scriptStatePtrArr_800bc1c0.length - (gameState_800babc8.charIds_88.length*2 + 2) + i;
       final int combatantIndex = this.getCombatantIndex(charIndex);
       final String name = "Enemy combatant index " + combatantIndex;
       final MonsterBattleEntity bent = new MonsterBattleEntity(name);
-      final ScriptState<MonsterBattleEntity> state = SCRIPTS.allocateScriptState(name, bent);
+      final ScriptState<MonsterBattleEntity> state = SCRIPTS.allocateScriptState(freeScript, name, bent);
       state.setTicker(bent::bentLoadingTicker);
       state.setDestructor(bent::bentDestructor);
       bent.charId_272 = charIndex;
@@ -1484,9 +1461,9 @@ public class Battle extends EngineState {
     //LAB_800fbe70
     for(int charSlot = 0; charSlot < charCount; charSlot++) {
       final int charIndex = gameState_800babc8.charIds_88[charSlot];
-      //final ScriptState<PlayerBattleEntity> = SCRIPTS.allocateScriptState(name, bent);
-      final int freeScript = SCRIPTS.findFreeScriptState();
-      final String name = "Char ID " + charIndex + " (bent + " + (freeScript) + ')';//changed 6 to 16, if this value is too low there are issues, needed min of 15 for virage 2.
+
+      final int freeScript = scriptStatePtrArr_800bc1c0.length - gameState_800babc8.charIds_88.length + charSlot;
+      final String name = "Char ID " + charIndex + " (bent + " + (freeScript) + ')';
       final PlayerBattleEntity bent = new PlayerBattleEntity(name, freeScript, this.playerBattleScript_800c66fc);
       final ScriptState<PlayerBattleEntity> state = SCRIPTS.allocateScriptState(freeScript, name, bent);
       state.setTicker(bent::bentLoadingTicker);
@@ -2878,7 +2855,6 @@ public class Battle extends EngineState {
   public FlowControl FUN_800cb618(final RunningScript<?> script) {
     final ScriptState<?> a1 = scriptStatePtrArr_800bc1c0[script.params_20[0].get()];
 
-    //greytodo: fix div dragon a1 = null 
     //LAB_800cb668
     
     if(script.params_20[1].get() != 0) {
@@ -4001,19 +3977,6 @@ public class Battle extends EngineState {
       //LAB_800cd9e8
       script.params_20[1].set(bent.bentSlot_274);
     }
-
-    final int[] opOffsetsToCheck = {1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30};//27?
-    for(int i = 0;i<opOffsetsToCheck.length; i++){
-      
-    switch(script.scriptState_04.frame().file.getOp(script.commandOffset_0c+opOffsetsToCheck[i])){
-      case 69 -> script.scriptState_04.frame().file.setOp(script.commandOffset_0c+opOffsetsToCheck[i], battleState_8006e398._294Offset);
-      case 90 -> script.scriptState_04.frame().file.setOp(script.commandOffset_0c+opOffsetsToCheck[i], battleState_8006e398._2e8Offset);
-      case 109 -> script.scriptState_04.frame().file.setOp(script.commandOffset_0c+opOffsetsToCheck[i], battleState_8006e398._334Offset);
-      case 115 -> script.scriptState_04.frame().file.setOp(script.commandOffset_0c+opOffsetsToCheck[i], battleState_8006e398._34cOffset);
-      case 129 -> script.scriptState_04.frame().file.setOp(script.commandOffset_0c+opOffsetsToCheck[i], battleState_8006e398._384Offset);
-      case 184 -> script.scriptState_04.frame().file.setOp(script.commandOffset_0c+opOffsetsToCheck[i], battleState_8006e398._460Offset);
-      case 189 -> script.scriptState_04.frame().file.setOp(script.commandOffset_0c+opOffsetsToCheck[i], battleState_8006e398._474Offset);
-    }}
     
     //LAB_800cd9f4
     return FlowControl.CONTINUE;
@@ -4785,7 +4748,7 @@ public class Battle extends EngineState {
     //   3: script[0x1026] 0x0
     //   4: script[0x1027] 0xa0
     final BattleObject bobj;
-    if(script.params_20[4].get() < 72) {
+    if(script.params_20[4].get() < scriptStatePtrArr_800bc1c0.length) {
       bobj = SCRIPTS.getObject(script.params_20[4].get(), BattleObject.class);
     } else {
       bobj = null;
@@ -4824,7 +4787,7 @@ public class Battle extends EngineState {
     //   3: script[0x102e] 0x0
     //   4: script[0x102f] 0xc8
     final BattleObject bobj;
-    if(script.params_20[4].get() < 72) {
+    if(script.params_20[4].get() < scriptStatePtrArr_800bc1c0.length) {
       bobj = SCRIPTS.getObject(script.params_20[4].get(), BattleObject.class);
     } else {
       bobj = null;
@@ -6696,7 +6659,7 @@ public class Battle extends EngineState {
     effect._00 = 0;
     effect.tmdType_04 = null;
     effect.extTmd_08 = null;
-    effect.texture15 = ((BattleEntity27c)scriptStatePtrArr_800bc1c0[id].innerStruct_00).combatant_144.texture15;
+    effect.texture15 = ((BattleEntity27c)scriptStatePtrArr_800bc1c0[id].innerStruct_00).combatant_144.texture15;//greytodo: crash when entering the 5th generation, DRGN0.BIN\5650 
     effect.texture24 =((BattleEntity27c)scriptStatePtrArr_800bc1c0[id].innerStruct_00).combatant_144.texture24;
     effect.textured = true;
     effect.model_134 = effect.model_10;
