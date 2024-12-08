@@ -1,6 +1,8 @@
 package legend.game.title;
 
 import legend.core.MathHelper;
+import legend.core.QueuedModelStandard;
+import legend.core.QueuedModelTmd;
 import legend.core.gpu.Bpp;
 import legend.core.gpu.Rect4i;
 import legend.core.gpu.VramTexture;
@@ -21,21 +23,35 @@ import legend.game.fmv.Fmv;
 import legend.game.input.Input;
 import legend.game.input.InputAction;
 import legend.game.inventory.WhichMenu;
+import legend.game.inventory.screens.CampaignSelectionScreen;
+import legend.game.inventory.screens.FullScreenInputScreen;
+import legend.game.inventory.screens.MenuScreen;
+import legend.game.inventory.screens.MessageBoxScreen;
+import legend.game.inventory.screens.NewCampaignScreen;
+import legend.game.inventory.screens.OptionsCategoryScreen;
 import legend.game.saves.ConfigStorage;
 import legend.game.saves.ConfigStorageLocation;
+import legend.game.saves.InvalidSaveException;
+import legend.game.saves.SaveFailedException;
 import legend.game.tim.Tim;
 import legend.game.types.GsRVIEW2;
+import legend.game.types.MessageBoxResult;
 import legend.game.types.Translucency;
 import legend.game.unpacker.FileData;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.joml.Vector3f;
 import org.lwjgl.glfw.GLFW;
 
 import javax.annotation.Nullable;
+import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Set;
 import java.util.function.BooleanSupplier;
+import java.util.function.Supplier;
 
 import static legend.core.GameEngine.CONFIG;
 import static legend.core.GameEngine.GPU;
@@ -47,13 +63,14 @@ import static legend.core.gpu.VramTextureLoader.stitchHorizontal;
 import static legend.core.gpu.VramTextureLoader.stitchVertical;
 import static legend.core.gpu.VramTextureLoader.textureFromPngOneChannelBlue;
 import static legend.core.gpu.VramTextureLoader.textureFromTim;
+import static legend.game.SItem.menuStack;
 import static legend.game.Scus94491BpeSegment.loadDrgnDir;
 import static legend.game.Scus94491BpeSegment.loadDrgnFile;
 import static legend.game.Scus94491BpeSegment.playSound;
 import static legend.game.Scus94491BpeSegment.resizeDisplay;
 import static legend.game.Scus94491BpeSegment.rsin;
 import static legend.game.Scus94491BpeSegment.startFadeEffect;
-import static legend.game.Scus94491BpeSegment_8002.loadAndRenderMenus;
+import static legend.game.Scus94491BpeSegment_8002.initMenu;
 import static legend.game.Scus94491BpeSegment_8003.GsGetLw;
 import static legend.game.Scus94491BpeSegment_8003.GsInitCoordinate2;
 import static legend.game.Scus94491BpeSegment_8003.GsSetRefView2L;
@@ -67,6 +84,8 @@ import static legend.game.Scus94491BpeSegment_800c.lightColourMatrix_800c3508;
 import static legend.game.Scus94491BpeSegment_800c.lightDirectionMatrix_800c34e8;
 
 public class Ttle extends EngineState {
+  private static final Logger LOGGER = LogManager.getFormatterLogger(Ttle.class);
+
   private TmdRenderingStruct _800c66d0;
   private final FireAnimationData20[] fireAnimation_800c66d4 = new FireAnimationData20[4];
   private int hasSavedGames;
@@ -93,6 +112,8 @@ public class Ttle extends EngineState {
 
   private int loadingStage;
   private int selectedMenuOption;
+  private boolean memcardConversionShown;
+  private boolean saveCategorizationShown;
 
   private Texture backgroundTex;
   private Texture logoTex;
@@ -347,7 +368,7 @@ public class Ttle extends EngineState {
 
   @Method(0x800c7e50L)
   private void fadeOutForNewGame() {
-    this.fadeOutToMenu(WhichMenu.INIT_NEW_CAMPAIGN_MENU, () -> {
+    this.fadeOutToMenu(NewCampaignScreen::new, () -> {
       if(loadingNewGameState_800bdc34) {
         removeInputHandlers();
         this.deallocate();
@@ -361,21 +382,59 @@ public class Ttle extends EngineState {
   }
 
   private void fadeOutForOptions() {
-    this.fadeOutToMenu(WhichMenu.INIT_OPTIONS_MENU, () -> {
+    this.fadeOutToMenu(() -> new OptionsCategoryScreen(CONFIG, Set.of(ConfigStorageLocation.GLOBAL), () -> whichMenu_800bdc38 = WhichMenu.UNLOAD), () -> {
       ConfigStorage.saveConfig(CONFIG, ConfigStorageLocation.GLOBAL, Path.of("config.dcnf"));
       return false;
     });
   }
 
   private void fadeOutForCategorizeSave() {
-    this.fadeOutToMenu(WhichMenu.INIT_CATEGORIZE_SAVE_MENU, () -> false);
+    this.fadeOutToMenu(() -> new FullScreenInputScreen("Uncategorized saves found. Please enter a name for your campaign.", "Campaign name:", SAVES.generateCampaignName(), (result, name) -> {
+      this.saveCategorizationShown = true;
+      if(result == MessageBoxResult.YES) {
+        if(SAVES.campaignExists(name)) {
+          menuStack.pushScreen(new MessageBoxScreen("Campaign name already\nin use", 0, result1 -> {
+            whichMenu_800bdc38 = WhichMenu.UNLOAD;
+          }));
+          return;
+        }
+
+        try {
+          SAVES.moveCategorizedSaves(name);
+        } catch(final IOException e) {
+          LOGGER.error("Failed to categorize saves", e);
+        }
+      }
+      whichMenu_800bdc38 = WhichMenu.UNLOAD;
+    }), () -> false);
   }
 
   private void fadeOutForMemcard() {
-    this.fadeOutToMenu(WhichMenu.INIT_MEMCARD_MENU, () -> false);
+    this.fadeOutToMenu(() -> new FullScreenInputScreen("PS1 memory card found. Please enter a name for your campaign.", "Campaign name:", SAVES.generateCampaignName(), (result, name) -> {
+      this.memcardConversionShown = true;
+      if(result == MessageBoxResult.YES) {
+        if(SAVES.campaignExists(name)) {
+          menuStack.pushScreen(new MessageBoxScreen("Campaign name already\nin use", 0, result1 -> {
+            whichMenu_800bdc38 = WhichMenu.UNLOAD;
+          }));
+          return;
+        }
+
+        menuStack.pushScreen(new MessageBoxScreen("Delete the memory card file?", 2, result1 -> {
+          try {
+            SAVES.splitMemcards(name, result1 == MessageBoxResult.YES);
+          } catch(final IOException | InvalidSaveException | SaveFailedException e) {
+            LOGGER.error("Failed to convert memcard", e);
+          }
+          whichMenu_800bdc38 = WhichMenu.UNLOAD;
+        }));
+      } else {
+        whichMenu_800bdc38 = WhichMenu.UNLOAD;
+      }
+    }), () -> false);
   }
 
-  private void fadeOutToMenu(final WhichMenu menu, final BooleanSupplier transition) {
+  private void fadeOutToMenu(final Supplier<MenuScreen> destScreen, final BooleanSupplier transition) {
     if(this.fadeOutTimer_800c6754 == 0) {
       startFadeEffect(1, 15);
     }
@@ -383,18 +442,14 @@ public class Ttle extends EngineState {
     //LAB_800c7fcc
     this.fadeOutTimer_800c6754++;
 
-    if(this.fadeOutTimer_800c6754 >= 16) {
-      if(this.menuTransitionState_800c6728 == 2) {
-        whichMenu_800bdc38 = menu;
-        removeInputHandlers();
-        this.deallocate();
-        this.menuTransitionState_800c6728 = 3;
-      }
+    if(this.fadeOutTimer_800c6754 >= 16 && this.menuTransitionState_800c6728 == 2) {
+      initMenu(WhichMenu.RENDER_NEW_MENU, destScreen);
+      removeInputHandlers();
+      this.deallocate();
+      this.menuTransitionState_800c6728 = 3;
     }
 
     //LAB_800c8038
-    loadAndRenderMenus();
-
     if(whichMenu_800bdc38 == WhichMenu.NONE_0) {
       if(this.menuTransitionState_800c6728 == 3) {
         if(!transition.getAsBoolean()) {
@@ -435,7 +490,7 @@ public class Ttle extends EngineState {
 
   @Method(0x800c7fa0L)
   private void waitForSaveSelection() {
-    this.fadeOutToMenu(WhichMenu.INIT_CAMPAIGN_SELECTION_MENU, () -> {
+    this.fadeOutToMenu(CampaignSelectionScreen::new, () -> {
       if(loadingNewGameState_800bdc34) {
         if(gameState_800babc8.isOnWorldMap_4e4) {
           engineStateOnceLoaded_8004dd24 = EngineStateEnum.WORLD_MAP_08;
@@ -695,13 +750,13 @@ public class Ttle extends EngineState {
   @Method(0x800c8634L)
   private void renderMenuOptions() {
     if(this.hasSavedGames == 0) {
-      if(!SAVES.findUncategorizedSaves().isEmpty()) {
+      if(!this.saveCategorizationShown && !SAVES.findUncategorizedSaves().isEmpty()) {
         this.menuState_800c672c = 4;
         this.menuTransitionState_800c6728 = 2;
         this.loadingStage = 9;
       }
 
-      if(!SAVES.findMemcards().isEmpty()) {
+      if(!this.memcardConversionShown && !SAVES.findMemcards().isEmpty()) {
         this.menuState_800c672c = 4;
         this.menuTransitionState_800c6728 = 2;
         this.loadingStage = 10;
@@ -809,13 +864,13 @@ public class Ttle extends EngineState {
 
       //LAB_800c8a8c
       RENDERER
-        .queueOrthoModel(this.menuTextObj)
+        .queueOrthoModel(this.menuTextObj, QueuedModelStandard.class)
         .monochrome(colour / 128.0f)
         .texture(this.menuTextTex[2])
         .vertices((i + 4) * 4, 4);
 
       RENDERER
-        .queueOrthoModel(this.menuTextObj)
+        .queueOrthoModel(this.menuTextObj, QueuedModelStandard.class)
         .monochrome(colour / 128.0f)
         .texture(this.menuTextTex[this.selectedMenuOption == i ? 1 : 0])
         .vertices(i * 4, 4);
@@ -842,7 +897,7 @@ public class Ttle extends EngineState {
     //LAB_800cabcc
     //LAB_800cabe8
     RENDERER
-      .queueOrthoModel(this.copyrightObj)
+      .queueOrthoModel(this.copyrightObj, QueuedModelStandard.class)
       .monochrome(this.copyrightFadeInAmount)
       .texture(this.copyrightTex);
   }
@@ -858,12 +913,12 @@ public class Ttle extends EngineState {
     //LAB_800cae2c
     //LAB_800cae48
     RENDERER
-      .queueOrthoModel(this.logoObj)
+      .queueOrthoModel(this.logoObj, QueuedModelStandard.class)
       .monochrome(this.logoFadeInAmount)
       .texture(this.logoTex);
 
     RENDERER
-      .queueOrthoModel(this.trademarkObj)
+      .queueOrthoModel(this.trademarkObj, QueuedModelStandard.class)
       .monochrome(this.logoFadeInAmount)
       .texture(this.trademarkTex);
   }
@@ -885,7 +940,7 @@ public class Ttle extends EngineState {
     //LAB_800cb0ec
     //LAB_800cb100
     RENDERER
-      .queueOrthoModel(this.backgroundObj)
+      .queueOrthoModel(this.backgroundObj, QueuedModelStandard.class)
       .texture(this.backgroundTex)
       .screenspaceOffset(0.0f, this.backgroundScrollAmount)
       .monochrome(this.backgroundFadeInAmount);
@@ -950,7 +1005,7 @@ public class Ttle extends EngineState {
       GsGetLw(dobj2s[i].coord2_04, lw);
       lw.scaleLocal(scale);
 
-      RENDERER.queueModel(this._800c66d0.dobj2s_00[i].obj, lw)
+      RENDERER.queueModel(this._800c66d0.dobj2s_00[i].obj, lw, QueuedModelTmd.class)
         .monochrome(this.flameColour / 128.0f)
         .screenspaceOffset(8.0f, 0.0f)
         .lightDirection(lightDirectionMatrix_800c34e8)
@@ -991,7 +1046,7 @@ public class Ttle extends EngineState {
 
     this.flashTransforms.transfer.set(0.0f, 0.0f, 30.0f);
     this.flashTransforms.scaling(368.0f, 240.0f, 1.0f);
-    RENDERER.queueOrthoModel(RENDERER.renderBufferQuad, this.flashTransforms)
+    RENDERER.queueOrthoModel(RENDERER.renderBufferQuad, this.flashTransforms, QueuedModelStandard.class)
       .texture(RENDERER.getLastFrame())
       .translucency(Translucency.B_PLUS_F)
       .monochrome(colour / 128.0f);

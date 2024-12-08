@@ -28,15 +28,12 @@ import static legend.game.Scus94491BpeSegment_8002.playMenuSound;
 import static legend.game.Scus94491BpeSegment_8002.setInventoryFromDisplay;
 import static legend.game.Scus94491BpeSegment_8002.sortItems;
 import static legend.game.Scus94491BpeSegment_8002.unloadRenderable;
-import static legend.game.Scus94491BpeSegment_8004.currentEngineState_8004dd04;
 import static legend.game.Scus94491BpeSegment_800b.equipmentOverflow;
 import static legend.game.Scus94491BpeSegment_800b.fullScreenEffect_800bb140;
 import static legend.game.Scus94491BpeSegment_800b.gameState_800babc8;
 import static legend.game.Scus94491BpeSegment_800b.itemOverflow;
 import static legend.game.Scus94491BpeSegment_800b.saveListDownArrow_800bdb98;
 import static legend.game.Scus94491BpeSegment_800b.saveListUpArrow_800bdb94;
-import static legend.game.Scus94491BpeSegment_800b.textZ_800bdf00;
-import static legend.game.Scus94491BpeSegment_800b.uiFile_800bdc3c;
 import static legend.game.Scus94491BpeSegment_800b.whichMenu_800bdc38;
 
 public class TooManyItemsScreen extends MenuScreen {
@@ -66,19 +63,17 @@ public class TooManyItemsScreen extends MenuScreen {
   protected void render() {
     switch(this.menuState) {
       case _1 -> {
-        if(uiFile_800bdc3c != null) {
-          loadItemsAndEquipmentForDisplay(this.equipment, this.items, 0x1L);
+        loadItemsAndEquipmentForDisplay(this.equipment, this.items, 0x1L);
 
-          for(final Item item : itemOverflow) {
-            this.droppedItems.add(MenuEntryStruct04.make(item));
-          }
-
-          for(final Equipment equipment : equipmentOverflow) {
-            this.droppedItems.add(MenuEntryStruct04.make(equipment));
-          }
-
-          this.menuState = MenuState._2;
+        for(final Item item : itemOverflow) {
+          this.droppedItems.add(MenuEntryStruct04.make(item));
         }
+
+        for(final Equipment equipment : equipmentOverflow) {
+          this.droppedItems.add(MenuEntryStruct04.make(equipment));
+        }
+
+        this.menuState = MenuState._2;
       }
 
       case _2 -> {
@@ -132,8 +127,8 @@ public class TooManyItemsScreen extends MenuScreen {
               this.invScroll--;
               this.renderable_8011e204.y_44 = this.FUN_8010f178(this.invIndex);
             } else if(this.invScroll == 0) {
-              this.invScroll = slotCount - 7;
-              this.invIndex = 6;
+              this.invScroll = Math.max(0, slotCount - 7);
+              this.invIndex = this.invScroll > 0 ? 6 : 0;
               this.renderable_8011e204.y_44 = this.FUN_8010f178(this.invIndex);
             }
           }
@@ -184,21 +179,8 @@ public class TooManyItemsScreen extends MenuScreen {
         this.FUN_8010fd80(false, this.droppedItems.get(this.dropIndex).item_00, this.invIndex, this.invScroll, 0);
 
         if(fullScreenEffect_800bb140.currentColour_28 >= 0xff) {
-          startFadeEffect(2, 10);
-          deallocateRenderables(0xff);
-
-          if(uiFile_800bdc3c != null) {
-            uiFile_800bdc3c.delete();
-          }
-
-          uiFile_800bdc3c = null;
-          whichMenu_800bdc38 = WhichMenu.UNLOAD_TOO_MANY_ITEMS_MENU_35;
-
-          currentEngineState_8004dd04.menuClosed();
-
-          textZ_800bdf00 = 13;
-
           menuStack.popScreen();
+          whichMenu_800bdc38 = WhichMenu.UNLOAD;
         }
       }
     }
@@ -227,7 +209,9 @@ public class TooManyItemsScreen extends MenuScreen {
       }
 
       if((a4 & 0x2) != 0) {
-        renderString(194, 164, I18n.translate(this.items.get(slotScroll + slotIndex).getDescriptionTranslationKey()), allocate);
+        if(slotScroll + slotIndex < this.items.size()) {
+          renderString(194, 164, I18n.translate(this.items.get(slotScroll + slotIndex).getDescriptionTranslationKey()), allocate);
+        }
 
         final Renderable58 renderable = allocateOneFrameGlyph(137, 84, 140);
         renderable.clut_30 = 0x7ceb;
@@ -241,7 +225,9 @@ public class TooManyItemsScreen extends MenuScreen {
       }
 
       if((a4 & 0x2) != 0) {
-        renderString(194, 164, I18n.translate(this.equipment.get(slotScroll + slotIndex).getDescriptionTranslationKey()), allocate);
+        if(slotScroll + slotIndex < this.equipment.size()) {
+          renderString(194, 164, I18n.translate(this.equipment.get(slotScroll + slotIndex).getDescriptionTranslationKey()), allocate);
+        }
 
         final Renderable58 renderable = allocateOneFrameGlyph(137, 84, 140);
         renderable.clut_30 = 0x7ceb;
@@ -273,7 +259,7 @@ public class TooManyItemsScreen extends MenuScreen {
         }
       }
     } else if(this.menuState == MenuState._9) {
-      for(int i = 0; i < 7; i++) {
+      for(int i = 0; i < this.items.size(); i++) {
         if(this.invIndex != i && MathHelper.inBox(x, y, 188, this.FUN_8010f178(i), 171, 17)) {
           playMenuSound(1);
           this.invIndex = i;
@@ -357,8 +343,8 @@ public class TooManyItemsScreen extends MenuScreen {
     }
 
     if(this.invIndex == 0 && this.invScroll == 0) {
-      this.invScroll = slotCount - 7;
-      this.invIndex = 7;
+      this.invScroll = Math.max(0, slotCount - 7);
+      this.invIndex = Math.min(slotCount, 7);
     }
   }
 
@@ -369,7 +355,7 @@ public class TooManyItemsScreen extends MenuScreen {
       this.invScroll++;
     }
 
-    if(this.invIndex == 6 && this.invScroll == slotCount - 7) {
+    if((this.invIndex == 6 && this.invScroll == slotCount - 7) || (this.invScroll < 1 && this.invIndex >= slotCount - 1)) {
       this.invScroll = 0;
       this.invIndex = -1;
     }
@@ -459,6 +445,10 @@ public class TooManyItemsScreen extends MenuScreen {
   private void selectMenuState9() {
     final MenuEntryStruct04<InventoryEntry> newItem = this.droppedItems.get(this.dropIndex);
     final boolean isItem = this.droppedItems.get(this.dropIndex).item_00 instanceof Item;
+
+    if(this.invIndex + this.invScroll > this.items.size() - 1) {
+      return;
+    }
 
     if(((isItem ? this.items : this.equipment).get(this.invIndex + this.invScroll).flags_02 & 0x6000) != 0) {
       playMenuSound(40);

@@ -2,7 +2,9 @@ package legend.game.submap;
 
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
-import legend.core.RenderEngine;
+import legend.core.QueuedModel;
+import legend.core.QueuedModelStandard;
+import legend.core.QueuedModelTmd;
 import legend.core.gpu.Bpp;
 import legend.core.gpu.Rect4i;
 import legend.core.gpu.VramTextureLoader;
@@ -50,7 +52,6 @@ import static legend.core.GameEngine.EVENTS;
 import static legend.core.GameEngine.GPU;
 import static legend.core.GameEngine.GTE;
 import static legend.core.GameEngine.RENDERER;
-import static legend.game.Scus94491BpeSegment.stopCurrentMusicSequence;
 import static legend.game.Scus94491BpeSegment.loadDrgnDir;
 import static legend.game.Scus94491BpeSegment.loadDrgnFile;
 import static legend.game.Scus94491BpeSegment.loadMusicPackage;
@@ -58,6 +59,7 @@ import static legend.game.Scus94491BpeSegment.loadSubmapSounds;
 import static legend.game.Scus94491BpeSegment.orderingTableBits_1f8003c0;
 import static legend.game.Scus94491BpeSegment.startCurrentMusicSequence;
 import static legend.game.Scus94491BpeSegment.stopAndResetSoundsAndSequences;
+import static legend.game.Scus94491BpeSegment.stopCurrentMusicSequence;
 import static legend.game.Scus94491BpeSegment.tmdGp0Tpage_1f8003ec;
 import static legend.game.Scus94491BpeSegment.unloadSoundFile;
 import static legend.game.Scus94491BpeSegment.zOffset_1f8003e8;
@@ -332,7 +334,7 @@ public class RetailSubmap extends Submap {
   }
 
   @Override
-  void applyCollisionDebugColour(final int collisionPrimitiveIndex, final RenderEngine.QueuedModel model) {
+  void applyCollisionDebugColour(final int collisionPrimitiveIndex, final QueuedModel model) {
     for(int n = 0; n < this.submapWorldMapExits_800f7f74.length; n++) {
       final SubmapWorldMapExits worldMapExits = this.submapWorldMapExits_800f7f74[n];
 
@@ -518,11 +520,6 @@ public class RetailSubmap extends Submap {
     } else {
       TmdObjLoader.fromModel("SobjModel (index " + sobj.sobjIndex_12e + ')', sobj.model_00);
     }
-  }
-
-  @Override
-  public void restoreAssets() {
-    this.loadTextures();
   }
 
   private void loadTextureOverrides() {
@@ -1057,6 +1054,12 @@ public class RetailSubmap extends Submap {
   }
 
   @Override
+  public void preDraw() {
+    RENDERER.scissorStack.push();
+    RENDERER.scissorStack.setRescale(this.backgroundRect.x + Math.round(GPU.getOffsetX() + this.submapOffsetX_800cb560 + this.screenOffset.x), this.backgroundRect.y, this.backgroundRect.w, this.backgroundRect.h);
+  }
+
+  @Override
   @Method(0x800e7954L)
   public void drawEnv(final MV[] sobjMatrices) {
     this.animateAndRenderSubmapModel(this.submapCutMatrix_800d4bb0);
@@ -1079,7 +1082,7 @@ public class RetailSubmap extends Submap {
     this.backgroundTransforms.transfer.set(GPU.getOffsetX() + this.submapOffsetX_800cb560 + this.screenOffset.x, GPU.getOffsetY() + this.submapOffsetY_800cb564 + this.screenOffset.y, 0.0f);
 
     RENDERER
-      .queueOrthoModel(this.backgroundObj, this.backgroundTransforms)
+      .queueOrthoModel(this.backgroundObj, this.backgroundTransforms, QueuedModelStandard.class)
       .texture(this.backgroundTexture);
 
     //LAB_800e7a60
@@ -1213,7 +1216,7 @@ public class RetailSubmap extends Submap {
         this.backgroundTransforms.identity();
         this.backgroundTransforms.transfer.set(GPU.getOffsetX() + this.submapOffsetX_800cb560 + this.screenOffset.x + x, GPU.getOffsetY() + this.submapOffsetY_800cb564 + this.screenOffset.y + y, z * 4.0f);
         RENDERER
-          .queueOrthoModel(metrics.obj, this.backgroundTransforms)
+          .queueOrthoModel(metrics.obj, this.backgroundTransforms, QueuedModelStandard.class)
           .texture(this.foregroundTextures[i]);
 
         // final int oldZ = textZ_800bdf00;
@@ -1313,7 +1316,7 @@ public class RetailSubmap extends Submap {
 
       GsGetLw(dobj2.coord2_04, lw);
 
-      RENDERER.queueModel(dobj2.obj, matrix, lw)
+      RENDERER.queueModel(dobj2.obj, matrix, lw, QueuedModelTmd.class)
         .screenspaceOffset(GPU.getOffsetX() + GTE.getScreenOffsetX() - 184, GPU.getOffsetY() + GTE.getScreenOffsetY() - 120)
         .lightDirection(lightDirectionMatrix_800c34e8)
         .lightColour(lightColourMatrix_800c3508)

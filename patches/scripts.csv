@@ -114,6 +114,7 @@ diff,SECT/DRGN23.BIN/360/3,scripts/DRGN23/360/3.diff,"Flanvel Teleporter Fixes"
 diff,SECT/DRGN23.BIN/366/1,scripts/DRGN23/366/1.diff,"Flanvel Teleporter Fixes"
 diff,SECT/DRGN23.BIN/366/2,scripts/DRGN23/366/2.diff,"Flanvel Teleporter Fixes"
 diff,SECT/DRGN23.BIN/366/3,scripts/DRGN23/366/3.diff,"Flanvel Teleporter Fixes"
+diff,SECT/DRGN23.BIN/495/2,scripts/DRGN23/495/2.diff,"Vellweb Belzac dialogue fix, GH#1768"
 diff,SECT/DRGN1.BIN/1,scripts/PartySizePatches/DRGN1/1.diff,"party size patch"
 diff,SECT/DRGN1.BIN/2,scripts/PartySizePatches/DRGN1/2.diff,"party size patch"
 diff,SECT/DRGN1.BIN/3,scripts/PartySizePatches/DRGN1/3.diff,"party size patch"
@@ -410,4 +411,3 @@ diff,SECT/DRGN1.BIN/396,scripts/PartySizePatches/DRGN1/396.diff,"party size patc
 diff,SECT/DRGN1.BIN/398,scripts/PartySizePatches/DRGN1/398.diff,"party size patch"
 diff,SECT/DRGN1.BIN/399,scripts/PartySizePatches/DRGN1/399.diff,"party size patch"
 diff,SECT/DRGN1.BIN/400,scripts/PartySizePatches/DRGN1/400.diff,"party size patch"
-

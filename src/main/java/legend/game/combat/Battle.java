@@ -2,6 +2,8 @@ package legend.game.combat;
 
 import legend.core.Config;
 import legend.core.MathHelper;
+import legend.core.QueuedModelBattleTmd;
+import legend.core.QueuedModelStandard;
 import legend.core.Random;
 import legend.core.gpu.GpuCommandCopyVramToVram;
 import legend.core.gpu.Rect4i;
@@ -94,6 +96,7 @@ import legend.game.i18n.I18n;
 import legend.game.inventory.Equipment;
 import legend.game.inventory.Item;
 import legend.game.inventory.WhichMenu;
+import legend.game.inventory.screens.PostBattleScreen;
 import legend.game.modding.coremod.CoreMod;
 import legend.game.modding.events.battle.BattleEndedEvent;
 import legend.game.modding.events.battle.BattleEntityTurnEvent;
@@ -155,6 +158,7 @@ import static legend.core.GameEngine.RENDERER;
 import static legend.core.GameEngine.SCRIPTS;
 import static legend.core.GameEngine.SPU;
 import static legend.game.SItem.loadCharacterStats;
+import static legend.game.SItem.menuStack;
 import static legend.game.Scus94491BpeSegment.charSoundEffectsLoaded;
 import static legend.game.Scus94491BpeSegment.FUN_80013404;
 import static legend.game.Scus94491BpeSegment.battlePreloadedEntities_1f8003f4;
@@ -850,7 +854,7 @@ public class Battle extends EngineState {
     functions[605] = SEffe::scriptAllocateLmbAnimation;
     functions[606] = SEffe::allocateDeffTmd;
     functions[607] = this::FUN_800e99bc;
-    functions[608] = SEffe::FUN_801181a8;
+    functions[608] = SEffe::scriptSetLmbDeffFlag;
 
     functions[610] = this::scriptLoadCmbAnimation;
     functions[611] = SEffe::scriptAttachEffectToBobj;
@@ -873,7 +877,7 @@ public class Battle extends EngineState {
     functions[628] = SEffe::allocateDeffTmdRenderer;
     functions[629] = SEffe::scriptAttackEffectToBobjRelative;
     functions[630] = SEffe::scriptGetEffectRotation;
-    functions[631] = SEffe::FUN_801181f0;
+    functions[631] = SEffe::scriptSetLmbManagerTransformMetrics;
     functions[632] = SEffe::scriptAllocateBuggedEffect;
 
     functions[634] = SEffe::scriptWaitForXaToLoad;
@@ -1892,7 +1896,10 @@ public class Battle extends EngineState {
       battleLoaded_800bc94c = false;
 
       switch(postBattleAction_800bc974) {
-        case 1, 3 -> whichMenu_800bdc38 = WhichMenu.INIT_POST_COMBAT_REPORT_26;
+        case 1, 3 -> {
+          whichMenu_800bdc38 = WhichMenu.RENDER_NEW_MENU;
+          menuStack.pushScreen(new PostBattleScreen());
+        }
         case 2, 4, 5 -> whichMenu_800bdc38 = WhichMenu.NONE_0;
       }
 
@@ -1965,16 +1972,16 @@ public class Battle extends EngineState {
       int y = this.mcqOffsetY_800c6778 - MathHelper.radToPsxDeg(MathHelper.floorMod(this.camera_800c67f0.calculateYAngleFromRefpointToViewpoint() + MathHelper.PI, MathHelper.TWO_PI)) + 1888;
 
       battlePreloadedEntities_1f8003f4.skyboxTransforms.transfer.set(x0, y, 60000.0f);
-      RENDERER.queueOrthoModel(battlePreloadedEntities_1f8003f4.skyboxObj, battlePreloadedEntities_1f8003f4.skyboxTransforms)
+      RENDERER.queueOrthoModel(battlePreloadedEntities_1f8003f4.skyboxObj, battlePreloadedEntities_1f8003f4.skyboxTransforms, QueuedModelStandard.class)
         .monochrome(this.mcqColour_800fa6dc / 128.0f);
 
       battlePreloadedEntities_1f8003f4.skyboxTransforms.transfer.set(x1, y, 60000.0f);
-      RENDERER.queueOrthoModel(battlePreloadedEntities_1f8003f4.skyboxObj, battlePreloadedEntities_1f8003f4.skyboxTransforms)
+      RENDERER.queueOrthoModel(battlePreloadedEntities_1f8003f4.skyboxObj, battlePreloadedEntities_1f8003f4.skyboxTransforms, QueuedModelStandard.class)
         .monochrome(this.mcqColour_800fa6dc / 128.0f);
 
       if(x2 <= centreScreenX_1f8003dc * 2) {
         battlePreloadedEntities_1f8003f4.skyboxTransforms.transfer.set(x2, y, 60000.0f);
-        RENDERER.queueOrthoModel(battlePreloadedEntities_1f8003f4.skyboxObj, battlePreloadedEntities_1f8003f4.skyboxTransforms)
+        RENDERER.queueOrthoModel(battlePreloadedEntities_1f8003f4.skyboxObj, battlePreloadedEntities_1f8003f4.skyboxTransforms, QueuedModelStandard.class)
           .monochrome(this.mcqColour_800fa6dc / 128.0f);
       }
 
@@ -4184,7 +4191,7 @@ public class Battle extends EngineState {
     fullScreenEffect_800bb140.transforms.transfer.set(-extraWidth / 2, 0.0f, 120.0f);
 
     //LAB_800139c4
-    RENDERER.queueOrthoModel(RENDERER.plainQuads.get(Translucency.of(script.params_20[3].get() + 1)), fullScreenEffect_800bb140.transforms)
+    RENDERER.queueOrthoModel(RENDERER.plainQuads.get(Translucency.of(script.params_20[3].get() + 1)), fullScreenEffect_800bb140.transforms, QueuedModelStandard.class)
       .colour(script.params_20[0].get() / 255.0f, script.params_20[1].get() / 255.0f, script.params_20[2].get() / 255.0f);
 
     return FlowControl.CONTINUE;
@@ -7367,7 +7374,7 @@ public class Battle extends EngineState {
         Renderer.renderDobj2(part, true, 0);
 
         if(part.obj != null) {
-          RENDERER.queueModel(part.obj, lw)
+          RENDERER.queueModel(part.obj, lw, QueuedModelBattleTmd.class)
             .lightDirection(lightDirectionMatrix_800c34e8)
             .lightColour(lightColourMatrix_800c3508)
             .backgroundColour(GTE.backgroundColour)
