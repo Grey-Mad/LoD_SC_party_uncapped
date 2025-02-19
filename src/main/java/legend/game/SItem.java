@@ -534,7 +534,7 @@ public final class SItem {
 
   @Method(0x800fc698L)
   public static int getXpToNextLevel(final int charIndex) {
-    if(charIndex == -1 || charIndex > 8) {
+    if(charIndex == -1 || charIndex > gameState_800babc8.charData_32c.size()) {
       //LAB_800fc6a4
       throw new RuntimeException("Character index " + charIndex + " out of bounds");
     }
@@ -793,7 +793,7 @@ public final class SItem {
 
     //LAB_80103b48
     int usedCharacterSlots = 0;
-    for(int slot = 0; slot < 9; slot++) {
+    for(int slot = 0; slot < characterIndices_800bdbb8.length; slot++) {
       secondaryCharIds_800bdbf8[slot] = -1;
       characterIndices_800bdbb8[slot] = -1;
 
@@ -945,7 +945,7 @@ public final class SItem {
 
   public static int loadAdditions(final int charIndex, @Nullable final MenuAdditionInfo[] additions) {
     if(additions != null) {
-      for(int i = 0; i < 9; i++) {
+      for(int i = 0; i < characterIndices_800bdbb8.length; i++) {
         additions[i].offset_00 = -1;
         additions[i].index_01 = -1;
       }
@@ -1510,7 +1510,7 @@ public final class SItem {
         allocateUiElement( 74,  74, x, y).z_3c = 33;
         allocateUiElement(153, 153, x, y);
 
-        if(charId < 9) {
+        if(charId < characterIndices_800bdbb8.length) {
           final Renderable58 struct = allocateRenderable(uiFile_800bdc3c.portraits_cfac(), null);
           initGlyph(struct, glyph_801142d4);
           struct.glyph_04 = charId;
@@ -1885,7 +1885,7 @@ public final class SItem {
     clearCharacterStats();
 
     //LAB_80110174
-    for(int charId = 0; charId < 9; charId++) {
+    for(int charId = 0; charId < gameState_800babc8.charData_32c.size(); charId++) {
       final ActiveStatsa0 stats = stats_800be5f8[charId];
 
       final CharacterData charData = gameState_800babc8.charData_32c.get(charId);

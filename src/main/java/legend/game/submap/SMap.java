@@ -865,7 +865,7 @@ public class SMap extends EngineState {
     } else {
       //LAB_800d9b70
       //LAB_800d9b84
-      for(int charSlot = 0; charSlot < 9; charSlot++) {
+      for(int charSlot = 0; charSlot < characterIndices_800bdbb8.length; charSlot++) {
         final ActiveStatsa0 stats = stats_800be5f8[charSlot];
         final CharacterData charData = gameState_800babc8.charData_32c.get(charSlot);
         charData.setHp(stats.maxHp_66);

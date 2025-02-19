@@ -31,7 +31,7 @@ public class AdditionListMenu extends ListMenu {
   private UiBox description;
 
   private final List<String> additions = new ArrayList<>();
-  private final MenuAdditionInfo[] menuAdditions = new MenuAdditionInfo[9];
+  private final MenuAdditionInfo[] menuAdditions = new MenuAdditionInfo[gameState_800babc8.charData_32c.size()];
 
   public AdditionListMenu(final BattleHud hud, final PlayerBattleEntity activePlayer, final ListPosition lastPosition, final Runnable onClose) {
     super(hud, activePlayer, 186, modifyLastPosition(activePlayer, lastPosition), onClose);

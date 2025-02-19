@@ -32,7 +32,7 @@ public class NewGame extends EngineState {
     }
 
     //LAB_800c723c
-    for(int charIndex = 0; charIndex < 9; charIndex++) {
+    for(int charIndex = 0; charIndex < characterIndices_800bdbb8.length; charIndex++) {
       final CharacterData charData = gameState_800babc8.charData_32c.get(charIndex);
       final int level = characterStartingLevels[charIndex];
       charData.setXp(xpTables[charIndex][level]);

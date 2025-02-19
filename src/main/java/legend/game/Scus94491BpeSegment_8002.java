@@ -3830,7 +3830,7 @@ public final class Scus94491BpeSegment_8002 {
   @Method(0x8002a6fcL)
   public static void clearCharacterStats() {
     //LAB_8002a730
-    for(int charIndex = 0; charIndex < 9; charIndex++) {
+    for(int charIndex = 0; charIndex < stats_800be5f8.length; charIndex++) {
       final ActiveStatsa0 stats = stats_800be5f8[charIndex];
 
       stats.xp_00 = 0;

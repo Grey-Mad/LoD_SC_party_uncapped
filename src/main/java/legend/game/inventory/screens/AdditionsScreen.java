@@ -40,7 +40,7 @@ public class AdditionsScreen extends MenuScreen {
   private int charSlot;
   private int selectedSlot;
   private Renderable58 additionHighlight;
-  private final MenuAdditionInfo[] additions = new MenuAdditionInfo[9];
+  private final MenuAdditionInfo[] additions = new MenuAdditionInfo[characterIndices_800bdbb8.length];//greytodo: change back
 
   public AdditionsScreen(final Runnable unload) {
     this.unload = unload;
