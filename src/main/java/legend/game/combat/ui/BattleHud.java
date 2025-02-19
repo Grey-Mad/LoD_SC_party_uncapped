@@ -1339,15 +1339,9 @@ public class BattleHud {
       //LAB_800f41dc
     }
     
-
-    final float battleUiBackgroundWidthScaleFactor = (RENDERER.getRenderWidth()/RENDERER.getRenderHeight())/(320f/240f);
-    final float ratioDifference =  RENDERER.getRenderWidth()/RENDERER.getRenderHeight() - 1.33333f; 
-
-    this.uiScaleFactor = battleUiBackgroundWidthScaleFactor*this.uiScaleFactor;
-    this.battleUiBackgroundWidth = Math.round(288*battleUiBackgroundWidthScaleFactor);      
-    
-    final int scaledHalfWidthChange = Math.round((320*battleUiBackgroundWidthScaleFactor-320)/2);
-    this.battleUiLeftGapWidth  = Math.round(16*battleUiBackgroundWidthScaleFactor)-scaledHalfWidthChange;
+    this.battleUiBackgroundWidth = Math.round(288*RENDERER.getRenderAspectRatio()/1.33333f);      
+    final int scaledHalfWidthChange = Math.round((320*RENDERER.getRenderAspectRatio()/1.33333f-320)/2);
+    this.battleUiLeftGapWidth  = Math.round(16*RENDERER.getRenderAspectRatio()/1.33333f)-scaledHalfWidthChange;
     
     int x = Math.round(this.battleUiLeftGapWidth)+Math.round(47*this.uiScaleFactor);
 
