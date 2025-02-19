@@ -2060,51 +2060,50 @@ public final class Scus94491BpeSegment {
     
     //greytodo: fix forever expanding spu, would 
     synchronized(Spu.class){
-    SPU.removeCombatEffectSoundByBentSlot(bent.bentSlot_274);
-    
+      SPU.removeCombatEffectSoundByBentSlot(bent.bentSlot_274);
+      
+      bent.model_148.effectSounds.name = "Char slot %d sound effects".formatted(charSlot);
+      bent.model_148.effectSounds.id_02 = charId;
+      bent.model_148.effectSounds.indices_08 = SoundFileIndices.load(files.get(1));
 
-    bent.model_148.effectSounds.name = "Char slot %d sound effects".formatted(charSlot);
-    bent.model_148.effectSounds.id_02 = charId;
-    bent.model_148.effectSounds.indices_08 = SoundFileIndices.load(files.get(1));
+      //LAB_8001cc48
+      //LAB_8001cc50
+      final PlayableSound0c sound = new PlayableSound0c();
+      sound.name = bent.model_148.effectSounds.name;
+      sound.used_00 = true;
+      sound.sshdPtr_04 = new Sshd(files.get(2));
+      sound.soundBufferPtr_08 = SPU.ram.length/8;
+      bent.model_148.effectSpuRamOffest = SPU.ram.length;
 
-    //LAB_8001cc48
-    //LAB_8001cc50
-    final PlayableSound0c sound = new PlayableSound0c();
-    sound.name = bent.model_148.effectSounds.name;
-    sound.used_00 = true;
-    sound.sshdPtr_04 = new Sshd(files.get(2));
-    sound.soundBufferPtr_08 = SPU.ram.length/8;
-    bent.model_148.effectSpuRamOffest = SPU.ram.length;
-
-    bent.model_148.effectSpuRam = new byte[files.get(3).size()];
-    System.arraycopy(files.get(3).getBytes(), 0, bent.model_148.effectSpuRam, 0, files.get(3).getBytes().length);
+      bent.model_148.effectSpuRam = new byte[files.get(3).size()];
+      System.arraycopy(files.get(3).getBytes(), 0, bent.model_148.effectSpuRam, 0, files.get(3).getBytes().length);
 
 
-    if(sound.sshdPtr_04.soundBankSize_04 != 0) {
-      byte[] spuRamOld = SPU.ram;
-      SPU.ram = new byte[SPU.ram.length + bent.model_148.effectSpuRam.length];
-      System.arraycopy(spuRamOld, 0, SPU.ram, 0, bent.model_148.effectSpuRamOffest);
-      System.arraycopy(bent.model_148.effectSpuRam, 0, SPU.ram, bent.model_148.effectSpuRamOffest, bent.model_148.effectSpuRam.length);  
+      if(sound.sshdPtr_04.soundBankSize_04 != 0) {
+        byte[] spuRamOld = SPU.ram;
+        SPU.ram = new byte[SPU.ram.length + bent.model_148.effectSpuRam.length];
+        System.arraycopy(spuRamOld, 0, SPU.ram, 0, bent.model_148.effectSpuRamOffest);
+        System.arraycopy(bent.model_148.effectSpuRam, 0, SPU.ram, bent.model_148.effectSpuRamOffest, bent.model_148.effectSpuRam.length);  
 
-      SPU.effectSoundsBentSlots.add(bent.bentSlot_274);
-      SPU.effectSoundsBentOffsets.add(bent.model_148.effectSpuRamOffest);
-      SPU.effectSpuRamSizes.add(bent.model_148.effectSpuRam.length);
-      SPU.effectPlayableSounds.add(sound);
+        SPU.effectSoundsBentSlots.add(bent.bentSlot_274);
+        SPU.effectSoundsBentOffsets.add(bent.model_148.effectSpuRamOffest);
+        SPU.effectSpuRamSizes.add(bent.model_148.effectSpuRam.length);
+        SPU.effectPlayableSounds.add(sound);
+      }
+
+      playableSounds_800c43d0.add(sound);
+      bent.model_148.effectSounds.playableSound_10 = sound;
+      bent.model_148.effectSounds.used_00 = true;
+
+      if(charSlot == 0 || charSlot == 1) {
+        //LAB_8001cc30
+        FUN_8001e8cc();
+      } else {
+        //LAB_8001cc38
+        //LAB_8001cc40
+        FUN_8001e8d4();
+      }
     }
-
-    playableSounds_800c43d0.add(sound);
-    bent.model_148.effectSounds.playableSound_10 = sound;
-    bent.model_148.effectSounds.used_00 = true;
-
-    if(charSlot == 0 || charSlot == 1) {
-      //LAB_8001cc30
-      FUN_8001e8cc();
-    } else {
-      //LAB_8001cc38
-      //LAB_8001cc40
-      FUN_8001e8d4();
-    }
-  }
   }
 
   @Method(0x8001cce8L)
@@ -2229,6 +2228,7 @@ public final class Scus94491BpeSegment {
         v1 = v1 - 17008;
       }
       
+      //greytodo: clean up audio code changes
       SPU.removeCombatEffectSoundByBentSlot(bent.bentSlot_274);
 
       bent.model_148.effectSounds.name = soundName;
@@ -2268,6 +2268,51 @@ public final class Scus94491BpeSegment {
 
     //LAB_8001d8ac
   }
+
+
+  public static void monsterSoundReplaced(final List<FileData> files, final String soundName, final int monsterSlot, final int soundBufferOffset,  final BattleEntity27c bent) {
+    final int file3Size = files.get(3).size();
+    if(file3Size > 48) {
+
+      int v1 = 51024;
+      for(int n = 3; n >= 0 && file3Size < v1; n--) {
+        v1 = v1 - 17008;
+      }
+
+      bent.model_148.effectSounds.name = soundName;
+      bent.model_148.effectSounds.indices_08 = SoundFileIndices.load(files.get(1));
+      bent.model_148.effectSounds.id_02 = files.get(0).readShort(0);      
+              
+      final int soundIndex = SPU.effectSoundsBentSlots.indexOf(bent.bentSlot_274);
+      SPU.effectPlayableSounds.get(soundIndex).name = bent.model_148.effectSounds.name;
+      //SPU.effectPlayableSounds.get(soundIndex).used_00 = true;
+      Sshd sshd = new Sshd(files.get(2));
+      SPU.effectPlayableSounds.get(soundIndex).sshdPtr_04 = sshd;
+
+      synchronized(Spu.class){
+        SPU.effectPlayableSounds.get(soundIndex).soundBufferPtr_08 = bent.model_148.effectSpuRamOffest/8;
+        //bent.model_148.effectSpuRamOffest = SPU.ram.length;
+        bent.model_148.effectSpuRam = new byte[files.get(3).size()];
+        
+        System.arraycopy(files.get(3).getBytes(), 0, bent.model_148.effectSpuRam, 0, files.get(3).getBytes().length);
+    
+    
+        if(sshd.soundBankSize_04 != 0) {
+          //byte[] spuRamOld = SPU.ram;
+          //SPU.ram = new byte[SPU.ram.length + bent.model_148.effectSpuRam.length];
+          //System.arraycopy(spuRamOld, 0, SPU.ram, 0, bent.model_148.effectSpuRamOffest);
+          System.arraycopy(bent.model_148.effectSpuRam, 0, SPU.ram, bent.model_148.effectSpuRamOffest, bent.model_148.effectSpuRam.length);  
+      }}
+  
+      bent.model_148.effectSounds.playableSound_10 = SPU.effectPlayableSounds.get(soundIndex);
+      //bent.model_148.effectSounds.used_00 = true;
+
+      setSoundSequenceVolume(bent.model_148.effectSounds.playableSound_10, 0x7f);
+    }
+
+    //LAB_8001d8ac
+  }
+
 
   @Method(0x8001d8d8L)
   public static void battleCutsceneSoundsLoaded(final List<FileData> files, final String soundName) {
@@ -2383,7 +2428,9 @@ public final class Scus94491BpeSegment {
       case 6 -> "Meru";
       case 7 -> "Kongol";
       case 8 -> "Miranda";
-      case 9, 10 -> "Divine";
+      case 9 -> "Bart";//greytodo: remove changes after test   
+      case 10 -> "Divine";
+      
       default -> throw new IllegalArgumentException("Invalid character ID " + id);
     };
   }

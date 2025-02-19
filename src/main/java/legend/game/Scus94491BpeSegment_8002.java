@@ -97,7 +97,7 @@ import static legend.game.Scus94491BpeSegment.centreScreenY_1f8003de;
 import static legend.game.Scus94491BpeSegment.displayWidth_1f8003e0;
 import static legend.game.Scus94491BpeSegment.loadDir;
 import static legend.game.Scus94491BpeSegment.loadDrgnDir;
-import static legend.game.Scus94491BpeSegment.monsterSoundLoaded;
+import static legend.game.Scus94491BpeSegment.monsterSoundReplaced;
 import static legend.game.Scus94491BpeSegment.playSound;
 import static legend.game.Scus94491BpeSegment.rectArray28_80010770;
 import static legend.game.Scus94491BpeSegment.resizeDisplay;
@@ -286,12 +286,13 @@ public final class Scus94491BpeSegment_8002 {
       default -> throw new IllegalArgumentException("Unknown battle phase file index " + fileIndex);
     }
     
-    for(int monsterSlot = 0; monsterSlot < 4; monsterSlot++) {
+    
+    for(int monsterSlot = 0; monsterSlot < battleState_8006e398.monsterBents_e50.length; monsterSlot++) {
       if(Unpacker.exists(path + '/' + monsterSlot)) {
         final int finalMonsterSlot = monsterSlot;
         loadDir(path + '/' + finalMonsterSlot, files -> {
           final int offset = soundbankOffset.getAndUpdate(val -> val + MathHelper.roundUp(files.get(3).size(), 0x10));
-          monsterSoundLoaded(files, "Monster slot %d (file %s) (replaced)".formatted(finalMonsterSlot, path), finalMonsterSlot, offset, bent);
+          monsterSoundReplaced(files, "Monster slot %d (file %s) (replaced)".formatted(finalMonsterSlot, path), finalMonsterSlot, offset, bent);
 
           if(count.decrementAndGet() == 0) {
            loadedDrgnFiles_800bcf78.updateAndGet(val -> val & ~0x10);
