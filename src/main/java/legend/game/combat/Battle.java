@@ -2684,7 +2684,7 @@ public class Battle extends EngineState {
         return;
       }
   
-      GPU.uploadData15(tim.getImageRect(), tim.getImageData());
+      GPU.uploadData15(tim.getImageRect(), tim.getImageData());//greytodo: see about removing 
     }
     
   }
@@ -6536,7 +6536,7 @@ public class Battle extends EngineState {
 
     // Retail bug? Trying to read textureInfo from a DEFF container that doesn't have it
     if(animatedTmdType.textureInfo_08 != null) {
-      //final DeffPart.TextureInfo textureInfo = animatedTmdType.textureInfo_08[0];
+      final DeffPart.TextureInfo textureInfo = animatedTmdType.textureInfo_08[0];
       //final int tpage = GetTPage(Bpp.BITS_4, Translucency.HALF_B_PLUS_HALF_F, textureInfo.vramPos_00.x, textureInfo.vramPos_00.y);
       
       //model.uvAdjustments_9d = vramSlots_8005027c[modelVramSlotIndices_800fb06c[tpage]];
@@ -6666,9 +6666,11 @@ public class Battle extends EngineState {
     effect._00 = 0;
     effect.tmdType_04 = null;
     effect.extTmd_08 = null;
-    effect.texture15 = ((BattleEntity27c)scriptStatePtrArr_800bc1c0[id].innerStruct_00).combatant_144.texture15;//greytodo: crash when entering the 5th generation, DRGN0.BIN\5650 
-    effect.texture24 =((BattleEntity27c)scriptStatePtrArr_800bc1c0[id].innerStruct_00).combatant_144.texture24;
-    effect.textured = true;
+    if((id & 0xff00_0000) != 0x700_0000) {
+      effect.texture15 = ((BattleEntity27c)scriptStatePtrArr_800bc1c0[id].innerStruct_00).combatant_144.texture15;//greytodo: crash when entering the 5th generation, DRGN0.BIN\5650 
+      effect.texture24 =((BattleEntity27c)scriptStatePtrArr_800bc1c0[id].innerStruct_00).combatant_144.texture24;
+      effect.textured = true;
+    }
     effect.model_134 = effect.model_10;
 
     if((id & 0xff00_0000) == 0x700_0000) {
