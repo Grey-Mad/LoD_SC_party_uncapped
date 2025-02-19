@@ -19,8 +19,9 @@ import static legend.game.Scus94491BpeSegment.simpleRand;
 import static legend.game.Scus94491BpeSegment_800b.gameState_800babc8;
 
 public class BattleStateEf4 {
-  public final StatusConditions20[] statusConditions_00 = new StatusConditions20[15]; //players + monsters
-  public int monsterBentsLength = 8;
+  private final int maxPlayerBents = gameState_800babc8.charIds_88.length;
+  private final int maxMonsterBents = maxPlayerBents+2;
+  public final StatusConditions20[] statusConditions_00 = new StatusConditions20[this.maxPlayerBents+this.maxMonsterBents];
 
   public int _180;
   /**
@@ -123,7 +124,7 @@ public class BattleStateEf4 {
   /** Used in player combat script */
   public int _290;
   /** Indexed by char slot */
-  public final int[] dragoonTurnsRemaining_294 = new int[gameState_800babc8.charIds_88.length];
+  public final int[] dragoonTurnsRemaining_294 = new int[this.maxPlayerBents];
   public int _294Offset = 260;
   public int _2a0;
   public int _2a4;
@@ -165,7 +166,7 @@ public class BattleStateEf4 {
   public int _2e0;
   public int _2e4;
   /** Indexed by char slot */
-  public final int[] _2e8 = new int[gameState_800babc8.charIds_88.length];
+  public final int[] _2e8 = new int[this.maxPlayerBents];
   public int _2e8Offset = _294Offset + dragoonTurnsRemaining_294.length;
   public int _2f4;
   public int _2f8;
@@ -196,13 +197,13 @@ public class BattleStateEf4 {
   public int _32c;
   public int _330;
   /** Pretty sure this is character index loading (boolean) */
-  public final int[] _334 = new int[gameState_800babc8.charIds_88.length];
+  public final int[] _334 = new int[this.maxPlayerBents];
   public int _334Offset = _2e8Offset + _2e8.length;
   public int _340;
   public int _344;
   public int _348;
   /** Indexed by char slot */
-  public final int[] _34c = new int[gameState_800babc8.charIds_88.length];
+  public final int[] _34c = new int[this.maxPlayerBents];
   public int _34cOffset = _334Offset + _334.length;
   /** Sequence volume is stored in here when player combat script is initialized */
   public int sequenceVolume_358;
@@ -217,7 +218,7 @@ public class BattleStateEf4 {
   public int _378;
   public int _37c;
   public int scriptEffectTableJumpIndex_380;
-  public Status04[] status_384 = new Status04[monsterBentsLength  + gameState_800babc8.charIds_88.length];
+  public Status04[] status_384 = new Status04[this.maxPlayerBents  + this.maxMonsterBents];
   public int _384Offset = _34cOffset + _34c.length;
   public int _3a4;
   public int _3a8;
@@ -270,13 +271,13 @@ public class BattleStateEf4 {
   /** Bitset of which scripts are currently running the status afflictions entrypoint */
   public int scriptsProcessingStatusAfflictions_45c;
   /** Indexed by char slot, something to do with bewitched (set to -1 if not bewitched) */
-  public final int[] _460 = new int[gameState_800babc8.charIds_88.length];
+  public final int[] _460 = new int[this.maxPlayerBents];
   public int _460Offset = _384Offset + status_384.length;
   /** Combat stage ID is stored here when player combat script is initialized */
   public int _46c;
   /** Used in player combat script, one bit for each player bent slot */
   public int _470;
-  public AdditionExtra04[] additionExtra_474 = new AdditionExtra04[monsterBentsLength  + gameState_800babc8.charIds_88.length];
+  public AdditionExtra04[] additionExtra_474 = new AdditionExtra04[this.maxPlayerBents  + this.maxMonsterBents];
   public int _474Offset = _460Offset + _460.length;
 
   //public int playerCombatantBentIndexOffset = _474Offset + additionExtra_474;
@@ -370,12 +371,12 @@ public class BattleStateEf4 {
   // This was used for storing animation files in VRAM
 //  public final int[] y_d80 = new int[3];
   public final CompressedAsset08[] compressedAssets_d8c = new CompressedAsset08[16];
-  public final ScriptState<? extends BattleEntity27c>[] allBents_e0c = new ScriptState[gameState_800babc8.charIds_88.length+10];
-  public final ScriptState<PlayerBattleEntity>[] playerBents_e40 = new ScriptState[gameState_800babc8.charIds_88.length];
-  public final ScriptState<MonsterBattleEntity>[] monsterBents_e50 = new ScriptState[10];
-  public final ScriptState<? extends BattleEntity27c>[] aliveBents_e78 = new ScriptState[gameState_800babc8.charIds_88.length+10];
-  public final ScriptState<PlayerBattleEntity>[] alivePlayerBents_eac = new ScriptState[gameState_800babc8.charIds_88.length];
-  public final ScriptState<MonsterBattleEntity>[] aliveMonsterBents_ebc = new ScriptState[10];
+  public final ScriptState<? extends BattleEntity27c>[] allBents_e0c = new ScriptState[this.maxPlayerBents  + this.maxMonsterBents];
+  public final ScriptState<PlayerBattleEntity>[] playerBents_e40 = new ScriptState[this.maxPlayerBents];
+  public final ScriptState<MonsterBattleEntity>[] monsterBents_e50 = new ScriptState[this.maxMonsterBents];
+  public final ScriptState<? extends BattleEntity27c>[] aliveBents_e78 = new ScriptState[this.maxPlayerBents  + this.maxMonsterBents];
+  public final ScriptState<PlayerBattleEntity>[] alivePlayerBents_eac = new ScriptState[this.maxPlayerBents];
+  public final ScriptState<MonsterBattleEntity>[] aliveMonsterBents_ebc = new ScriptState[this.maxMonsterBents];
   // Reads directly from gameState now
 //  public TransformationMode morphMode_ee4;
 
@@ -841,4 +842,7 @@ public class BattleStateEf4 {
     additionExtra_474 = new AdditionExtra04[limit  + gameState_800babc8.charIds_88.length]; 
     _474Offset = _460Offset + _460.length;
   }
+
+  
+
 }

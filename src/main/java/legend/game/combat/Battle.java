@@ -423,11 +423,11 @@ public class Battle extends EngineState {
     Arrays.setAll(this.dragoonSpells_800c6960, i -> new DragoonSpells09());
   }
 
-  public final String[] currentEnemyNames_800c69d0 = new String[9];
+  public final String[] currentEnemyNames_800c69d0 = new String[gameState_800babc8.charIds_88.length+2];
 
   public Element dragoonSpaceElement_800c6b64;
 
-  public final int[] monsterBents_800c6b78 = new int[9];
+  public final int[] monsterBents_800c6b78 = new int[gameState_800babc8.charIds_88.length+2];
   private int monsterCount_800c6b9c;
 
   public final String[] melbuMonsterNames_800c6ba8 = new String[3];
@@ -7643,7 +7643,7 @@ public class Battle extends EngineState {
     this.monsterCount_800c6b9c = 0;
 
     //LAB_800ee764
-    for(int combatantIndex = 0; combatantIndex < 9; combatantIndex++) {//seems to work at 9, greytodo: findout if this val needs to be increased
+    for(int combatantIndex = 0; combatantIndex < monsterBents_800c6b78.length; combatantIndex++) {//seems to work at 9, greytodo: findout if this val needs to be increased
       this.monsterBents_800c6b78[combatantIndex] = -1;
       this.currentEnemyNames_800c69d0[combatantIndex] = null;
     }
