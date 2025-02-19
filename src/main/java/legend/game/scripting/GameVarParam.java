@@ -139,7 +139,7 @@ public class GameVarParam extends Param {
       case 114 -> Scus94491BpeSegment_800b.gameState_800babc8.goods_19c[0];
 
       //greytodo patch all scripts
-      /*case 115 -> Scus94491BpeSegment_800b.gameState_800babc8.charData_32c.get(0).getPartyFlags();
+      case 115 -> Scus94491BpeSegment_800b.gameState_800babc8.charData_32c.get(0).getPartyFlags();
       case 116 -> Scus94491BpeSegment_800b.gameState_800babc8.charData_32c.get(1).getPartyFlags();
       case 117 -> Scus94491BpeSegment_800b.gameState_800babc8.charData_32c.get(2).getPartyFlags();
       case 118 -> Scus94491BpeSegment_800b.gameState_800babc8.charData_32c.get(3).getPartyFlags();
@@ -147,8 +147,11 @@ public class GameVarParam extends Param {
       case 120 -> Scus94491BpeSegment_800b.gameState_800babc8.charData_32c.get(5).getPartyFlags();
       case 121 -> Scus94491BpeSegment_800b.gameState_800babc8.charData_32c.get(6).getPartyFlags();
       case 122 -> Scus94491BpeSegment_800b.gameState_800babc8.charData_32c.get(7).getPartyFlags();
-      case 123 -> Scus94491BpeSegment_800b.gameState_800babc8.charData_32c.get(8).getPartyFlags();*/
+      case 123 -> Scus94491BpeSegment_800b.gameState_800babc8.charData_32c.get(8).getPartyFlags();
 
+      //case 116 -> battleState_8006e398.;
+      //case 116 -> battleState_8006e398.;
+      
       case 124 -> Scus94491BpeSegment_8005.standingInSavePoint_8005a368 ? 1 : 0;
       case 125 -> Scus94491BpeSegment_8007.shopId_8007a3b4;
       case 126 -> Scus94491BpeSegment_800b.gameState_800babc8._1a4[0];
@@ -287,7 +290,7 @@ public class GameVarParam extends Param {
       case 114 -> Scus94491BpeSegment_800b.gameState_800babc8.goods_19c[0] = val;
 
       //greytodo patch all scripts
-      /*case 115 -> Scus94491BpeSegment_800b.gameState_800babc8.charData_32c.get(0).setPartyFlags(val);
+      case 115 -> Scus94491BpeSegment_800b.gameState_800babc8.charData_32c.get(0).setPartyFlags(val);
       case 116 -> Scus94491BpeSegment_800b.gameState_800babc8.charData_32c.get(1).setPartyFlags(val);
       case 117 -> Scus94491BpeSegment_800b.gameState_800babc8.charData_32c.get(2).setPartyFlags(val);
       case 118 -> Scus94491BpeSegment_800b.gameState_800babc8.charData_32c.get(3).setPartyFlags(val);
@@ -295,7 +298,7 @@ public class GameVarParam extends Param {
       case 120 -> Scus94491BpeSegment_800b.gameState_800babc8.charData_32c.get(5).setPartyFlags(val);
       case 121 -> Scus94491BpeSegment_800b.gameState_800babc8.charData_32c.get(6).setPartyFlags(val);
       case 122 -> Scus94491BpeSegment_800b.gameState_800babc8.charData_32c.get(7).setPartyFlags(val);
-      case 123 -> Scus94491BpeSegment_800b.gameState_800babc8.charData_32c.get(8).setPartyFlags(val);*/
+      case 123 -> Scus94491BpeSegment_800b.gameState_800babc8.charData_32c.get(8).setPartyFlags(val);
 
 
       case 124 -> Scus94491BpeSegment_8005.standingInSavePoint_8005a368 = val != 0;

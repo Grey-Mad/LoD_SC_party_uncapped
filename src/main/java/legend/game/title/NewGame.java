@@ -11,6 +11,7 @@ import static legend.game.SItem.magicStuff_80111d20;
 import static legend.game.SItem.xpTables;
 import static legend.game.Scus94491BpeSegment_8004.additionOffsets_8004f5ac;
 import static legend.game.Scus94491BpeSegment_8004.engineStateOnceLoaded_8004dd24;
+import static legend.game.Scus94491BpeSegment_800b.characterIndices_800bdbb8;
 import static legend.game.Scus94491BpeSegment_800b.gameState_800babc8;
 import static legend.core.GameEngine.CONFIG;
 
@@ -34,14 +35,19 @@ public class NewGame extends EngineState {
     //LAB_800c723c
     for(int charIndex = 0; charIndex < characterIndices_800bdbb8.length; charIndex++) {
       final CharacterData charData = gameState_800babc8.charData_32c.get(charIndex);
-      final int level = characterStartingLevels[charIndex];
-      charData.setXp(xpTables[charIndex][level]);
-      charData.setHp(levelStuff_80111cfc[charIndex][level].hp_00);
+
+      if ((boolean) CONFIG.getConfig(legend.core.GameEngine.REGISTRIES.config.getEntry("lod", String.join("","set_lv_one_at_start_", charData.name)).get())){
+        charData.setLevel(1);
+      } else{
+        charData.setLevel(characterStartingLevels[charIndex]);
+      }
+      
+      charData.setXp(xpTables[charIndex][charData.getLevel()]);
+      charData.setHp(levelStuff_80111cfc[charIndex][charData.getLevel()].hp_00);
       charData.setMp(magicStuff_80111d20[charIndex][1].mp_00);
       charData.setSp(0);
       charData.setDlevelXp(0);
       charData.setStatus (0);
-      charData.setLevel(level);
       charData.setDlevel(1);
 
       //LAB_800c7294
@@ -53,7 +59,7 @@ public class NewGame extends EngineState {
       charData.additionLevels_1a[0] = 1;
 
       //LAB_800c72d4
-      for(int i = 1; i < level; i++) {
+      for(int i = 1; i < charData.getLevel(); i++) {
         final int index = levelStuff_80111cfc[charIndex][i].addition_02;
 
         if(index != -1) {
@@ -67,8 +73,6 @@ public class NewGame extends EngineState {
       //LAB_800c730c
       charData.selectedAddition_19 = startingAddition_800ce758[charIndex];
     }
-
-    gameState_800babc8.charData_32c.get(0).setPartyFlags(0x3);
   }
 
   @Override

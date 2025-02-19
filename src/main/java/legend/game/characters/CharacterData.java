@@ -36,7 +36,7 @@ public class CharacterData extends RegistryEntry implements ScriptReadable {
      *   <li>0x40 - ultimate addition unlocked</li>
      * </ul>
      */
-  private int partyFlags_04;
+  private int partyFlags_04 = 0x0;
   private int hp_08;
   private int mp_0a;
   private int sp_0c;
@@ -73,17 +73,7 @@ public class CharacterData extends RegistryEntry implements ScriptReadable {
   }
   public void setPartyFlags(final int partyFlags) {
     this.partyFlags_04 = partyFlags;
-
-    String name = this.getRegistryId().entryId();
-    if ((boolean) CONFIG.getConfig(legend.core.GameEngine.REGISTRIES.config.getEntry("lod", String.join("","force_remove_and_block_", name)).get())){
-      this.partyFlags_04=0x0;
-    };
     
-    if (this.partyFlags_04 != 0x23){
-      if ((boolean) CONFIG.getConfig(legend.core.GameEngine.REGISTRIES.config.getEntry("lod", String.join("","force_add_and_keep_", name)).get())){
-        this.partyFlags_04=0x3;
-      };   
-    }
     
   }
   public int getHp() {

@@ -1,5 +1,8 @@
 package legend.lodmod;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.legendofdragoon.modloader.events.EventListener;
 import org.legendofdragoon.modloader.registries.Registrar;
 import org.legendofdragoon.modloader.registries.RegistryDelegate;
@@ -12,30 +15,29 @@ import legend.game.saves.ConfigRegistryEvent;
 import legend.game.saves.ConfigStorageLocation;
 
 public class LodExtendedCharacterSettings {
-  private LodExtendedCharacterSettings() { }
+  private LodExtendedCharacterSettings() {
+     
+  }
 
   private static final Registrar<ConfigEntry<?>, ConfigRegistryEvent> CONFIG_REGISTRAR = new Registrar<>(GameEngine.REGISTRIES.config, "lod");
   
-  public static final RegistryDelegate<BoolConfigEntry> FORCE_REMOVE_AND_BLOCK_DART = CONFIG_REGISTRAR.register("force_remove_and_block_dart", () -> new BoolConfigEntry(false, ConfigStorageLocation.SAVE, ConfigCategory.EXTENDED_PARTY));
-  public static final RegistryDelegate<BoolConfigEntry> FORCE_REMOVE_AND_BLOCK_LAVITZ = CONFIG_REGISTRAR.register("force_remove_and_block_lavitz", () -> new BoolConfigEntry(false, ConfigStorageLocation.SAVE, ConfigCategory.EXTENDED_PARTY));
-  public static final RegistryDelegate<BoolConfigEntry> FORCE_REMOVE_AND_BLOCK_SHANA = CONFIG_REGISTRAR.register("force_remove_and_block_shana", () -> new BoolConfigEntry(false, ConfigStorageLocation.SAVE, ConfigCategory.EXTENDED_PARTY));
-  public static final RegistryDelegate<BoolConfigEntry> FORCE_REMOVE_AND_BLOCK_ROSE = CONFIG_REGISTRAR.register("force_remove_and_block_rose", () -> new BoolConfigEntry(false, ConfigStorageLocation.SAVE, ConfigCategory.EXTENDED_PARTY));
-  public static final RegistryDelegate<BoolConfigEntry> FORCE_REMOVE_AND_BLOCK_HASCHEL = CONFIG_REGISTRAR.register("force_remove_and_block_haschel", () -> new BoolConfigEntry(false, ConfigStorageLocation.SAVE, ConfigCategory.EXTENDED_PARTY));
-  public static final RegistryDelegate<BoolConfigEntry> FORCE_REMOVE_AND_BLOCK_ALBERT = CONFIG_REGISTRAR.register("force_remove_and_block_albert", () -> new BoolConfigEntry(false, ConfigStorageLocation.SAVE, ConfigCategory.EXTENDED_PARTY));
-  public static final RegistryDelegate<BoolConfigEntry> FORCE_REMOVE_AND_BLOCK_MERU = CONFIG_REGISTRAR.register("force_remove_and_block_meru", () -> new BoolConfigEntry(false, ConfigStorageLocation.SAVE, ConfigCategory.EXTENDED_PARTY));
-  public static final RegistryDelegate<BoolConfigEntry> FORCE_REMOVE_AND_BLOCK_KONGOL = CONFIG_REGISTRAR.register("force_remove_and_block_kongol", () -> new BoolConfigEntry(false, ConfigStorageLocation.SAVE, ConfigCategory.EXTENDED_PARTY));
-  public static final RegistryDelegate<BoolConfigEntry> FORCE_REMOVE_AND_BLOCK_MIRANDA = CONFIG_REGISTRAR.register("force_remove_and_block_miranda", () -> new BoolConfigEntry(false, ConfigStorageLocation.SAVE, ConfigCategory.EXTENDED_PARTY));
+  public static List<RegistryDelegate<BoolConfigEntry>> FORCE_ADD_AND_KEEP_LIST = new ArrayList<RegistryDelegate<BoolConfigEntry>>();
+  //greytodo:  
+  //public static List<RegistryDelegate<BoolConfigEntry>> FORCE_REMOVE_AND_BLOCK_LIST = new ArrayList<RegistryDelegate<BoolConfigEntry>>();
+  public static List<RegistryDelegate<BoolConfigEntry>> FORCE_LEVEL_ZERO_ON_START_LIST = new ArrayList<RegistryDelegate<BoolConfigEntry>>();
 
-  public static final RegistryDelegate<BoolConfigEntry> FORCE_ADD_AND_KEEP_DART = CONFIG_REGISTRAR.register("force_add_and_keep_dart", () -> new BoolConfigEntry(false, ConfigStorageLocation.SAVE, ConfigCategory.EXTENDED_PARTY));
-  public static final RegistryDelegate<BoolConfigEntry> FORCE_ADD_AND_KEEP_LAVITZ = CONFIG_REGISTRAR.register("force_add_and_keep_lavitz", () -> new BoolConfigEntry(false, ConfigStorageLocation.SAVE, ConfigCategory.EXTENDED_PARTY));
-  public static final RegistryDelegate<BoolConfigEntry> FORCE_ADD_AND_KEEP_SHANA = CONFIG_REGISTRAR.register("force_add_and_keep_shana", () -> new BoolConfigEntry(false, ConfigStorageLocation.SAVE, ConfigCategory.EXTENDED_PARTY));
-  public static final RegistryDelegate<BoolConfigEntry> FORCE_ADD_AND_KEEP_ROSE = CONFIG_REGISTRAR.register("force_add_and_keep_rose", () -> new BoolConfigEntry(false, ConfigStorageLocation.SAVE, ConfigCategory.EXTENDED_PARTY));
-  public static final RegistryDelegate<BoolConfigEntry> FORCE_ADD_AND_KEEP_HASCHEL = CONFIG_REGISTRAR.register("force_add_and_keep_haschel", () -> new BoolConfigEntry(false, ConfigStorageLocation.SAVE, ConfigCategory.EXTENDED_PARTY));
-  public static final RegistryDelegate<BoolConfigEntry> FORCE_ADD_AND_KEEP_ALBERT = CONFIG_REGISTRAR.register("force_add_and_keep_albert", () -> new BoolConfigEntry(false, ConfigStorageLocation.SAVE, ConfigCategory.EXTENDED_PARTY));
-  public static final RegistryDelegate<BoolConfigEntry> FORCE_ADD_AND_KEEP_MERU = CONFIG_REGISTRAR.register("force_add_and_keep_meru", () -> new BoolConfigEntry(false, ConfigStorageLocation.SAVE, ConfigCategory.EXTENDED_PARTY));
-  public static final RegistryDelegate<BoolConfigEntry> FORCE_ADD_AND_KEEP_KONGOL = CONFIG_REGISTRAR.register("force_add_and_keep_kongol", () -> new BoolConfigEntry(false, ConfigStorageLocation.SAVE, ConfigCategory.EXTENDED_PARTY));
-  public static final RegistryDelegate<BoolConfigEntry> FORCE_ADD_AND_KEEP_MIRANDA = CONFIG_REGISTRAR.register("force_add_and_keep_miranda", () -> new BoolConfigEntry(false, ConfigStorageLocation.SAVE, ConfigCategory.EXTENDED_PARTY));
+ public static void fillRegistrar(String[] characterNames){
+  for(int i = 0; i < characterNames.length; i++){
+    FORCE_ADD_AND_KEEP_LIST.add(i, CONFIG_REGISTRAR.register(String.join("","force_add_and_keep_", characterNames[i]), () -> new BoolConfigEntry(false, ConfigStorageLocation.SAVE, ConfigCategory.EXTENDED_PARTY)));
+    //greytodo:
+    //FORCE_REMOVE_AND_BLOCK_LIST.add(i, CONFIG_REGISTRAR.register(String.join("","force_remove_and_block_", characterNames[i]), () -> new BoolConfigEntry(false, ConfigStorageLocation.SAVE, ConfigCategory.EXTENDED_PARTY)));
+    FORCE_LEVEL_ZERO_ON_START_LIST.add(CONFIG_REGISTRAR.register(String.join("","set_lv_one_at_start_", characterNames[i]), () -> new BoolConfigEntry(false, ConfigStorageLocation.SAVE, ConfigCategory.EXTENDED_PARTY)));
   
+  }
+
+ }
+
+
   @EventListener
   public static void registerConfig(final ConfigRegistryEvent event) {
     CONFIG_REGISTRAR.registryEvent(event);

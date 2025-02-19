@@ -797,7 +797,11 @@ public final class SItem {
       secondaryCharIds_800bdbf8[slot] = -1;
       characterIndices_800bdbb8[slot] = -1;
 
-      if((gameState_800babc8.charData_32c.get(slot).getPartyFlags() & 0x1) != 0) {
+
+      final String name = gameState_800babc8.charData_32c.get(slot).name;
+      final boolean forceAdd = (boolean) CONFIG.getConfig(legend.core.GameEngine.REGISTRIES.config.getEntry("lod", String.join("","force_add_and_keep_", name)).get());
+      
+      if(((gameState_800babc8.charData_32c.get(slot).getPartyFlags() & 0x1) != 0) || forceAdd) {
         characterIndices_800bdbb8[characterCount_8011d7c4] = slot;
         characterCount_8011d7c4++;
 

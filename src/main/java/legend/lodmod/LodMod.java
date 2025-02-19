@@ -250,6 +250,10 @@ public class LodMod {
 
   @EventListener
   public static void registerLodExtendedCharacterSettings(final ConfigRegistryEvent event) {
+    //greytodo see about removing the fillRegistrar function 
+    if (LodExtendedCharacterSettings.FORCE_ADD_AND_KEEP_LIST.size() == 0){
+      LodExtendedCharacterSettings.fillRegistrar(CHARACTER_NAMES);
+    }
     LodExtendedCharacterSettings.registerConfig(event);
   }
 
@@ -264,7 +268,7 @@ public class LodMod {
 
   @EventListener
   public static void loadGame(final GameLoadedEvent event){
-    for(int i = 0; i < CHARACTER_NAMES.length; i++){
+    for(int i = 0; i < event.gameState.charData_32c.size(); i++){
       LodCharactersData.CHARACTER_REGISTRAR_LIST.get(i).get().setCharacterData(event.gameState.charData_32c.get(i));
       event.gameState.charData_32c.set(i,LodCharactersData.CHARACTER_REGISTRAR_LIST.get(i).get());
       event.gameState.charData_32c.get(i).setCharacterData(LodCharactersData.CHARACTER_REGISTRAR_LIST.get(i).get());
@@ -345,6 +349,14 @@ public class LodMod {
     miranda.put(EquipmentSlot.ARMOUR, LodEquipment.CLOTHES.get());
     miranda.put(EquipmentSlot.BOOTS, LodEquipment.LEATHER_SHOES.get());
     miranda.put(EquipmentSlot.ACCESSORY, LodEquipment.BRACELET.get());
+
+    //greytodo: remove after test
+    final Map<EquipmentSlot, Equipment> bart = event.gameState.charData_32c.get(9).equipment_14;
+    bart.put(EquipmentSlot.WEAPON, LodEquipment.BROAD_SWORD.get());
+    bart.put(EquipmentSlot.HELMET, LodEquipment.BANDANA.get());
+    bart.put(EquipmentSlot.ARMOUR, LodEquipment.LEATHER_ARMOR.get());
+    bart.put(EquipmentSlot.BOOTS, LodEquipment.LEATHER_BOOTS.get());
+    bart.put(EquipmentSlot.ACCESSORY, LodEquipment.BRACELET.get());
 
     event.gameState.gold_94 = 20;
   }
