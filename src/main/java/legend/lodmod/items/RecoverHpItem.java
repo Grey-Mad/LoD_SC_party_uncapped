@@ -3,10 +3,9 @@ package legend.lodmod.items;
 import legend.core.memory.Method;
 import legend.game.Scus94491BpeSegment_8002;
 import legend.game.combat.bent.BattleEntity27c;
+import legend.game.inventory.ItemIcon;
 import legend.game.inventory.UseItemResponse;
 import legend.lodmod.LodMod;
-
-import java.util.function.BiFunction;
 
 import static legend.game.Scus94491BpeSegment_800b.stats_800be5f8;
 
@@ -14,7 +13,7 @@ public class RecoverHpItem extends BattleItem {
   private final boolean targetAll;
   private final int percentage;
 
-  public RecoverHpItem(final int icon, final int price, final boolean targetAll, final int percentage) {
+  public RecoverHpItem(final ItemIcon icon, final int price, final boolean targetAll, final int percentage) {
     super(icon, price);
     this.targetAll = targetAll;
     this.percentage = percentage;
@@ -41,11 +40,11 @@ public class RecoverHpItem extends BattleItem {
     }
 
     response._00 = this.canTarget(TargetType.ALL) ? 3 : 2;
-    response.value_04 = this.getRecoveryMethod().apply(charId, amount);
+    response.value_04 = this.recover(charId, amount);
   }
 
-  protected BiFunction<Integer, Integer, Integer> getRecoveryMethod() {
-    return Scus94491BpeSegment_8002::addHp;
+  protected int recover(final int charId,final int amount) {
+    return Scus94491BpeSegment_8002.addHp(charId, amount);
   }
 
   @Override

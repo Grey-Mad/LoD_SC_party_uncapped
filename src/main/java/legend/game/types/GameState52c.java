@@ -5,8 +5,7 @@ import it.unimi.dsi.fastutil.ints.IntList;
 import legend.core.GameEngine;
 import legend.game.inventory.Equipment;
 import legend.game.inventory.Item;
-import legend.game.characters.CharacterData;
-import legend.game.modding.coremod.CoreMod;
+import legend.game.saves.Campaign;
 import legend.lodmod.LodMod;
 import org.legendofdragoon.modloader.registries.RegistryId;
 
@@ -16,7 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class GameState52c {
-  public String campaignName;
+  public Campaign campaign;
 
   /** Maybe flags? Maybe individual bytes? */
   public int _04;

@@ -95,9 +95,9 @@ public class ModelEffect13c implements Effect<EffectManagerParams.AnimType> {
 
         //TODO remove null check
         if (textured){
-          // used durning dragoon attack 
           if(part.obj != null) {
             RENDERER.queueModel(part.obj, lw, QueuedModelBattleTmd.class)
+              .depthOffset(model.zOffset_a0 * 4)
               .lightDirection(lightDirectionMatrix_800c34e8)
               .lightColour(lightColourMatrix_800c3508)
               .backgroundColour(GTE.backgroundColour)
@@ -108,9 +108,9 @@ public class ModelEffect13c implements Effect<EffectManagerParams.AnimType> {
               .texture(this.texture15,1);
             }
         }else{
-          // used durning dragoon transformation or magic 
           if(part.obj != null) {
             RENDERER.queueModel(part.obj, lw, QueuedModelBattleTmd.class)
+              .depthOffset(model.zOffset_a0 * 4)
               .lightDirection(lightDirectionMatrix_800c34e8)
               .lightColour(lightColourMatrix_800c3508)
               .backgroundColour(GTE.backgroundColour)

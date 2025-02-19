@@ -28,6 +28,7 @@ import static legend.game.SItem.useItemGlyphs_801141fc;
 import static legend.game.Scus94491BpeSegment.startFadeEffect;
 import static legend.game.Scus94491BpeSegment_8002.allocateRenderable;
 import static legend.game.Scus94491BpeSegment_8002.deallocateRenderables;
+import static legend.game.Scus94491BpeSegment_8002.menuItemIconComparator;
 import static legend.game.Scus94491BpeSegment_8002.playMenuSound;
 import static legend.game.Scus94491BpeSegment_8002.takeItemId;
 import static legend.game.Scus94491BpeSegment_8002.unloadRenderable;
@@ -41,7 +42,7 @@ import static legend.game.Scus94491BpeSegment_800b.uiFile_800bdc3c;
 public class UseItemScreen extends MenuScreen {
   private static final String HP_recovered_for_all_8011cfcc = "HP recovered for all";
   private static final String MP_recovered_for_all_8011cff8 = "MP recovered for all";
-  private static final String Completely_recovered_8011d534 = "recovered for all";
+  private static final String Completely_recovered_8011d534 = "completely recovered";
   private static final String Recovered_8011d560 = "Recovered";
   private static final String HP_8011d57c = " HP ";
   private static final String MP_8011d584 = " MP ";
@@ -204,7 +205,7 @@ public class UseItemScreen extends MenuScreen {
       }
     }
 
-    this.menuItems.sort();
+    this.menuItems.sort(menuItemIconComparator());
     return this.menuItems.size();
   }
 
