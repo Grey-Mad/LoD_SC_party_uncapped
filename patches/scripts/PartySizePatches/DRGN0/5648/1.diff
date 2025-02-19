@@ -1,0 +1,11 @@
+--- original
++++ modified
+@@ -2386,7 +2386,7 @@
+ data 0x900ffea
+ data 0x49
+ LABEL_15:
+-mov var[35], stor[23]
++return
+ LABEL_16:
+ decr stor[23]
+ mov var[34][stor[23]], stor[24]

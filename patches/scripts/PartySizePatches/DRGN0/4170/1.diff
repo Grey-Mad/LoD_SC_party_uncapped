@@ -1,0 +1,94 @@
+--- original
++++ modified
+@@ -2027,8 +2027,9 @@
+ mov var[35], stor[23]
+ LABEL_66:
+ decr stor[23]
+-mov var[34][stor[23]], stor[24]
+-call 129, stor[24], inl[:LABEL_46[stor[23]]], inl[:LABEL_47[stor[23]]], inl[:LABEL_48[stor[23]]]
++mov var[50][stor[23]], stor[24]
++mov var[34][stor[23]], stor[25]
++call 129, stor[25], stor[stor[stor[0], 24], 2], stor[stor[stor[0], 24], 3], stor[stor[stor[0], 24], 4]
+ jmp_cmp !=, 0x0, stor[23], inl[:LABEL_66]
+ yield
+ return
+@@ -2041,8 +2042,9 @@
+ mov var[35], stor[23]
+ LABEL_69:
+ decr stor[23]
+-mov var[34][stor[23]], stor[24]
+-call 128, stor[24], inl[:LABEL_46[stor[23]]], inl[:LABEL_47[stor[23]]], inl[:LABEL_48[stor[23]]]
++mov var[50][stor[23]], stor[24]
++mov var[34][stor[23]], stor[25]
++call 128, stor[25], stor[stor[stor[0], 24], 2], stor[stor[stor[0], 24], 3], stor[stor[stor[0], 24], 4]
+ jmp_cmp !=, 0x0, stor[23], inl[:LABEL_69]
+ return
+ LABEL_70:
+@@ -3339,19 +3341,60 @@
+ LABEL_140:
+ mov var[35], stor[23]
+ mov 0x0, stor[21]
++mov 0x0, stor[2]
++mov 0x0, stor[27]
++mov 0x0, stor[30]
+ LABEL_141:
+ decr stor[23]
+ mov var[34][stor[23]], stor[22]
+ call 138, stor[22], 0x1
+ jmp_cmp ==, stor[22], stor[8], inl[:LABEL_142]
+-jmp_cmp ==, 0x0, stor[21], inl[:LABEL_143]
+-jmp inl[:LABEL_144]
++jmp_cmp !=, 0x0, stor[2], inl[:SET_STOR_TWO_TO_ZERO]
++mov 0x1, stor[2]
++jmp inl[:STOR_TWO_IS_ONE]
++SET_STOR_TWO_TO_ZERO:
++mov 0x0, stor[2]
++STOR_TWO_IS_ONE:
++jmp_cmp ==, 0x0, stor[2], inl[:LABEL_143]
++jmp_cmp ==, 0x1, stor[2], inl[:LABEL_144]
+ LABEL_142:
+ jmp_cmp !=, 0x0, stor[23], inl[:LABEL_141]
+ return
+ LABEL_143:
+-call 148, stor[22], stor[8], 0x1, 0x200, 0x0, 0x500
++mov 0, stor[3]
++jmp_cmp <=, var[35], 0x3, inl[:SKIP]
++mov 360, stor[3]
++div var[35], stor[3]
++incr stor[27]
++mul stor[27], stor[3]
++mul 0xa, stor[3]
++SKIP:
++cos_12 stor[3], stor[4]
++sin_12 stor[3], stor[5]
++mul 0x500, stor[4]
++mul 0x500, stor[5]
++div 0x1000, stor[4]
++div 0x1000, stor[5]
++mov 0x200, stor[3]
++add stor[4], stor[3]
++call 148, stor[22], stor[8], 0x1, stor[3], 0x0, stor[5]
+ incr stor[21]
+ jmp inl[:LABEL_142]
+ LABEL_144:
+-call 148, stor[22], stor[8], 0x1, 0x200, 0x0, 0xfffffb00
++mov 0, stor[3]
++jmp_cmp <=, var[35], 0x3, inl[:SKIP2]
++mov 360, stor[3]
++div var[35], stor[3]
++incr  stor[30]
++mul  stor[30], stor[3]
++mul 0xa, stor[3]
++SKIP2:
++cos_12 stor[3], stor[4]
++sin_12 stor[3], stor[5]
++mul 0x500, stor[4]
++mul 0x500, stor[5]
++div 0x1000, stor[4]
++div 0x1000, stor[5]
++mov 0x200, stor[3]
++add stor[4], stor[3]
++mul 0xffffffff, stor[5]
++call 148, stor[22], stor[8], 0x1, stor[3], 0x0, stor[5]
+ incr stor[21]
+ jmp inl[:LABEL_142]

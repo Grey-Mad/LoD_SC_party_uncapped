@@ -1,0 +1,11 @@
+--- original
++++ modified
+@@ -1575,7 +1575,7 @@
+ ENTRYPOINT_14:
+ ENTRYPOINT_15:
+ mov 0x0, stor[24]
+-gosub inl[:LABEL_134]
++mov 0x23, var[115][0]
+ call 240
+ call 97, 0x0
+ call 311, stor[0]

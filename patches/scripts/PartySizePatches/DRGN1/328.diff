@@ -89,3 +89,20 @@
  mov 0x0, var[45][stor[9]]
  call 169, stor[0], STATUS, stor[8]
  and 0xffffff00, stor[8]
+@@ -2299,6 +2299,7 @@
+ return
+ ENTRYPOINT_0:
++mov var[35], stor[3]
++add 0x2, stor[3]
++jmp_cmp ==, stor[3], var[37], inl[:SKIP_ADD_BOMBS]
++LOOP_ADD_BOMBS:
++mov var[35], stor[3]
++add 0x2, stor[3]
++call 360, 0x0, 0x2, stor[5]
++mov 0xffffffff, stor[5]
++jmp_cmp !=, stor[3], var[37], inl[:LOOP_ADD_BOMBS]
++SKIP_ADD_BOMBS:
++mov 0xffffffff, stor[4]
++mov 0xffffffff, stor[3]
+ gosub inl[:LABEL_0]
+ call 524, stor[0], 0x0

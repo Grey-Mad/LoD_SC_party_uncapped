@@ -1,0 +1,31 @@
+--- original
++++ modified
+@@ -1486,22 +1486,15 @@
+ gosub inl[:LABEL_26]
+ call 238, 0x2, stor[17], 0x1, 0x0, 0x0, 0x0, 0x0
+-mov var[34][2], stor[28]
+-call 600, stor[18]
+-mov stor[27], stor[stor[stor[0], 18], 27]
+-mov stor[28], stor[stor[stor[0], 18], 28]
+-call 618, stor[18], inl[:LABEL_29]
+-yield
+-mov var[34][0], stor[28]
+-call 600, stor[18]
+-mov stor[27], stor[stor[stor[0], 18], 27]
+-mov stor[28], stor[stor[stor[0], 18], 28]
+-call 618, stor[18], inl[:LABEL_29]
+-yield
+-mov var[34][1], stor[28]
++mov 0x0, stor[30]
++mov var[34][stor[30]], stor[28]
++LOOP:
+ call 600, stor[18]
+ mov stor[27], stor[stor[stor[0], 18], 27]
+ mov stor[28], stor[stor[stor[0], 18], 28]
+ call 618, stor[18], inl[:LABEL_29]
++incr stor[30]
++mov var[34][stor[30]], stor[28]
++jmp_cmp !=, stor[28], 0xffffffff, inl[:LOOP]
+ mov 0x2e, stor[23]
+ wait stor[23]
+ call 239, 0x2, stor[17], 0x1, 0x3

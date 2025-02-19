@@ -98,3 +98,39 @@
  mov 0x0, var[45][stor[9]]
  call 169, stor[0], STATUS, stor[8]
  and 0xffffff00, stor[8]
+@@ -2445,7 +2445,7 @@
+ gosub inl[:LABEL_4]
+ jmp_cmp !=, 0x0, stor[8], inl[:LABEL_159]
+ gosub inl[:LABEL_3]
+-mov var[45][11], stor[8]
++mov var[45][17], stor[8] 
+ gosub_table stor[8], inl[:LABEL_160]
+ jmp inl[:LABEL_159]
+ LABEL_159:
+@@ -2482,7 +2482,7 @@
+ mov 0x0, var[45][12]
+ gosub inl[:JMP_4874_0]
+ mov 0x1, stor[8]
+-mov stor[8], var[45][11]
++mov stor[8], var[45][17]
+ LABEL_163:
+ return
+ JMP_4364_1:
+@@ -2507,7 +2507,7 @@
+ call 203, 0x0
+ mov 0xe3, var[44]
+ mov 0x2, stor[8]
+-mov stor[8], var[45][11]
++mov stor[8], var[45][17]
+ LABEL_165:
+ return
+ JMP_4364_2:
+@@ -2524,7 +2524,7 @@
+ call 322, stor[0], 0x0
+ mov 0x21, var[44]
+ mov 0x3, stor[8]
+-mov stor[8], var[45][11]
++mov stor[8], var[45][17]
+ LABEL_167:
+ return
+ JMP_4364_3:
