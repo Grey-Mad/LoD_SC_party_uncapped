@@ -45,6 +45,8 @@ public class GameVarArrayParam extends Param {
       case 112 -> Scus94491BpeSegment_800b.gameState_800babc8.wmapFlags_15c.getRaw(this.arrIndex);
       case 113 -> Scus94491BpeSegment_800b.gameState_800babc8.visitedLocations_17c.getRaw(this.arrIndex);
       case 114 -> Scus94491BpeSegment_800b.gameState_800babc8.goods_19c[this.arrIndex];
+      //case 115 -> this.readPartyFlags(this.arrIndex); //greytodo
+      
       case 126 -> Scus94491BpeSegment_800b.gameState_800babc8._1a4[this.arrIndex];
       case 127 -> Scus94491BpeSegment_800b.gameState_800babc8.chestFlags_1c4[this.arrIndex];
       case 128 -> this.readStatusConditionsVar(0, this.arrIndex);//greytodo: should this be an array or list?
@@ -66,6 +68,7 @@ public class GameVarArrayParam extends Param {
       case 144 -> this.readStatusConditionsVar(16, this.arrIndex);
       case 145 -> this.readStatusConditionsVar(17, this.arrIndex);
       case 146 -> this.readStatusConditionsVar(18, this.arrIndex);
+      case 147 -> this.readStatusConditionsVar(19, this.arrIndex);
 
       default -> throw new IllegalArgumentException("Unknown game data index " + this.varIndex);
     };
@@ -90,6 +93,7 @@ public class GameVarArrayParam extends Param {
       case 112 -> Scus94491BpeSegment_800b.gameState_800babc8.wmapFlags_15c.setRaw(this.arrIndex, val);
       case 113 -> Scus94491BpeSegment_800b.gameState_800babc8.visitedLocations_17c.setRaw(this.arrIndex, val);
       case 114 -> Scus94491BpeSegment_800b.gameState_800babc8.goods_19c[this.arrIndex] = val;
+      //case 115 -> this.writePartyFlags(this.arrIndex, val); //greytodo
       case 126 -> Scus94491BpeSegment_800b.gameState_800babc8._1a4[this.arrIndex] = val;
       case 127 -> Scus94491BpeSegment_800b.gameState_800babc8.chestFlags_1c4[this.arrIndex] = val;
       case 128 -> this.writeStatusConditionsVar(0, this.arrIndex, val); //greytodo: how big should this be 
@@ -111,6 +115,7 @@ public class GameVarArrayParam extends Param {
       case 144 -> this.writeStatusConditionsVar(16, this.arrIndex, val);
       case 145 -> this.writeStatusConditionsVar(17, this.arrIndex, val);
       case 146 -> this.writeStatusConditionsVar(18, this.arrIndex, val);
+      case 147 -> this.writeStatusConditionsVar(19, this.arrIndex, val);
 
       default -> throw new IllegalArgumentException("Unknown game data index " + this.varIndex);
     }
@@ -754,5 +759,11 @@ public class GameVarArrayParam extends Param {
 
       default -> throw new IllegalArgumentException("Unknown special effect var index " + varIndex);
     }
+  }
+  private int readPartyFlags(final int index) {
+    return Scus94491BpeSegment_800b.gameState_800babc8.charData_32c.get(index).getPartyFlags();
+  }
+  private void writePartyFlags(final int index, final int val) {
+    Scus94491BpeSegment_800b.gameState_800babc8.charData_32c.get(index).setPartyFlags(val);
   }
 }
