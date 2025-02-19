@@ -1126,7 +1126,7 @@ public final class Unpacker {
 
   private static void playerCombatSoundEffectsTransformer(final PathNode node, final Transformations transformations, final Set<String> flags) {
     final String end = node.fullPath.substring(node.fullPath.lastIndexOf('/') + 1);
-
+    //greytodo: fix lenus
     if(node.fullPath.startsWith("SECT/DRGN0.BIN/752/0/")) {
       transformations.addNode("characters/dart/sounds/combat/" + end, node.data);
     } else if(node.fullPath.startsWith("SECT/DRGN0.BIN/752/1/")) {
@@ -1181,7 +1181,7 @@ public final class Unpacker {
   }
 
   private static void dragoonCombatModelsAndTexturesTransformer(final PathNode node, final Transformations transformations, final Set<String> flags) {
-    for(int charId = 0; charId < 10; charId++) {
+    for(int charId = 0; charId < 10; charId++) { //greytodo
       final String charName = getCharacterName(charId).toLowerCase();
 
       if(node.fullPath.startsWith("SECT/DRGN0.BIN/" + (4011 + charId * 2))) {

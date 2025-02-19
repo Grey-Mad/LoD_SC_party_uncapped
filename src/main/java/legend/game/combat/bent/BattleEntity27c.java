@@ -1,6 +1,8 @@
 package legend.game.combat.bent;
 
 import legend.core.QueuedModelBattleTmd;
+import legend.core.gpu.Gpu.DRAW_PIXELS;
+import legend.core.gpu.GpuCommandCopyVramToVram;
 import legend.core.gpu.Rect4i;
 import legend.core.gte.MV;
 import legend.core.gte.ModelPart10;
@@ -32,11 +34,13 @@ import java.util.HashSet;
 import java.util.Set;
 
 import static legend.core.GameEngine.EVENTS;
+import static legend.core.GameEngine.GPU;
 import static legend.core.GameEngine.GTE;
 import static legend.core.GameEngine.RENDERER;
 import static legend.game.Scus94491BpeSegment.tmdGp0Tpage_1f8003ec;
 import static legend.game.Scus94491BpeSegment.zOffset_1f8003e8;
 import static legend.game.Scus94491BpeSegment_8002.animateModel;
+import static legend.game.Scus94491BpeSegment_8002.animateModelTextures;
 import static legend.game.Scus94491BpeSegment_8002.applyModelRotationAndScale;
 import static legend.game.Scus94491BpeSegment_8003.GsGetLs;
 import static legend.game.Scus94491BpeSegment_8003.GsGetLws;
@@ -639,8 +643,8 @@ public abstract class BattleEntity27c extends BattleObject {
       this.recreateTexture = false;
       combatant_144.recreateTexture = false;
     }
-
-
+    //greytodo: find way to animate textures
+  
     if((state.storage_44[7] & 0x211) == 0) {
       this.renderBttlModel(this.model_148);
     }

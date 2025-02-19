@@ -454,7 +454,8 @@ public class Battle extends EngineState {
   public static final int[][] textboxColours_800c6fec = {{76, 183, 225}, {182, 112, 0}, {25, 15, 128}, {128, 128, 128}, {129, 9, 236}, {213, 197, 58}, {72, 255, 159}, {238, 9, 9}, {0, 41, 159}};
 
   @SuppressWarnings("unchecked")
-  public static final RegistryDelegate<Element>[] characterElements_800c706c = new RegistryDelegate[] {LodMod.FIRE_ELEMENT, LodMod.WIND_ELEMENT, LodMod.LIGHT_ELEMENT, LodMod.DARK_ELEMENT, LodMod.THUNDER_ELEMENT, LodMod.WIND_ELEMENT, LodMod.WATER_ELEMENT, LodMod.EARTH_ELEMENT, LodMod.LIGHT_ELEMENT};
+  //greytodo: change back after test
+  public static final RegistryDelegate<Element>[] characterElements_800c706c = new RegistryDelegate[] {LodMod.FIRE_ELEMENT, LodMod.WIND_ELEMENT, LodMod.LIGHT_ELEMENT, LodMod.DARK_ELEMENT, LodMod.THUNDER_ELEMENT, LodMod.WIND_ELEMENT, LodMod.WATER_ELEMENT, LodMod.EARTH_ELEMENT, LodMod.LIGHT_ELEMENT, LodMod.WATER_ELEMENT};
 
   /** Different sets of bents for different target types (chars, monsters, all) */
   public ScriptState<BattleEntity27c>[][] targetBents_800c71f0;
@@ -1491,12 +1492,12 @@ public class Battle extends EngineState {
       }else{
         //curve: z= (x^2)*(a/b^2)-a where a = zIcpt, b = xIcpt
         final float zIcpt = 0x125;
-        final float xIcpt = 0x450;
+        final float xIcpt = 0x500;
         final float zCoord = bent.model_148.coord2_14.coord.transfer.z;
         //derivative of curve: z'= (2 a x)/b^2
         //arclength is integral of: sqrt(1 + (x*(2a/b^2))^2)
         //indef intergral is (2*a*x*sqrt(1 + ((4*a*a*x*x)/(b*b*b*b))) + b*b*log((2*a*x)/(b*b) + sqrt(1 + (4*a*a*x*x)/(b*b*b*b))))/(4*a);
-        final float curveEnd = 0x900;
+        final float curveEnd = 0x1000;
         final float halfCurveLength = (2f*zIcpt*curveEnd*Math.sqrt(1f + ((4f*zIcpt*zIcpt*curveEnd*curveEnd)/(xIcpt*xIcpt*xIcpt*xIcpt))) + xIcpt*xIcpt*(float)java.lang.Math.log((2f*zIcpt*curveEnd)/(xIcpt*xIcpt) + Math.sqrt(1f + (4f*zIcpt*zIcpt*curveEnd*curveEnd)/(xIcpt*xIcpt*xIcpt*xIcpt))))/(4f*zIcpt);
         final float curveSegementLength = (2f*halfCurveLength)/(charCount-1f);
         
@@ -2221,7 +2222,7 @@ public class Battle extends EngineState {
 
             if((combatant.charIndex_1a2 & 0x1) != 0) {
               if(charIndex == 0 && (gameState_800babc8.goods_19c[0] & 0xff) >>> 7 != 0) {
-                charIndex = 10; // Divine dragoon
+                charIndex = 10; // Divine dragoon //greytodo
               }
 
               final String charName = getCharacterName(charIndex).toLowerCase();
@@ -2326,7 +2327,11 @@ public class Battle extends EngineState {
         if(isDragoon == 0) {
           // Additions
           if(charId != 2 && charId != 8) {
+            if (charId == 9){
+              fileIndex = 4031; //greytodo: remove when done 
+            } else {
             fileIndex = 4031 + gameState_800babc8.charData_32c.get(charId).selectedAddition_19 + charId * 8 - additionOffsets_8004f5ac[charId];
+            }
           } else {
             // Retail fix: Shana/??? have selectedAddition 255 which loads a random file... just load Dart's first addition here, it isn't used (see GH#357)
             fileIndex = 4031 + charId * 8;

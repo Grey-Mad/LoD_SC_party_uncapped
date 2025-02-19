@@ -419,20 +419,7 @@ public class PostBattleScreen extends MenuScreen {
    */
   @Method(0x8010cc24L)
   private boolean givePendingXp() {
-    /*final int[] charIds = {
-      gameState_800babc8.charIds_88[0],
-      gameState_800babc8.charIds_88[1],
-      gameState_800babc8.charIds_88[2],
-      secondaryCharIds_800bdbf8[0],
-      secondaryCharIds_800bdbf8[1],
-      secondaryCharIds_800bdbf8[2],
-      secondaryCharIds_800bdbf8[3],
-      secondaryCharIds_800bdbf8[4],
-      secondaryCharIds_800bdbf8[5],
-      secondaryCharIds_800bdbf8[6],
-      secondaryCharIds_800bdbf8[7],
-      secondaryCharIds_800bdbf8[8],
-    };*/
+  
     int[] charIds = new int[gameState_800babc8.charIds_88.length+secondaryCharIds_800bdbf8.length];
 
     for(int i=0; i<gameState_800babc8.charIds_88.length; i++){
