@@ -358,7 +358,8 @@ public class BattleHud {
   public void initCharacterDisplay(final int charSlot) {
     
     if (battleState_8006e398.getAlivePlayerCount()>3){
-      uiScaleFactor = (288/(94f*(battleState_8006e398.getAlivePlayerCount()/3f)))/3f;
+      this.uiScaleFactor = (288/(94f*(battleState_8006e398.getAlivePlayerCount()/3f)))/3f;
+      this.uiScaleFactor = this.uiScaleFactor*RENDERER.getRenderAspectRatio()/1.33333f;
     }else{
       uiScaleFactor = 1f;
     }
