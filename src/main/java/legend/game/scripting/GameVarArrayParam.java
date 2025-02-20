@@ -760,10 +760,4 @@ public class GameVarArrayParam extends Param {
       default -> throw new IllegalArgumentException("Unknown special effect var index " + varIndex);
     }
   }
-  private int readPartyFlags(final int index) {
-    return Scus94491BpeSegment_800b.gameState_800babc8.charData_32c.get(index).getPartyFlags();
-  }
-  private void writePartyFlags(final int index, final int val) {
-    Scus94491BpeSegment_800b.gameState_800babc8.charData_32c.get(index).setPartyFlags(val);
-  }
 }

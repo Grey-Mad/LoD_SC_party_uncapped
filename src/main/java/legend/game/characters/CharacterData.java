@@ -136,10 +136,10 @@ public class CharacterData extends RegistryEntry implements ScriptReadable {
   }
 
   public void setCharacterData(CharacterData data) {
-    this.xp_00 = data.getXp();
+    this.xp_00 = data.xp_00;
     this.partyFlags_04 =data.getPartyFlags();
-    this.hp_08 =data.getHp();
-    this.mp_0a =data.getMp();
+    this.hp_08 =data.hp_08;
+    this.mp_0a =data.mp_0a;
     this.sp_0c =data.getSp();
     this.dlevelXp_0e =data.getDlevelXp();
     this.status_10 =data.getStatus();

@@ -4,7 +4,7 @@ import legend.game.saves.ConfigCollection;
 import legend.game.saves.ConfigStorage;
 import legend.game.saves.ConfigStorageLocation;
 import legend.game.saves.SavedGame;
-import legend.game.characters.CharacterData;
+import legend.game.types.CharacterData2c;
 import legend.game.types.EquipmentSlot;
 import legend.game.types.GameState52c;
 import legend.game.unpacker.FileData;
@@ -123,24 +123,24 @@ public final class V2Serializer {
     final int charDataCount = data.readUShort(offset); // Not yet used
     offset += 2;
 
-    for(final CharacterData charData : state.charData_32c) {
-      charData.setXp(data.readInt(offset));
+    for(final CharacterData2c charData : state.charData_32c) {
+      charData.xp_00 = data.readInt(offset);
       offset += 4;
-      charData.setHp(data.readInt(offset));
+      charData.partyFlags_04 = data.readInt(offset);
       offset += 4;
-      charData.setHp(data.readInt(offset));
+      charData.hp_08 = data.readInt(offset);
       offset += 4;
-      charData.setMp(data.readInt(offset));
+      charData.mp_0a = data.readInt(offset);
       offset += 4;
-      charData.setSp(data.readInt(offset));
+      charData.sp_0c = data.readInt(offset);
       offset += 4;
-      charData.setDlevelXp(data.readInt(offset));
+      charData.dlevelXp_0e = data.readInt(offset);
       offset += 4;
-      charData.setStatus(data.readInt(offset));
+      charData.status_10 = data.readInt(offset);
       offset += 4;
-      charData.setLevel(data.readUShort(offset));
+      charData.level_12 = data.readUShort(offset);
       offset += 2;
-      charData.setDlevel(data.readUShort(offset));
+      charData.dlevel_13 = data.readUShort(offset);
       offset += 2;
 
       for(int i = 0; i < 5; i++) {
@@ -196,9 +196,9 @@ public final class V2Serializer {
     final ConfigCollection config = new ConfigCollection();
     ConfigStorage.loadConfig(config, ConfigStorageLocation.SAVE, data.slice(offset));
 
-    final CharacterData charData = state.charData_32c.get(state.charIds_88[0]);
-    final int maxHp = levelStuff_80111cfc[state.charIds_88[0]][charData.getLevel()].hp_00;
-    final int maxMp = magicStuff_80111d20[state.charIds_88[0]][charData.getDlevel()].mp_00;
+    final CharacterData2c charData = state.charData_32c[state.charIds_88[0]];
+    final int maxHp = levelStuff_80111cfc[state.charIds_88[0]][charData.level_12].hp_00;
+    final int maxMp = magicStuff_80111d20[state.charIds_88[0]][charData.dlevel_13].mp_00;
     return new SavedGame(name, name, locationType, locationIndex, state, config, maxHp, maxMp);
   }
 }

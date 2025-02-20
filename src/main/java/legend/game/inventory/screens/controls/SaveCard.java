@@ -3,7 +3,7 @@ package legend.game.inventory.screens.controls;
 import legend.game.inventory.screens.Control;
 import legend.game.inventory.screens.HorizontalAlign;
 import legend.game.saves.SavedGame;
-import legend.game.characters.CharacterData;
+import legend.game.types.CharacterData2c;
 import legend.game.types.GameState52c;
 import legend.game.types.Renderable58;
 
@@ -97,10 +97,10 @@ public class SaveCard extends Control {
           }
         }
 
-        final CharacterData char0 = state.charData_32c.get(firstCharId);
-        this.renderNumber(224, y + 6, char0.getLevel(), 2); // Level
-        this.renderNumber(269, y + 6, char0.getDlevel(), 2); // Dragoon level
-        renderFourDigitHp(302, y + 6, char0.getHp(), this.saveData.maxHp, Renderable58.FLAG_DELETE_AFTER_RENDER); // Current HP
+        final CharacterData2c char0 = state.charData_32c[firstCharId];
+        this.renderNumber(224, y + 6, char0.level_12, 2); // Level
+        this.renderNumber(269, y + 6, char0.dlevel_13, 2); // Dragoon level
+        renderFourDigitHp(302, y + 6, char0.hp_08, this.saveData.maxHp, Renderable58.FLAG_DELETE_AFTER_RENDER); // Current HP
         this.renderNumber(332, y + 6, this.saveData.maxHp, 4); // Max HP
         this.renderNumber(245, y + 17, state.gold_94, 8); // Gold
         this.renderNumber(306, y + 17, getTimestampPart(state.timestamp_a0, 0), 3); // Time played hour

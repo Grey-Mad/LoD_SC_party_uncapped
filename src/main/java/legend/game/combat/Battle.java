@@ -21,7 +21,6 @@ import legend.core.spu.Spu;
 import legend.game.EngineState;
 import legend.game.EngineStateEnum;
 import legend.game.Scus94491BpeSegment;
-import legend.game.characters.CharacterData;
 import legend.game.characters.Element;
 import legend.game.characters.Stat;
 import legend.game.characters.StatMod;
@@ -2260,7 +2259,7 @@ public class Battle extends EngineState {
 
             if((combatant.charIndex_1a2 & 0x1) != 0) {
               if(charIndex == 0 && (gameState_800babc8.goods_19c[0] & 0xff) >>> 7 != 0) {
-                charIndex = 10; // Divine dragoon //greytodo
+                charIndex = 10;
               }
 
               final String charName = getCharacterName(charIndex).toLowerCase();
@@ -2369,11 +2368,7 @@ public class Battle extends EngineState {
         if(isDragoon == 0) {
           // Additions
           if(charId != 2 && charId != 8) {
-            if (charId == 9){
-              fileIndex = 4031; //greytodo: remove when done 
-            } else {
-            fileIndex = 4031 + gameState_800babc8.charData_32c.get(charId).selectedAddition_19 + charId * 8 - additionOffsets_8004f5ac[charId];
-            }
+            fileIndex = 4031 + gameState_800babc8.charData_32c[charId].selectedAddition_19 + charId * 8 - additionOffsets_8004f5ac[charId];
           } else {
             // Retail fix: Shana/??? have selectedAddition 255 which loads a random file... just load Dart's first addition here, it isn't used (see GH#357)
             fileIndex = 4031 + charId * 8;
@@ -3772,7 +3767,7 @@ public class Battle extends EngineState {
       final BattleEntity27c bent = (BattleEntity27c)scriptStatePtrArr_800bc1c0[script.params_20[0].get()].innerStruct_00;
 
       final int charIndex = bent.charId_272;
-      final CharacterData charData = gameState_800babc8.charData_32c.get(charIndex);
+      final CharacterData2c charData = gameState_800babc8.charData_32c[charIndex];
 
       final int additionIndex = charData.selectedAddition_19 - additionOffsets_8004f5ac[charIndex];
       if(charIndex == 2 || charIndex == 8 || additionIndex < 0) {
@@ -3808,8 +3803,8 @@ public class Battle extends EngineState {
 
       // If there's only one addition that isn't maxed (the ultimate addition), unlock it
       //LAB_800cd31c
-      if(nonMaxedAdditions < 2 && (charData.getPartyFlags() & 0x40) == 0) {
-        charData.setPartyFlags(charData.getPartyFlags() | 0x40);
+      if(nonMaxedAdditions < 2 && (charData.partyFlags_04 & 0x40) == 0) {
+        charData.partyFlags_04 |= 0x40;
 
         if(lastNonMaxAdditionIndex >= 0) {
           charData.additionLevels_1a[lastNonMaxAdditionIndex] = 1;
@@ -4584,7 +4579,7 @@ public class Battle extends EngineState {
     } else {
       //LAB_800d3dc0
       final AdditionNameTextEffect1c additionStruct = new AdditionNameTextEffect1c();
-      final int addition = gameState_800babc8.charData_32c.get(script.params_20[0].get()).selectedAddition_19;
+      final int addition = gameState_800babc8.charData_32c[script.params_20[0].get()].selectedAddition_19;
       final ScriptState<AdditionNameTextEffect1c> state = SCRIPTS.allocateScriptState("AdditionNameTextEffect1c", additionStruct);
       state.loadScriptFile(doNothingScript_8004f650);
       state.setTicker((s, effect) -> additionStruct.tickAdditionNameEffect(s, this._800faa9d));
@@ -7692,7 +7687,7 @@ public class Battle extends EngineState {
     this.monsterCount_800c6b9c = 0;
 
     //LAB_800ee764
-    for(int combatantIndex = 0; combatantIndex < monsterBents_800c6b78.length; combatantIndex++) {//seems to work at 9, greytodo: findout if this val needs to be increased
+    for(int combatantIndex = 0; combatantIndex < monsterBents_800c6b78.length; combatantIndex++) {
       this.monsterBents_800c6b78[combatantIndex] = -1;
       this.currentEnemyNames_800c69d0[combatantIndex] = null;
     }
@@ -7756,20 +7751,20 @@ public class Battle extends EngineState {
       final CharacterData charData = gameState_800babc8.charData_32c.get(bent.charId_272);
 
       //LAB_800eec10
-      charData.setHp(java.lang.Math.max(1, bent.stats.getStat(LodMod.HP_STAT.get()).getCurrent()));
+      charData.hp_08 = java.lang.Math.max(1, bent.stats.getStat(LodMod.HP_STAT.get()).getCurrent());
 
-      if((gameState_800babc8.goods_19c[0] & 0x1 << characterDragoonIndices_800c6e68[bent.charId_272]) != 0) {
-        charData.setMp(bent.stats.getStat(LodMod.MP_STAT.get()).getCurrent());
-      }
+       if((gameState_800babc8.goods_19c[0] & 0x1 << characterDragoonIndices_800c6e68[bent.charId_272]) != 0) {
+         charData.mp_0a = bent.stats.getStat(LodMod.MP_STAT.get()).getCurrent();
+       }
 
-      //LAB_800eec78
-      if(bent.charId_272 == 0 && (gameState_800babc8.goods_19c[0] & 0x1 << characterDragoonIndices_800c6e68[9]) != 0) {
-        charData.setMp(bent.stats.getStat(LodMod.MP_STAT.get()).getCurrent());
-      }
+       //LAB_800eec78
+       if(bent.charId_272 == 0 && (gameState_800babc8.goods_19c[0] & 0x1 << characterDragoonIndices_800c6e68[9]) != 0) {
+         charData.mp_0a = bent.stats.getStat(LodMod.MP_STAT.get()).getCurrent();
+       }
 
-      //LAB_800eecb8
-      charData.setStatus(bent.status_0e & 0xc8);
-      charData.setSp(bent.stats.getStat(LodMod.SP_STAT.get()).getCurrent());
+       //LAB_800eecb8
+       charData.status_10 = bent.status_0e & 0xc8;
+       charData.sp_0c = bent.stats.getStat(LodMod.SP_STAT.get()).getCurrent();
     }
 
     //LAB_800eed78

@@ -28,7 +28,6 @@ public class ActiveStatsa0 {
   /** Absolute addition index into the table of every addition for every character (byte) */
   public int selectedAddition_35;
   /** ubyte */
-  //greytodo additionLevel reg
   public final int[] additionLevels_36 = new int[8];
   /** ubyte */
   public final int[] additionXp_3e = new int[8];

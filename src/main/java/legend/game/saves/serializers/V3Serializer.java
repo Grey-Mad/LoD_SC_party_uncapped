@@ -4,7 +4,7 @@ import legend.game.saves.ConfigCollection;
 import legend.game.saves.ConfigStorage;
 import legend.game.saves.ConfigStorageLocation;
 import legend.game.saves.SavedGame;
-import legend.game.characters.CharacterData;
+import legend.game.types.CharacterData2c;
 import legend.game.types.EquipmentSlot;
 import legend.game.types.GameState52c;
 import legend.game.unpacker.FileData;
@@ -128,24 +128,24 @@ public final class V3Serializer {
     final int charDataCount = data.readUShort(offset); // Not yet used
     offset += 2;
 
-    for(final CharacterData charData : state.charData_32c) {
-      charData.setXp(data.readInt(offset));
+    for(final CharacterData2c charData : state.charData_32c) {
+      charData.xp_00 = data.readInt(offset);
       offset += 4;
-      charData.setPartyFlags(data.readInt(offset));
+      charData.partyFlags_04 = data.readInt(offset);
       offset += 4;
-      charData.setHp(data.readInt(offset));
+      charData.hp_08 = data.readInt(offset);
       offset += 4;
-      charData.setMp(data.readInt(offset));
+      charData.mp_0a = data.readInt(offset);
       offset += 4;
-      charData.setSp(data.readInt(offset));
+      charData.sp_0c = data.readInt(offset);
       offset += 4;
-      charData.setDlevelXp(data.readInt(offset));
+      charData.dlevelXp_0e = data.readInt(offset);
       offset += 4;
-      charData.setStatus (data.readInt(offset));
+      charData.status_10 = data.readInt(offset);
       offset += 4;
-      charData.setLevel(data.readUShort(offset));
+      charData.level_12 = data.readUShort(offset);
       offset += 2;
-      charData.setDlevel(data.readUShort(offset));
+      charData.dlevel_13 = data.readUShort(offset);
       offset += 2;
 
       for(int i = 0; i < 5; i++) {

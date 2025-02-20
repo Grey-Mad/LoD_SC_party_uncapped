@@ -3,7 +3,7 @@ package legend.game.title;
 import legend.core.memory.Method;
 import legend.game.EngineState;
 import legend.game.EngineStateEnum;
-import legend.game.characters.CharacterData;
+import legend.game.types.CharacterData2c;
 import legend.game.modding.coremod.CoreMod;
 
 import static legend.game.SItem.levelStuff_80111cfc;
@@ -33,23 +33,17 @@ public class NewGame extends EngineState {
     }
 
     //LAB_800c723c
-    for(int charIndex = 0; charIndex < characterIndices_800bdbb8.length; charIndex++) {
-      final CharacterData charData = gameState_800babc8.charData_32c.get(charIndex);
-
-      if ((boolean) CONFIG.getConfig(legend.core.GameEngine.REGISTRIES.config.getEntry("lod", String.join("","set_lv_one_at_start_", charData.name)).get())){
-        charData.setLevel(1);
-      } else{
-        charData.setLevel(characterStartingLevels[charIndex]);
-      }
-      
-      charData.setXp(xpTables[charIndex][charData.getLevel()]);
-      charData.setHp(levelStuff_80111cfc[charIndex][charData.getLevel()].hp_00);
-      charData.setMp(magicStuff_80111d20[charIndex][1].mp_00);
-      charData.setSp(0);
-      charData.setDlevelXp(0);
-      charData.setStatus (0);
-      charData.setDlevel(1);
-
+    for(int charIndex = 0; charIndex < characterIndices_800bdbb8.length; charIndex++) {     
+      final CharacterData2c charData = gameState_800babc8.charData_32c[charIndex];
+      final int level = characterStartingLevels[charIndex];
+      charData.xp_00 = xpTables[charIndex][level];
+      charData.hp_08 = levelStuff_80111cfc[charIndex][level].hp_00;
+      charData.mp_0a = magicStuff_80111d20[charIndex][1].mp_00;
+      charData.sp_0c = 0;
+      charData.dlevelXp_0e = 0;
+      charData.status_10 = 0;
+      charData.level_12 = level;
+      charData.dlevel_13 = 1;
       //LAB_800c7294
       for(int additionIndex = 0; additionIndex < 8; additionIndex++) {
         charData.additionLevels_1a[additionIndex] = 0;
@@ -59,7 +53,7 @@ public class NewGame extends EngineState {
       charData.additionLevels_1a[0] = 1;
 
       //LAB_800c72d4
-      for(int i = 1; i < charData.getLevel(); i++) {
+      for(int i = 1; i < charData.level_12; i++) {
         final int index = levelStuff_80111cfc[charIndex][i].addition_02;
 
         if(index != -1) {

@@ -43,8 +43,6 @@ import legend.game.unpacker.Unpacker;
 import legend.game.unpacker.UnpackerException;
 import legend.game.unpacker.UnpackerStoppedRuntimeException;
 import legend.game.unpacker.scripts.ScriptPatcher;
-import legend.lodmod.LodMod;
-
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.joml.Vector3f;
@@ -306,18 +304,51 @@ public final class GameEngine {
   }
 
   private static void loadXpTables() throws IOException {
-    FileData[] xpFileData = new FileData[LodMod.CHARACTER_NAMES.length];
-    for(int i = 0; i<xpFileData.length; i++){
-      xpFileData[i] = new FileData(Files.readAllBytes(Paths.get(String.join("","./files/characters/",LodMod.CHARACTER_NAMES[i],"/xp"))));
-    }  
+    final FileData dart = new FileData(Files.readAllBytes(Paths.get("./files/characters/dart/xp")));
+    final FileData lavitz = new FileData(Files.readAllBytes(Paths.get("./files/characters/lavitz/xp")));
+    final FileData albert = new FileData(Files.readAllBytes(Paths.get("./files/characters/albert/xp")));
+    final FileData shana = new FileData(Files.readAllBytes(Paths.get("./files/characters/shana/xp")));
+    final FileData miranda = new FileData(Files.readAllBytes(Paths.get("./files/characters/miranda/xp")));
+    final FileData rose = new FileData(Files.readAllBytes(Paths.get("./files/characters/rose/xp")));
+    final FileData haschel = new FileData(Files.readAllBytes(Paths.get("./files/characters/haschel/xp")));
+    final FileData kongol = new FileData(Files.readAllBytes(Paths.get("./files/characters/kongol/xp")));
+    final FileData meru = new FileData(Files.readAllBytes(Paths.get("./files/characters/meru/xp")));
 
-    for (int i = 0; i<LodMod.CHARACTER_NAMES.length; i++){
-      int[] charXpTable = xpTables[i];
-      for(int j = 0; j < charXpTable.length; j++) {
-        charXpTable[j] = xpFileData[i].readInt(j * 4);
-      }
-      xpTables[i] = charXpTable;
-    } 
+    for(int i = 0; i < dartXpTable_801135e4.length; i++) {
+      dartXpTable_801135e4[i] = dart.readInt(i * 4);
+    }
+
+    for(int i = 0; i < lavitzXpTable_801138c0.length; i++) {
+      lavitzXpTable_801138c0[i] = lavitz.readInt(i * 4);
+    }
+
+    for(int i = 0; i < albertXpTable_801138c0.length; i++) {
+      albertXpTable_801138c0[i] = albert.readInt(i * 4);
+    }
+
+    for(int i = 0; i < shanaXpTable_80113aa8.length; i++) {
+      shanaXpTable_80113aa8[i] = shana.readInt(i * 4);
+    }
+
+    for(int i = 0; i < mirandaXpTable_80113aa8.length; i++) {
+      mirandaXpTable_80113aa8[i] = miranda.readInt(i * 4);
+    }
+
+    for(int i = 0; i < roseXpTable_801139b4.length; i++) {
+      roseXpTable_801139b4[i] = rose.readInt(i * 4);
+    }
+
+    for(int i = 0; i < haschelXpTable_801136d8.length; i++) {
+      haschelXpTable_801136d8[i] = haschel.readInt(i * 4);
+    }
+
+    for(int i = 0; i < kongolXpTable_801134f0.length; i++) {
+      kongolXpTable_801134f0[i] = kongol.readInt(i * 4);
+    }
+
+    for(int i = 0; i < meruXpTable_801137cc.length; i++) {
+      meruXpTable_801137cc[i] = meru.readInt(i * 4);
+    }
   }
 
   private static void transitionToGame() {

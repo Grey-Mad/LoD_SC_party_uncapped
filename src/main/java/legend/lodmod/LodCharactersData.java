@@ -15,7 +15,7 @@ public final class LodCharactersData {
 
   }
 
-  private static final Registrar<CharacterData, CharacterDataRegistryEvent> CHARACTER_REGISTRAR = new Registrar<>(GameEngine.REGISTRIES.charactersData, LodMod.MOD_ID);
+  /*private static final Registrar<CharacterData, CharacterDataRegistryEvent> CHARACTER_REGISTRAR = new Registrar<>(GameEngine.REGISTRIES.charactersData, LodMod.MOD_ID);
   public static List<RegistryDelegate<CharacterData>> CHARACTER_REGISTRAR_LIST = new ArrayList<RegistryDelegate<CharacterData>>();
   
  public static void fillRegistrar(String[] characterNames){
@@ -26,5 +26,5 @@ public final class LodCharactersData {
 
   static void register(final CharacterDataRegistryEvent event) {
     CHARACTER_REGISTRAR.registryEvent(event);
-  }
+  }*/
 }

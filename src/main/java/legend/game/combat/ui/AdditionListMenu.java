@@ -8,7 +8,7 @@ import legend.game.inventory.screens.TextColour;
 import legend.game.scripting.RunningScript;
 import legend.game.types.ActiveStatsa0;
 import legend.game.types.AdditionData0e;
-import legend.game.characters.CharacterData;
+import legend.game.types.CharacterData2c;
 import legend.game.types.MenuAdditionInfo;
 
 import java.util.ArrayList;
@@ -33,7 +33,7 @@ public class AdditionListMenu extends ListMenu {
   private UiBox description;
 
   private final List<String> additions = new ArrayList<>();
-  private final MenuAdditionInfo[] menuAdditions = new MenuAdditionInfo[gameState_800babc8.charData_32c.size()];
+  private final MenuAdditionInfo[] menuAdditions = new MenuAdditionInfo[gameState_800babc8.charData_32c.length];
 
   public AdditionListMenu(final BattleHud hud, final PlayerBattleEntity activePlayer, final ListPosition lastPosition, final Runnable onClose) {
     super(hud, activePlayer, 186, modifyLastPosition(activePlayer, lastPosition), onClose);
@@ -43,7 +43,7 @@ public class AdditionListMenu extends ListMenu {
   }
 
   private static ListPosition modifyLastPosition(final PlayerBattleEntity player, final ListPosition lastPosition) {
-    final CharacterData charData = gameState_800babc8.charData_32c.get(player.charId_272);
+    final CharacterData2c charData = gameState_800babc8.charData_32c[player.charId_272];
     final int index = charData.selectedAddition_19 - additionOffsets_8004f5ac[player.charId_272];
 
     if(index > 6) {
@@ -64,7 +64,7 @@ public class AdditionListMenu extends ListMenu {
 
   @Override
   protected void drawListEntry(final int index, final int x, final int y, final int trim) {
-    final CharacterData charData = gameState_800babc8.charData_32c.get(this.player_08.charId_272);
+    final CharacterData2c charData = gameState_800babc8.charData_32c[this.player_08.charId_272];
 
     this.fontOptions.trim(trim);
     this.fontOptions.horizontalAlign(HorizontalAlign.LEFT);
@@ -92,7 +92,7 @@ public class AdditionListMenu extends ListMenu {
   @Override
   protected void onUse(final int index) {
     final ActiveStatsa0 stats = stats_800be5f8[this.player_08.charId_272];
-    final CharacterData charData = gameState_800babc8.charData_32c.get(this.player_08.charId_272);
+    final CharacterData2c charData = gameState_800babc8.charData_32c[this.player_08.charId_272];
     this.player_08.combatant_144.mrg_04 = null;
     charData.selectedAddition_19 = additionOffsets_8004f5ac[this.player_08.charId_272] + index;
     loadCharacterStats();
@@ -129,15 +129,15 @@ public class AdditionListMenu extends ListMenu {
 
       final int level = additionData_80052884[additionOffset + additionSlot].level_00;
 
-      if(level == -1 && (gameState_800babc8.charData_32c.get(charId).getPartyFlags() & 0x40) != 0) {
+      if(level == -1 && (gameState_800babc8.charData_32c[charId].partyFlags_04 & 0x40) != 0) {
         final String additionName = additionNames_800fa8d4[additionOffset + additionSlot];
         this.additions.add(additionName);
-      } else if(level > 0 && level <= gameState_800babc8.charData_32c.get(charId).getLevel()) {
+      } else if(level > 0 && level <= gameState_800babc8.charData_32c[charId].level_12) {
         final String additionName = additionNames_800fa8d4[additionOffset + additionSlot];
         this.additions.add(additionName);
 
-        if(gameState_800babc8.charData_32c.get(charId).additionLevels_1a[additionSlot] == 0) {
-          gameState_800babc8.charData_32c.get(charId).additionLevels_1a[additionSlot] = 1;
+        if(gameState_800babc8.charData_32c[charId].additionLevels_1a[additionSlot] == 0) {
+          gameState_800babc8.charData_32c[charId].additionLevels_1a[additionSlot] = 1;
         }
       }
     }
@@ -153,7 +153,7 @@ public class AdditionListMenu extends ListMenu {
         final int listIndex = this.listScroll_1e + this.listIndex_24;
         final int offset = this.menuAdditions[listIndex].offset_00;
         final int index = this.menuAdditions[listIndex].index_01;
-        final CharacterData charData = gameState_800babc8.charData_32c.get(this.player_08.charId_272);
+        final CharacterData2c charData = gameState_800babc8.charData_32c[this.player_08.charId_272];
         final int level = charData.additionLevels_1a[index];
         final AdditionData0e additionData = additionData_80052884[offset];
         final int damage = additionData.damage_0c * (additions_80114070[offset][level].damageMultiplier_03 + 100) / 100;

@@ -5,13 +5,14 @@ import it.unimi.dsi.fastutil.ints.IntList;
 import legend.core.GameEngine;
 import legend.game.inventory.Equipment;
 import legend.game.inventory.Item;
+import legend.game.modding.coremod.CoreMod;
 import legend.game.saves.Campaign;
 import legend.lodmod.LodMod;
 import org.legendofdragoon.modloader.registries.RegistryId;
-
 import static legend.core.GameEngine.CONFIG;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class GameState52c {
@@ -69,7 +70,7 @@ public class GameState52c {
   public final IntList itemIds_2e9 = new IntArrayList();
   /** Only used during loading */
   public final List<RegistryId> itemRegistryIds_2e9 = new ArrayList<>();
-  public final List<CharacterData> charData_32c = new ArrayList<>();
+  public final CharacterData2c[] charData_32c = new CharacterData2c[9];
 
   //public final int[] _4b8 = new int[8];
 
@@ -89,7 +90,7 @@ public class GameState52c {
   public int characterInitialized_4e6;
 
   public GameState52c() {
-    //Arrays.setAll(this.charData_32c, i -> new CharacterData2c());
+    Arrays.setAll(this.charData_32c, i -> new CharacterData2c());
   }
 
   public void syncIds() {
@@ -104,7 +105,7 @@ public class GameState52c {
       this.equipment_1e8.add(GameEngine.REGISTRIES.equipment.getEntry(id).get());
     }
 
-    for(final CharacterData charData : this.charData_32c) {
+    for(final CharacterData2c  charData : this.charData_32c) {
       charData.equipment_14.clear();
 
       for(final EquipmentSlot slot : EquipmentSlot.values()) {

@@ -47,7 +47,7 @@ import legend.game.sound.Sshd;
 import legend.game.types.BattleReportOverlay0e;
 import legend.game.types.BattleReportOverlayList10;
 import legend.game.types.BattleUiParts;
-import legend.game.characters.CharacterData;
+import legend.game.types.CharacterData2c;
 import legend.game.types.Flags;
 import legend.game.types.McqHeader;
 import legend.game.types.OverlayStruct;
@@ -2453,7 +2453,6 @@ public final class Scus94491BpeSegment {
       case 6 -> "Meru";
       case 7 -> "Kongol";
       case 8 -> "Miranda";
-      case 9 -> "Bart";//greytodo: remove changes after test   
       case 10 -> "Divine";
       
       default -> throw new IllegalArgumentException("Invalid character ID " + id);

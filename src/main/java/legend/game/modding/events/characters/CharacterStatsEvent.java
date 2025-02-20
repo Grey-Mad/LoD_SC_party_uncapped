@@ -1,6 +1,6 @@
 package legend.game.modding.events.characters;
 
-import legend.game.characters.CharacterData;
+import legend.game.types.CharacterData2c;
 import legend.game.types.LevelStuff08;
 import legend.game.types.MagicStuff08;
 import org.legendofdragoon.modloader.events.Event;
@@ -44,15 +44,15 @@ public class CharacterStatsEvent extends Event {
   public CharacterStatsEvent(final int characterId) {
     this.characterId = characterId;
 
-    final CharacterData charData = gameState_800babc8.charData_32c.get(characterId);
-    this.xp = charData.getXp();
-    this.hp = charData.getHp();
-    this.mp = charData.getMp();
-    this.sp = charData.getSp();
-    this.dxp = charData.getDlevelXp();
-    this.flags = charData.getStatus();
-    this.level = charData.getLevel();
-    this.dlevel = charData.getDlevel();
+    final CharacterData2c charData = gameState_800babc8.charData_32c[characterId];
+    this.xp = charData.xp_00;
+    this.hp = charData.hp_08;
+    this.mp = charData.mp_0a;
+    this.sp = charData.sp_0c;
+    this.dxp = charData.dlevelXp_0e;
+    this.flags = charData.status_10;
+    this.level = charData.level_12;
+    this.dlevel = charData.dlevel_13;
 
     final LevelStuff08 levelStuff = levelStuff_80111cfc[characterId][this.level];
     this.maxHp = levelStuff.hp_00;

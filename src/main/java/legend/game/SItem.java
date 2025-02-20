@@ -33,7 +33,7 @@ import legend.game.scripting.RunningScript;
 import legend.game.scripting.ScriptDescription;
 import legend.game.scripting.ScriptParam;
 import legend.game.types.ActiveStatsa0;
-import legend.game.characters.CharacterData;
+import legend.game.types.CharacterData2c;
 import legend.game.types.EquipmentSlot;
 import legend.game.types.LevelStuff08;
 import legend.game.types.MagicStuff08;
@@ -132,8 +132,6 @@ public final class SItem {
     new MenuStatus08("Poison", new FontOptions().colour(TextColour.LIME).shadowColour(TextColour.GREEN).horizontalAlign(HorizontalAlign.CENTRE)),
   };
 
-  /** Note: arrays run into the next array's first element */
-  //greytodo: see about turning into reg likely already done by dramod
   public static final int[][] dragoonXpRequirements_800fbbf0 = {
     {0, 0, 1200, 6000, 12000, 20000, 0},
     {0, 0, 1000, 6000, 12000, 20000, 0},
@@ -148,7 +146,6 @@ public final class SItem {
 
   public static final int[] dragoonGoodsBits_800fbd08 = {0, 2, 5, 6, 4, 2, 1, 3, 5, 7};
 
-  //greytodo: see about turning into reg 
   public static final LevelStuff08[][] levelStuff_80111cfc = {
     {new LevelStuff08(0, -1, 0, 0, 0, 0, 0), new LevelStuff08(30, -1, 50, 2, 3, 4, 4), new LevelStuff08(60, -1, 50, 4, 5, 5, 5), new LevelStuff08(90, -1, 50, 6, 7, 7, 7), new LevelStuff08(120, -1, 50, 8, 9, 10, 9), new LevelStuff08(150, -1, 50, 11, 11, 12, 11), new LevelStuff08(180, -1, 50, 13, 13, 14, 13), new LevelStuff08(210, -1, 50, 15, 15, 16, 15), new LevelStuff08(240, -1, 50, 18, 17, 19, 17), new LevelStuff08(270, -1, 50, 20, 19, 21, 19), new LevelStuff08(300, -1, 50, 22, 21, 23, 21), new LevelStuff08(330, -1, 50, 25, 24, 26, 24), new LevelStuff08(413, -1, 50, 27, 26, 28, 26), new LevelStuff08(496, -1, 50, 30, 29, 31, 29), new LevelStuff08(579, -1, 50, 32, 31, 33, 32), new LevelStuff08(662, -1, 50, 35, 34, 36, 34), new LevelStuff08(745, -1, 50, 37, 36, 38, 37), new LevelStuff08(828, -1, 50, 40, 39, 41, 40), new LevelStuff08(911, -1, 50, 42, 41, 43, 42), new LevelStuff08(994, -1, 50, 45, 44, 46, 45), new LevelStuff08(1077, -1, 50, 47, 46, 48, 48), new LevelStuff08(1160, -1, 50, 50, 49, 51, 51), new LevelStuff08(1272, -1, 50, 52, 51, 53, 53), new LevelStuff08(1384, -1, 50, 55, 54, 56, 55), new LevelStuff08(1496, -1, 50, 57, 56, 58, 57), new LevelStuff08(1608, -1, 50, 60, 59, 61, 60), new LevelStuff08(1720, -1, 50, 62, 61, 63, 62), new LevelStuff08(1832, -1, 50, 65, 64, 66, 64), new LevelStuff08(1944, -1, 50, 67, 66, 68, 67), new LevelStuff08(2056, -1, 50, 70, 69, 71, 69), new LevelStuff08(2168, -1, 50, 72, 71, 73, 71), new LevelStuff08(2280, -1, 50, 75, 74, 76, 74), new LevelStuff08(2399, -1, 50, 77, 76, 78, 76), new LevelStuff08(2518, -1, 50, 80, 79, 81, 79), new LevelStuff08(2637, -1, 50, 82, 81, 83, 82), new LevelStuff08(2756, -1, 50, 85, 84, 86, 84), new LevelStuff08(2875, -1, 50, 87, 86, 88, 87), new LevelStuff08(2994, -1, 50, 90, 89, 91, 90), new LevelStuff08(3113, -1, 50, 92, 91, 93, 92), new LevelStuff08(3232, -1, 50, 95, 94, 96, 95), new LevelStuff08(3351, -1, 50, 97, 96, 98, 98), new LevelStuff08(3470, -1, 50, 100, 99, 101, 101), new LevelStuff08(3729, -1, 50, 102, 101, 103, 103), new LevelStuff08(3988, -1, 50, 105, 104, 105, 105), new LevelStuff08(4247, -1, 50, 107, 106, 108, 107), new LevelStuff08(4506, -1, 50, 110, 109, 110, 110), new LevelStuff08(4765, -1, 50, 112, 111, 113, 112), new LevelStuff08(5024, -1, 50, 115, 114, 115, 114), new LevelStuff08(5283, -1, 50, 117, 116, 118, 117), new LevelStuff08(5542, -1, 50, 120, 119, 120, 119), new LevelStuff08(5801, -1, 50, 122, 121, 123, 121), new LevelStuff08(6060, -1, 50, 125, 124, 125, 124), new LevelStuff08(6220, -1, 50, 127, 126, 128, 126), new LevelStuff08(6380, -1, 50, 130, 129, 131, 129), new LevelStuff08(6540, -1, 50, 133, 132, 133, 132), new LevelStuff08(6700, -1, 50, 136, 135, 136, 135), new LevelStuff08(6860, -1, 50, 138, 138, 139, 138), new LevelStuff08(7020, -1, 50, 141, 141, 141, 141), new LevelStuff08(7180, -1, 50, 144, 144, 144, 144), new LevelStuff08(7340, -1, 50, 147, 147, 147, 147), new LevelStuff08(7500, -1, 50, 150, 150, 150, 150), },
     {new LevelStuff08(0, -1, 0, 0, 0, 0, 0), new LevelStuff08(35, 8, 40, 3, 2, 4, 2), new LevelStuff08(67, -1, 40, 6, 3, 7, 3), new LevelStuff08(100, -1, 40, 13, 4, 10, 4), new LevelStuff08(133, -1, 40, 15, 6, 13, 5), new LevelStuff08(166, 9, 40, 16, 7, 16, 6), new LevelStuff08(199, -1, 40, 20, 8, 19, 7), new LevelStuff08(231, 10, 40, 23, 10, 22, 7), new LevelStuff08(264, -1, 40, 27, 11, 25, 8), new LevelStuff08(297, -1, 40, 30, 13, 28, 9), new LevelStuff08(330, -1, 40, 34, 14, 31, 10), new LevelStuff08(363, 11, 40, 37, 15, 34, 11), new LevelStuff08(454, -1, 40, 41, 17, 37, 12), new LevelStuff08(545, 12, 40, 45, 18, 41, 13), new LevelStuff08(636, -1, 40, 48, 20, 44, 14), new LevelStuff08(728, -1, 40, 52, 22, 47, 15), new LevelStuff08(819, -1, 40, 56, 23, 51, 16), new LevelStuff08(910, -1, 40, 60, 25, 54, 17), new LevelStuff08(1002, -1, 40, 63, 27, 57, 18), new LevelStuff08(1093, -1, 40, 67, 28, 61, 19), new LevelStuff08(1184, -1, 40, 71, 30, 64, 20), new LevelStuff08(1276, -1, 40, 75, 31, 67, 21), new LevelStuff08(1399, -1, 40, 78, 33, 71, 24), new LevelStuff08(1522, -1, 40, 82, 35, 74, 27), new LevelStuff08(1645, -1, 40, 86, 37, 77, 29), new LevelStuff08(1768, -1, 40, 90, 39, 81, 32), new LevelStuff08(1892, -1, 40, 93, 41, 84, 35), new LevelStuff08(2015, -1, 40, 97, 43, 87, 37), new LevelStuff08(2138, -1, 40, 101, 45, 91, 40), new LevelStuff08(2261, -1, 40, 105, 47, 94, 43), new LevelStuff08(2384, -1, 40, 108, 48, 97, 45), new LevelStuff08(2508, -1, 40, 112, 50, 101, 48), new LevelStuff08(2638, -1, 40, 116, 52, 104, 49), new LevelStuff08(2769, -1, 40, 120, 54, 107, 50), new LevelStuff08(2900, -1, 40, 123, 55, 111, 51), new LevelStuff08(3031, -1, 40, 127, 57, 114, 52), new LevelStuff08(3162, -1, 40, 131, 59, 117, 53), new LevelStuff08(3293, -1, 40, 135, 61, 121, 54), new LevelStuff08(3424, -1, 40, 138, 62, 124, 55), new LevelStuff08(3555, -1, 40, 142, 64, 127, 57), new LevelStuff08(3686, -1, 40, 146, 66, 131, 58), new LevelStuff08(3817, -1, 40, 150, 68, 134, 59), new LevelStuff08(4101, -1, 40, 153, 70, 137, 61), new LevelStuff08(4386, -1, 40, 157, 72, 141, 64), new LevelStuff08(4671, -1, 40, 161, 74, 144, 67), new LevelStuff08(4956, -1, 40, 165, 76, 147, 70), new LevelStuff08(5241, -1, 40, 168, 78, 151, 73), new LevelStuff08(5526, -1, 40, 172, 80, 154, 76), new LevelStuff08(5811, -1, 40, 176, 82, 157, 79), new LevelStuff08(6096, -1, 40, 180, 84, 161, 82), new LevelStuff08(6381, -1, 40, 183, 86, 164, 85), new LevelStuff08(6666, -1, 40, 187, 88, 167, 87), new LevelStuff08(6842, -1, 40, 191, 90, 171, 88), new LevelStuff08(7018, -1, 40, 195, 92, 174, 89), new LevelStuff08(7194, -1, 40, 200, 94, 178, 90), new LevelStuff08(7370, -1, 40, 204, 97, 182, 91), new LevelStuff08(7546, -1, 40, 208, 99, 185, 93), new LevelStuff08(7722, -1, 40, 212, 101, 189, 94), new LevelStuff08(7898, -1, 40, 216, 104, 192, 95), new LevelStuff08(8074, -1, 40, 220, 106, 196, 96), new LevelStuff08(8250, -1, 40, 225, 108, 199, 97), },
@@ -161,7 +158,6 @@ public final class SItem {
     {new LevelStuff08(0, 0, 0, 0, 0, 0, 0), new LevelStuff08(24, -1, 65, 2, 3, 2, 3), new LevelStuff08(48, -1, 65, 3, 6, 3, 6), new LevelStuff08(72, -1, 65, 5, 9, 5, 9), new LevelStuff08(96, -1, 65, 7, 12, 6, 12), new LevelStuff08(120, -1, 65, 8, 16, 8, 15), new LevelStuff08(144, -1, 65, 10, 19, 9, 19), new LevelStuff08(168, -1, 65, 12, 22, 11, 22), new LevelStuff08(192, -1, 65, 13, 26, 12, 25), new LevelStuff08(216, -1, 65, 15, 29, 14, 28), new LevelStuff08(240, -1, 65, 17, 32, 15, 31), new LevelStuff08(264, -1, 65, 19, 36, 17, 35), new LevelStuff08(330, -1, 65, 20, 41, 18, 41), new LevelStuff08(396, -1, 65, 21, 47, 20, 47), new LevelStuff08(463, -1, 65, 22, 53, 22, 53), new LevelStuff08(529, -1, 65, 23, 58, 24, 59), new LevelStuff08(596, -1, 65, 24, 64, 25, 65), new LevelStuff08(662, -1, 65, 26, 70, 27, 71), new LevelStuff08(728, -1, 65, 27, 75, 29, 77), new LevelStuff08(795, -1, 65, 28, 81, 31, 83), new LevelStuff08(861, -1, 65, 29, 87, 33, 89), new LevelStuff08(928, -1, 65, 30, 93, 34, 95), new LevelStuff08(1017, -1, 65, 32, 98, 36, 101), new LevelStuff08(1107, -1, 65, 33, 104, 37, 106), new LevelStuff08(1196, -1, 65, 35, 109, 39, 111), new LevelStuff08(1286, -1, 65, 36, 115, 40, 117), new LevelStuff08(1376, -1, 65, 38, 120, 42, 122), new LevelStuff08(1465, -1, 65, 39, 126, 43, 128), new LevelStuff08(1555, -1, 65, 40, 131, 45, 133), new LevelStuff08(1644, -1, 65, 42, 137, 46, 139), new LevelStuff08(1734, -1, 65, 43, 143, 48, 144), new LevelStuff08(1824, -1, 65, 45, 148, 50, 150), new LevelStuff08(1919, -1, 65, 47, 153, 51, 155), new LevelStuff08(2014, -1, 65, 48, 158, 53, 160), new LevelStuff08(2109, -1, 65, 50, 164, 54, 165), new LevelStuff08(2204, -1, 65, 52, 169, 56, 170), new LevelStuff08(2300, -1, 65, 54, 174, 57, 176), new LevelStuff08(2395, -1, 65, 56, 179, 59, 181), new LevelStuff08(2490, -1, 65, 58, 184, 60, 186), new LevelStuff08(2585, -1, 65, 60, 189, 62, 191), new LevelStuff08(2680, -1, 65, 61, 194, 63, 196), new LevelStuff08(2776, -1, 65, 63, 200, 65, 202), new LevelStuff08(2983, -1, 65, 65, 202, 68, 204), new LevelStuff08(3190, -1, 65, 67, 205, 72, 207), new LevelStuff08(3397, -1, 65, 69, 208, 75, 209), new LevelStuff08(3604, -1, 65, 71, 211, 79, 212), new LevelStuff08(3812, -1, 65, 73, 214, 83, 215), new LevelStuff08(4019, -1, 65, 76, 217, 86, 217), new LevelStuff08(4226, -1, 65, 78, 220, 90, 220), new LevelStuff08(4433, -1, 65, 80, 223, 93, 222), new LevelStuff08(4640, -1, 65, 82, 226, 97, 225), new LevelStuff08(4848, -1, 65, 84, 229, 101, 228), new LevelStuff08(4976, -1, 65, 86, 232, 106, 231), new LevelStuff08(5104, -1, 65, 88, 235, 111, 234), new LevelStuff08(5232, -1, 65, 91, 238, 117, 237), new LevelStuff08(5360, -1, 65, 93, 240, 122, 240), new LevelStuff08(5488, -1, 65, 95, 243, 127, 243), new LevelStuff08(5616, -1, 65, 97, 246, 133, 246), new LevelStuff08(5744, -1, 65, 100, 249, 138, 249), new LevelStuff08(5872, -1, 65, 102, 252, 143, 252), new LevelStuff08(6000, -1, 65, 104, 255, 149, 254), },
   };
 
-  //greytodo: see about turning into reg 
   public static final MagicStuff08[][] magicStuff_80111d20 = {
     {new MagicStuff08(0, -1, 255, 255, 255, 255, 255), new MagicStuff08(20, 0, 255, 150, 150, 200, 200), new MagicStuff08(40, 1, 255, 155, 155, 210, 210), new MagicStuff08(60, 2, 255, 160, 160, 220, 220), new MagicStuff08(80, -1, 255, 165, 165, 230, 230), new MagicStuff08(100, 3, 255, 170, 170, 250, 250), },
     {new MagicStuff08(0, -1, 255, 255, 255, 255, 255), new MagicStuff08(20, 5, 255, 150, 200, 200, 200), new MagicStuff08(40, 7, 255, 155, 205, 210, 210), new MagicStuff08(60, 6, 255, 160, 210, 220, 220), new MagicStuff08(80, -1, 255, 165, 215, 230, 230), new MagicStuff08(100, 8, 255, 170, 220, 250, 250), },
@@ -174,9 +170,18 @@ public final class SItem {
     {new MagicStuff08(0, -1, 255, 255, 255, 255, 255), new MagicStuff08(20, 66, 255, 200, 150, 200, 200), new MagicStuff08(40, 65, 255, 205, 155, 210, 210), new MagicStuff08(60, 67, 255, 210, 160, 220, 220), new MagicStuff08(80, -1, 255, 215, 165, 230, 230), new MagicStuff08(100, 13, 255, 220, 170, 250, 250), },
   };
 
-  public static int[][] xpTables = new int[LodMod.CHARACTER_NAMES.length][61];
+  public static final int[] kongolXpTable_801134f0 = new int[61];
+  public static final int[] dartXpTable_801135e4 = new int[61];
+  public static final int[] haschelXpTable_801136d8 = new int[61];
+  public static final int[] meruXpTable_801137cc = new int[61];
+  public static final int[] lavitzXpTable_801138c0 = new int[61];
+  public static final int[] albertXpTable_801138c0 = new int[61];
+  public static final int[] roseXpTable_801139b4 = new int[61];
+  public static final int[] shanaXpTable_80113aa8 = new int[61];
+  public static final int[] mirandaXpTable_80113aa8 = new int[61];
+  public static final int[][] xpTables = {dartXpTable_801135e4, lavitzXpTable_801138c0, shanaXpTable_80113aa8, roseXpTable_801139b4, haschelXpTable_801136d8, albertXpTable_801138c0, meruXpTable_801137cc, kongolXpTable_801134f0, mirandaXpTable_80113aa8};
 
-  //greytodo: see about turning into reg 
+
   public static final Addition04[][] additions_80114070 = {
     {new Addition04(0, 0, 0), new Addition04(0, 0, 0), new Addition04(25, 0, 5), new Addition04(50, 0, 10), new Addition04(75, 0, 20), new Addition04(100, 0, 35)},
     {new Addition04(0, 0, 0), new Addition04(0, 0, 0), new Addition04(25, 20, 5), new Addition04(50, 40, 10), new Addition04(75, 60, 15), new Addition04(100, 80, 25)},
@@ -514,13 +519,13 @@ public final class SItem {
 
   @Method(0x800fc698L)
   public static int getXpToNextLevel(final int charIndex) {
-    if(charIndex == -1 || charIndex > gameState_800babc8.charData_32c.size()) {
+    if(charIndex == -1 || charIndex > gameState_800babc8.charData_32c.length) {
       //LAB_800fc6a4
       throw new RuntimeException("Character index " + charIndex + " out of bounds");
     }
 
     //LAB_800fc6ac
-    final int level = gameState_800babc8.charData_32c.get(charIndex).getLevel();
+    final int level = gameState_800babc8.charData_32c[charIndex].level_12;
 
     if(level >= 60) {
       return 0; // Max level
@@ -772,7 +777,7 @@ public final class SItem {
     }
 
     //LAB_80103ac0
-    final CharacterData charData = gameState_800babc8.charData_32c.get(charIndex);
+    final CharacterData2c charData = gameState_800babc8.charData_32c[charIndex];
     final Equipment previousEquipment = charData.equipment_14.get(equipment.slot);
     charData.equipment_14.put(equipment.slot, equipment);
 
@@ -792,10 +797,11 @@ public final class SItem {
       characterIndices_800bdbb8[slot] = -1;
 
 
-      final String name = gameState_800babc8.charData_32c.get(slot).name;
+      /*final String name = gameState_800babc8.charData_32c[slot].name;
       final boolean forceAdd = (boolean) CONFIG.getConfig(legend.core.GameEngine.REGISTRIES.config.getEntry("lod", String.join("","force_add_and_keep_", name)).get());
       
-      if(((gameState_800babc8.charData_32c.get(slot).getPartyFlags() & 0x1) != 0) || forceAdd) {
+      if(((gameState_800babc8.charData_32c[slot].partyFlags_04 & 0x1) != 0) || forceAdd) {*/
+    if((gameState_800babc8.charData_32c[slot].partyFlags_04 & 0x1) != 0) {
         characterIndices_800bdbb8[characterCount_8011d7c4] = slot;
         characterCount_8011d7c4++;
 
@@ -908,8 +914,8 @@ public final class SItem {
       if(a0 == 0) {
         for(int i = 0; i < characterCount_8011d7c4; i++) {
           for(final EquipmentSlot equipmentSlot : EquipmentSlot.values()) {
-            if(gameState_800babc8.charData_32c.get(characterIndices_800bdbb8[i]).equipment_14.get(equipmentSlot) != null) {
-              final Equipment equipment = gameState_800babc8.charData_32c.get(characterIndices_800bdbb8[i]).equipment_14.get(equipmentSlot);
+            if(gameState_800babc8.charData_32c[characterIndices_800bdbb8[i]].equipment_14.get(equipmentSlot) != null) {
+              final Equipment equipment = gameState_800babc8.charData_32c[characterIndices_800bdbb8[i]].equipment_14.get(equipmentSlot);
               final MenuEntryStruct04<Equipment> menuEntry = MenuEntryStruct04.make(equipment);
               menuEntry.flags_02 = 0x3000 | characterIndices_800bdbb8[i];
               equipments.add(menuEntry);
@@ -946,24 +952,24 @@ public final class SItem {
 
       final int level = additionData_80052884[additionOffsets_8004f5ac[charIndex] + additionIndex].level_00;
 
-      if(level == -1 && (gameState_800babc8.charData_32c.get(charIndex).getPartyFlags() & 0x40) != 0) {
+      if(level == -1 && (gameState_800babc8.charData_32c[charIndex].partyFlags_04 & 0x40) != 0) {
         if(additions != null) {
           additions[t0].offset_00 = additionOffsets_8004f5ac[charIndex] + additionIndex;
           additions[t0].index_01 = additionIndex;
         }
 
         t0++;
-      } else if(level > 0 && level <= gameState_800babc8.charData_32c.get(charIndex).getLevel()) {
+      } else if(level > 0 && level <= gameState_800babc8.charData_32c[charIndex].level_12) {
         if(additions != null) {
           additions[t0].offset_00 = additionOffsets_8004f5ac[charIndex] + additionIndex;
           additions[t0].index_01 = additionIndex;
         }
 
-        if(gameState_800babc8.charData_32c.get(charIndex).additionLevels_1a[additionIndex] == 0) {
-          gameState_800babc8.charData_32c.get(charIndex).additionLevels_1a[additionIndex] = 1;
+        if(gameState_800babc8.charData_32c[charIndex].additionLevels_1a[additionIndex] == 0) {
+          gameState_800babc8.charData_32c[charIndex].additionLevels_1a[additionIndex] = 1;
         }
 
-        if(level == gameState_800babc8.charData_32c.get(charIndex).getLevel()) {
+        if(level == gameState_800babc8.charData_32c[charIndex].level_12) {
           t5 = additionOffsets_8004f5ac[charIndex] + additionIndex + 1;
         }
 
@@ -1427,7 +1433,7 @@ public final class SItem {
   @Method(0x80107e70L)
   public static boolean renderCharacterStatusEffect(final int x, final int y, final int charIndex) {
     //LAB_80107e90
-    final int status = gameState_800babc8.charData_32c.get(charIndex).getStatus();
+    final int status = gameState_800babc8.charData_32c[charIndex].status_10;
 
     if(tickCount_800bb0fc / currentEngineState_8004dd04.tickMultiplier() % 32 < 16) {
       return false;
@@ -1510,7 +1516,7 @@ public final class SItem {
         renderThreeDigitNumber(x + 106, y + 39, stats.mp_06);
         renderCharacter(x + 124, y + 39, 11);
         renderThreeDigitNumber(x + 148, y + 39, stats.maxMp_6e);
-        renderSixDigitNumber(x + 88, y + 50, gameState_800babc8.charData_32c.get(charId).getXp());
+        renderSixDigitNumber(x + 88, y + 50, gameState_800babc8.charData_32c[charId].xp_00);
         renderCharacter(x + 124, y + 50, 11);
         renderXp(x + 130, y + 50, getXpToNextLevel(charId));
 
@@ -1536,7 +1542,7 @@ public final class SItem {
       final ActiveStatsa0 statsTmp;
 
       if(equipment != null) {
-        final Map<EquipmentSlot, Equipment> oldEquipment = new EnumMap<>(gameState_800babc8.charData_32c.get(charIndex).equipment_14);
+        final Map<EquipmentSlot, Equipment> oldEquipment = new EnumMap<>(gameState_800babc8.charData_32c[charIndex].equipment_14);
 
         //LAB_80108638
         equipItem(equipment, charIndex);
@@ -1546,8 +1552,8 @@ public final class SItem {
         statsTmp = new ActiveStatsa0(stats_800be5f8[charIndex]);
 
         //LAB_801086e8
-        gameState_800babc8.charData_32c.get(charIndex).equipment_14.clear();
-        gameState_800babc8.charData_32c.get(charIndex).equipment_14.putAll(oldEquipment);
+        gameState_800babc8.charData_32c[charIndex].equipment_14.clear();
+        gameState_800babc8.charData_32c[charIndex].equipment_14.putAll(oldEquipment);
 
         loadCharacterStats();
       } else {
@@ -1621,7 +1627,7 @@ public final class SItem {
       return;
     }
 
-    final CharacterData charData = gameState_800babc8.charData_32c.get(charIndex);
+    final CharacterData2c charData = gameState_800babc8.charData_32c[charIndex];
 
     if(allocate) {
       allocateUiElement(0x59, 0x59, 194, 16);
@@ -1868,10 +1874,10 @@ public final class SItem {
     clearCharacterStats();
 
     //LAB_80110174
-    for(int charId = 0; charId < gameState_800babc8.charData_32c.size(); charId++) {
+    for(int charId = 0; charId < gameState_800babc8.charData_32c.length; charId++) {
       final ActiveStatsa0 stats = stats_800be5f8[charId];
 
-      final CharacterData charData = gameState_800babc8.charData_32c.get(charId);
+      final CharacterData2c charData = gameState_800babc8.charData_32c[charId];
 
       final CharacterStatsEvent statsEvent = EVENTS.postEvent(new CharacterStatsEvent(charId));
 
@@ -1952,7 +1958,7 @@ public final class SItem {
       if(charId == 0 && (gameState_800babc8.goods_19c[0] & 0x1 << dragoonGoodsBits_800fbd08[9]) != 0) {
         stats.flags_0c |= 0x6000;
 
-        stats.dlevel_0f = gameState_800babc8.charData_32c.get(0).getDlevel();
+        stats.dlevel_0f = gameState_800babc8.charData_32c[0].dlevel_13;
 
         final int a1 = dragoonGoodsBits_800fbd08[0];
 
@@ -1962,7 +1968,7 @@ public final class SItem {
           stats.maxMp_6e = statsEvent.maxMp;
         } else {
           //LAB_80110590
-          stats.mp_06 = charData.getMp();
+          stats.mp_06 = charData.mp_0a;
           stats.maxMp_6e = magicStuff.mp_00;
         }
       }
