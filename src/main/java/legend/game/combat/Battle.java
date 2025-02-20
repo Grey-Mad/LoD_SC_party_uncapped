@@ -456,8 +456,7 @@ public class Battle extends EngineState {
   public static final int[][] textboxColours_800c6fec = {{76, 183, 225}, {182, 112, 0}, {25, 15, 128}, {128, 128, 128}, {129, 9, 236}, {213, 197, 58}, {72, 255, 159}, {238, 9, 9}, {0, 41, 159}};
 
   @SuppressWarnings("unchecked")
-  //greytodo: change back after test
-  public static final RegistryDelegate<Element>[] characterElements_800c706c = new RegistryDelegate[] {LodMod.FIRE_ELEMENT, LodMod.WIND_ELEMENT, LodMod.LIGHT_ELEMENT, LodMod.DARK_ELEMENT, LodMod.THUNDER_ELEMENT, LodMod.WIND_ELEMENT, LodMod.WATER_ELEMENT, LodMod.EARTH_ELEMENT, LodMod.LIGHT_ELEMENT, LodMod.WATER_ELEMENT};
+  public static final RegistryDelegate<Element>[] characterElements_800c706c = new RegistryDelegate[] {LodMod.FIRE_ELEMENT, LodMod.WIND_ELEMENT, LodMod.LIGHT_ELEMENT, LodMod.DARK_ELEMENT, LodMod.THUNDER_ELEMENT, LodMod.WIND_ELEMENT, LodMod.WATER_ELEMENT, LodMod.EARTH_ELEMENT, LodMod.LIGHT_ELEMENT};
 
   /** Different sets of bents for different target types (chars, monsters, all) */
   public ScriptState<BattleEntity27c>[][] targetBents_800c71f0;
@@ -2718,7 +2717,7 @@ public class Battle extends EngineState {
           }
         }
       }
-      combatant.recreateTexture = true;
+      
     } else {
       final Rect4i imageRect = tim.getImageRect();
   
@@ -6710,8 +6709,8 @@ public class Battle extends EngineState {
     effect.tmdType_04 = null;
     effect.extTmd_08 = null;
     if((id & 0xff00_0000) != 0x700_0000) {
-      effect.texture15 = ((BattleEntity27c)scriptStatePtrArr_800bc1c0[id].innerStruct_00).combatant_144.texture15;//greytodo: crash when entering the 5th generation, DRGN0.BIN\5650 
-      effect.texture24 =((BattleEntity27c)scriptStatePtrArr_800bc1c0[id].innerStruct_00).combatant_144.texture24;
+      effect.texture15 = ((BattleEntity27c)scriptStatePtrArr_800bc1c0[id].innerStruct_00).texture15;//greytodo: crash when entering the 5th generation, DRGN0.BIN\5650 
+      effect.texture24 =((BattleEntity27c)scriptStatePtrArr_800bc1c0[id].innerStruct_00).texture24;
       effect.textured = true;
     }
     effect.model_134 = effect.model_10;

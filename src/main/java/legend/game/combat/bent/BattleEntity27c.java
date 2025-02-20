@@ -40,7 +40,6 @@ import static legend.core.GameEngine.RENDERER;
 import static legend.game.Scus94491BpeSegment.tmdGp0Tpage_1f8003ec;
 import static legend.game.Scus94491BpeSegment.zOffset_1f8003e8;
 import static legend.game.Scus94491BpeSegment_8002.animateModel;
-import static legend.game.Scus94491BpeSegment_8002.animateModelTextures;
 import static legend.game.Scus94491BpeSegment_8002.applyModelRotationAndScale;
 import static legend.game.Scus94491BpeSegment_8003.GsGetLs;
 import static legend.game.Scus94491BpeSegment_8003.GsGetLws;
@@ -54,7 +53,13 @@ import static legend.game.combat.Battle.FUN_800ca194;
 import static legend.game.combat.Battle.loadCombatantModelAndAnimation;
 import static legend.game.combat.Battle.spellStats_800fa0b8;
 import static legend.game.combat.SEffe.renderBttlShadow;
+import static org.lwjgl.system.MemoryStack.create;
 
+import static org.lwjgl.opengl.GL30C.GL_R32UI;
+import static org.lwjgl.opengl.GL30C.GL_RED_INTEGER;
+import static org.lwjgl.opengl.GL11C.GL_UNSIGNED_INT;
+import static org.lwjgl.opengl.GL12C.GL_UNSIGNED_INT_8_8_8_8_REV;
+import static org.lwjgl.opengl.GL11C.GL_RGBA;
 
 public abstract class BattleEntity27c extends BattleObject {
   
@@ -228,9 +233,11 @@ public abstract class BattleEntity27c extends BattleObject {
   public final Rect4i scissor = new Rect4i();
   public boolean useScissor;
 
-  private Texture combatantTexture15;
-  private Texture combatantTexture24;
-  private boolean recreateTexture = true;
+  private Texture texture15;
+  private Texture texture24;
+  private int[] vram15;
+  private int[] vram24;
+  //private boolean recreateTexture = true;*/
 
   public BattleEntity27c(final BattleEntityType type, final String name) {
     super(BattleObject.BOBJ);
@@ -594,6 +601,11 @@ public abstract class BattleEntity27c extends BattleObject {
         this.model_148.uvAdjustments_9d = new UvAdjustmentMetrics14(1, 0, 240, 0, 0, false);
         this.loadingAnimIndex_26e = 0;
         loadCombatantModelAndAnimation(this.model_148, this.combatant_144);
+
+        this.vram15 = this.combatant_144.textureVram15;
+        this.vram24 = this.combatant_144.textureVram24;
+        createTextureFromTim(this.combatant_144.textureW,this.combatant_144.textureH);
+
         this._278 = 1;
         this.currentAnimIndex_270 = -1;
 
@@ -609,6 +621,26 @@ public abstract class BattleEntity27c extends BattleObject {
 
     //LAB_800caf38
   }
+
+
+  public void createTextureFromTim(final int w, final int h) {
+    this.texture15= Texture.create(builder -> {
+      builder.size(w, h);
+      builder.data(this.vram15, w, h);
+      builder.internalFormat(GL_R32UI);
+      builder.dataFormat(GL_RED_INTEGER);
+      builder.dataType(GL_UNSIGNED_INT);
+    });
+
+    this.texture24 = Texture.create(builder -> {
+      builder.size(w, h);
+      builder.data(this.vram24, w, h);
+      builder.internalFormat(GL_RGBA);
+      builder.dataFormat(GL_RGBA);
+      builder.dataType(GL_UNSIGNED_INT_8_8_8_8_REV);
+    });
+  }
+
 
   protected abstract ScriptFile getScript();
 
@@ -636,13 +668,13 @@ public abstract class BattleEntity27c extends BattleObject {
   @Method(0x800cb024L)
   protected void bentRenderer(final ScriptState<? extends BattleEntity27c> state, final BattleEntity27c bent) {
     
-    if (this.recreateTexture || combatant_144.recreateTexture){ //greytodo: find way to remove and this.recreateTexture
+    /*if (this.recreateTexture || combatant_144.recreateTexture){ //greytodo: find way to remove and this.recreateTexture
       state.innerStruct_00.combatant_144.createTextureFromTim();
       this.combatantTexture15 = state.innerStruct_00.combatant_144.texture15;
       this.combatantTexture24 = state.innerStruct_00.combatant_144.texture24;
       this.recreateTexture = false;
       combatant_144.recreateTexture = false;
-    }
+    }*/
     //greytodo: find way to animate textures
   
     if((state.storage_44[7] & 0x211) == 0) {
@@ -696,8 +728,8 @@ public abstract class BattleEntity27c extends BattleObject {
             .ctmdFlags((part.attribute_00 & 0x4000_0000) != 0 ? 0x12 : 0x0)
             .tmdTranslucency(tmdGp0Tpage_1f8003ec >>> 5 & 0b11)
             .battleColour(((Battle)currentEngineState_8004dd04)._800c6930.colour_00)
-            .texture(this.combatantTexture24,0)
-            .texture(this.combatantTexture15,1);
+            .texture(texture24,0)
+            .texture(texture15,1);
 
           if(this.useScissor) {
             queue.scissor(this.scissor);
