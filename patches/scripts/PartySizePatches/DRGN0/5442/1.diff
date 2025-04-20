@@ -1,20 +1,20 @@
 --- original
 +++ modified
-@@ -1813,12 +1813,26 @@
- gosub inl[:LABEL_67]
+@@ -1803,12 +1803,26 @@
+ gosub inl[:LABEL_76]
  mov 0x14, stor[23]
  wait stor[23]
-+jmp_cmp ==, var[34][2], 0xffffffff, inl[:SKIP_0]
- gosub inl[:LABEL_129]
-+SKIP_0:
++jmp_cmp ==, var[34][2], 0xffffffff, inl[:SKIP_P_2]
+ gosub inl[:LABEL_134]
++SKIP_P_2:
  mov 0x5, stor[23]
  wait stor[23]
-+jmp_cmp ==, var[34][1], 0xffffffff, inl[:SKIP_1]
- gosub inl[:LABEL_126]
-+SKIP_1:
++jmp_cmp ==, var[34][1], 0xffffffff, inl[:SKIP_P_1]
+ gosub inl[:LABEL_131]
++SKIP_P_1:
  mov 0x7, stor[23]
  wait stor[23]
- gosub inl[:LABEL_132]
+ gosub inl[:LABEL_137]
  mov 0x8, stor[23]
  wait stor[23]
 +mov 0x3, stor[4]
@@ -26,26 +26,26 @@
 +wait stor[23]
 +incr stor[4]
 +jmp inl[:LOOP_0]
-+SKIP:
-@@ -2486,15 +2250,48 @@
- LABEL_136:
++SKIP: 
+@@ -2496,15 +2510,49 @@
+ LABEL_141:
  call 548, stor[0], 0xffffffff, stor[24], stor[25], stor[26]
  mov stor[24], stor[27]
 -mov var[34][0], stor[28]
 +mov 0x0, stor[4]
 +LOOP:
 +mov var[34][stor[4]], stor[28]
-+jmp_cmp ==, stor[28], 0xffffffff, inl[:SKIP_R]
- gosub inl[:LABEL_137]
++jmp_cmp ==, stor[28], 0xffffffff, inl[:SKIP_R] 
+ gosub inl[:LABEL_142]
 +incr stor[4]
 +jmp inl[:LOOP]
 +SKIP_R:
 -mov var[34][1], stor[28]
--gosub inl[:LABEL_137]
+-gosub inl[:LABEL_142]
 -mov var[34][2], stor[28]
--gosub inl[:LABEL_137]
+-gosub inl[:LABEL_142]
  yield
- jmp inl[:LABEL_136]
+ jmp inl[:LABEL_141]
  data 0x1
 +FORK_TO_FALL:
 +call 600, stor[18]
@@ -79,6 +79,6 @@
 +call 640, 0x1, 0xfffffe00, 0x400, 0x0, stor[24], stor[25], stor[26]
 +call 130, stor[28], stor[24], stor[25], stor[26]
 +rewind
- LABEL_137:
+ LABEL_142:
  call 513, stor[28], stor[27]
  mov stor[stor[stor[0], 28], 24], stor[24]
