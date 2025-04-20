@@ -222,7 +222,7 @@ public class BattleHud {
   }
 
   @Method(0x800eca98L)
-  private void drawTargetArrow(final int targetType, final int combatantIdx) {//greytodo: see about changing arrow order
+  private void drawTargetArrow(final int targetType, final int combatantIdx) {//greytodo: see about changing arrow draw order
     if(combatantIdx != -1) {
       //LAB_800ecb50
       //LAB_800ecb54
@@ -357,11 +357,16 @@ public class BattleHud {
   @Method(0x800ef8d8L)
   public void initCharacterDisplay(final int charSlot) {
     
-    if (battleState_8006e398.getAlivePlayerCount()>3){
-      this.uiScaleFactor = (288/(94f*(battleState_8006e398.getAlivePlayerCount()/3f)))/3f;
+
+    //float screenBaseX = 320f;
+    //float screenBaseLeftRightOffetset = 16f;
+
+
+    if (battleState_8006e398.getPlayerCount()>3){
+      this.uiScaleFactor = (288f/(94f*(battleState_8006e398.getPlayerCount()/3f)))/3f;
       this.uiScaleFactor = this.uiScaleFactor*RENDERER.getRenderAspectRatio()/1.33333f;
     }else{
-      uiScaleFactor = 1f;
+      this.uiScaleFactor = (288f/94f)/3f;
     }
 
     
@@ -495,7 +500,9 @@ public class BattleHud {
       if(this.activePartyBattleHudCharacterDisplays_800c6c40[0].charIndex_00 != -1 && (this.activePartyBattleHudCharacterDisplays_800c6c40[0].flags_06 & 0x1) != 0) {
         if(this.battleUiBackground == null) {
 
-          this.battleUiBackground = new UiBox("Battle UI Background", this.battleUiLeftGapWidth, battleHudYOffsets_800fb198[this.battleHudYOffsetIndex_800c6c38] - Math.round(26*this.uiScaleFactor), this.battleUiBackgroundWidth, Math.round(40*this.uiScaleFactor));
+          this.battleUiBackground = new UiBox("Battle UI Background", 
+              this.battleUiLeftGapWidth, battleHudYOffsets_800fb198[this.battleHudYOffsetIndex_800c6c38] - Math.round(26*this.uiScaleFactor), 
+              this.battleUiBackgroundWidth+1, Math.round(40*this.uiScaleFactor));
         }
 
         this.battleUiBackground.render(Config.changeBattleRgb() ? Config.getBattleRgb() : Config.defaultUiColour);
@@ -1342,6 +1349,14 @@ public class BattleHud {
     this.battleUiBackgroundWidth = Math.round(288*RENDERER.getRenderAspectRatio()/1.33333f);      
     final int scaledHalfWidthChange = Math.round((320*RENDERER.getRenderAspectRatio()/1.33333f-320)/2);
     this.battleUiLeftGapWidth  = Math.round(16*RENDERER.getRenderAspectRatio()/1.33333f)-scaledHalfWidthChange;
+
+    
+    if (battleState_8006e398.getPlayerCount() <= 3){
+
+      this.battleUiBackgroundWidth = 288;
+      this.battleUiLeftGapWidth = 16;
+    }
+
     
     int x = Math.round(this.battleUiLeftGapWidth)+Math.round(47*this.uiScaleFactor);
 
