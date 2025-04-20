@@ -64,7 +64,7 @@ public class CharSwapScreen extends MenuScreen {
           int secondarySlotIndex;
 
           /* Check current party for empty slots or swappable characters above locked characters. */
-          for(primarySlotIndex = 0; primarySlotIndex < 2 && !sortPrimary; primarySlotIndex++) {
+          for(primarySlotIndex = 0; primarySlotIndex < (gameState_800babc8.charIds_88.length-1) && !sortPrimary; primarySlotIndex++) {
             final int charA = gameState_800babc8.charIds_88[primarySlotIndex];
             final int charB = gameState_800babc8.charIds_88[primarySlotIndex + 1];
             sortPrimary = charA == -1 || charB == -1 || (gameState_800babc8.charData_32c[charA].partyFlags_04 & 0x20) == 0 && (gameState_800babc8.charData_32c[charB].partyFlags_04 & 0x20) != 0;
@@ -83,18 +83,18 @@ public class CharSwapScreen extends MenuScreen {
                 1. Locked/required characters.
                 2. Available characters in current party.
                 3. Available characters not in current party. */
-            for(charIndex = 0, primarySlotIndex = 0; charIndex < 9 && primarySlotIndex < 3; charIndex++) {
+            for(charIndex = 0, primarySlotIndex = 0; charIndex < 9 && primarySlotIndex < gameState_800babc8.charIds_88.length; charIndex++) {
               if((gameState_800babc8.charData_32c[charIndex].partyFlags_04 & 0x20) != 0) {
                 slots[primarySlotIndex++] = charIndex;
               }
             }
-            for(int i = 0; i < 3 && primarySlotIndex < 3; i++) {
+            for(int i = 0; i < 3 && primarySlotIndex < gameState_800babc8.charIds_88.length; i++) {
               charIndex = gameState_800babc8.charIds_88[i];
               if(charIndex != -1 && (gameState_800babc8.charData_32c[charIndex].partyFlags_04 & 0x2) != 0 && charIndex != slots[0] && charIndex != slots[1] && charIndex != slots[2]) {
                 slots[primarySlotIndex++] = charIndex;
               }
             }
-            for(charIndex = 0; charIndex < 9 && primarySlotIndex < 3; charIndex++) {
+            for(charIndex = 0; charIndex < 9 && primarySlotIndex < gameState_800babc8.charIds_88.length; charIndex++) {
               if((gameState_800babc8.charData_32c[charIndex].partyFlags_04 & 0x2) != 0 && charIndex != slots[0] && charIndex != slots[1] && charIndex != slots[2]) {
                 slots[primarySlotIndex++] = charIndex;
               }
@@ -110,6 +110,7 @@ public class CharSwapScreen extends MenuScreen {
               secondaryCharIds_800bdbf8[secondarySlotIndex++] = -1;
             }
 
+            //greytodo complete looping
             gameState_800babc8.charIds_88[0] = slots[0];
             gameState_800babc8.charIds_88[1] = slots[1];
             gameState_800babc8.charIds_88[2] = slots[2];
