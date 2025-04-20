@@ -138,16 +138,15 @@ public class GameVarParam extends Param {
       case 113 -> Scus94491BpeSegment_800b.gameState_800babc8.visitedLocations_17c.getRaw(0);
       case 114 -> Scus94491BpeSegment_800b.gameState_800babc8.goods_19c[0];
 
-      //greytodo patch all scripts
-      case 115 -> Scus94491BpeSegment_800b.gameState_800babc8.charData_32c.get(0).getPartyFlags();
-      case 116 -> Scus94491BpeSegment_800b.gameState_800babc8.charData_32c.get(1).getPartyFlags();
-      case 117 -> Scus94491BpeSegment_800b.gameState_800babc8.charData_32c.get(2).getPartyFlags();
-      case 118 -> Scus94491BpeSegment_800b.gameState_800babc8.charData_32c.get(3).getPartyFlags();
-      case 119 -> Scus94491BpeSegment_800b.gameState_800babc8.charData_32c.get(4).getPartyFlags();
-      case 120 -> Scus94491BpeSegment_800b.gameState_800babc8.charData_32c.get(5).getPartyFlags();
-      case 121 -> Scus94491BpeSegment_800b.gameState_800babc8.charData_32c.get(6).getPartyFlags();
-      case 122 -> Scus94491BpeSegment_800b.gameState_800babc8.charData_32c.get(7).getPartyFlags();
-      case 123 -> Scus94491BpeSegment_800b.gameState_800babc8.charData_32c.get(8).getPartyFlags();
+      case 115 -> Scus94491BpeSegment_800b.gameState_800babc8.charData_32c[0].partyFlags_04;
+      case 116 -> Scus94491BpeSegment_800b.gameState_800babc8.charData_32c[1].partyFlags_04;
+      case 117 -> Scus94491BpeSegment_800b.gameState_800babc8.charData_32c[2].partyFlags_04;
+      case 118 -> Scus94491BpeSegment_800b.gameState_800babc8.charData_32c[3].partyFlags_04;
+      case 119 -> Scus94491BpeSegment_800b.gameState_800babc8.charData_32c[4].partyFlags_04;
+      case 120 -> Scus94491BpeSegment_800b.gameState_800babc8.charData_32c[5].partyFlags_04;
+      case 121 -> Scus94491BpeSegment_800b.gameState_800babc8.charData_32c[6].partyFlags_04;
+      case 122 -> Scus94491BpeSegment_800b.gameState_800babc8.charData_32c[7].partyFlags_04;
+      case 123 -> Scus94491BpeSegment_800b.gameState_800babc8.charData_32c[8].partyFlags_04;
 
       //case 116 -> battleState_8006e398.;
       //case 116 -> battleState_8006e398.;
@@ -288,17 +287,16 @@ public class GameVarParam extends Param {
       case 112 -> Scus94491BpeSegment_800b.gameState_800babc8.wmapFlags_15c.setRaw(0, val);
       case 113 -> Scus94491BpeSegment_800b.gameState_800babc8.visitedLocations_17c.setRaw(0, val);
       case 114 -> Scus94491BpeSegment_800b.gameState_800babc8.goods_19c[0] = val;
-
-      //greytodo patch all scripts
-      case 115 -> Scus94491BpeSegment_800b.gameState_800babc8.charData_32c.get(0).setPartyFlags(val);
-      case 116 -> Scus94491BpeSegment_800b.gameState_800babc8.charData_32c.get(1).setPartyFlags(val);
-      case 117 -> Scus94491BpeSegment_800b.gameState_800babc8.charData_32c.get(2).setPartyFlags(val);
-      case 118 -> Scus94491BpeSegment_800b.gameState_800babc8.charData_32c.get(3).setPartyFlags(val);
-      case 119 -> Scus94491BpeSegment_800b.gameState_800babc8.charData_32c.get(4).setPartyFlags(val);
-      case 120 -> Scus94491BpeSegment_800b.gameState_800babc8.charData_32c.get(5).setPartyFlags(val);
-      case 121 -> Scus94491BpeSegment_800b.gameState_800babc8.charData_32c.get(6).setPartyFlags(val);
-      case 122 -> Scus94491BpeSegment_800b.gameState_800babc8.charData_32c.get(7).setPartyFlags(val);
-      case 123 -> Scus94491BpeSegment_800b.gameState_800babc8.charData_32c.get(8).setPartyFlags(val);
+      
+      case 115 -> Scus94491BpeSegment_800b.gameState_800babc8.charData_32c[0].partyFlags_04 = val;
+      case 116 -> Scus94491BpeSegment_800b.gameState_800babc8.charData_32c[1].partyFlags_04 = val;
+      case 117 -> Scus94491BpeSegment_800b.gameState_800babc8.charData_32c[2].partyFlags_04 = val;
+      case 118 -> Scus94491BpeSegment_800b.gameState_800babc8.charData_32c[3].partyFlags_04 = val;
+      case 119 -> Scus94491BpeSegment_800b.gameState_800babc8.charData_32c[4].partyFlags_04 = val;
+      case 120 -> Scus94491BpeSegment_800b.gameState_800babc8.charData_32c[5].partyFlags_04 = val;
+      case 121 -> Scus94491BpeSegment_800b.gameState_800babc8.charData_32c[6].partyFlags_04 = val;
+      case 122 -> Scus94491BpeSegment_800b.gameState_800babc8.charData_32c[7].partyFlags_04 = val;
+      case 123 -> Scus94491BpeSegment_800b.gameState_800babc8.charData_32c[8].partyFlags_04 = val;
 
 
       case 124 -> Scus94491BpeSegment_8005.standingInSavePoint_8005a368 = val != 0;

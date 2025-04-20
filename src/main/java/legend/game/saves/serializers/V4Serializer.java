@@ -193,9 +193,6 @@ public final class V4Serializer {
         charData.additionXp_22[additionSlot] = data.readInt(offset);
         offset += 4;
       }
-      //greytodo: fills with the correct data but will be empty
-      //charData.(j);
-      //state.charData_32c.add(charData);
     }
     
     for(int i = 0; i < 8; i++) {

@@ -45,13 +45,6 @@ public class CombatantStruct1a8 {
   public int _1a4;
   public int _1a6;
 
-  public int textureW;
-  public int textureH;
-  public int[] textureVram24 = new int[256 * 64];
-  public int[] textureVram15 = new int[256 * 64];
-  /*public Texture texture15;
-  public Texture texture24;
-  public boolean recreateTexture;*/
 
   @Method(0x800c90b0L)
   public boolean isModelLoaded() {
@@ -77,22 +70,5 @@ public class CombatantStruct1a8 {
   public record ItemDrop(int chance, InventoryEntry item) {
   }
 
-  /*public void createTextureFromTim(final int w, final int h, int[] textureVram15, int[] textureVram24) {
-    this.texture15= Texture.create(builder -> {
-      builder.size(this.textureW, this.textureH);
-      builder.data(this.textureVram15, this.textureW, this.textureH);
-      builder.internalFormat(GL_R32UI);
-      builder.dataFormat(GL_RED_INTEGER);
-      builder.dataType(GL_UNSIGNED_INT);
-    });
-
-    this.texture24 = Texture.create(builder -> {
-      builder.size(this.textureW, this.textureH);
-      builder.data(this.textureVram24, this.textureW, this.textureH);
-      builder.internalFormat(GL_RGBA);
-      builder.dataFormat(GL_RGBA);
-      builder.dataType(GL_UNSIGNED_INT_8_8_8_8_REV);
-    });
-  }*/
 
 }

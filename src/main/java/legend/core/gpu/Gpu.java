@@ -58,16 +58,6 @@ public class Gpu {
   private Texture vramTexture24;
   private boolean vramDirty;
 
-
-  public List<int[]> vram24PerCombatant = new ArrayList<>();
-  public List<int[]> vram15PerCombatant = new ArrayList<>();
-  private List<Texture> vramTexture15PerCombatant = new ArrayList<>();
-  private List<Texture> vramTexture24PerCombatant = new ArrayList<>();
-  public List<Integer> vramTexture15PerCombatantW = new ArrayList<>();
-  public List<Integer> vramTexture15PerCombatantH = new ArrayList<>();
-  public List<Integer> vramTexture24PerCombatantW = new ArrayList<>();
-  public List<Integer> vramTexture24PerCombatantH = new ArrayList<>();
-
   private Shader<SimpleShaderOptions> vramShader;
   private SimpleShaderOptions vramShaderOptions;
   private Shader.UniformBuffer transforms2Uniform;
