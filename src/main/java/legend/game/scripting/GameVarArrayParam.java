@@ -27,6 +27,11 @@ public class GameVarArrayParam extends Param {
   
   @Override
   public int get() {
+
+    if (this.varIndex>=128){
+      return this.readStatusConditionsVar(varIndex-128, this.arrIndex);
+    }
+
     return switch(this.varIndex) {
       case 6 -> Scus94491BpeSegment_800b.gameState_800babc8.scriptData_08[this.arrIndex];
       case 17 -> Scus94491BpeSegment_800b.gameState_800babc8.charIds_88[this.arrIndex];
@@ -45,30 +50,16 @@ public class GameVarArrayParam extends Param {
       case 112 -> Scus94491BpeSegment_800b.gameState_800babc8.wmapFlags_15c.getRaw(this.arrIndex);
       case 113 -> Scus94491BpeSegment_800b.gameState_800babc8.visitedLocations_17c.getRaw(this.arrIndex);
       case 114 -> Scus94491BpeSegment_800b.gameState_800babc8.goods_19c[this.arrIndex];
-      //case 115 -> this.readPartyFlags(this.arrIndex); //greytodo
-      
       case 126 -> Scus94491BpeSegment_800b.gameState_800babc8._1a4[this.arrIndex];
       case 127 -> Scus94491BpeSegment_800b.gameState_800babc8.chestFlags_1c4[this.arrIndex];
-      case 128 -> this.readStatusConditionsVar(0, this.arrIndex);//greytodo: should this be an array or list?
-      case 129 -> this.readStatusConditionsVar(1, this.arrIndex);
-      case 130 -> this.readStatusConditionsVar(2, this.arrIndex);
-      case 131 -> this.readStatusConditionsVar(3, this.arrIndex);
-      case 132 -> this.readStatusConditionsVar(4, this.arrIndex);
-      case 133 -> this.readStatusConditionsVar(5, this.arrIndex);
-      case 134 -> this.readStatusConditionsVar(6, this.arrIndex);
-      case 135 -> this.readStatusConditionsVar(7, this.arrIndex);
-      case 136 -> this.readStatusConditionsVar(8, this.arrIndex);
-      case 137 -> this.readStatusConditionsVar(9, this.arrIndex);
-      case 138 -> this.readStatusConditionsVar(10, this.arrIndex);
-      case 139 -> this.readStatusConditionsVar(11, this.arrIndex);
-      case 140 -> this.readStatusConditionsVar(12, this.arrIndex);
-      case 141 -> this.readStatusConditionsVar(13, this.arrIndex);
-      case 142 -> this.readStatusConditionsVar(14, this.arrIndex);
-      case 143 -> this.readStatusConditionsVar(15, this.arrIndex);
-      case 144 -> this.readStatusConditionsVar(16, this.arrIndex);
-      case 145 -> this.readStatusConditionsVar(17, this.arrIndex);
-      case 146 -> this.readStatusConditionsVar(18, this.arrIndex);
-      case 147 -> this.readStatusConditionsVar(19, this.arrIndex);
+
+      /*case 202 -> this.readDragoonTurnsRemainingVar(this.arrIndex);//
+      case 203 -> this.read2e8Var(this.arrIndex);//
+      case 204 -> this.read334Var(this.arrIndex);//
+      case 205 -> this.read34cVar(this.arrIndex);//
+      case 206 -> this.readStatusVar(this.arrIndex);//0x81 129
+      case 207 -> this.read460Var(this.arrIndex);//
+      case 208 -> this.readAdditionExtraVar(this.arrIndex);//0xbd */
 
       default -> throw new IllegalArgumentException("Unknown game data index " + this.varIndex);
     };
@@ -76,6 +67,12 @@ public class GameVarArrayParam extends Param {
 
   @Override
   public Param set(final int val) {
+
+    if (this.varIndex>=128){
+      this.writeStatusConditionsVar(varIndex-128, this.arrIndex, val);
+      return this;
+    }
+
     switch(this.varIndex) {
       case 6 -> Scus94491BpeSegment_800b.gameState_800babc8.scriptData_08[this.arrIndex] = val;
       case 17 -> Scus94491BpeSegment_800b.gameState_800babc8.charIds_88[this.arrIndex] = val;
@@ -93,29 +90,16 @@ public class GameVarArrayParam extends Param {
       case 112 -> Scus94491BpeSegment_800b.gameState_800babc8.wmapFlags_15c.setRaw(this.arrIndex, val);
       case 113 -> Scus94491BpeSegment_800b.gameState_800babc8.visitedLocations_17c.setRaw(this.arrIndex, val);
       case 114 -> Scus94491BpeSegment_800b.gameState_800babc8.goods_19c[this.arrIndex] = val;
-      //case 115 -> this.writePartyFlags(this.arrIndex, val); //greytodo
       case 126 -> Scus94491BpeSegment_800b.gameState_800babc8._1a4[this.arrIndex] = val;
       case 127 -> Scus94491BpeSegment_800b.gameState_800babc8.chestFlags_1c4[this.arrIndex] = val;
-      case 128 -> this.writeStatusConditionsVar(0, this.arrIndex, val); //greytodo: how big should this be 
-      case 129 -> this.writeStatusConditionsVar(1, this.arrIndex, val);
-      case 130 -> this.writeStatusConditionsVar(2, this.arrIndex, val);
-      case 131 -> this.writeStatusConditionsVar(3, this.arrIndex, val);
-      case 132 -> this.writeStatusConditionsVar(4, this.arrIndex, val);
-      case 133 -> this.writeStatusConditionsVar(5, this.arrIndex, val);
-      case 134 -> this.writeStatusConditionsVar(6, this.arrIndex, val);
-      case 135 -> this.writeStatusConditionsVar(7, this.arrIndex, val);
-      case 136 -> this.writeStatusConditionsVar(8, this.arrIndex, val);
-      case 137 -> this.writeStatusConditionsVar(9, this.arrIndex, val);
-      case 138 -> this.writeStatusConditionsVar(10, this.arrIndex, val);
-      case 139 -> this.writeStatusConditionsVar(11, this.arrIndex, val);
-      case 140 -> this.writeStatusConditionsVar(12, this.arrIndex, val);
-      case 141 -> this.writeStatusConditionsVar(13, this.arrIndex, val);
-      case 142 -> this.writeStatusConditionsVar(14, this.arrIndex, val);
-      case 143 -> this.writeStatusConditionsVar(15, this.arrIndex, val);
-      case 144 -> this.writeStatusConditionsVar(16, this.arrIndex, val);
-      case 145 -> this.writeStatusConditionsVar(17, this.arrIndex, val);
-      case 146 -> this.writeStatusConditionsVar(18, this.arrIndex, val);
-      case 147 -> this.writeStatusConditionsVar(19, this.arrIndex, val);
+ 
+      /*case 202 -> this.writeDragoonTurnsRemainingVar(this.arrIndex, val);
+      case 203 -> this.write2e8Var(this.arrIndex, val);
+      case 204 -> this.write334Var(this.arrIndex, val);
+      case 205 -> this.write34cVar(this.arrIndex, val);
+      case 206 -> this.writeStatusVar(this.arrIndex, val);
+      case 207 -> this.write460Var(this.arrIndex, val);
+      case 208 -> this.writeAdditionExtraVar(this.arrIndex, val);*/
 
       default -> throw new IllegalArgumentException("Unknown game data index " + this.varIndex);
     }
@@ -760,4 +744,48 @@ public class GameVarArrayParam extends Param {
       default -> throw new IllegalArgumentException("Unknown special effect var index " + varIndex);
     }
   }
+
+  /*private int readDragoonTurnsRemainingVar(final int varIndex) {
+    return Scus94491BpeSegment_8006.battleState_8006e398.dragoonTurnsRemaining_294[varIndex];
+  };
+  private void writeDragoonTurnsRemainingVar(final int varIndex, final int val) {
+    Scus94491BpeSegment_8006.battleState_8006e398.dragoonTurnsRemaining_294[varIndex] = val;
+  };
+  private int read2e8Var(final int varIndex) {
+    return Scus94491BpeSegment_8006.battleState_8006e398._2e8[varIndex];
+  };
+  private void write2e8Var(final int varIndex, final int val) {
+    Scus94491BpeSegment_8006.battleState_8006e398._2e8[varIndex] = val;
+  };
+  private int read334Var(final int varIndex) {
+    return Scus94491BpeSegment_8006.battleState_8006e398._334[varIndex];
+  };
+  private void write334Var(final int varIndex, final int val) {
+    Scus94491BpeSegment_8006.battleState_8006e398._334[varIndex] = val;
+  };
+  private int read34cVar(final int varIndex) {
+    return Scus94491BpeSegment_8006.battleState_8006e398._34c[varIndex];
+  };
+  private void write34cVar(final int varIndex, final int val) {
+    Scus94491BpeSegment_8006.battleState_8006e398._34c[varIndex] = val;
+  };
+  private int readStatusVar(final int varIndex) { 
+    return Scus94491BpeSegment_8006.battleState_8006e398.status_384[varIndex].pack();
+  };
+  private void writeStatusVar(final int varIndex, final int val) { 
+    Scus94491BpeSegment_8006.battleState_8006e398.status_384[varIndex].unpack(val);
+  };
+  private int read460Var(final int varIndex) {
+    return Scus94491BpeSegment_8006.battleState_8006e398._460[varIndex];
+  };
+  private void write460Var(final int varIndex, final int val) {
+    Scus94491BpeSegment_8006.battleState_8006e398._460[varIndex] = val;
+  };
+  private int readAdditionExtraVar(final int varIndex) { 
+    return Scus94491BpeSegment_8006.battleState_8006e398.additionExtra_474[varIndex].pack();
+  };
+  private void writeAdditionExtraVar(final int varIndex, final int val) { 
+    Scus94491BpeSegment_8006.battleState_8006e398.additionExtra_474[varIndex].unpack(val);
+  };*/
+
 }

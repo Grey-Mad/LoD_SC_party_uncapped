@@ -95,7 +95,7 @@ public class CombatDebuggerController {
 
 
   public void initialize() {
-    for(int i = 0; i < 10; i++) {
+    for(int i = 0; i < battleState_8006e398.allBents_e0c.length; i++) {
       this.bents.add(new ListItem(this::getCombatantName, i));
     }
 
