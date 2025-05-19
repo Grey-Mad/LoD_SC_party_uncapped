@@ -8,14 +8,13 @@ import legend.core.memory.types.IntRef;
 import legend.core.opengl.MeshObj;
 import legend.core.opengl.QuadBuilder;
 import legend.game.combat.types.EnemyDrop;
-import legend.game.input.Input;
-import legend.game.input.InputAction;
 import legend.game.inventory.WhichMenu;
 import legend.game.modding.coremod.CoreMod;
 import legend.game.types.Renderable58;
 import legend.game.types.Translucency;
 
 import static legend.core.GameEngine.CONFIG;
+import static legend.core.GameEngine.PLATFORM;
 import static legend.core.GameEngine.RENDERER;
 import static legend.game.SItem.additions_8011a064;
 import static legend.game.SItem.cacheCharacterSlots;
@@ -55,6 +54,8 @@ import static legend.game.Scus94491BpeSegment_800b.uiFile_800bdc3c;
 import static legend.game.Scus94491BpeSegment_800b.unlockedUltimateAddition_800bc910;
 import static legend.game.Scus94491BpeSegment_800b.whichMenu_800bdc38;
 import static legend.game.combat.Battle.spellStats_800fa0b8;
+import static legend.game.modding.coremod.CoreMod.INPUT_ACTION_MENU_BACK;
+import static legend.game.modding.coremod.CoreMod.INPUT_ACTION_MENU_CONFIRM;
 
 public class PostBattleScreen extends MenuScreen {
   private static final String NEW_ADDITION = "New Addition";
@@ -164,7 +165,7 @@ public class PostBattleScreen extends MenuScreen {
         break;
 
       case WAIT_FOR_FIRST_BUTTON_PRESS_3:
-        if(Input.pressedThisFrame(InputAction.BUTTON_SOUTH)) {
+        if(PLATFORM.isActionPressed(INPUT_ACTION_MENU_CONFIRM.get())) {
           //LAB_8010da84
           if(goldGainedFromCombat_800bc920 == 0) {
             this.inventoryMenuState_800bdc28 = MenuState.TICK_XP_5;
@@ -178,7 +179,7 @@ public class PostBattleScreen extends MenuScreen {
 
       case TICK_GOLD_4:
         final int goldTick;
-        if(Input.pressedThisFrame(InputAction.BUTTON_SOUTH)) {
+        if(PLATFORM.isActionPressed(INPUT_ACTION_MENU_CONFIRM.get())) {
           goldTick = goldGainedFromCombat_800bc920;
         } else {
           //LAB_8010dab4
@@ -231,7 +232,7 @@ public class PostBattleScreen extends MenuScreen {
           if(this.additionsUnlocked_8011e1b8[0] + this.additionsUnlocked_8011e1b8[1] + this.additionsUnlocked_8011e1b8[2] == 0) {
             //LAB_8010dc9c
             this.inventoryMenuState_800bdc28 = MenuState.MAIN_LEVEL_UPS_8;
-          } else if(Input.pressedThisFrame(InputAction.BUTTON_SOUTH)) {
+          } else if(PLATFORM.isActionPressed(INPUT_ACTION_MENU_CONFIRM.get())) {
             playMenuSound(2);
             this.unlockHeight_8011e178 = 0;
             this.inventoryMenuState_800bdc28 = MenuState.EMBIGGEN_UNLOCKED_ADDITIONS_6;
@@ -246,7 +247,7 @@ public class PostBattleScreen extends MenuScreen {
           this.unlockHeight_8011e178 += 2;
         } else {
           //LAB_8010dcc8
-          if(Input.pressedThisFrame(InputAction.BUTTON_SOUTH)) {
+          if(PLATFORM.isActionPressed(INPUT_ACTION_MENU_CONFIRM.get())) {
             playMenuSound(2);
 
             //LAB_8010dcf0
@@ -291,7 +292,7 @@ public class PostBattleScreen extends MenuScreen {
       case SECONDARY_LEVEL_UPS_9:
         this.drawChar(24, 152, secondaryCharIds_800bdbf8[this.levelUpCharId_8011e170 - 3]);
 
-        if(Input.pressedThisFrame(InputAction.BUTTON_SOUTH) || Input.pressedThisFrame(InputAction.BUTTON_EAST)) {
+        if(PLATFORM.isActionPressed(INPUT_ACTION_MENU_CONFIRM.get()) || PLATFORM.isActionPressed(INPUT_ACTION_MENU_BACK.get())) {
           playMenuSound(2);
           this.levelsGained_8011e1c8[this.levelUpCharId_8011e170] = 0;
           this.inventoryMenuState_800bdc28 = MenuState.MAIN_LEVEL_UPS_8;
@@ -320,7 +321,7 @@ public class PostBattleScreen extends MenuScreen {
         break;
 
       case WAIT_FOR_DRAGOON_LEVEL_UP_INPUT_11:
-        if(Input.pressedThisFrame(InputAction.BUTTON_SOUTH)) {
+        if(PLATFORM.isActionPressed(INPUT_ACTION_MENU_CONFIRM.get())) {
           this.unlockHeight_8011e178 = 0;
           playMenuSound(2);
 
@@ -336,7 +337,7 @@ public class PostBattleScreen extends MenuScreen {
           this.unlockHeight_8011e178 += 2;
         } else {
           //LAB_8010def4
-          if(Input.pressedThisFrame(InputAction.BUTTON_SOUTH)) {
+          if(PLATFORM.isActionPressed(INPUT_ACTION_MENU_CONFIRM.get())) {
             playMenuSound(2);
 
             //LAB_8010df1c
@@ -366,7 +367,7 @@ public class PostBattleScreen extends MenuScreen {
         break;
 
       case WAIT_FOR_INPUT_14:
-        if(Input.pressedThisFrame(InputAction.BUTTON_SOUTH) || Input.pressedThisFrame(InputAction.BUTTON_EAST)) {
+        if(PLATFORM.isActionPressed(INPUT_ACTION_MENU_CONFIRM.get()) || PLATFORM.isActionPressed(INPUT_ACTION_MENU_BACK.get())) {
           playMenuSound(3);
 
           if(itemsDroppedByEnemies_800bc928.isEmpty() || giveItems(itemsDroppedByEnemies_800bc928) == 0) {
@@ -446,7 +447,7 @@ public class PostBattleScreen extends MenuScreen {
 
         //LAB_8010cc70
         final int cappedPendingXp;
-        if(Input.pressedThisFrame(InputAction.BUTTON_SOUTH) || pendingXp < 10) {
+        if(PLATFORM.isActionPressed(INPUT_ACTION_MENU_CONFIRM.get()) || pendingXp < 10) {
           cappedPendingXp = pendingXp;
         } else {
           cappedPendingXp = 10;

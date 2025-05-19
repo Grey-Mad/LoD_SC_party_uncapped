@@ -9,8 +9,6 @@ import legend.core.memory.Method;
 import legend.core.opengl.Obj;
 import legend.core.opengl.QuadBuilder;
 import legend.game.i18n.I18n;
-import legend.game.input.Input;
-import legend.game.input.InputAction;
 import legend.game.inventory.Addition04;
 import legend.game.inventory.EquipItemResult;
 import legend.game.inventory.Equipment;
@@ -62,6 +60,7 @@ import java.util.function.Consumer;
 import static legend.core.GameEngine.AUDIO_THREAD;
 import static legend.core.GameEngine.CONFIG;
 import static legend.core.GameEngine.EVENTS;
+import static legend.core.GameEngine.PLATFORM;
 import static legend.core.GameEngine.REGISTRIES;
 import static legend.game.Scus94491BpeSegment.loadDrgnDir;
 import static legend.game.Scus94491BpeSegment.loadDrgnFileSync;
@@ -105,6 +104,8 @@ import static legend.game.Scus94491BpeSegment_800b.textZ_800bdf00;
 import static legend.game.Scus94491BpeSegment_800b.tickCount_800bb0fc;
 import static legend.game.Scus94491BpeSegment_800b.uiFile_800bdc3c;
 import static legend.game.combat.Battle.seed_800fa754;
+import static legend.game.modding.coremod.CoreMod.INPUT_ACTION_MENU_BACK;
+import static legend.game.modding.coremod.CoreMod.INPUT_ACTION_MENU_CONFIRM;
 
 public final class SItem {
   private SItem() { }
@@ -570,7 +571,7 @@ public final class SItem {
   }
 
   private static void menuMusicLoaded(final List<FileData> files) {
-    menuMusic = new BackgroundMusic(files, 5815, AUDIO_THREAD.getSequencer().getSampleRate());
+    menuMusic = new BackgroundMusic(files, 5815, AUDIO_THREAD.getSampleRate());
   }
 
   /** FUN_8001e010 with param 0 */
@@ -1668,7 +1669,7 @@ public final class SItem {
   }
 
   @Method(0x80109410L)
-  public static void renderMenuItems(final int x, final int y, final MenuEntries<?> menuItems, final int slotScroll, final int itemCount, @Nullable final Renderable58 a5, @Nullable final Renderable58 a6) {
+  public static void renderMenuItems(final int x, final int y, final MenuEntries<?> menuItems, final int slotScroll, final int itemCount, @Nullable final Renderable58 upArrow, @Nullable final Renderable58 downArrow) {
     int s3 = slotScroll;
 
     //LAB_8010947c
@@ -1695,21 +1696,21 @@ public final class SItem {
     //LAB_801095c0
     //LAB_801095d4
     //LAB_801095e0
-    if(a5 != null) { // There was an NPE here when fading out item list
+    if(upArrow != null) { // There was an NPE here when fading out item list
       if(slotScroll != 0) {
-        a5.flags_00 &= ~Renderable58.FLAG_INVISIBLE;
+        upArrow.flags_00 &= ~Renderable58.FLAG_INVISIBLE;
       } else {
-        a5.flags_00 |= Renderable58.FLAG_INVISIBLE;
+        upArrow.flags_00 |= Renderable58.FLAG_INVISIBLE;
       }
     }
 
     //LAB_80109614
     //LAB_80109628
-    if(a6 != null) { // There was an NPE here when fading out item list
+    if(downArrow != null) { // There was an NPE here when fading out item list
       if(i + slotScroll < menuItems.size()) {
-        a6.flags_00 &= ~Renderable58.FLAG_INVISIBLE;
+        downArrow.flags_00 &= ~Renderable58.FLAG_INVISIBLE;
       } else {
-        a6.flags_00 |= Renderable58.FLAG_INVISIBLE;
+        downArrow.flags_00 |= Renderable58.FLAG_INVISIBLE;
       }
     }
   }
@@ -1784,7 +1785,7 @@ public final class SItem {
 
         if(messageBox.type_15 == 0) {
           //LAB_8010eed8
-          if(!messageBox.ignoreInput && Input.pressedThisFrame(InputAction.BUTTON_SOUTH) || Input.pressedThisFrame(InputAction.BUTTON_EAST)) {
+          if(!messageBox.ignoreInput && PLATFORM.isActionPressed(INPUT_ACTION_MENU_CONFIRM.get()) || PLATFORM.isActionPressed(INPUT_ACTION_MENU_BACK.get())) {
             playMenuSound(2);
             messageBox.state_0c = 4;
             messageBox.result = MessageBoxResult.YES;

@@ -1,7 +1,7 @@
 package legend.game.inventory.screens;
 
+import legend.core.platform.input.InputAction;
 import legend.game.EngineStateEnum;
-import legend.game.input.InputAction;
 import legend.game.inventory.WhichMenu;
 import legend.game.inventory.screens.controls.Background;
 import legend.game.inventory.screens.controls.Button;
@@ -9,6 +9,7 @@ import legend.game.inventory.screens.controls.CharacterCard;
 import legend.game.inventory.screens.controls.DragoonSpirits;
 import legend.game.inventory.screens.controls.Glyph;
 import legend.game.modding.coremod.CoreMod;
+import legend.game.modding.events.gamestate.GameLoadedEvent;
 import legend.game.saves.ConfigStorage;
 import legend.game.saves.ConfigStorageLocation;
 import legend.game.types.MessageBoxResult;
@@ -24,6 +25,7 @@ import java.util.List;
 import java.util.function.Function;
 
 import static legend.core.GameEngine.CONFIG;
+import static legend.core.GameEngine.EVENTS;
 import static legend.core.GameEngine.RENDERER;
 import static legend.game.SItem.UI_TEXT_CENTERED;
 import static legend.game.SItem.cacheCharacterSlots;
@@ -40,8 +42,13 @@ import static legend.game.Scus94491BpeSegment_8002.deallocateRenderables;
 import static legend.game.Scus94491BpeSegment_8002.getTimestampPart;
 import static legend.game.Scus94491BpeSegment_8002.playMenuSound;
 import static legend.game.Scus94491BpeSegment_8002.renderText;
+import static legend.game.Scus94491BpeSegment_8004.currentEngineState_8004dd04;
 import static legend.game.Scus94491BpeSegment_8004.engineState_8004dd20;
+import static legend.game.Scus94491BpeSegment_8005.collidedPrimitiveIndex_80052c38;
 import static legend.game.Scus94491BpeSegment_8005.standingInSavePoint_8005a368;
+import static legend.game.Scus94491BpeSegment_8005.submapCutForSave_800cb450;
+import static legend.game.Scus94491BpeSegment_8005.submapCut_80052c30;
+import static legend.game.Scus94491BpeSegment_8005.submapScene_80052c34;
 import static legend.game.Scus94491BpeSegment_800b.continentIndex_800bf0b0;
 import static legend.game.Scus94491BpeSegment_800b.fullScreenEffect_800bb140;
 import static legend.game.Scus94491BpeSegment_800b.gameState_800babc8;
@@ -53,6 +60,11 @@ import static legend.game.Scus94491BpeSegment_800b.saveListUpArrow_800bdb94;
 import static legend.game.Scus94491BpeSegment_800b.submapId_800bd808;
 import static legend.game.Scus94491BpeSegment_800b.textZ_800bdf00;
 import static legend.game.Scus94491BpeSegment_800b.whichMenu_800bdc38;
+import static legend.game.modding.coremod.CoreMod.INPUT_ACTION_MENU_BACK;
+import static legend.game.modding.coremod.CoreMod.INPUT_ACTION_MENU_DOWN;
+import static legend.game.modding.coremod.CoreMod.INPUT_ACTION_MENU_LEFT;
+import static legend.game.modding.coremod.CoreMod.INPUT_ACTION_MENU_RIGHT;
+import static legend.game.modding.coremod.CoreMod.INPUT_ACTION_MENU_UP;
 
 public class MainMenuScreen extends MenuScreen {
   private int loadingStage;
@@ -60,6 +72,9 @@ public class MainMenuScreen extends MenuScreen {
 
   private final CharacterCard[] charCards = new CharacterCard[3];
   private final List<Button> menuButtons = new ArrayList<>();
+
+  private final Button saveButton;
+  private final Button loadButton;
 
   public MainMenuScreen(final Runnable unload) {
     this.unload = unload;
@@ -101,8 +116,11 @@ public class MainMenuScreen extends MenuScreen {
     this.addButton("Replace", this::showCharSwapScreen);
     this.addButton("Options", this::showOptionsScreen);
     this.addButton("", () -> { }).hide();
-    this.addButton("", () -> { }).hide();
-    this.addButton("Save", this::showSaveScreen).setDisabled(!canSave_8011dc88);
+    this.loadButton = this.addButton("Load", this::showLoadScreen);
+    this.saveButton = this.addButton("Save", this::showSaveScreen);
+
+    this.loadButton.setDisabled(gameState_800babc8.campaign.loadAllSaves().isEmpty());
+    this.saveButton.setDisabled(!canSave_8011dc88);
 
     for(int i = 0; i < 3; i++) {
       this.addCharCard(i);
@@ -128,49 +146,58 @@ public class MainMenuScreen extends MenuScreen {
 
     button.onPressed(onClick::run);
 
-    button.onPressedWithRepeatPulse(inputAction -> {
-      switch(inputAction) {
-        case DPAD_DOWN, JOYSTICK_LEFT_BUTTON_DOWN -> {
-          for(int i = 1; i < this.menuButtons.size(); i++) {
-            final Button otherButton = this.menuButtons.get(Math.floorMod(index + i, this.menuButtons.size()));
-
-            if(!otherButton.isDisabled() && otherButton.isVisible()) {
-              playMenuSound(1);
-              this.setFocus(otherButton);
-              break;
-            }
-          }
-        }
-        case DPAD_UP, JOYSTICK_LEFT_BUTTON_UP -> {
-          for(int i = 1; i < this.menuButtons.size(); i++) {
-            final Button otherButton = this.menuButtons.get(Math.floorMod(index - i, this.menuButtons.size()));
-
-            if(!otherButton.isDisabled() && otherButton.isVisible()) {
-              playMenuSound(1);
-              this.setFocus(otherButton);
-              break;
-            }
-          }
-        }
-        case DPAD_RIGHT, JOYSTICK_LEFT_BUTTON_RIGHT -> {
-          final Button otherButton = this.menuButtons.get(Math.floorMod(index + this.menuButtons.size() / 2, this.menuButtons.size()));
+    button.onInputActionPressed((action, repeat) -> {
+      if(action == INPUT_ACTION_MENU_DOWN.get()) {
+        for(int i = 1; i < this.menuButtons.size(); i++) {
+          final Button otherButton = this.menuButtons.get(Math.floorMod(index + i, this.menuButtons.size()));
 
           if(!otherButton.isDisabled() && otherButton.isVisible()) {
             playMenuSound(1);
             this.setFocus(otherButton);
+            break;
           }
         }
-        case DPAD_LEFT, JOYSTICK_LEFT_BUTTON_LEFT -> {
-          final Button otherButton = this.menuButtons.get(Math.floorMod(index - this.menuButtons.size() / 2, this.menuButtons.size()));
 
-          if(!otherButton.isDisabled() && otherButton.isVisible()) {
-            playMenuSound(1);
-            this.setFocus(otherButton);
-          }
-        }
+        return InputPropagation.HANDLED;
       }
 
-      return InputPropagation.HANDLED;
+      if(action == INPUT_ACTION_MENU_UP.get()) {
+        for(int i = 1; i < this.menuButtons.size(); i++) {
+          final Button otherButton = this.menuButtons.get(Math.floorMod(index - i, this.menuButtons.size()));
+
+          if(!otherButton.isDisabled() && otherButton.isVisible()) {
+            playMenuSound(1);
+            this.setFocus(otherButton);
+            break;
+          }
+        }
+
+        return InputPropagation.HANDLED;
+      }
+
+      if(action == INPUT_ACTION_MENU_RIGHT.get()) {
+        final Button otherButton = this.menuButtons.get(Math.floorMod(index + this.menuButtons.size() / 2, this.menuButtons.size()));
+
+        if(!otherButton.isDisabled() && otherButton.isVisible()) {
+          playMenuSound(1);
+          this.setFocus(otherButton);
+        }
+
+        return InputPropagation.HANDLED;
+      }
+
+      if(action == INPUT_ACTION_MENU_LEFT.get()) {
+        final Button otherButton = this.menuButtons.get(Math.floorMod(index - this.menuButtons.size() / 2, this.menuButtons.size()));
+
+        if(!otherButton.isDisabled() && otherButton.isVisible()) {
+          playMenuSound(1);
+          this.setFocus(otherButton);
+        }
+
+        return InputPropagation.HANDLED;
+      }
+
+      return InputPropagation.PROPAGATE;
     });
 
     this.menuButtons.add(button);
@@ -258,9 +285,9 @@ public class MainMenuScreen extends MenuScreen {
     for(int i = 0; i < 6; i++) {
       final int x = 106;
       final int y = 93 + i * 13;
-      RENDERER.queueLine(transforms, textZ_800bdf00 * 4.0f, new Vector2f(x, y), new Vector2f(x + 59, y))
+      RENDERER.queueLine(transforms, textZ_800bdf00 * 4.0f + 5, new Vector2f(x, y), new Vector2f(x + 59, y))
         .translucency(Translucency.B_MINUS_F)
-        .monochrome(0.05f)
+        .colour(2.0f / 256, 20.0f / 256, 12.0f / 256)
       ;
     }
 
@@ -324,17 +351,48 @@ public class MainMenuScreen extends MenuScreen {
 
       
       this.loadingStage = 0;
+
+      canSave_8011dc88 = engineState_8004dd20 == EngineStateEnum.WORLD_MAP_08 || CONFIG.getConfig(CoreMod.SAVE_ANYWHERE_CONFIG.get()) || standingInSavePoint_8005a368;
+      this.saveButton.setDisabled(!canSave_8011dc88);
     }));
   }
 
+  private void showLoadScreen() {
+    menuStack.pushScreen(new LoadGameScreen(save -> {
+      menuStack.reset();
 
-  
+      final GameLoadedEvent event = EVENTS.postEvent(new GameLoadedEvent(save.state));
+
+      gameState_800babc8 = event.gameState;
+      gameState_800babc8.syncIds();
+
+      loadingNewGameState_800bdc34 = true;
+      whichMenu_800bdc38 = WhichMenu.UNLOAD_SAVE_GAME_MENU_20;
+
+      submapScene_80052c34 = gameState_800babc8.submapScene_a4;
+      submapCut_80052c30 = gameState_800babc8.submapCut_a8;
+      submapCutForSave_800cb450 = submapCut_80052c30;
+      collidedPrimitiveIndex_80052c38 = gameState_800babc8.submapCut_a8;
+
+      if(gameState_800babc8.submapCut_a8 == 264) { // Somewhere in Home of Giganto
+        submapScene_80052c34 = 53;
+      }
+
+      currentEngineState_8004dd04.loadGameFromMenu(gameState_800babc8);
+    }, () -> {
+      menuStack.popScreen();
+      this.fadeOutArrows();
+      this.loadingStage = 0;
+    }, gameState_800babc8.campaign));
+  }
+
   private void showSaveScreen() {
     if(canSave_8011dc88) {
       menuStack.pushScreen(new SaveGameScreen(() -> {
         menuStack.popScreen();
         this.fadeOutArrows();
         this.loadingStage = 0;
+        this.loadButton.setDisabled(gameState_800babc8.campaign.loadAllSaves().isEmpty());
       }));
     } else {
       playMenuSound(40);
@@ -365,13 +423,13 @@ public class MainMenuScreen extends MenuScreen {
   }
 
   @Override
-  public InputPropagation pressedThisFrame(final InputAction inputAction) {
-    if(super.pressedThisFrame(inputAction) == InputPropagation.HANDLED) {
+  protected InputPropagation inputActionPressed(final InputAction action, final boolean repeat) {
+    if(super.inputActionPressed(action, repeat) == InputPropagation.HANDLED) {
       return InputPropagation.HANDLED;
     }
 
     if(this.loadingStage == 2) {
-      if(inputAction == InputAction.BUTTON_EAST) {
+      if(action == INPUT_ACTION_MENU_BACK.get() && !repeat) {
         this.menuEscape();
         return InputPropagation.HANDLED;
       }

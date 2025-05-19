@@ -11,6 +11,7 @@ import java.util.Arrays;
 
 import static legend.game.Scus94491BpeSegment_8006.battleState_8006e398;
 import static legend.game.Scus94491BpeSegment_800b.gameState_800babc8;
+import static legend.game.combat.bent.BattleEntity27c.FLAG_DRAGOON;
 
 /** 0x18cb0 bytes */
 public class BattlePreloadedEntities_18cb0 {
@@ -34,7 +35,7 @@ public class BattlePreloadedEntities_18cb0 {
 
   @Method(0x800c7488L)
   public int getHitProperty(final int charSlot, final int hitNum, final int hitPropertyIndex) {
-    if((battleState_8006e398.playerBents_e40[charSlot].storage_44[7] & 0x2) != 0) { // Is dragoon
+    if((battleState_8006e398.playerBents_e40[charSlot].storage_44[7] & FLAG_DRAGOON) != 0) { // Is dragoon
       return this.additionHits_38[charSlot + (additionHits_38.length/2)].hits_00[hitNum].get(hitPropertyIndex);
     }
 
