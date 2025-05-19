@@ -119,6 +119,7 @@ import legend.game.tmd.UvAdjustmentMetrics14;
 import legend.game.types.ActiveStatsa0;
 import legend.game.types.CContainer;
 import legend.game.types.CContainerSubfile2;
+import legend.game.types.CharacterData2c;
 import legend.game.types.EquipmentSlot;
 import legend.game.types.Keyframe0c;
 import legend.game.types.McqHeader;
@@ -355,7 +356,7 @@ public class Battle extends EngineState {
 
   private int currentPostCombatActionFrame_800c6690;
 
-  private final CombatantStruct1a8[] combatants_8005e398 = new CombatantStruct1a8[16]; /*greytodo: see about using dyanmic array*/
+  private final CombatantStruct1a8[] combatants_8005e398 = new CombatantStruct1a8[gameState_800babc8.charIds_88.length*2+2]; /*greytodo: see about using dyanmic array*/
   /** The number of {@link #combatants_8005e398}s */
   private int combatantCount_800c66a0;
   public int currentStage_800c66a4;
@@ -456,7 +457,7 @@ public class Battle extends EngineState {
   public static final int[][] textboxColours_800c6fec = {{76, 183, 225}, {182, 112, 0}, {25, 15, 128}, {128, 128, 128}, {129, 9, 236}, {213, 197, 58}, {72, 255, 159}, {238, 9, 9}, {0, 41, 159}};
 
   @SuppressWarnings("unchecked")
-  public static final RegistryDelegate<Element>[] characterElements_800c706c = new RegistryDelegate[] {LodMod.FIRE_ELEMENT, LodMod.WIND_ELEMENT, LodMod.LIGHT_ELEMENT, LodMod.DARK_ELEMENT, LodMod.THUNDER_ELEMENT, LodMod.WIND_ELEMENT, LodMod.WATER_ELEMENT, LodMod.EARTH_ELEMENT, LodMod.LIGHT_ELEMENT};
+  public static final RegistryDelegate<Element>[] characterElements_800c706c = new RegistryDelegate[] {LodMod.FIRE_ELEMENT, LodMod.FIRE_ELEMENT, LodMod.LIGHT_ELEMENT, LodMod.DARK_ELEMENT, LodMod.THUNDER_ELEMENT, LodMod.WIND_ELEMENT, LodMod.WATER_ELEMENT, LodMod.EARTH_ELEMENT, LodMod.LIGHT_ELEMENT};
 
   /** Different sets of bents for different target types (chars, monsters, all) */
   public ScriptState<BattleEntity27c>[][] targetBents_800c71f0;
@@ -1116,9 +1117,9 @@ public class Battle extends EngineState {
   @ScriptParam(direction = ScriptParam.Direction.IN, type = ScriptParam.Type.INT, name = "combatantIndex", description = "Combatant ID")
   @ScriptParam(direction = ScriptParam.Direction.IN, type = ScriptParam.Type.INT, name = "vramSlot", description = "Target vram slot")
   private FlowControl scriptSetCombatantVramSlot(final RunningScript<BattleEntity27c> script) {
-    this.unsetMonsterTextureSlotUsed(this.combatants_8005e398[script.params_20[0].get()].vramSlot_1a0);
-    this.combatants_8005e398[script.params_20[0].get()].vramSlot_1a0 = script.params_20[1].get();
-    this.setMonsterTextureSlotUsed(this.combatants_8005e398[script.params_20[0].get()].vramSlot_1a0);
+    //this.unsetMonsterTextureSlotUsed(this.combatants_8005e398[script.params_20[0].get()].vramSlot_1a0);
+    //this.combatants_8005e398[script.params_20[0].get()].vramSlot_1a0 = script.params_20[1].get();
+    //this.setMonsterTextureSlotUsed(this.combatants_8005e398[script.params_20[0].get()].vramSlot_1a0);
     return FlowControl.CONTINUE;
   }
 
@@ -1276,7 +1277,7 @@ public class Battle extends EngineState {
 
   @Method(0x800c7524L)
   public void initBattle() {
-    //greytodo read max mosters in encounter and set vals in battlestate accordingly
+    //greytodo: add way read max mosters in encounter and set vals in battlestate accordingly
     new Tim(Loader.loadFile("shadow.tim")).uploadToGpu();
 
     this.FUN_800c8624();
@@ -1426,7 +1427,7 @@ public class Battle extends EngineState {
       bent.model_148.effectSounds.used_00 = false;
       final int finalMonsterSlot = bent.charId_272;
 
-      if (encounterId_800bb0f8 == 390){//greytodo: is this needed
+      if (encounterId_800bb0f8 == 390){//greytodo: check if this is needed
         String boss = "";
         switch(encounterId_800bb0f8) {
           case 390 -> boss = "doel";
@@ -1601,7 +1602,7 @@ public class Battle extends EngineState {
       final int enemyIndex = a0.charIndex_1a2 & 0x1ff;
 
       if(Loader.exists("monsters/%d/textures/combat".formatted(enemyIndex))) {
-        loadFile("monsters/%d/textures/combat".formatted(enemyIndex), files -> this.loadCombatantTim(a0, files));
+        loadFile("monsters/%d/textures/combat".formatted(enemyIndex), files -> this.loadCombatantTim(data, files));
       }
     }
   }
@@ -1622,7 +1623,7 @@ public class Battle extends EngineState {
   @Method(0x800fc548L)
   public void loadCharacterTim(final FileData file, final int charSlot) {
     final BattleEntity27c bent = battleState_8006e398.playerBents_e40[charSlot].innerStruct_00;
-    this.loadCombatantTim(bent.combatant_144, file);
+    this.loadCombatantTim(bent, file);
   }
 
   /** Pulled from S_ITEM */
@@ -2149,7 +2150,7 @@ public class Battle extends EngineState {
           combatant.flags_19e = 0x1;
           try {
             if(a0 < 0 || (Loader.exists("monsters/%d/textures/combat".formatted(a0)) && Files.size(Loader.resolve("monsters/%d/textures/combat".formatted(a0))) > 0)) {
-              combatant.vramSlot_1a0 = this.findFreeMonsterTextureSlot(a0);
+              //combatant.vramSlot_1a0 = this.findFreeMonsterTextureSlot(a0);
             }
           } catch(final IOException e) {
             LOGGER.error("Failed to find texture file for monster %d", a0);
@@ -2157,7 +2158,7 @@ public class Battle extends EngineState {
         } else {
           //LAB_800c8f90
           combatant.flags_19e = 0x5;
-          combatant.vramSlot_1a0 = charSlot + 1;
+          //combatant.vramSlot_1a0 = charSlot + 1;
         }
 
         //LAB_800c8f94
@@ -2177,9 +2178,9 @@ public class Battle extends EngineState {
   public void removeCombatant(final int combatantIndex) {
     final CombatantStruct1a8 combatant = this.combatants_8005e398[combatantIndex];
 
-    if(combatant.vramSlot_1a0 != 0) {
-      this.unsetMonsterTextureSlotUsed(combatant.vramSlot_1a0);
-    }
+    //if(combatant.vramSlot_1a0 != 0) {
+    //  this.unsetMonsterTextureSlotUsed(combatant.vramSlot_1a0);
+    //}
 
     //LAB_800c9020
     //LAB_800c902c
@@ -2664,10 +2665,10 @@ public class Battle extends EngineState {
         }
 
         final String charName = getCharacterName(fileIndex).toLowerCase();
-        loadFile("characters/%s/textures/dragoon".formatted(charName), files -> this.loadCombatantTim(bent.combatant_144, files));
+        loadFile("characters/%s/textures/dragoon".formatted(charName), files -> this.loadCombatantTim(bent, files));
         } else {
         final String charName = getCharacterName(fileIndex).toLowerCase();
-        loadFile("characters/%s/textures/combat".formatted(charName), files -> this.loadCombatantTim(bent.combatant_144, files));
+        loadFile("characters/%s/textures/combat".formatted(charName), files -> this.loadCombatantTim(bent, files));
       }
     }
 
@@ -2675,26 +2676,29 @@ public class Battle extends EngineState {
   }
 
   @Method(0x800ca75cL)
-  public void loadCombatantTim(@Nullable final CombatantStruct1a8 combatant, final FileData timFile) {
+  public void loadCombatantTim(final BattleEntity27c bent, final FileData timFile) {
     if(timFile.size() == 0){return;}
     final Tim tim = new Tim(timFile);
     
-    if(combatant != null) {
-      combatant.textureW = tim.getImageRect().w();
-      combatant.textureH = tim.getImageRect().h();
+      final int w = tim.getImageRect().w();
+      final int h = tim.getImageRect().h();
+      bent.w = w;
+      bent.h = h;
+      bent.vram24 = new int[h*w];
+      bent.vram15 = new int[h*w];
       
       int i = 0;
-      for(int y = 0; y < combatant.textureH; y++) {
-        for(int x = 0; x < combatant.textureW; x++) {
+      for(int y = 0; y < h; y++) {
+        for(int x = 0; x < w; x++) {
           if(i + 1 >= tim.getImageData().size()) {
             break;
           }
 
           final int packed = tim.getImageData().readUShort(i);
           final int unpacked = MathHelper.colour15To24(packed);
-          final int index = y * combatant.textureW + x;
-          combatant.textureVram24[index] = unpacked;
-          combatant.textureVram15[index] = packed;
+          final int index = y * w + x;
+          bent.vram24[index] = unpacked;
+          bent.vram15[index] = packed;
           i += 2;
         }
       }
@@ -2709,25 +2713,15 @@ public class Battle extends EngineState {
             }
             final int packed = tim.getClutData().readUShort(j);
             final int unpacked = MathHelper.colour15To24(packed);
-            final int index = y * combatant.textureW + x;
-  
-            combatant.textureVram24[index] = unpacked;
-            combatant.textureVram15[index] = packed;
+            final int index = y * w + x;
+            bent.vram24[index] = unpacked;
+            bent.vram15[index] = packed;
             j += 2;
           }
         }
       }
-      
-    } else {
-      final Rect4i imageRect = tim.getImageRect();
+
   
-      if(imageRect.x == 0x41 && imageRect.y == 0 && imageRect.w == 0 && imageRect.h == 0) {
-        return;
-      }
-  
-      GPU.uploadData15(tim.getImageRect(), tim.getImageData());//greytodo: see about removing 
-    }
-    
   }
 
   @Method(0x800ca89cL)
@@ -3560,7 +3554,7 @@ public class Battle extends EngineState {
       state.storage_44[7] &= 0xffff_fffe;
       return FlowControl.CONTINUE;
     }
-
+    bent.recreateTexture = true;
     //LAB_800ccccc
     return FlowControl.PAUSE_AND_REWIND;
   }
@@ -3983,9 +3977,14 @@ public class Battle extends EngineState {
     
     final int combatantIndex = script.params_20[0].get();
     final CombatantStruct1a8 combatant = combatantIndex >= 0 ? this.combatants_8005e398[combatantIndex] : null; // Not sure if the else case actually happens
-  
-    this.loadCombatantTim(combatant, a1.data_00);
-
+    
+    for (int i = 0; i<battleState_8006e398.allBents_e0c.length; i++)
+      if ((battleState_8006e398.allBents_e0c[i] != null) && (combatant != null)){
+        if (battleState_8006e398.allBents_e0c[i].innerStruct_00.combatant_144._1a4 == combatant._1a4){
+          this.loadCombatantTim(battleState_8006e398.allBents_e0c[i].innerStruct_00, a1.data_00);
+          return FlowControl.PAUSE;//greytodo: fix the order being off
+        }
+      }
     //LAB_800cd900
     return FlowControl.PAUSE;
   }
@@ -7747,7 +7746,7 @@ public class Battle extends EngineState {
     //LAB_800eebd8
     for(int charSlot = 0; charSlot < battleState_8006e398.getPlayerCount(); charSlot++) {
       final PlayerBattleEntity bent = battleState_8006e398.playerBents_e40[charSlot].innerStruct_00;
-      final CharacterData charData = gameState_800babc8.charData_32c.get(bent.charId_272);
+      final CharacterData2c charData = gameState_800babc8.charData_32c[bent.charId_272];
 
       //LAB_800eec10
       charData.hp_08 = java.lang.Math.max(1, bent.stats.getStat(LodMod.HP_STAT.get()).getCurrent());

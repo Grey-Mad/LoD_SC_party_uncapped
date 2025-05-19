@@ -30,6 +30,7 @@ import org.joml.Vector2f;
 import org.joml.Vector3f;
 import org.joml.Vector3i;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -53,7 +54,6 @@ import static legend.game.combat.Battle.FUN_800ca194;
 import static legend.game.combat.Battle.loadCombatantModelAndAnimation;
 import static legend.game.combat.Battle.spellStats_800fa0b8;
 import static legend.game.combat.SEffe.renderBttlShadow;
-import static org.lwjgl.system.MemoryStack.create;
 
 import static org.lwjgl.opengl.GL30C.GL_R32UI;
 import static org.lwjgl.opengl.GL30C.GL_RED_INTEGER;
@@ -233,11 +233,17 @@ public abstract class BattleEntity27c extends BattleObject {
   public final Rect4i scissor = new Rect4i();
   public boolean useScissor;
 
-  private Texture texture15;
-  private Texture texture24;
-  private int[] vram15;
-  private int[] vram24;
-  //private boolean recreateTexture = true;*/
+
+  public Texture texture15;
+  public Texture texture24;
+  public int[] vram15;
+  public int[] vram24;
+  public int w;
+  public int h;
+  public ArrayList<Texture> textures15 = new ArrayList<Texture>();
+  public ArrayList<Texture> textures24 = new ArrayList<Texture>();
+  public int frameIndexAnimatedTexture;
+  public boolean recreateTexture = false;
 
   public BattleEntity27c(final BattleEntityType type, final String name) {
     super(BattleObject.BOBJ);
@@ -602,9 +608,99 @@ public abstract class BattleEntity27c extends BattleObject {
         this.loadingAnimIndex_26e = 0;
         loadCombatantModelAndAnimation(this.model_148, this.combatant_144);
 
-        this.vram15 = this.combatant_144.textureVram15;
-        this.vram24 = this.combatant_144.textureVram24;
-        createTextureFromTim(this.combatant_144.textureW,this.combatant_144.textureH);
+        for(int i = 0; i < 7; i++) {
+          if(this.model_148.animateTextures_ec[i]) {
+
+
+            int metricsIndex = 1;
+            final int x = this.model_148.animationMetrics_d0[i][metricsIndex++];// + vramX;
+            final int y = this.model_148.animationMetrics_d0[i][metricsIndex++];// + vramY;
+            final int w = this.model_148.animationMetrics_d0[i][metricsIndex++] / 4;
+            int h = this.model_148.animationMetrics_d0[i][metricsIndex++];
+            final int copyMode = this.model_148.animationMetrics_d0[i][metricsIndex++];
+            int secondaryYOffsetH = this.model_148.animationMetrics_d0[i][metricsIndex];
+            
+            if((this.model_148.usArr_ac[i] & 0xf) != 0) {
+              this.model_148.usArr_ac[i]--;
+              
+              if(this.model_148.usArr_ac[i] == 0) {
+                this.model_148.usArr_ac[i] = secondaryYOffsetH;
+                secondaryYOffsetH = 16;
+              } else {
+                secondaryYOffsetH = 0;
+              }
+            }
+
+            if((short)secondaryYOffsetH == 0) {
+              return;
+            }
+
+            //GPU.queueCommand(1, new GpuCommandCopyVramToVram(960, 256, x & 0xffff, y & 0xffff, w, h));
+            //copyVramAnimationSlotToVram(960, 256, x & 0xffff, y & 0xffff, w, h);
+            //clears 
+            secondaryYOffsetH /= 16;
+            h -= secondaryYOffsetH;
+
+            //if((short)copyMode == 0) {
+              //GPU.queueCommand(1, new GpuCommandCopyVramToVram(x, y + h, 960, 256, w, secondaryYOffsetH));
+              //GPU.queueCommand(1, new GpuCommandCopyVramToVram(x, y, 960, secondaryYOffsetH + 256, w, h));
+            //} else {
+              //LAB_80022358
+              //GPU.queueCommand(1, new GpuCommandCopyVramToVram(x, y, 960, h + 256, w, secondaryYOffsetH));
+              //GPU.queueCommand(1, new GpuCommandCopyVramToVram(x, y + secondaryYOffsetH, 960, 256, w, h));
+              //
+            //}
+
+            //createAnimatedTextureFromTim(this.w, this.h);
+
+            //GPU.queueCommand(1, new GpuCommandCopyVramToVram(x, y, 960, h + 256, w, secondaryYOffsetH));
+            
+            //if((short)copyMode != 0
+
+            for(int test = 0; test < ((h+secondaryYOffsetH)/secondaryYOffsetH); test++) {
+              ArrayList<Integer> sectionCopied24 = new ArrayList<Integer>();
+              ArrayList<Integer> sectionCopied15 = new ArrayList<Integer>();
+
+              for(int q = 0; q < this.h; q++) {
+                for(int s = 0; s < this.w; s++) {
+                  final int index = q * this.w + s;
+                  if ((q < h+secondaryYOffsetH) && ((x<=s)&&(s<w+x))){
+                    sectionCopied24.add(this.vram24[index]);
+                    sectionCopied15.add(this.vram15[index]);
+                  }
+                }
+              }
+              for(int q = 0; q < this.h; q++) {
+                for(int s = 0; s < this.w; s++) {
+                  final int index = q * this.w + s;
+                  if (((h<=q)&&(q < h+secondaryYOffsetH)) && ((x<=s)&&(s<w+x))){
+                    this.vram24[index] = sectionCopied24.getFirst();
+                    this.vram15[index] = sectionCopied15.getFirst();
+                    sectionCopied24.removeFirst();
+                    sectionCopied15.removeFirst();
+                  }
+                }
+              }
+
+              for(int q = 0; q < this.h; q++) {
+                for(int s = 0; s < this.w; s++) {
+                  final int index = q * this.w + s;
+                  if ((q<h) && ((x<=s)&&(s<w+x))){
+                    this.vram24[index] = sectionCopied24.getFirst();
+                    this.vram15[index] = sectionCopied15.getFirst();
+                    sectionCopied24.removeFirst();
+                    sectionCopied15.removeFirst();
+                  }
+                }
+              }
+
+            
+              createAnimatedTextureFromTim(this.w,this.h);
+            }
+          }
+        }
+        
+        createTextureFromTim(this.w,this.h);//greytodo: texture animation
 
         this._278 = 1;
         this.currentAnimIndex_270 = -1;
@@ -624,7 +720,7 @@ public abstract class BattleEntity27c extends BattleObject {
 
 
   public void createTextureFromTim(final int w, final int h) {
-    this.texture15= Texture.create(builder -> {
+    this.texture15 = Texture.create(builder -> {
       builder.size(w, h);
       builder.data(this.vram15, w, h);
       builder.internalFormat(GL_R32UI);
@@ -641,6 +737,25 @@ public abstract class BattleEntity27c extends BattleObject {
     });
   }
 
+  public void createAnimatedTextureFromTim(final int w, final int h) {
+    this.textures15.add(
+      Texture.create(builder -> {
+      builder.size(w, h);
+      builder.data(this.vram15, w, h);
+      builder.internalFormat(GL_R32UI);
+      builder.dataFormat(GL_RED_INTEGER);
+      builder.dataType(GL_UNSIGNED_INT);
+    }));
+
+    this.textures24.add(
+    Texture.create(builder -> {
+      builder.size(w, h);
+      builder.data(this.vram24, w, h);
+      builder.internalFormat(GL_RGBA);
+      builder.dataFormat(GL_RGBA);
+      builder.dataType(GL_UNSIGNED_INT_8_8_8_8_REV);
+    }));
+  }
 
   protected abstract ScriptFile getScript();
 
@@ -668,14 +783,6 @@ public abstract class BattleEntity27c extends BattleObject {
   @Method(0x800cb024L)
   protected void bentRenderer(final ScriptState<? extends BattleEntity27c> state, final BattleEntity27c bent) {
     
-    /*if (this.recreateTexture || combatant_144.recreateTexture){ //greytodo: find way to remove and this.recreateTexture
-      state.innerStruct_00.combatant_144.createTextureFromTim();
-      this.combatantTexture15 = state.innerStruct_00.combatant_144.texture15;
-      this.combatantTexture24 = state.innerStruct_00.combatant_144.texture24;
-      this.recreateTexture = false;
-      combatant_144.recreateTexture = false;
-    }*/
-    //greytodo: find way to animate textures
   
     if((state.storage_44[7] & 0x211) == 0) {
       this.renderBttlModel(this.model_148);
@@ -719,22 +826,55 @@ public abstract class BattleEntity27c extends BattleObject {
         GTE.setTransforms(ls);
         Renderer.renderDobj2(part, true, 0);
 
-        if(model.modelParts_00[i].obj != null) {
-          final QueuedModelBattleTmd queue = RENDERER.queueModel(model.modelParts_00[i].obj, lw, QueuedModelBattleTmd.class)
-            .depthOffset(model.zOffset_a0 * 4)
-            .lightDirection(lightDirectionMatrix_800c34e8)
-            .lightColour(lightColourMatrix_800c3508)
-            .backgroundColour(GTE.backgroundColour)
-            .ctmdFlags((part.attribute_00 & 0x4000_0000) != 0 ? 0x12 : 0x0)
-            .tmdTranslucency(tmdGp0Tpage_1f8003ec >>> 5 & 0b11)
-            .battleColour(((Battle)currentEngineState_8004dd04)._800c6930.colour_00)
-            .texture(texture24,0)
-            .texture(texture15,1);
-
-          if(this.useScissor) {
-            queue.scissor(this.scissor);
-          }
+        if (this.recreateTexture){
+          createTextureFromTim(this.w, this.h);
+          this.recreateTexture = false;
         }
+
+        if (this.textures15.isEmpty()){
+          if(model.modelParts_00[i].obj != null) {
+            final QueuedModelBattleTmd queue = RENDERER.queueModel(model.modelParts_00[i].obj, lw, QueuedModelBattleTmd.class)
+              .depthOffset(model.zOffset_a0 * 4)
+              .lightDirection(lightDirectionMatrix_800c34e8)
+              .lightColour(lightColourMatrix_800c3508)
+              .backgroundColour(GTE.backgroundColour)
+              .ctmdFlags((part.attribute_00 & 0x4000_0000) != 0 ? 0x12 : 0x0)
+              .tmdTranslucency(tmdGp0Tpage_1f8003ec >>> 5 & 0b11)
+              .battleColour(((Battle)currentEngineState_8004dd04)._800c6930.colour_00)
+              .texture(this.texture24,0)
+              .texture(this.texture15,1);
+
+            if(this.useScissor) {
+              queue.scissor(this.scissor);
+            }
+          }
+        }else{
+            if(model.modelParts_00[i].obj != null) {
+              final QueuedModelBattleTmd queue = RENDERER.queueModel(model.modelParts_00[i].obj, lw, QueuedModelBattleTmd.class)
+                .depthOffset(model.zOffset_a0 * 4)
+                .lightDirection(lightDirectionMatrix_800c34e8)
+                .lightColour(lightColourMatrix_800c3508)
+                .backgroundColour(GTE.backgroundColour)
+                .ctmdFlags((part.attribute_00 & 0x4000_0000) != 0 ? 0x12 : 0x0)
+                .tmdTranslucency(tmdGp0Tpage_1f8003ec >>> 5 & 0b11)
+                .battleColour(((Battle)currentEngineState_8004dd04)._800c6930.colour_00)
+                .texture(this.textures24.get(frameIndexAnimatedTexture),0)
+                .texture(this.textures15.get(frameIndexAnimatedTexture),1);
+
+              if(this.useScissor) {
+                queue.scissor(this.scissor);
+              }
+              
+            }
+
+        }
+      }
+    }
+
+    if (!this.textures15.isEmpty()){
+      frameIndexAnimatedTexture++;
+      if (frameIndexAnimatedTexture >= this.textures24.size()) {
+        frameIndexAnimatedTexture = 0;
       }
     }
 

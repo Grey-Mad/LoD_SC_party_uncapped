@@ -418,6 +418,7 @@ public final class Scus94491BpeSegment_8002 {
 
       for(int i = 0; i < 7; i++) {
         if(model.animateTextures_ec[i]) {
+          //greytodo: check if this loop is need with texture changes
           animateModelTextures(model, i);
         }
       }

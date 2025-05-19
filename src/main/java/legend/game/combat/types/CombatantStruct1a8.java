@@ -34,7 +34,7 @@ public class CombatantStruct1a8 {
    * </ul>
    */
   public int flags_19e;
-  public int vramSlot_1a0;
+  //public int vramSlot_1a0;
   /**
    * Not just char index
    * <ul>
