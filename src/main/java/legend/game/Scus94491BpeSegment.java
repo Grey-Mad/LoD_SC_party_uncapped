@@ -2081,7 +2081,7 @@ public final class Scus94491BpeSegment {
   public static void charSoundEffectsLoaded(final List<FileData> files, final int charSlot, final BattleEntity27c bent) {
     final int charId = gameState_800babc8.charIds_88[charSlot];
     
-    //greytodo: fix forever expanding spu, would 
+    //greytodo: check if forever expanding spu is fixed 
     synchronized(Spu.class){
       SPU.removeCombatEffectSoundByBentSlot(bent.bentSlot_274);
       
@@ -2453,7 +2453,7 @@ public final class Scus94491BpeSegment {
       case 6 -> "Meru";
       case 7 -> "Kongol";
       case 8 -> "Miranda";
-      case 10 -> "Divine";
+      case 9, 10 -> "Divine";
       
       default -> throw new IllegalArgumentException("Invalid character ID " + id);
     };
