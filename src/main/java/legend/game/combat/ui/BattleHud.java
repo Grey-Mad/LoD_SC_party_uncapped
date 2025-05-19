@@ -645,34 +645,36 @@ public class BattleHud {
             final float hLineOffset = 7 - Math.round(dimVertexPositionModifier*1.142f);
 
             //top
+            //portraitXcoordinate - lineWidth
+
             this.drawLineNoOffset(
-                portraitXcoordinate - lineWidth, 
+                portraitXcoordinate - vLineOffset, 
                 portraitYcoordinate - lineWidth - hLineOffset, 
-                hLineLength, 
+                hLineLength+vLineOffset*2-(lineWidth*2), 
                 lineWidth, 
                 r, g, b, translucent);
             //bottom
             this.drawLineNoOffset(
-                portraitXcoordinate - lineWidth, 
+                portraitXcoordinate - vLineOffset, 
                 portraitYcoordinate + hLineOffset + namePortraitMetrics.portraitH_07*this.uiScaleFactor + lineWidth, 
-                hLineLength,
+                hLineLength+vLineOffset*2-(lineWidth*2),
                 -lineWidth,
                 r, g, b, translucent);
 
             //left
             this.drawLineNoOffset(
                 portraitXcoordinate - lineWidth-vLineOffset, 
-                portraitYcoordinate - lineWidth,
+                portraitYcoordinate - lineWidth-hLineOffset,
                 lineWidth, 
-                vLineLength, 
+                vLineLength+(hLineOffset*2),
               r, g, b, translucent);
 
             //right
             this.drawLineNoOffset(
                 portraitXcoordinate + namePortraitMetrics.portraitW_06*this.uiScaleFactor + lineWidth+vLineOffset, 
-                portraitYcoordinate - lineWidth,
+                portraitYcoordinate - lineWidth-hLineOffset,
                 -lineWidth, 
-                vLineLength, 
+                vLineLength+(hLineOffset*2), 
                 r, g, b, translucent);
           }
 
