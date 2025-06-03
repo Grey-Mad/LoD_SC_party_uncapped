@@ -2090,7 +2090,7 @@ public final class Scus94491BpeSegment {
       final PlayableSound0c sound = new PlayableSound0c();
       sound.name = bent.model_148.effectSounds.name;
       sound.used_00 = true;
-      sound.sshdPtr_04 = new Sshd(files.get(2));
+      sound.sshdPtr_04 = new Sshd(sound.name, files.get(2));
       sound.soundBufferPtr_08 = SPU.ram.length/8;
       bent.model_148.effectSpuRamOffest = SPU.ram.length;
 
@@ -2116,7 +2116,7 @@ public final class Scus94491BpeSegment {
 
       if(charSlot == 0 || charSlot == 1) {
         //LAB_8001cc30
-        FUN_8001e8cc();
+        //FUN_8001e8cc();
       } else {
         //LAB_8001cc38
         //LAB_8001cc40
@@ -2166,7 +2166,7 @@ public final class Scus94491BpeSegment {
       final PlayableSound0c sound = new PlayableSound0c();
       sound.name = bent.model_148.effectSounds.name;
       sound.used_00 = true;
-      Sshd sshd = new Sshd(files.get(2));
+      Sshd sshd = new Sshd(soundName, files.get(2));
       sound.sshdPtr_04 = sshd;
 
       sound.soundBufferPtr_08 = SPU.ram.length/8;
@@ -2257,7 +2257,7 @@ public final class Scus94491BpeSegment {
       final PlayableSound0c sound = new PlayableSound0c();
       sound.name = bent.model_148.effectSounds.name;
       sound.used_00 = true;
-      Sshd sshd = new Sshd(files.get(2));
+      Sshd sshd = new Sshd(soundName, files.get(2));
       sound.sshdPtr_04 = sshd;
 
       synchronized(Spu.class){
@@ -2305,7 +2305,7 @@ public final class Scus94491BpeSegment {
       final int soundIndex = SPU.effectSoundsBentSlots.indexOf(bent.bentSlot_274);
       SPU.effectPlayableSounds.get(soundIndex).name = bent.model_148.effectSounds.name;
       //SPU.effectPlayableSounds.get(soundIndex).used_00 = true;
-      Sshd sshd = new Sshd(files.get(2));
+      Sshd sshd = new Sshd(soundName, files.get(2));
       SPU.effectPlayableSounds.get(soundIndex).sshdPtr_04 = sshd;
 
       synchronized(Spu.class){
