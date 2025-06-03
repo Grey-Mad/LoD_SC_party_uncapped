@@ -12,6 +12,9 @@ import legend.game.characters.StatModTypeRegistryEvent;
 import legend.game.characters.StatType;
 import legend.game.characters.StatTypeRegistry;
 import legend.game.characters.StatTypeRegistryEvent;
+import legend.game.combat.MaxBattleEntities;
+import legend.game.combat.MaxBattleEntitiesRegistry;
+import legend.game.combat.MaxBattleEntitiesRegistryEvent;
 import legend.game.combat.bent.BattleEntityType;
 import legend.game.combat.bent.BattleEntityTypeRegistry;
 import legend.game.combat.bent.BattleEntityTypeRegistryEvent;
@@ -50,6 +53,7 @@ public class Registries extends org.legendofdragoon.modloader.registries.Registr
   public final Registry<Spell> spell = this.addRegistry(new SpellRegistry(), SpellRegistryEvent::new);
   public final Registry<ConfigEntry<?>> config = this.addRegistry(new ConfigRegistry(), ConfigRegistryEvent::new);
   public final Registry<DeffPackage> deff = this.addRegistry(new DeffRegistry(), RegisterDeffsEvent::new);
+  public final Registry<MaxBattleEntities> maxBattleEntities = this.addRegistry(new MaxBattleEntitiesRegistry(), MaxBattleEntitiesRegistryEvent::new);
 
   protected Registries(final EventManager events, final Consumer<Access> access) {
     super(events, access);
