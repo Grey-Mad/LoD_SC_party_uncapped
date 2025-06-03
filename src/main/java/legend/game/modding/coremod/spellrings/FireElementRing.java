@@ -2,6 +2,6 @@ package legend.game.modding.coremod.spellrings;
 
 public class FireElementRing extends SimpleElementRing {
   public FireElementRing() {
-    super(0x6c8283);
+    super(0x201996);
   }
 }
