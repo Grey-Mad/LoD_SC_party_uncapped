@@ -1,25 +1,29 @@
 --- original
 +++ modified
-@@ -1570,9 +1570,11 @@
+@@ -1570,9 +1570,15 @@
  LABEL_29:
--mov var[34][0], stor[28]
--return
--LABEL_30:
--mov var[34][2], stor[28]
--return
--LABEL_31:
--mov var[34][1], stor[28]
++jmp_cmp >, var[35], 0x3, inl[:SKIP_NORMAL]
+ mov var[34][0], stor[28]
+ return
+ LABEL_30:
+ mov var[34][2], stor[28]
+ return
+ LABEL_31:
+ mov var[34][1], stor[28]
++SKIP_NORMAL:
++jmp_cmp >, var[35], 0x3, inl[:SKIP_LOOP]
 +LOOP:
 +mov var[34][stor[3]], stor[28]
 +incr stor[3]
-+jmp_cmp ==, 0xffffffff, var[34][stor[3]], inl[:BREAK_LOOP] 
++jmp_cmp ==, var[35], stor[3], inl[:BREAK_LOOP] 
 +incr stor[3]
-+jmp_cmp ==, 0xffffffff, var[34][stor[3]], inl[:BREAK_LOOP] 
++jmp_cmp ==, var[35], stor[3], inl[:BREAK_LOOP] 
 +incr stor[3]
-+jmp_cmp ==, 0xffffffff, var[34][stor[3]], inl[:BREAK_LOOP] 
++jmp_cmp ==, var[35], stor[3], inl[:BREAK_LOOP] 
 +rand 0x2, stor[2]
 +jmp_cmp !=, 0x1, stor[2], inl[:LOOP] 
 +BREAK_LOOP:
++SKIP_LOOP:
  return
 @@ -1872,6 +1874,10 @@
  call 141, stor[27]

@@ -89,7 +89,7 @@
  mov 0x0, var[45][stor[9]]
  call 169, stor[0], STATUS, stor[8]
  and 0xffffff00, stor[8]
-@@ -2299,6 +2299,7 @@
+@@ -2299,21 +2299,38 @@
  return
  ENTRYPOINT_0:
 +mov var[35], stor[3]
@@ -106,3 +106,28 @@
 +mov 0xffffffff, stor[3]
  gosub inl[:LABEL_0]
  call 524, stor[0], 0x0
+ call 173, stor[0], 0x1
+ or 0x200, stor[7]
+ call 138, stor[0], 0x0
+ LABEL_127:
+ wait_cmp &, 0x8, stor[7]
+ gosub inl[:LABEL_3]
+ jmp_cmp !=, 0x0, stor[8], inl[:LABEL_129]
+ call 371, stor[0], stor[8], 0x1
+ mov stor[8], stor[18]
+ sub 0x2, stor[18]
++mov stor[18], stor[19]
++LOOP:
++jmp_cmp <, stor[19], 0x3, inl[:SKIP_CORRECT_BOMBS_ADDED_BY_SCRIPT]
++sub 0x3, stor[19]
++SKIP_CORRECT_BOMBS_ADDED_BY_SCRIPT:
++jmp_cmp >, stor[19], 0x2, inl[:LOOP]
+ mov var[34][stor[18]], stor[28]
+ mov stor[28], var[45][251]
+-gosub_table stor[18], inl[:LABEL_131]
+-gosub_table stor[18], inl[:LABEL_130]
++gosub_table stor[19], inl[:LABEL_131]
++gosub_table stor[19], inl[:LABEL_130]
+ jmp_cmp <, 0x2, stor[8], inl[:LABEL_128]
+ gosub inl[:LABEL_49]
+ jmp inl[:LABEL_129]
