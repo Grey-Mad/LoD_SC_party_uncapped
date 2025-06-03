@@ -266,16 +266,7 @@ public abstract class BattleEntity27c extends BattleObject {
   public boolean useScissor;
 
 
-  public Texture texture15;
-  public Texture texture24;
-  public int[] vram15;
-  public int[] vram24;
-  public int w;
-  public int h;
-  public ArrayList<Texture> textures15 = new ArrayList<Texture>();
-  public ArrayList<Texture> textures24 = new ArrayList<Texture>();
-  public int frameIndexAnimatedTexture;
-  public boolean recreateTexture = false;
+
 
   public BattleEntity27c(final BattleEntityType type, final String name) {
     super(BattleObject.BOBJ);
@@ -683,46 +674,45 @@ public abstract class BattleEntity27c extends BattleObject {
               ArrayList<Integer> sectionCopied24 = new ArrayList<Integer>();
               ArrayList<Integer> sectionCopied15 = new ArrayList<Integer>();
 
-              for(int q = 0; q < this.h; q++) {
-                for(int s = 0; s < this.w; s++) {
-                  final int index = q * this.w + s;
-                  if ((q < h+secondaryYOffsetH) && ((x<=s)&&(s<w+x))){
-                    sectionCopied24.add(this.vram24[index]);
-                    sectionCopied15.add(this.vram15[index]);
+              for(int q = y; q < this.combatant_144.h; q++) {
+                for(int s = x; s < this.combatant_144.w; s++) {
+                  final int index = q * this.combatant_144.w + s;
+                  if (((y<=q)&&(q<h+secondaryYOffsetH+y)) && ((x<=s)&&(s<w+x))){
+                    sectionCopied24.add(this.combatant_144.vram24[index]);
+                    sectionCopied15.add(this.combatant_144.vram15[index]);
                   }
                 }
               }
-              for(int q = 0; q < this.h; q++) {
-                for(int s = 0; s < this.w; s++) {
-                  final int index = q * this.w + s;
-                  if (((h<=q)&&(q < h+secondaryYOffsetH)) && ((x<=s)&&(s<w+x))){
-                    this.vram24[index] = sectionCopied24.getFirst();
-                    this.vram15[index] = sectionCopied15.getFirst();
+              for(int q = y; q < this.combatant_144.h; q++) {
+                for(int s = x; s < this.combatant_144.w; s++) {
+                  final int index = q * this.combatant_144.w + s;
+                  if (((h+y<=q)&&(q<h+secondaryYOffsetH+y)) && ((x<=s)&&(s<w+x))){
+                    this.combatant_144.vram24[index] = sectionCopied24.getFirst();
+                    this.combatant_144.vram15[index] = sectionCopied15.getFirst();
                     sectionCopied24.removeFirst();
                     sectionCopied15.removeFirst();
                   }
                 }
               }
 
-              for(int q = 0; q < this.h; q++) {
-                for(int s = 0; s < this.w; s++) {
-                  final int index = q * this.w + s;
-                  if ((q<h) && ((x<=s)&&(s<w+x))){
-                    this.vram24[index] = sectionCopied24.getFirst();
-                    this.vram15[index] = sectionCopied15.getFirst();
+              for(int q = y; q < this.combatant_144.h; q++) {
+                for(int s = x; s < this.combatant_144.w; s++) {
+                  final int index = q * this.combatant_144.w + s;
+                  if (((y<=q)&&(q<h+y)) && ((x<=s)&&(s<w+x))){
+                    this.combatant_144.vram24[index] = sectionCopied24.getFirst();
+                    this.combatant_144.vram15[index] = sectionCopied15.getFirst();
                     sectionCopied24.removeFirst();
                     sectionCopied15.removeFirst();
                   }
                 }
               }
-
-            
-              createAnimatedTextureFromTim(this.w,this.h);
+              
+              createAnimatedTextureFromTim(this.combatant_144.w,this.combatant_144.h);
             }
           }
         }
         
-        createTextureFromTim(this.w,this.h);//greytodo: texture animation
+        createTextureFromTim(this.combatant_144.w,this.combatant_144.h);//greytodo: texture animation
 
         this._278 = 1;
         this.currentAnimIndex_270 = -1;
@@ -742,17 +732,17 @@ public abstract class BattleEntity27c extends BattleObject {
 
 
   public void createTextureFromTim(final int w, final int h) {
-    this.texture15 = Texture.create(builder -> {
+    this.combatant_144.texture15 = Texture.create(builder -> {
       builder.size(w, h);
-      builder.data(this.vram15, w, h);
+      builder.data(this.combatant_144.vram15, w, h);
       builder.internalFormat(GL_R32UI);
       builder.dataFormat(GL_RED_INTEGER);
       builder.dataType(GL_UNSIGNED_INT);
     });
 
-    this.texture24 = Texture.create(builder -> {
+    this.combatant_144.texture24 = Texture.create(builder -> {
       builder.size(w, h);
-      builder.data(this.vram24, w, h);
+      builder.data(this.combatant_144.vram24, w, h);
       builder.internalFormat(GL_RGBA);
       builder.dataFormat(GL_RGBA);
       builder.dataType(GL_UNSIGNED_INT_8_8_8_8_REV);
@@ -760,19 +750,19 @@ public abstract class BattleEntity27c extends BattleObject {
   }
 
   public void createAnimatedTextureFromTim(final int w, final int h) {
-    this.textures15.add(
+    this.combatant_144.textures15.add(
       Texture.create(builder -> {
       builder.size(w, h);
-      builder.data(this.vram15, w, h);
+      builder.data(this.combatant_144.vram15, w, h);
       builder.internalFormat(GL_R32UI);
       builder.dataFormat(GL_RED_INTEGER);
       builder.dataType(GL_UNSIGNED_INT);
     }));
 
-    this.textures24.add(
+    this.combatant_144.textures24.add(
     Texture.create(builder -> {
       builder.size(w, h);
-      builder.data(this.vram24, w, h);
+      builder.data(this.combatant_144.vram24, w, h);
       builder.internalFormat(GL_RGBA);
       builder.dataFormat(GL_RGBA);
       builder.dataType(GL_UNSIGNED_INT_8_8_8_8_REV);
@@ -846,12 +836,12 @@ public abstract class BattleEntity27c extends BattleObject {
         GTE.setTransforms(ls);
         Renderer.renderDobj2(part, true, 0);
 
-        if (this.recreateTexture){
-          createTextureFromTim(this.w, this.h);
-          this.recreateTexture = false;
+        if (this.combatant_144.recreateTexture){//greytodo see about removeing
+          createTextureFromTim(this.combatant_144.w, this.combatant_144.h);
+          this.combatant_144.recreateTexture = false;
         }
 
-        if (this.textures15.isEmpty()){
+        if (this.combatant_144.textures15.isEmpty()){
           if(model.modelParts_00[i].obj != null) {
             final QueuedModelBattleTmd queue = RENDERER.queueModel(model.modelParts_00[i].obj, lw, QueuedModelBattleTmd.class)
               .depthOffset(model.zOffset_a0 * 4)
@@ -861,8 +851,8 @@ public abstract class BattleEntity27c extends BattleObject {
               .ctmdFlags((part.attribute_00 & 0x4000_0000) != 0 ? 0x12 : 0x0)
               .tmdTranslucency(tmdGp0Tpage_1f8003ec >>> 5 & 0b11)
               .battleColour(((Battle)currentEngineState_8004dd04)._800c6930.colour_00)
-              .texture(this.texture24,0)
-              .texture(this.texture15,1);
+              .texture(this.combatant_144.texture24,0)
+              .texture(this.combatant_144.texture15,1);
 
             if(this.useScissor) {
               queue.scissor(this.scissor);
@@ -878,8 +868,8 @@ public abstract class BattleEntity27c extends BattleObject {
                 .ctmdFlags((part.attribute_00 & 0x4000_0000) != 0 ? 0x12 : 0x0)
                 .tmdTranslucency(tmdGp0Tpage_1f8003ec >>> 5 & 0b11)
                 .battleColour(((Battle)currentEngineState_8004dd04)._800c6930.colour_00)
-                .texture(this.textures24.get(frameIndexAnimatedTexture),0)
-                .texture(this.textures15.get(frameIndexAnimatedTexture),1);
+                .texture(this.combatant_144.textures24.get(this.combatant_144.frameIndexAnimatedTexture),0)
+                .texture(this.combatant_144.textures15.get(this.combatant_144.frameIndexAnimatedTexture),1);
 
               if(this.useScissor) {
                 queue.scissor(this.scissor);
@@ -891,10 +881,10 @@ public abstract class BattleEntity27c extends BattleObject {
       }
     }
 
-    if (!this.textures15.isEmpty()){
-      frameIndexAnimatedTexture++;
-      if (frameIndexAnimatedTexture >= this.textures24.size()) {
-        frameIndexAnimatedTexture = 0;
+    if (!this.combatant_144.textures15.isEmpty()){
+      this.combatant_144.frameIndexAnimatedTexture++;
+      if (this.combatant_144.frameIndexAnimatedTexture >= this.combatant_144.textures24.size()) {
+        this.combatant_144.frameIndexAnimatedTexture = 0;
       }
     }
 

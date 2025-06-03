@@ -1689,7 +1689,7 @@ public class Battle extends EngineState {
       final int enemyIndex = a0.charIndex_1a2 & 0x1ff;
 
       if(Loader.exists("monsters/%d/textures/combat".formatted(enemyIndex))) {
-        loadFile("monsters/%d/textures/combat".formatted(enemyIndex), files -> this.loadCombatantTim(data, files));
+        loadFile("monsters/%d/textures/combat".formatted(enemyIndex), files -> this.loadCombatantTim(a0, files));
       }
     }
   }
@@ -2752,7 +2752,7 @@ public class Battle extends EngineState {
         }
 
         final String charName = getCharacterName(fileIndex).toLowerCase();
-        loadFile("characters/%s/textures/dragoon".formatted(charName), files -> this.loadCombatantTim(bent, files));
+        loadFile("characters/%s/textures/dragoon".formatted(charName), files -> this.loadCombatantTim(bent.combatant_144, files));
         } else {
         final String charName = getCharacterName(fileIndex).toLowerCase();
         loadFile("characters/%s/textures/combat".formatted(charName), files -> this.loadCombatantTim(bent, files));
@@ -2763,16 +2763,16 @@ public class Battle extends EngineState {
   }
 
   @Method(0x800ca75cL)
-  public void loadCombatantTim(final BattleEntity27c bent, final FileData timFile) {
+  public void loadCombatantTim(final CombatantStruct1a8 combatant, final FileData timFile) {
     if(timFile.size() == 0){return;}
     final Tim tim = new Tim(timFile);
     
       final int w = tim.getImageRect().w();
       final int h = tim.getImageRect().h();
-      bent.w = w;
-      bent.h = h;
-      bent.vram24 = new int[h*w];
-      bent.vram15 = new int[h*w];
+      combatant.w = w;
+      combatant.h = h;
+      combatant.vram24 = new int[h*w];
+      combatant.vram15 = new int[h*w];
       
       int i = 0;
       for(int y = 0; y < h; y++) {
@@ -2784,8 +2784,8 @@ public class Battle extends EngineState {
           final int packed = tim.getImageData().readUShort(i);
           final int unpacked = MathHelper.colour15To24(packed);
           final int index = y * w + x;
-          bent.vram24[index] = unpacked;
-          bent.vram15[index] = packed;
+          combatant.vram24[index] = unpacked;
+          combatant.vram15[index] = packed;
           i += 2;
         }
       }
@@ -2801,8 +2801,8 @@ public class Battle extends EngineState {
             final int packed = tim.getClutData().readUShort(j);
             final int unpacked = MathHelper.colour15To24(packed);
             final int index = y * w + x;
-            bent.vram24[index] = unpacked;
-            bent.vram15[index] = packed;
+            combatant.vram24[index] = unpacked;
+            combatant.vram15[index] = packed;
             j += 2;
           }
         }
@@ -7061,7 +7061,7 @@ public class Battle extends EngineState {
   }
 
   @Method(0x800ead44L)
-  public void applyTextureAnimation(final Rect4i rect, final int h) {
+  public void applyTextureAnimation(final Rect4i rect, final int h) {//greytodo find where this is used 
     GPU.queueCommand(1, new GpuCommandCopyVramToVram(960, 256, rect.x, rect.y + rect.h - h, rect.w, h));
     GPU.queueCommand(1, new GpuCommandCopyVramToVram(rect.x, rect.y + h, rect.x, rect.y, rect.w, rect.h - h));
     GPU.queueCommand(1, new GpuCommandCopyVramToVram(rect.x, rect.y, 960, 256, rect.w, h));
