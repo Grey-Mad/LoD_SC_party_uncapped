@@ -61,7 +61,7 @@ USE_PURIFIER:
 mov stor[8], inl[:USE_PURIFIER_STATUS] ; back up statuses that are cured
 gosub inl[:THROW_SHIELD_BUFF_PURIFIER] ; addr
 call Battle::scriptGetBentSlot, stor[28], stor[9], 0x0 ; bentIndex, charOrBentSlot, mode
-add 0x81, stor[9] ; amount, operand
+add var[45][136], stor[9] ; amount, operand
 mov var[45][stor[9]], stor[9] ; s9 = status
 and 0xf, stor[9] ; mask status effect index
 mov inl[:STATUS_AFFLICTION_FLAGS[stor[9]]], stor[9] ; s9 = status flag for status effect index
