@@ -63,7 +63,7 @@ public final class V4Serializer {
     final int charSlotCount = data.readByte(offset); // Not yet used
     offset++;
 
-    for(int i = 0; i < state.charIds_88.length; i++) {
+    for(int i = 0; i < charSlotCount; i++) {
       state.charIds_88[i] = data.readShort(offset);
       offset += 2;
     }

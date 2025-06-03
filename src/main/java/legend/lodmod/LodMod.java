@@ -26,6 +26,7 @@ import legend.game.characters.UnaryStatMod;
 import legend.game.characters.UnaryStatModConfig;
 import legend.game.characters.UnaryStatModType;
 import legend.game.characters.VitalsStat;
+import legend.game.combat.MaxBattleEntitiesRegistryEvent;
 import legend.game.combat.bent.BattleEntityType;
 import legend.game.combat.bent.BattleEntityTypeRegistryEvent;
 import legend.game.combat.deff.RegisterDeffsEvent;
@@ -48,6 +49,7 @@ import legend.game.modding.coremod.elements.ThunderElement;
 import legend.game.modding.coremod.elements.WaterElement;
 import legend.game.modding.coremod.elements.WindElement;
 import legend.game.modding.events.battle.RegisterBattleEntityStatsEvent;
+import legend.game.modding.events.gamestate.GameLoadedEvent;
 import legend.game.modding.events.gamestate.NewGameEvent;
 import legend.game.modding.events.input.RegisterDefaultInputBindingsEvent;
 import legend.game.modding.events.inventory.GatherAttackItemsEvent;
@@ -356,6 +358,20 @@ public class LodMod {
     event.add(LodItems.MOON_SERENADE.get());
     event.add(LodItems.HEALING_RAIN.get());
     event.add(LodItems.HEALING_BREEZE.get());
+  }
+
+  @EventListener
+  public static void registerMaxBents(final MaxBattleEntitiesRegistryEvent event) {
+    LodMaxBattleEntities.register(event);
+  }
+  
+  @EventListener
+  public static void onGameLoad(final GameLoadedEvent event) {
+    event.gameState.charIds_88 =  new int[LodMaxBattleEntities.MAX_PLAYER_BENTS.get().maxBattleEntities];
+    event.gameState.charIds_88[0] = 0;
+    for(int i=1;i<(LodMaxBattleEntities.MAX_PLAYER_BENTS.get().maxBattleEntities);i++){
+      event.gameState.charIds_88[i] = -1;
+    }
   }
 
   @EventListener
