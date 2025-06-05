@@ -3,7 +3,10 @@
 *.ddmp
 *.conf
 *.dcnf
-
+*.css
+*.fxml
+*.vscode
+*.lang
 
 
 # Compiled class file
