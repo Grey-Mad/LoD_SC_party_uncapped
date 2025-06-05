@@ -799,14 +799,20 @@ public final class SItem {
         characterIndices_800bdbb8[characterCount_8011d7c4] = slot;
         characterCount_8011d7c4++;
 
-        if(gameState_800babc8.charIds_88[0] != slot && gameState_800babc8.charIds_88[1] != slot && gameState_800babc8.charIds_88[2] != slot) {
+        boolean setUsedCharacterSlots = true;
+        for(int i=0; i < gameState_800babc8.charIds_88.length; i++){
+          if (!(gameState_800babc8.charIds_88[i] != slot)){
+            setUsedCharacterSlots = false;
+            break;
+          }
+        }
+        if(setUsedCharacterSlots){
           secondaryCharIds_800bdbf8[usedCharacterSlots] = slot;
           usedCharacterSlots++;
         }
       }
-
-      //LAB_80103bb4
     }
+      //LAB_80103bb4
   }
 
   @Method(0x80103e90L)
