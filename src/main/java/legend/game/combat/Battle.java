@@ -150,6 +150,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.function.Function;
 
@@ -374,7 +375,7 @@ public class Battle extends EngineState {
 
   private int currentPostCombatActionFrame_800c6690;
 
-  private final CombatantStruct1a8[] combatants_8005e398 = new CombatantStruct1a8[10];
+  private final CombatantStruct1a8[] combatants_8005e398 = new CombatantStruct1a8[gameState_800babc8.charIds_88.length*2+2];
   /** The number of {@link #combatants_8005e398}s */
   private int combatantCount_800c66a0;
   public int currentStage_800c66a4;
@@ -439,16 +440,16 @@ public class Battle extends EngineState {
   public static BattleStageDarkening1800 stageDarkening_800c6958;
   public static int stageDarkeningClutWidth_800c695c;
 
-  public final DragoonSpells09[] dragoonSpells_800c6960 = new DragoonSpells09[3];
+  public final DragoonSpells09[] dragoonSpells_800c6960 = new DragoonSpells09[gameState_800babc8.charIds_88.length];
   {
     Arrays.setAll(this.dragoonSpells_800c6960, i -> new DragoonSpells09());
   }
 
-  public final String[] currentEnemyNames_800c69d0 = new String[9];
+  public final String[] currentEnemyNames_800c69d0 = new String[gameState_800babc8.charIds_88.length+2];
 
   public Element dragoonSpaceElement_800c6b64;
 
-  public final int[] monsterBents_800c6b78 = new int[9];
+  public final int[] monsterBents_800c6b78 = new int[gameState_800babc8.charIds_88.length+2];
   private int monsterCount_800c6b9c;
 
   public final String[] melbuMonsterNames_800c6ba8 = new String[3];
@@ -1406,12 +1407,13 @@ public class Battle extends EngineState {
     this.FUN_800c8624();
 
     gameState_800babc8._b4++;
-    Arrays.fill(unlockedUltimateAddition_800bc910, false);
+    unlockedUltimateAddition_800bc910=new ArrayList<Boolean>(Arrays.asList(new Boolean[gameState_800babc8.charIds_88.length]));
+    Collections.fill(unlockedUltimateAddition_800bc910, false);
     goldGainedFromCombat_800bc920 = 0;
 
-    spGained_800bc950[0] = 0;
-    spGained_800bc950[1] = 0;
-    spGained_800bc950[2] = 0;
+    spGained_800bc950 = new ArrayList<Integer>(Arrays.asList(new Integer[gameState_800babc8.charIds_88.length]));
+    Collections.fill(spGained_800bc950, 0);
+    livingCharIds_800bc968 = new ArrayList<Integer>(Arrays.asList(new Integer[gameState_800babc8.charIds_88.length]));
 
     totalXpFromCombat_800bc95c = 0;
     battleFlags_800bc960 = 0;
@@ -1420,6 +1422,7 @@ public class Battle extends EngineState {
     itemOverflow.clear();
     equipmentOverflow.clear();
 
+    /*greytodo: need way to loop this section */
     int charIndex = gameState_800babc8.charIds_88[1];
     if(charIndex < 0) {
       gameState_800babc8.charIds_88[1] = gameState_800babc8.charIds_88[2];
@@ -1492,7 +1495,7 @@ public class Battle extends EngineState {
     loadAdditions();
 
     //LAB_800c7830
-    for(int i = 0; i < 12; i++) {
+    for(int i = 0; i < battleState_8006e398.allBents_e0c.length; i++) {
       battleState_8006e398.allBents_e0c[i] = null;
     }
 
@@ -1528,7 +1531,8 @@ public class Battle extends EngineState {
       final int combatantIndex = this.getCombatantIndex(charIndex);
       final String name = "Enemy combatant index " + combatantIndex;
       final MonsterBattleEntity bent = new MonsterBattleEntity(name);
-      final ScriptState<MonsterBattleEntity> state = SCRIPTS.allocateScriptState(name, bent);
+      final int freeScript = scriptStatePtrArr_800bc1c0.length - (gameState_800babc8.charIds_88.length*2 + 2) + i;
+      final ScriptState<MonsterBattleEntity> state = SCRIPTS.allocateScriptState(freeScript, name, bent);
       state.setTicker(bent::bentLoadingTicker);
       state.setDestructor(bent::bentDestructor);
       bent.charId_272 = charIndex;
@@ -1548,7 +1552,7 @@ public class Battle extends EngineState {
   public void allocatePlayerBattleEntities() {
     //LAB_800fbdb8
     int charCount;
-    for(charCount = 0; charCount < 3; charCount++) {
+    for(charCount = 0; charCount < gameState_800babc8.charIds_88.length; charCount++) {
       if(gameState_800babc8.charIds_88[charCount] < 0) {
         break;
       }
@@ -1566,9 +1570,10 @@ public class Battle extends EngineState {
     //LAB_800fbe70
     for(int charSlot = 0; charSlot < charCount; charSlot++) {
       final int charIndex = gameState_800babc8.charIds_88[charSlot];
-      final String name = "Char ID " + charIndex + " (bent + " + (charSlot + 6) + ')';
-      final PlayerBattleEntity bent = new PlayerBattleEntity(name, charSlot + 6, this.playerBattleScript_800c66fc);
-      final ScriptState<PlayerBattleEntity> state = SCRIPTS.allocateScriptState(charSlot + 6, name, bent);
+      final int freeScript = scriptStatePtrArr_800bc1c0.length - gameState_800babc8.charIds_88.length + charSlot;
+      final String name = "Char ID " + charIndex + " (bent + " + (freeScript) + ')';
+      final PlayerBattleEntity bent = new PlayerBattleEntity(name, freeScript, this.playerBattleScript_800c66fc);
+      final ScriptState<PlayerBattleEntity> state = SCRIPTS.allocateScriptState(freeScript, name, bent);
       state.setTicker(bent::bentLoadingTicker);
       state.setDestructor(bent::bentDestructor);
       bent.element = characterElements_800c706c[charIndex].get();
@@ -1824,7 +1829,7 @@ public class Battle extends EngineState {
 
       //LAB_800c8104
       for(int i = 0; i < aliveCharBents; i++) {
-        livingCharIds_800bc968[i] = battleState_8006e398.alivePlayerBents_eac[i].innerStruct_00.charId_272;
+        livingCharIds_800bc968.set(i, battleState_8006e398.alivePlayerBents_eac[i].innerStruct_00.charId_272);
       }
 
       //LAB_800c8144
@@ -2184,7 +2189,7 @@ public class Battle extends EngineState {
   @Method(0x800c8f50L)
   public int addCombatant(final int a0, final int charSlot) {
     //LAB_800c8f6c
-    for(int combatantIndex = 0; combatantIndex < 10; combatantIndex++) {
+    for(int combatantIndex = 0; combatantIndex < combatants_8005e398.length; combatantIndex++) {
       if(this.combatants_8005e398[combatantIndex] == null) {
         final CombatantStruct1a8 combatant = new CombatantStruct1a8();
         this.combatants_8005e398[combatantIndex] = combatant;
@@ -2235,7 +2240,7 @@ public class Battle extends EngineState {
   @Method(0x800c9060L)
   public int getCombatantIndex(final int charIndex) {
     //LAB_800c906c
-    for(int i = 0; i < 10; i++) {
+    for(int i = 0; i < combatants_8005e398.length; i++) {
       final CombatantStruct1a8 combatant = this.combatants_8005e398[i];
 
       if(combatant != null && combatant.charIndex_1a2 == charIndex) {
@@ -3846,7 +3851,7 @@ public class Battle extends EngineState {
         }
 
         //LAB_800cd36c
-        unlockedUltimateAddition_800bc910[bent.charSlot_276] = true;
+        unlockedUltimateAddition_800bc910.set(bent.charSlot_276, true);
       }
 
       //LAB_800cd390
@@ -4831,7 +4836,7 @@ public class Battle extends EngineState {
     //   3: script[0x1026] 0x0
     //   4: script[0x1027] 0xa0
     final BattleObject bobj;
-    if(script.params_20[4].get() < 72) {
+    if(script.params_20[4].get() < scriptStatePtrArr_800bc1c0.length) {
       bobj = SCRIPTS.getObject(script.params_20[4].get(), BattleObject.class);
     } else {
       bobj = null;
@@ -4870,7 +4875,7 @@ public class Battle extends EngineState {
     //   3: script[0x102e] 0x0
     //   4: script[0x102f] 0xc8
     final BattleObject bobj;
-    if(script.params_20[4].get() < 72) {
+    if(script.params_20[4].get() < scriptStatePtrArr_800bc1c0.length) {
       bobj = SCRIPTS.getObject(script.params_20[4].get(), BattleObject.class);
     } else {
       bobj = null;
@@ -7714,7 +7719,7 @@ public class Battle extends EngineState {
     this.monsterCount_800c6b9c = 0;
 
     //LAB_800ee764
-    for(int combatantIndex = 0; combatantIndex < 9; combatantIndex++) {
+    for(int combatantIndex = 0; combatantIndex < monsterBents_800c6b78.length; combatantIndex++) {
       this.monsterBents_800c6b78[combatantIndex] = -1;
       this.currentEnemyNames_800c69d0[combatantIndex] = null;
     }
@@ -7729,8 +7734,8 @@ public class Battle extends EngineState {
     this.dragoonSpaceElement_800c6b64 = null;
 
     //LAB_800ee894
-    for(int charSlot = 0; charSlot < 3; charSlot++) {
-      spGained_800bc950[charSlot] = 0;
+    for(int charSlot = 0; charSlot < battleState_8006e398.getPlayerCount(); charSlot++) {
+      spGained_800bc950.set(charSlot,0);
     }
 
     sortItems();
@@ -7810,7 +7815,7 @@ public class Battle extends EngineState {
     characterStatsLoaded_800be5d0 = true;
 
     //LAB_800ef31c
-    for(int charSlot = 0; charSlot < 3; charSlot++) {
+    for(int charSlot = 0; charSlot < battleState_8006e398.getPlayerCount(); charSlot++) {
       this.dragoonSpells_800c6960[charSlot].charId_00 = -1;
 
       //LAB_800ef328
@@ -8148,7 +8153,7 @@ public class Battle extends EngineState {
     final VitalsStat sp = player.stats.getStat(LodMod.SP_STAT.get());
 
     sp.setCurrent(sp.getCurrent() + script.params_20[1].get());
-    spGained_800bc950[player.charSlot_276] += script.params_20[1].get();
+    spGained_800bc950.set(player.charSlot_276, spGained_800bc950.get(player.charSlot_276) + script.params_20[1].get());
 
     //LAB_800f4500
     script.params_20[2].set(sp.getCurrent());
