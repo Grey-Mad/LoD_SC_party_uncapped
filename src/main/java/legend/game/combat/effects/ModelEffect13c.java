@@ -4,6 +4,7 @@ import legend.core.QueuedModelBattleTmd;
 import legend.core.gte.MV;
 import legend.core.gte.ModelPart10;
 import legend.core.memory.Method;
+import legend.core.opengl.Texture;
 import legend.game.combat.Battle;
 import legend.game.combat.deff.Anim;
 import legend.game.combat.deff.DeffPart;
@@ -40,6 +41,10 @@ public class ModelEffect13c implements Effect<EffectManagerParams.AnimType> {
   public Anim anim_0c;
   public final Model124 model_10;
   public Model124 model_134;
+
+  public Texture texture15;
+  public Texture texture24;
+  public boolean textured = false;
 
   public ModelEffect13c(final String name) {
     this.model_10 = new Model124(name);
@@ -89,16 +94,31 @@ public class ModelEffect13c implements Effect<EffectManagerParams.AnimType> {
         zMin = oldZMin;
 
         //TODO remove null check
-        if(part.obj != null) {
-          RENDERER.queueModel(part.obj, lw, QueuedModelBattleTmd.class)
-            .depthOffset(model.zOffset_a0 * 4)
-            .lightDirection(lightDirectionMatrix_800c34e8)
-            .lightColour(lightColourMatrix_800c3508)
-            .backgroundColour(GTE.backgroundColour)
-            .ctmdFlags((part.attribute_00 & 0x4000_0000) != 0 ? 0x12 : 0x0)
-            .tmdTranslucency(tmdGp0Tpage_1f8003ec >>> 5 & 0b11)
-            .battleColour(((Battle)currentEngineState_8004dd04)._800c6930.colour_00);
-        }
+        if (textured){
+          if(part.obj != null) {
+            RENDERER.queueModel(part.obj, lw, QueuedModelBattleTmd.class)
+              .depthOffset(model.zOffset_a0 * 4)
+              .lightDirection(lightDirectionMatrix_800c34e8)
+              .lightColour(lightColourMatrix_800c3508)
+              .backgroundColour(GTE.backgroundColour)
+              .ctmdFlags((part.attribute_00 & 0x4000_0000) != 0 ? 0x12 : 0x0)
+              .tmdTranslucency(tmdGp0Tpage_1f8003ec >>> 5 & 0b11)
+              .battleColour(((Battle)currentEngineState_8004dd04)._800c6930.colour_00)
+              .texture(this.texture24,0)
+              .texture(this.texture15,1);
+            }
+        }else{
+          if(part.obj != null) {
+            RENDERER.queueModel(part.obj, lw, QueuedModelBattleTmd.class)
+              .depthOffset(model.zOffset_a0 * 4)
+              .lightDirection(lightDirectionMatrix_800c34e8)
+              .lightColour(lightColourMatrix_800c3508)
+              .backgroundColour(GTE.backgroundColour)
+              .ctmdFlags((part.attribute_00 & 0x4000_0000) != 0 ? 0x12 : 0x0)
+              .tmdTranslucency(tmdGp0Tpage_1f8003ec >>> 5 & 0b11)
+              .battleColour(((Battle)currentEngineState_8004dd04)._800c6930.colour_00);
+            }
+      }
 
         part.attribute_00 = oldAttrib;
       }

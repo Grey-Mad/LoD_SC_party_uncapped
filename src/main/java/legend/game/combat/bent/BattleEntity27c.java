@@ -5,6 +5,7 @@ import legend.core.gpu.Rect4i;
 import legend.core.gte.MV;
 import legend.core.gte.ModelPart10;
 import legend.core.memory.Method;
+import legend.core.opengl.Texture;
 import legend.game.characters.Element;
 import legend.game.characters.ElementSet;
 import legend.game.characters.StatCollection;
@@ -19,11 +20,18 @@ import legend.game.modding.events.battle.SpellStatsEvent;
 import legend.game.scripting.ScriptFile;
 import legend.game.scripting.ScriptState;
 import legend.game.tmd.Renderer;
+import legend.game.tmd.UvAdjustmentMetrics14;
 import legend.game.types.Model124;
 import legend.game.types.SpellStats0c;
 import legend.lodmod.LodMod;
 import org.joml.Vector3f;
 import org.joml.Vector3i;
+
+import static org.lwjgl.opengl.GL30C.GL_R32UI;
+import static org.lwjgl.opengl.GL30C.GL_RED_INTEGER;
+import static org.lwjgl.opengl.GL11C.GL_RGBA;
+import static org.lwjgl.opengl.GL11C.GL_UNSIGNED_INT;
+import static org.lwjgl.opengl.GL12C.GL_UNSIGNED_INT_8_8_8_8_REV;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -253,6 +261,10 @@ public abstract class BattleEntity27c extends BattleObject {
 
   public final Rect4i scissor = new Rect4i();
   public boolean useScissor;
+
+
+  public Texture texture15;
+  public Texture texture24;
 
   public BattleEntity27c(final BattleEntityType type, final String name) {
     super(BattleObject.BOBJ);
@@ -604,6 +616,7 @@ public abstract class BattleEntity27c extends BattleObject {
     if(v1 != 0) {
       if(this.combatant_144.isModelLoaded()) {
         this.model_148.uvAdjustments_9d = vramSlots_8005027c[vramSlotIndices_800fa730[this.combatant_144.vramSlot_1a0]];
+        this.model_148.uvAdjustments_9d = new UvAdjustmentMetrics14(1, 0, 240, 0, 0, false);
         this.loadingAnimIndex_26e = 0;
         loadCombatantModelAndAnimation(this.model_148, this.combatant_144);
         this._278 = 1;
@@ -678,6 +691,9 @@ public abstract class BattleEntity27c extends BattleObject {
 
     final MV lw = new MV();
     final MV ls = new MV();
+    if (this.combatant_144.updateTexture){
+      createTexture();
+    };
 
     //LAB_800ec9d0
     for(int i = 0; i < model.modelParts_00.length; i++) {
@@ -689,18 +705,36 @@ public abstract class BattleEntity27c extends BattleObject {
         GTE.setTransforms(ls);
         Renderer.renderDobj2(part, true, 0);
 
-        if(model.modelParts_00[i].obj != null) {
-          final QueuedModelBattleTmd queue = RENDERER.queueModel(model.modelParts_00[i].obj, lw, QueuedModelBattleTmd.class)
-            .depthOffset(model.zOffset_a0 * 4)
-            .lightDirection(lightDirectionMatrix_800c34e8)
-            .lightColour(lightColourMatrix_800c3508)
-            .backgroundColour(GTE.backgroundColour)
-            .ctmdFlags((part.attribute_00 & 0x4000_0000) != 0 ? 0x12 : 0x0)
-            .tmdTranslucency(tmdGp0Tpage_1f8003ec >>> 5 & 0b11)
-            .battleColour(((Battle)currentEngineState_8004dd04)._800c6930.colour_00);
+        if (this.texture15 != null){
+          if(model.modelParts_00[i].obj != null) {
+            final QueuedModelBattleTmd queue = RENDERER.queueModel(model.modelParts_00[i].obj, lw, QueuedModelBattleTmd.class)
+              .depthOffset(model.zOffset_a0 * 4)
+              .lightDirection(lightDirectionMatrix_800c34e8)
+              .lightColour(lightColourMatrix_800c3508)
+              .backgroundColour(GTE.backgroundColour)
+              .ctmdFlags((part.attribute_00 & 0x4000_0000) != 0 ? 0x12 : 0x0)
+              .tmdTranslucency(tmdGp0Tpage_1f8003ec >>> 5 & 0b11)
+              .battleColour(((Battle)currentEngineState_8004dd04)._800c6930.colour_00)
+              .texture(this.texture24,0)
+              .texture(this.texture15,1);
+            if(this.useScissor) {
+              queue.scissor(this.scissor);
+            }
+          }
+        } else {
+          if(model.modelParts_00[i].obj != null) {
+            final QueuedModelBattleTmd queue = RENDERER.queueModel(model.modelParts_00[i].obj, lw, QueuedModelBattleTmd.class)
+              .depthOffset(model.zOffset_a0 * 4)
+              .lightDirection(lightDirectionMatrix_800c34e8)
+              .lightColour(lightColourMatrix_800c3508)
+              .backgroundColour(GTE.backgroundColour)
+              .ctmdFlags((part.attribute_00 & 0x4000_0000) != 0 ? 0x12 : 0x0)
+              .tmdTranslucency(tmdGp0Tpage_1f8003ec >>> 5 & 0b11)
+              .battleColour(((Battle)currentEngineState_8004dd04)._800c6930.colour_00);
 
-          if(this.useScissor) {
-            queue.scissor(this.scissor);
+            if(this.useScissor) {
+              queue.scissor(this.scissor);
+            }
           }
         }
       }
@@ -748,4 +782,22 @@ public abstract class BattleEntity27c extends BattleObject {
     this.spellId_4e = spellId;
     this.setTempSpellStats();
   }
+
+  public void createTexture() {
+    this.texture15 = Texture.create(builder -> {
+        builder.size(this.combatant_144.rectW, this.combatant_144.rectH);
+        builder.data(this.combatant_144.vram15, this.combatant_144.rectW, this.combatant_144.rectH);
+        builder.internalFormat(GL_R32UI);
+        builder.dataFormat(GL_RED_INTEGER);
+        builder.dataType(GL_UNSIGNED_INT);
+      });
+    this.texture24 = Texture.create(builder -> {
+        builder.size(this.combatant_144.rectW, this.combatant_144.rectH);
+        builder.data(this.combatant_144.vram24, this.combatant_144.rectW, this.combatant_144.rectH);
+        builder.internalFormat(GL_RGBA);
+        builder.dataFormat(GL_RGBA);
+        builder.dataType(GL_UNSIGNED_INT_8_8_8_8_REV);
+      });
+  }
+
 }
