@@ -45,7 +45,25 @@
  gosub inl[:LABEL_213]
  incr stor[11]
  jmp_cmp <, stor[11], var[33], inl[:LABEL_56]
-@@ -2327,7 +2327,7 @@
+@@ -1649,14 +1649,12 @@
+ mov var[128 + stor[9]][7], stor[10]
+ shr 0x18, stor[10]
+ jmp_cmp !=, 0x0, stor[10], inl[:JMP_7d70_0]
++jmp_cmp !=, 0x0, reg[10], inl[:JMP_7d70_0]
+ gosub inl[:LABEL_82]
+ rand 0x64, stor[8]
+ jmp_cmp <, 0x64, stor[8], inl[:LABEL_76]
+-call 497, 0xffffffff, stor[8]
+-jmp_cmp ==, 0xffffffff, stor[8], inl[:LABEL_76]
+-shl 0x18, stor[8]
+-call 371, stor[0], stor[9], 0x0
+-or stor[8], var[128 + stor[9]][7]
++call 497, null, reg[10]
++jmp_cmp ==, 0, reg[10], inl[:LABEL_76]
+ mov 0x0, stor[8]
+ mov 0x1e, stor[9]
+ mov 0x0, stor[10]
+@@ -2329,7 +2327,7 @@
  mov 0x0, stor[31]
  mov 0x0, stor[16]
  call 371, stor[32], stor[8], 0x0
@@ -54,7 +72,7 @@
  jmp_cmp &, 0x2, var[45][stor[8]], inl[:LABEL_134]
  call 169, stor[0], STATUS, stor[8]
  jmp_cmp &, 0x10, stor[8], inl[:LABEL_134]
-@@ -2941,7 +2941,7 @@
+@@ -2943,7 +2941,7 @@
  call 169, stor[0], GUARD, stor[8]
  jmp_cmp !=, 0x0, stor[8], inl[:LABEL_198]
  call 371, stor[0], stor[9], 0x0
@@ -63,7 +81,7 @@
  call 169, stor[0], STATUS, stor[8]
  and 0xff, stor[8]
  jmp_cmp ==, 0x0, stor[8], inl[:LABEL_201]
-@@ -3042,7 +3042,7 @@
+@@ -3044,7 +3042,7 @@
  gosub inl[:LABEL_204]
  jmp_cmp >, 0x0, stor[8], inl[:LABEL_212]
  call 371, stor[0], stor[9], 0x0
@@ -72,7 +90,7 @@
  jmp_cmp &, 0x80, var[45][stor[9]], inl[:LABEL_210]
  or 0x80, var[45][stor[9]]
  call 600, stor[18]
-@@ -3443,14 +3443,14 @@
+@@ -3445,14 +3443,14 @@
  return
  LABEL_239:
  call 371, stor[0], stor[9], 0x0
@@ -89,3 +107,15 @@
  mov 0x0, var[45][stor[9]]
  call 169, stor[0], STATUS, stor[8]
  and 0xffffff00, stor[8]
+@@ -3607,9 +3605,9 @@
+ mov var[128 + stor[25]][7], stor[26]
+ shr 0x18, stor[26]
+ and 0xff, stor[26]
+-jmp_cmp ==, 0x0, stor[26], inl[:LABEL_251]
+ jmp_cmp ==, 0x1, stor[26], inl[:LABEL_249]
+-call 498, stor[26], stor[8]
++jmp_cmp ==, 0x0, reg[10], inl[:LABEL_251]
++call 498, reg[10], reg[10]
+ jmp inl[:LABEL_250]
+ LABEL_249:
+ mov var[5], stor[8]
