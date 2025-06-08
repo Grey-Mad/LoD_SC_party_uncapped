@@ -176,17 +176,17 @@ public class BattleHud {
   private final FloatingNumberC4[] floatingNumbers_800c6b5c = new FloatingNumberC4[12];
   private int countCameraPositionIndicesIndices_800c6ba0;
   private int currentCameraPositionIndicesIndicesIndex_800c6ba1;
-  private final BattleDisplayStats144[] displayStats_800c6c2c = new BattleDisplayStats144[3];
+  private final BattleDisplayStats144[] displayStats_800c6c2c = new BattleDisplayStats144[gameState_800babc8.charIds_88.length];
   private final int[] cameraPositionIndicesIndices_800c6c30 = new int[4];
-  private final BattleHudCharacterDisplay3c[] activePartyBattleHudCharacterDisplays_800c6c40 = new BattleHudCharacterDisplay3c[3];
+  private final BattleHudCharacterDisplay3c[] activePartyBattleHudCharacterDisplays_800c6c40 = new BattleHudCharacterDisplay3c[gameState_800babc8.charIds_88.length];
 
   public final Battle battle;
 
   private UiBox battleUiBackground;
   private UiBox battleUiName;
-  private final Obj[] names = new Obj[3];
-  private final Obj[] portraits = new Obj[3];
-  private final Obj[][] stats = new Obj[3][3];
+  private final Obj[] names = new Obj[gameState_800babc8.charIds_88.length];
+  private final Obj[] portraits = new Obj[gameState_800babc8.charIds_88.length];
+  private final Obj[][] stats = new Obj[gameState_800babc8.charIds_88.length][3];
   private final MV uiTransforms = new MV();
   private final Vector3f colourTemp = new Vector3f();
 
@@ -201,6 +201,11 @@ public class BattleHud {
   private Obj spBars;
   private final MV spBarTransforms = new MV();
   private final MV lineTransforms = new MV();
+
+  private boolean uiScaleApplied = false;
+  private float uiScaleFactor = (288/(94f*(gameState_800babc8.charIds_88.length/3f)))/3f;
+  private int battleUiLeftGapWidth;
+  private int battleUiBackgroundWidth;
 
   public BattleHud(final Battle battle) {
     this.battle = battle;
@@ -319,7 +324,7 @@ public class BattleHud {
     this.battleHudYOffsetIndex_800c6c38 = 1;
 
     //LAB_800ef7d4
-    for(int charSlot = 0; charSlot < 3; charSlot++) {
+    for(int charSlot = 0; charSlot < activePartyBattleHudCharacterDisplays_800c6c40.length; charSlot++) {
       final BattleHudCharacterDisplay3c charDisplay = this.activePartyBattleHudCharacterDisplays_800c6c40[charSlot];
       charDisplay.charIndex_00 = -1;
       charDisplay.flags_06 = 0;
@@ -328,7 +333,7 @@ public class BattleHud {
     }
 
     //LAB_800ef818
-    for(int charSlot = 0; charSlot < 3; charSlot++) {
+    for(int charSlot = 0; charSlot < activePartyBattleHudCharacterDisplays_800c6c40.length; charSlot++) {
       final BattleDisplayStats144 displayStats = this.displayStats_800c6c2c[charSlot];
 
       //LAB_800ef820
@@ -365,6 +370,14 @@ public class BattleHud {
 
   @Method(0x800ef8d8L)
   public void initCharacterDisplay(final int charSlot) {
+
+    if (battleState_8006e398.getPlayerCount()>3){
+      this.uiScaleFactor = (288f/(94f*(battleState_8006e398.getPlayerCount()/3f)))/3f;
+      this.uiScaleFactor = this.uiScaleFactor*RENDERER.getRenderAspectRatio()/1.33333f;
+    }else{
+      this.uiScaleFactor = (288f/94f)/3f;
+    }
+
     final BattleHudCharacterDisplay3c charDisplay = this.activePartyBattleHudCharacterDisplays_800c6c40[charSlot];
     charDisplay.charIndex_00 = charSlot;
     charDisplay.charId_02 = battleState_8006e398.playerBents_e40[charSlot].innerStruct_00.charId_272;
@@ -479,6 +492,10 @@ public class BattleHud {
   private void drawUiElements() {
     int spBarIndex = 0;
 
+    if (!this.uiScaleApplied){
+      this.uiTransforms.scale(this.uiScaleFactor, this.uiScaleFactor, 1.0f);
+      this.uiScaleApplied = true;
+    }
     //LAB_800efe04
     //LAB_800efe9c
     //LAB_800eff1c
@@ -489,7 +506,9 @@ public class BattleHud {
       // Background
       if(this.activePartyBattleHudCharacterDisplays_800c6c40[0].charIndex_00 != -1 && (this.activePartyBattleHudCharacterDisplays_800c6c40[0].flags_06 & 0x1) != 0) {
         if(this.battleUiBackground == null) {
-          this.battleUiBackground = new UiBox("Battle UI Background", 16, battleHudYOffsets_800fb198[this.battleHudYOffsetIndex_800c6c38] - 26, 288, 40);
+          this.battleUiBackground = new UiBox("Battle UI Background", 
+            this.battleUiLeftGapWidth, battleHudYOffsets_800fb198[this.battleHudYOffsetIndex_800c6c38] - Math.round(26*this.uiScaleFactor), 
+            this.battleUiBackgroundWidth+1, Math.round(40*this.uiScaleFactor));        
         }
 
         this.battleUiBackground.render(Config.changeBattleRgb() ? Config.getBattleRgb() : Config.defaultUiColour);
@@ -533,7 +552,7 @@ public class BattleHud {
               }
 
               // Numbers
-              this.uiTransforms.transfer.set(displayStats.x_00 + digit.x_02, displayStats.y_02 + digit.y_04, 124.0f);
+              this.uiTransforms.transfer.set(displayStats.x_00 + (digit.x_02*this.uiScaleFactor), displayStats.y_02 + (digit.y_04*this.uiScaleFactor), 124.0f);
               final QueuedModelStandard digitModel = RENDERER.queueOrthoModel(this.floatingTextType1Digits[digit.digitValue_00], this.uiTransforms, QueuedModelStandard.class);
 
               if(charDisplay._14[2] < 6) {
@@ -560,7 +579,7 @@ public class BattleHud {
             );
           }
 
-          this.uiTransforms.transfer.set(displayStats.x_00 + 1, displayStats.y_02 - 25, 124.0f);
+          this.uiTransforms.transfer.set(displayStats.x_00 + (this.uiScaleFactor), displayStats.y_02 - (25*this.uiScaleFactor), 124.0f);
           final QueuedModelStandard nameModel = RENDERER.queueOrthoModel(this.names[charSlot], this.uiTransforms, QueuedModelStandard.class);
 
           // Portraits
@@ -573,7 +592,7 @@ public class BattleHud {
             );
           }
 
-          this.uiTransforms.transfer.set(displayStats.x_00 - 44, displayStats.y_02 - 22, 124.0f);
+          this.uiTransforms.transfer.set(displayStats.x_00 - (44*this.uiScaleFactor), displayStats.y_02 - (22*this.uiScaleFactor), 124.0f);
           final QueuedModelStandard portraitModel = RENDERER.queueOrthoModel(this.portraits[charSlot], this.uiTransforms, QueuedModelStandard.class);
 
           if(charDisplay._14[2] < 6) {
@@ -586,57 +605,80 @@ public class BattleHud {
 
           if(brightnessIndex0 != 0) {
             final int v1_0 = (6 - charDisplay._14[2]) * 8 + 100;
-            final int x = displayStats.x_00 - centreScreenX_1f8003dc + namePortraitMetrics.portraitW_06 / 2 - 44;
-            final int y = displayStats.y_02 - centreScreenY_1f8003de + namePortraitMetrics.portraitH_07 / 2 - 22;
-            int dimVertexPositionModifier = (namePortraitMetrics.portraitW_06 + 2) * v1_0 / 100 / 2;
-            final int x0 = x - dimVertexPositionModifier;
-            final int x1 = x + dimVertexPositionModifier - 1;
+            final int x = displayStats.x_00 - centreScreenX_1f8003dc + Math.round(namePortraitMetrics.portraitW_06*this.uiScaleFactor)/ 2 - Math.round(44*this.uiScaleFactor);
+            final int y = displayStats.y_02 - centreScreenY_1f8003de + Math.round(namePortraitMetrics.portraitH_07*this.uiScaleFactor)/ 2 - Math.round(22*this.uiScaleFactor);
+            int dimVertexPositionModifier = (namePortraitMetrics.portraitW_06 + Math.round(2*this.uiScaleFactor)) * v1_0 / 100 / 2;
+            final int x0 = x - Math.round(dimVertexPositionModifier*this.uiScaleFactor);
+            final int x1 = x + Math.round((dimVertexPositionModifier - 1)*this.uiScaleFactor);
 
             final short[] xs = {(short)x0, (short)x1, (short)x0, (short)x1};
 
-            dimVertexPositionModifier = (namePortraitMetrics.portraitH_07 + 2) * v1_0 / 100 / 2;
-            final int y0 = y - dimVertexPositionModifier;
-            final int y1 = y + dimVertexPositionModifier - 1;
+            dimVertexPositionModifier = (namePortraitMetrics.portraitH_07 + Math.round(2*this.uiScaleFactor)) * v1_0 / 100 / 2;
+            final int y0 = y - Math.round(dimVertexPositionModifier*this.uiScaleFactor);
+            final int y1 = y + Math.round((dimVertexPositionModifier - 1)*this.uiScaleFactor);
 
             final short[] ys = {(short)y0, (short)y0, (short)y1, (short)y1};
 
             //LAB_800f0438
-            for(int i = 0; i < 8; i++) {
-              dimVertexPositionModifier = charDisplay._14[2];
+            dimVertexPositionModifier = charDisplay._14[2];
 
-              final int r;
-              final int g;
-              final int b;
-              final boolean translucent;
-              if(dimVertexPositionModifier < 6) {
-                r = dimVertexPositionModifier * 0x2a;
-                g = r;
-                b = r;
-                translucent = true;
-              } else {
-                r = 0xff;
-                g = 0xff;
-                b = 0xff;
-                translucent = false;
-              }
-
-              //LAB_800f0470
-              //LAB_800f047c
-              final int borderLayer = i / 4;
-              final CombatPortraitBorderMetrics0c borderMetrics = combatPortraitBorderVertexCoords_800c6e9c[i % 4];
-
-              // Draw border around currently active character's portrait
-              this.drawLine(
-                xs[borderMetrics.x1Index_00] + borderMetrics.x1Offset_04 + borderMetrics._08 * borderLayer,
-                ys[borderMetrics.y1Index_01] + borderMetrics.y1Offset_05 + borderMetrics._09 * borderLayer,
-                xs[borderMetrics.x2Index_02] + borderMetrics.x2Offset_06 + borderMetrics._0a * borderLayer,
-                ys[borderMetrics.y2Index_03] + borderMetrics.y2Offset_07 + borderMetrics._0b * borderLayer,
-                r,
-                g,
-                b,
-                translucent
-              );
+            final int r;
+            final int g;
+            final int b;
+            final boolean translucent;
+            if(dimVertexPositionModifier < 6) {
+              r = dimVertexPositionModifier * 0x2a;
+              g = r;
+              b = r;
+              translucent = true;
+            } else {
+              r = 0xff;
+              g = 0xff;
+              b = 0xff;
+              translucent = false;
             }
+
+            final float lineWidth = 2f*this.uiScaleFactor;
+            final float portraitXcoordinate = displayStats.x_00 - (44*this.uiScaleFactor);
+            final float portraitYcoordinate = displayStats.y_02 - (22*this.uiScaleFactor);     
+            final float hLineLength = namePortraitMetrics.portraitW_06*this.uiScaleFactor + lineWidth*2f;
+            final float vLineLength = namePortraitMetrics.portraitH_07*this.uiScaleFactor + lineWidth*2f;
+
+            final float vLineOffset = 6 - dimVertexPositionModifier;
+            final float hLineOffset = 7 - Math.round(dimVertexPositionModifier*1.142f);
+
+            //top
+            //portraitXcoordinate - lineWidth
+
+            this.drawLineNoOffset(
+                portraitXcoordinate - vLineOffset, 
+                portraitYcoordinate - lineWidth - hLineOffset, 
+                hLineLength+vLineOffset*2-(lineWidth*2), 
+                lineWidth, 
+                r, g, b, translucent);
+            //bottom
+            this.drawLineNoOffset(
+                portraitXcoordinate - vLineOffset, 
+                portraitYcoordinate + hLineOffset + namePortraitMetrics.portraitH_07*this.uiScaleFactor + lineWidth, 
+                hLineLength+vLineOffset*2-(lineWidth*2),
+                -lineWidth,
+                r, g, b, translucent);
+
+            //left
+            this.drawLineNoOffset(
+                portraitXcoordinate - lineWidth-vLineOffset, 
+                portraitYcoordinate - lineWidth-hLineOffset,
+                lineWidth, 
+                vLineLength+(hLineOffset*2),
+              r, g, b, translucent);
+
+            //right
+            this.drawLineNoOffset(
+                portraitXcoordinate + namePortraitMetrics.portraitW_06*this.uiScaleFactor + lineWidth+vLineOffset, 
+                portraitYcoordinate - lineWidth-hLineOffset,
+                -lineWidth, 
+                vLineLength+(hLineOffset*2), 
+                r, g, b, translucent);
           }
 
           //LAB_800f05d4
@@ -663,7 +705,7 @@ public class BattleHud {
               );
             }
 
-            this.uiTransforms.transfer.set(displayStats.x_00 + labelMetrics.x_00, displayStats.y_02 + labelMetrics.y_02, 124.0f);
+            this.uiTransforms.transfer.set(displayStats.x_00 + (labelMetrics.x_00*this.uiScaleFactor), displayStats.y_02 + (labelMetrics.y_02*this.uiScaleFactor), 124.0f);
             final QueuedModelStandard statsModel = RENDERER.queueOrthoModel(this.stats[charSlot][i], this.uiTransforms, QueuedModelStandard.class);
 
             if(charDisplay._14[2] < 6) {
@@ -697,10 +739,10 @@ public class BattleHud {
               spBarW = Math.max(0, (short)spBarW * 35 / 100);
 
               //LAB_800f0780
-              final int left = displayStats.x_00 - centreScreenX_1f8003dc + 3;
-              final int top = displayStats.y_02 - centreScreenY_1f8003de + 8;
-              final int right = left + spBarW;
-              final int bottom = top + 3;
+              final float left = displayStats.x_00 - centreScreenX_1f8003dc + 3*this.uiScaleFactor;
+              final float top = displayStats.y_02 - centreScreenY_1f8003de + 8*this.uiScaleFactor;
+              final float right = left + spBarW*this.uiScaleFactor;
+              final float bottom = top + 3*this.uiScaleFactor;
 
               final int[] spBarColours = spBarColours_800c6f04[spBarIndex];
 
@@ -718,25 +760,31 @@ public class BattleHud {
               this.spBarTransforms.scaling(right - left, bottom - top, 1.0f);
 
               RENDERER.queueOrthoModel(this.spBars, this.spBarTransforms, QueuedModelStandard.class).colour(spBarColours[0] / 255.0f, spBarColours[1] / 255.0f, spBarColours[2] / 255.0f);
-            }
+            
 
             //SP border
             //LAB_800f0910
-            for(int i = 0; i < 4; i++) {
-              final int offsetX = displayStats.x_00 - centreScreenX_1f8003dc;
-              final int offsetY = displayStats.y_02 - centreScreenY_1f8003de;
-              this.drawLine(spBarBorderMetrics_800fb46c[i].x1_00 + offsetX, spBarBorderMetrics_800fb46c[i].y1_01 + offsetY, spBarBorderMetrics_800fb46c[i].x2_02 + offsetX, spBarBorderMetrics_800fb46c[i].y2_03 + offsetY, 0x60, 0x60, 0x60, false);
-            }
+            final float topSpFlashingBorder    = GPU.getOffsetY() + top    - this.uiScaleFactor;
+            final float bottomSpFlashingBorder = GPU.getOffsetY() + bottom;
+            final float leftSpFlashingBorder =   GPU.getOffsetX() + left   - this.uiScaleFactor;
+            final float rightSpFlashingBorder =  GPU.getOffsetX() + left + 35*this.uiScaleFactor + this.uiScaleFactor;
 
             //Full SP meter
             if((charDisplay.flags_06 & 0x8) != 0) {
               //LAB_800f09ec
-              for(int i = 0; i < 4; i++) {
-                final int offsetX = displayStats.x_00 - centreScreenX_1f8003dc;
-                final int offsetY = displayStats.y_02 - centreScreenY_1f8003de;
-                this.drawLine(spBarFlashingBorderMetrics_800fb47c[i].x1_00 + offsetX, spBarFlashingBorderMetrics_800fb47c[i].y1_01 + offsetY, spBarFlashingBorderMetrics_800fb47c[i].x2_02 + offsetX, spBarFlashingBorderMetrics_800fb47c[i].y2_03 + offsetY, 0x80, 0, 0, false);
-              }
+              this.drawLineNoOffset(leftSpFlashingBorder,  topSpFlashingBorder   , 37*this.uiScaleFactor, this.uiScaleFactor, 0x80, 0, 0, false);
+              this.drawLineNoOffset(leftSpFlashingBorder,  bottomSpFlashingBorder, 37*this.uiScaleFactor, this.uiScaleFactor, 0x80, 0, 0, false);
+              this.drawLineNoOffset(leftSpFlashingBorder,  topSpFlashingBorder,    this.uiScaleFactor, bottomSpFlashingBorder-topSpFlashingBorder, 0x80, 0, 0, false);
+              this.drawLineNoOffset(rightSpFlashingBorder, topSpFlashingBorder,    -this.uiScaleFactor, bottomSpFlashingBorder-topSpFlashingBorder, 0x80, 0, 0, false);              
             }
+            final float topSpBorder    = topSpFlashingBorder    - this.uiScaleFactor;
+            final float bottomSpBorder = bottomSpFlashingBorder + this.uiScaleFactor;
+            final float leftSpBorder   = leftSpFlashingBorder   - this.uiScaleFactor;
+            final float rightSpBorder  = rightSpFlashingBorder  + this.uiScaleFactor;
+            this.drawLineNoOffset(leftSpBorder, topSpBorder   , 39*this.uiScaleFactor, this.uiScaleFactor, 0x60, 0x60, 0x60, false);
+            this.drawLineNoOffset(leftSpBorder, bottomSpBorder, 39*this.uiScaleFactor, this.uiScaleFactor, 0x60, 0x60, 0x60, false);
+            this.drawLineNoOffset(leftSpBorder,  topSpBorder,    this.uiScaleFactor, bottomSpBorder-topSpBorder,0x60, 0x60, 0x60, false);
+            this.drawLineNoOffset(rightSpBorder, topSpBorder,    -this.uiScaleFactor, bottomSpBorder-topSpBorder,0x60, 0x60, 0x60, false);
           }
         }
       }
@@ -828,6 +876,7 @@ public class BattleHud {
         renderText(str, 160 - textWidth(str) / 2, 24, UI_WHITE);
       }
     }
+  }
     //LAB_800f0f2c
   }
 
@@ -917,7 +966,7 @@ public class BattleHud {
     if(!visible) {
       //LAB_800f1a10
       //LAB_800f1a28
-      for(int i = 0; i < 3; i++) {
+      for(int i = 0; i < activePartyBattleHudCharacterDisplays_800c6c40.length; i++) {
         final BattleHudCharacterDisplay3c v1 = this.activePartyBattleHudCharacterDisplays_800c6c40[i];
 
         if(v1.charIndex_00 != -1) {
@@ -933,7 +982,7 @@ public class BattleHud {
 
     //LAB_800f1a64
     //LAB_800f1a70
-    for(int i = 0; i < 3; i++) {
+    for(int i = 0; i < this.activePartyBattleHudCharacterDisplays_800c6c40.length; i++) {
       final BattleHudCharacterDisplay3c v1 = this.activePartyBattleHudCharacterDisplays_800c6c40[i];
       if(v1.charIndex_00 != -1) {
         v1._14[2] = 0;
@@ -1305,13 +1354,21 @@ public class BattleHud {
 
       //LAB_800f41dc
     }
+    this.battleUiBackgroundWidth = Math.round(288*RENDERER.getRenderAspectRatio()/1.33333f);      
+    final int scaledHalfWidthChange = Math.round((320*RENDERER.getRenderAspectRatio()/1.33333f-320)/2);
+    this.battleUiLeftGapWidth  = Math.round(16*RENDERER.getRenderAspectRatio()/1.33333f)-scaledHalfWidthChange;
+
+    if (battleState_8006e398.getPlayerCount() <= 3){
+      this.battleUiBackgroundWidth = 288;
+      this.battleUiLeftGapWidth = 16;
+    }
 
     //LAB_800f41f4
     //LAB_800f41f8
-    short x = 63;
+    int x = Math.round(this.battleUiLeftGapWidth)+Math.round(47*this.uiScaleFactor);
 
     //LAB_800f4220
-    for(int charSlot = 0; charSlot < 3; charSlot++) {
+    for(int charSlot = 0; charSlot < activePartyBattleHudCharacterDisplays_800c6c40.length; charSlot++) {
       final BattleDisplayStats144 displayStats = this.displayStats_800c6c2c[charSlot];
       final BattleHudCharacterDisplay3c v1 = this.activePartyBattleHudCharacterDisplays_800c6c40[charSlot];
 
@@ -1321,7 +1378,7 @@ public class BattleHud {
       }
 
       //LAB_800f4238
-      x += 94;
+      x += Math.round(94*this.uiScaleFactor);
     }
   }
 
@@ -1375,7 +1432,7 @@ public class BattleHud {
     this.battleMenu_800c6c34.state_00 = 1;
     this.battleMenu_800c6c34.highlightState_02 = 2;
     this.battleMenu_800c6c34.x_06 = 160;
-    this.battleMenu_800c6c34.y_08 = 172;
+    this.battleMenu_800c6c34.y_08 = (short)(172 +26- Math.round(26*this.uiScaleFactor));
     this.battleMenu_800c6c34.selectedIcon_22 = 0;
     this.battleMenu_800c6c34.currentIconStateTick_24 = 0;
     this.battleMenu_800c6c34.iconStateIndex_26 = 0;
@@ -2166,6 +2223,19 @@ public class BattleHud {
   private void drawLine(final int x1, final int y1, final int x2, final int y2, final int r, final int g, final int b, final boolean translucent) {
     this.lineTransforms.transfer.set(GPU.getOffsetX() + x1, GPU.getOffsetY() + y1, 31.0f);
     this.lineTransforms.scaling(x2 - x1 + 1, y2 - y1 + 1, 1.0f);
+
+    if(translucent) {
+      RENDERER.queueOrthoModel(RENDERER.plainQuads.get(Translucency.B_PLUS_F), this.lineTransforms, QueuedModelStandard.class)
+        .colour(r / 255.0f, g / 255.0f, b / 255.0f);
+    } else {
+      RENDERER.queueOrthoModel(RENDERER.opaqueQuad, this.lineTransforms, QueuedModelStandard.class)
+        .colour(r / 255.0f, g / 255.0f, b / 255.0f);
+    }
+  }
+
+  private void drawLineNoOffset(final float xCord, final float yCord, final float xScale, final float yScale, final int r, final int g, final int b, final boolean translucent) {
+    this.lineTransforms.transfer.set(xCord, yCord, 31.0f);
+    this.lineTransforms.scaling(xScale, yScale, 1.0f);
 
     if(translucent) {
       RENDERER.queueOrthoModel(RENDERER.plainQuads.get(Translucency.B_PLUS_F), this.lineTransforms, QueuedModelStandard.class)
