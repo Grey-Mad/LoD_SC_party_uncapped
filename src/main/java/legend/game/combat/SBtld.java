@@ -15,7 +15,7 @@ public class SBtld {
   @Method(0x80109250L)
   public static void loadAdditions() {
     //LAB_801092a0
-    for(int charSlot = 0; charSlot < 3; charSlot++) {
+    for(int charSlot = 0; charSlot < gameState_800babc8.charIds_88.length; charSlot++) {
       final int charIndex = gameState_800babc8.charIds_88[charSlot];
 
       if(charIndex >= 0) {
@@ -37,7 +37,7 @@ public class SBtld {
         if(activeAdditionIndex >= 0) {
           //LAB_80109320
           battlePreloadedEntities_1f8003f4.additionHits_38[charSlot] = additionHits_8010e658[activeAdditionIndex];
-          battlePreloadedEntities_1f8003f4.additionHits_38[charSlot + 3] = additionHits_8010e658[activeDragoonAdditionIndex];
+          battlePreloadedEntities_1f8003f4.additionHits_38[charSlot + gameState_800babc8.charIds_88.length] = additionHits_8010e658[activeDragoonAdditionIndex];
         }
       }
 
