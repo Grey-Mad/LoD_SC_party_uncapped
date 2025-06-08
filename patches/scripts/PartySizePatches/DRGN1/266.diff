@@ -36,7 +36,17 @@
  jmp_cmp &, 0x2, var[45][stor[8]], inl[:LABEL_42]
  call 169, stor[0], STATUS, stor[8]
  jmp_cmp &, 0x10, stor[8], inl[:LABEL_42]
-@@ -1397,7 +1397,7 @@
+@@ -923,7 +923,9 @@
+ mov var[34][0], stor[28]
+ call 138, stor[28], 0x1
+ mov var[34][1], stor[28]
++jmp_cmp ==, stor[28], 0xffffffff, inl[:SKIP_P2]
+ call 138, stor[28], 0x1
++SKIP_P2:
+ mov 0xe3, var[44]
+ mov var[45][247], stor[8]
+ jmp_cmp !=, 0x0, stor[8], inl[:LABEL_75]
+@@ -1399,7 +1397,7 @@
  shr 0x1, stor[9]
  LABEL_92:
  call 371, stor[30], stor[10], 0x0
@@ -45,7 +55,7 @@
  mov var[45][stor[10]], stor[10]
  jmp_cmp !&, 0x2, stor[10], inl[:LABEL_93]
  jmp_cmp &, 0x4, stor[10], inl[:LABEL_93]
-@@ -1405,7 +1405,7 @@
+@@ -1407,7 +1405,7 @@
  LABEL_93:
  jmp_cmp >=, 0x0, stor[9], inl[:LABEL_95]
  call 371, stor[30], stor[10], 0x0
@@ -54,7 +64,7 @@
  jmp_cmp !&, 0x1, var[45][stor[10]], inl[:LABEL_95]
  call 177, stor[30], CURRENT_HP, stor[10]
  call 177, stor[30], MAX_HP, stor[11]
-@@ -1941,7 +1941,7 @@
+@@ -1943,7 +1941,7 @@
  call 169, stor[0], STATUS, stor[8]
  jmp_cmp !&, 0x10, stor[8], inl[:LABEL_103]
  call 371, stor[0], stor[8], 0x0
@@ -63,7 +73,7 @@
  or 0xf00, var[45][stor[8]]
  LABEL_103:
  return
-@@ -1989,7 +1989,7 @@
+@@ -1991,7 +1989,7 @@
  call 169, stor[0], GUARD, stor[8]
  jmp_cmp !=, 0x0, stor[8], inl[:LABEL_110]
  call 371, stor[0], stor[9], 0x0
@@ -72,7 +82,7 @@
  call 169, stor[0], STATUS, stor[8]
  and 0xff, stor[8]
  jmp_cmp ==, 0x0, stor[8], inl[:LABEL_113]
-@@ -2090,7 +2090,7 @@
+@@ -2092,7 +2090,7 @@
  gosub inl[:LABEL_116]
  jmp_cmp >, 0x0, stor[8], inl[:LABEL_124]
  call 371, stor[0], stor[9], 0x0
@@ -81,7 +91,7 @@
  jmp_cmp &, 0x80, var[45][stor[9]], inl[:LABEL_122]
  or 0x80, var[45][stor[9]]
  call 600, stor[18]
-@@ -2491,7 +2491,7 @@
+@@ -2493,7 +2491,7 @@
  return
  LABEL_151:
  call 371, stor[0], stor[9], 0x0
@@ -90,7 +100,7 @@
  jmp_cmp !&, 0x80, var[45][stor[9]], inl[:LABEL_152]
  or 0x40, var[45][stor[9]]
  LABEL_152:
-@@ -2545,7 +2545,7 @@
+@@ -2547,7 +2545,7 @@
  LABEL_154:
  mov var[32][stor[8]], stor[10]
  call 371, stor[10], stor[9], 0x0
