@@ -308,7 +308,7 @@ call Battle::scriptRenderRecover, stor[28], stor[8], 0xd ; bentIndex, amount, co
 jmp_cmp !&, 0x2, stor[stor[stor[0], 28], 7], inl[:RECOVER_SP_EXIT] ; operand, left, right, addr
 div 100, stor[8] ; amount, operand
 call Battle::scriptGetBentSlot, stor[28], stor[9], 0x1 ; bentIndex, charOrBentSlot, mode
-add 69, stor[9] ; amount, operand
+add var[45][71], stor[9] ; amount, operand
 add stor[8], var[45][stor[9]] ; amount, operand
 RECOVER_SP_EXIT:
 return
@@ -351,7 +351,7 @@ return
 ; SUBROUTINE
 CLEAR_BENT_STATUS:
 call Battle::scriptGetBentSlot, stor[28], stor[9], 0x0 ; bentIndex, charOrBentSlot, mode
-add 0x81, stor[9] ; amount, operand
+add var[45][136], stor[9] ; amount, operand
 mov 0x0, var[45][stor[9]] ; source, dest
 call Battle::scriptGetBentStat, stor[28], STATUS, stor[8] ; bentIndex, statIndex, value
 and 0xffffff00, stor[8] ; right, left
@@ -558,7 +558,7 @@ call Battle::scriptGetBentStat, stor[0], STATUS, stor[8] ; bentIndex, statIndex,
 jmp_cmp !&, 0x10, stor[8], inl[:LABEL_59] ; not stunned
 
 call Battle::scriptGetBentSlot, stor[0], stor[8], 0x0 ; bentIndex, charOrBentSlot, mode
-add 0x81, stor[8] ; amount, operand
+add var[45][136], stor[8] ; amount, operand
 or 0xf00, var[45][stor[8]] ; right, left
 
 LABEL_59:
@@ -688,7 +688,7 @@ return
 LABEL_79:
 mov 0x0, stor[8] ; source, dest
 call Battle::scriptGetBentSlot, stor[28], stor[9], 0x0 ; bentIndex, charOrBentSlot, mode
-add 0x81, stor[9] ; amount, operand
+add var[45][136], stor[9] ; amount, operand
 mov var[45][stor[9]], stor[10] ; source, dest
 and 0xf, stor[10] ; right, left
 jmp_cmp !=, 0x4, stor[10], inl[:LABEL_80] ; operand, left, right, addr
@@ -706,7 +706,7 @@ mov 0x0, stor[8] ; source, dest
 
 ; s10 = my status index
 call Battle::scriptGetBentSlot, stor[0], stor[9], 0x0 ; bentIndex, charOrBentSlot, mode
-add 129, stor[9] ; amount, operand
+add var[45][136], stor[9] ; amount, operand
 mov var[45][stor[9]], stor[10] ; source, dest
 and 0xf, stor[10] ; right, left
 
@@ -1005,7 +1005,7 @@ gosub inl[:CAN_BECOME_DRAGOON] ; addr
 jmp_cmp ==, 0x0, stor[10], inl[:LABEL_151] ; operand, left, right, addr
 mov var[45][108], stor[8] ; source, dest
 call Battle::scriptGetBentSlot, stor[0], stor[31], 0x1 ; bentIndex, charOrBentSlot, mode
-add 0x73, stor[31] ; amount, operand
+add var[45][117], stor[31] ; amount, operand
 add stor[8], var[45][stor[31]] ; amount, operand
 call Battle::scriptGiveSp, stor[0], stor[8], stor[9] ; bentIndex, amount, total
 jmp_cmp !=, 0x2, var[45][242], inl[:LABEL_151] ; operand, left, right, addr
@@ -1654,7 +1654,7 @@ return
 ; SUBROUTINE
 LABEL_240:
 call Battle::scriptGetBentSlot, stor[0], stor[8], 0x0 ; bentIndex, charOrBentSlot, mode
-add 0xbd, stor[8] ; amount, operand
+add var[45][196], stor[8] ; amount, operand
 mov var[45][stor[8]], stor[8] ; source, dest
 and 0x2, stor[8] ; right, left
 jmp_cmp ==, 0x0, var[45][243], inl[:LABEL_241] ; operand, left, right, addr
@@ -1665,7 +1665,7 @@ return
 ; SUBROUTINE
 LABEL_242:
 call Battle::scriptGetBentSlot, stor[0], stor[8], 0x0 ; bentIndex, charOrBentSlot, mode
-add 0xbd, stor[8] ; amount, operand
+add var[45][196], stor[8] ; amount, operand
 mov var[45][stor[8]], stor[8] ; source, dest
 jmp_cmp &, 0x4, stor[8], inl[:LABEL_243] ; operand, left, right, addr
 and 0x2, stor[8] ; right, left
@@ -3672,7 +3672,7 @@ jmp_cmp !&, 0x40, stor[9], inl[:LABEL_328] ; operand, left, right, addr
 mov 0x0, stor[8] ; source, dest
 LABEL_328:
 call Battle::scriptGetBentSlot, stor[0], stor[31], 0x1 ; bentIndex, charOrBentSlot, mode
-add 0x73, stor[31] ; amount, operand
+add var[45][117], stor[31] ; amount, operand
 add stor[8], var[45][stor[31]] ; amount, operand
 gosub inl[:CAN_BECOME_DRAGOON] ; addr
 jmp_cmp ==, 0x0, stor[10], inl[:LABEL_329] ; operand, left, right, addr
@@ -4464,7 +4464,7 @@ jmp_cmp !=, 0x0, stor[8], inl[:LABEL_419] ; operand, left, right, addr
 call Battle::scriptGetBentStat, stor[0], GUARD, stor[8] ; bentIndex, statIndex, value
 jmp_cmp !=, 0x0, stor[8], inl[:LABEL_420] ; operand, left, right, addr
 call Battle::scriptGetBentSlot, stor[0], stor[9], 0x0 ; bentIndex, charOrBentSlot, mode
-add 0x81, stor[9] ; amount, operand
+add var[45][136], stor[9] ; amount, operand
 call Battle::scriptGetBentStat, stor[0], STATUS, stor[8] ; bentIndex, statIndex, value
 and 0xff, stor[8] ; right, left
 jmp_cmp ==, 0x0, stor[8], inl[:LABEL_423] ; operand, left, right, addr
@@ -4515,7 +4515,7 @@ jmp_cmp &, 0x2, stor[8], inl[:LABEL_419] ; operand, left, right, addr
 call Battle::scriptGetBentSlot, stor[0], stor[8], 0x0 ; bentIndex, charOrBentSlot, mode
 mov var[128 + stor[8]][4], stor[8] ; source, dest
 call Battle::scriptGetBentSlot, stor[0], stor[10], 0x1 ; bentIndex, charOrBentSlot, mode
-add 0xb8, stor[10] ; amount, operand
+add var[45][186], stor[10] ; amount, operand
 mov stor[8], var[45][stor[10]] ; source, dest
 LABEL_424:
 call Battle::scriptGetBentStat, stor[0], STATUS, stor[8] ; bentIndex, statIndex, value
@@ -4563,7 +4563,7 @@ return
 LABEL_430:
 mov 0x0, stor[8] ; source, dest
 call Battle::scriptGetBentSlot, stor[0], stor[11], 0x1 ; bentIndex, charOrBentSlot, mode
-add 0x6d, stor[11] ; amount, operand
+add var[45][111], stor[11] ; amount, operand
 jmp_cmp &, 0x0, var[45][stor[11]], inl[:LABEL_431] ; operand, left, right, addr
 call Battle::scriptGetBentStat, stor[0], EQUIPMENT_STATUS_RESIST, stor[10] ; bentIndex, statIndex, value
 jmp_cmp !&, inl[:STATUS_AFFLICTION_FLAGS[stor[9]]], stor[10], inl[:LABEL_431] ; operand, left, right, addr
@@ -4581,7 +4581,7 @@ jmp_cmp ==, 0x0, stor[8], inl[:LABEL_433] ; operand, left, right, addr
 gosub inl[:LABEL_427] ; addr
 jmp_cmp >, 0x0, stor[8], inl[:LABEL_435] ; operand, left, right, addr
 call Battle::scriptGetBentSlot, stor[0], stor[9], 0x0 ; bentIndex, charOrBentSlot, mode
-add 0x81, stor[9] ; amount, operand
+add var[45][136], stor[9] ; amount, operand
 jmp_cmp &, 0x80, var[45][stor[9]], inl[:LABEL_433] ; operand, left, right, addr
 or 0x80, var[45][stor[9]] ; right, left
 call Battle::scriptAllocateEmptyEffectManagerChild, stor[18] ; effectIndex
@@ -4617,7 +4617,7 @@ mov 0x0, stor[8] ; source, dest
 LABEL_437:
 mov var[32][stor[8]], stor[28] ; source, dest
 call Battle::scriptGetBentSlot, stor[28], stor[9], 0x0 ; bentIndex, charOrBentSlot, mode
-add 0x81, stor[9] ; amount, operand
+add var[45][136], stor[9] ; amount, operand
 gosub inl[:LABEL_438] ; addr
 incr stor[8] ; operand
 jmp_cmp <, stor[8], var[33], inl[:LABEL_437] ; operand, left, right, addr
@@ -4689,7 +4689,7 @@ LABEL_446:
 gosub_table stor[31], inl[:LABEL_444] ; index, table
 LABEL_447:
 call Battle::scriptGetBentSlot, stor[28], stor[8], 0x1 ; bentIndex, charOrBentSlot, mode
-add 0xb8, stor[8] ; amount, operand
+add var[45][186], stor[8] ; amount, operand
 mov var[45][stor[8]], stor[8] ; source, dest
 jmp_cmp >, 0x0, stor[8], inl[:LABEL_448] ; operand, left, right, addr
 jmp_cmp &, 0x40, stor[stor[stor[0], 8], 7], inl[:LABEL_452] ; operand, left, right, addr
@@ -5069,7 +5069,7 @@ return
 ; SUBROUTINE
 LABEL_466:
 call Battle::scriptGetBentSlot, stor[0], stor[9], 0x0 ; bentIndex, charOrBentSlot, mode
-add 129, stor[9] ; amount, operand
+add var[45][136], stor[9] ; amount, operand
 jmp_cmp !&, 0x80, var[45][stor[9]], inl[:LABEL_467] ; operand, left, right, addr
 or 0x40, var[45][stor[9]] ; right, left
 LABEL_467:
@@ -5080,7 +5080,7 @@ return
 ; SUBROUTINE
 CLEAR_MY_STATUS:
 call Battle::scriptGetBentSlot, stor[0], stor[9], 0x0 ; bentIndex, charOrBentSlot, mode
-add 129, stor[9] ; amount, operand
+add var[45][136], stor[9] ; amount, operand
 mov 0x0, var[45][stor[9]] ; source, dest
 call Battle::scriptGetBentStat, stor[0], STATUS, stor[8] ; bentIndex, statIndex, value
 and 0xffffff00, stor[8] ; right, left
@@ -5095,7 +5095,7 @@ LABEL_469:
 call Battle::scriptGetBentSlot, stor[0], stor[9], 0x0 ; bentIndex, charOrBentSlot, mode
 
 ; if unknown flag 0x80 on my battle var status is not set
-add 129, stor[9] ; amount, operand
+add var[45][136], stor[9] ; amount, operand
 jmp_cmp !&, 0x80, var[45][stor[9]], inl[:LABEL_470] ; operand, left, right, addr
 
 ; clear flag 0x80 on my battle var status
@@ -5115,7 +5115,7 @@ mov 0x0, stor[8] ; source, dest
 LABEL_472:
 mov var[32][stor[8]], stor[10] ; s10 = allbent[s8]
 call Battle::scriptGetBentSlot, stor[10], stor[9], 0x0 ; s9 = bent[s10].slot
-add 129, stor[9] ; amount, operand
+add var[45][136], stor[9] ; amount, operand
 jmp_cmp !&, 0x80, var[45][stor[9]], inl[:LABEL_473] ; operand, left, right, addr
 and 0xffffff7f, var[45][stor[9]] ; right, left
 or 0x10000, var[45][stor[9]] ; right, left
@@ -5129,7 +5129,7 @@ return
 ; SUBROUTINE
 LABEL_474:
 call Battle::scriptGetBentSlot, stor[0], stor[9], 0x0 ; bentIndex, charOrBentSlot, mode
-add 129, stor[9] ; amount, operand
+add var[45][136], stor[9] ; amount, operand
 return
 
 
@@ -5210,7 +5210,7 @@ mov 0x0, var[45][120] ; source, dest
 
 ; set my char loading to 1
 call Battle::scriptGetBentSlot, stor[0], stor[8], 0x1 ; bentIndex, charOrBentSlot, mode
-add 109, stor[8] ; amount, operand
+add var[45][111], stor[8] ; amount, operand
 mov 0x1, var[45][stor[8]] ; source, dest
 
 gosub inl[:INIT_PLAYER] ; addr
@@ -5218,7 +5218,7 @@ gosub inl[:HANDLE_STATUS_CONDITIONS] ; addr
 
 ; set my char loading to 0
 call Battle::scriptGetBentSlot, stor[0], stor[8], 0x1 ; bentIndex, charOrBentSlot, mode
-add 109, stor[8] ; amount, operand
+add var[45][111], stor[8] ; amount, operand
 mov 0x0, var[45][stor[8]] ; source, dest
 
 MAIN_LOOP:
@@ -5263,7 +5263,7 @@ LABEL_484:
 
 ; apply status affliction action
 call Battle::scriptGetBentSlot, stor[0], stor[9], 0x0 ; bentIndex, charOrBentSlot, mode
-add 0x81, stor[9] ; amount, operand
+add var[45][136], stor[9] ; amount, operand
 mov var[45][stor[9]], stor[8] ; source, dest
 jmp_cmp !&, 0x80, stor[8], inl[:MAIN_LOOP_SKIP_STATUS_AFFLICTION] ; operand, left, right, addr
 and 0x7, stor[8] ; mask status afflictions
@@ -5287,7 +5287,7 @@ jmp_cmp ==, 0x2, var[45][242], inl[:MAIN_LOOP_SKIP_DRAGOON] ; operand, left, rig
 
 ; tick dragoon sp
 call Battle::scriptGetBentSlot, stor[0], stor[8], 0x1 ; bentIndex, charOrBentSlot, mode
-add 69, stor[8] ; amount, operand
+add var[45][71], stor[8] ; amount, operand
 decr var[45][stor[8]] ; decrease dragoon turns remaining
 mov var[45][stor[8]], stor[9] ; source, dest
 call Battle::scriptGiveSp, stor[0], 0x0, stor[10] ; s10 = current sp
@@ -5787,7 +5787,7 @@ mov stor[9], stor[12] ; source, dest
 div 0x64, stor[9] ; amount, operand
 mov var[34][stor[8]], stor[11] ; source, dest
 call Battle::scriptGetBentSlot, stor[11], stor[10], 0x1 ; bentIndex, charOrBentSlot, mode
-add 0x45, stor[10] ; amount, operand
+add var[45][71], stor[10] ; amount, operand
 mov stor[9], var[45][stor[10]] ; source, dest
 mul 0x64, stor[9] ; amount, operand
 sub stor[9], stor[12] ; amount, operand
@@ -5897,7 +5897,7 @@ call Battle::scriptGiveSp, stor[0], 0x0, stor[9] ; bentIndex, amount, total
 mov stor[9], stor[10] ; source, dest
 div 0x64, stor[9] ; amount, operand
 call Battle::scriptGetBentSlot, stor[0], stor[8], 0x1 ; bentIndex, charOrBentSlot, mode
-add 0x45, stor[8] ; amount, operand
+add var[45][71], stor[8] ; amount, operand
 mov stor[9], var[45][stor[8]] ; source, dest
 mul 0x64, stor[9] ; amount, operand
 sub stor[9], stor[10] ; amount, operand
@@ -6236,13 +6236,13 @@ mov 0xa, stor[23] ; source, dest
 wait stor[23] ; frames
 gosub inl[:LABEL_471] ; addr
 call Battle::scriptGetBentSlot, stor[0], stor[8], 0x0 ; bentIndex, charOrBentSlot, mode
-add 0xbd, stor[8] ; amount, operand
+add var[45][196], stor[8] ; amount, operand
 mov var[45][stor[8]], var[45][227] ; source, dest
 mov 0x0, var[45][stor[8]] ; source, dest
 gosub inl[:GET_MY_CHAR_ID] ; addr
 gosub_table stor[8], inl[:LABEL_480] ; index, table
 call Battle::scriptGetBentSlot, stor[0], stor[8], 0x0 ; bentIndex, charOrBentSlot, mode
-add 0xbd, stor[8] ; amount, operand
+add var[45][196], stor[8] ; amount, operand
 mov var[45][227], var[45][stor[8]] ; source, dest
 call Battle::scriptSetBentRotationY, stor[0], 0x400 ; bentIndex, y
 mov 0x14, stor[23] ; source, dest
@@ -6828,10 +6828,10 @@ mov stor[8], stor[10] ; source, dest
 mov stor[8], stor[11] ; source, dest
 
 ; make some battle var array indices
-add 69, stor[8] ; amount, operand
-add 90, stor[9] ; amount, operand
-add 115, stor[10] ; amount, operand
-add 184, stor[11] ; amount, operand
+add var[45][71], stor[8] ; amount, operand
+add var[45][92], stor[9] ; amount, operand
+add var[45][117], stor[10] ; amount, operand
+add var[45][186], stor[11] ; amount, operand
 
 ; clear my slot in a few more battle var arrays
 mov 0x0, var[45][stor[8]] ; source, dest
@@ -6856,11 +6856,11 @@ mov 0x0, var[128 + stor[8]][6] ; source, dest
 mov 0xffffffff, var[128 + stor[8]][4] ; source, dest
 
 ; clear my status
-add 129, stor[8] ; amount, operand
+add var[45][136], stor[8] ; amount, operand
 mov 0x0, var[45][stor[8]] ; source, dest
 
 ; clear my special weapon flags (destroyer mace, wargod, etc)
-add 189, stor[9] ; amount, operand
+add var[45][196], stor[9] ; amount, operand
 mov 0x0, var[45][stor[9]] ; source, dest
 
 gosub inl[:CACHE_SPECIAL_EQUIPMENT_FLAGS] ; addr
@@ -6951,7 +6951,7 @@ call Battle::scriptGetBentStat2, stor[28], MAX_HP, stor[9] ; bentIndex, statInde
 div 0x4, stor[9] ; amount, operand
 jmp_cmp >=, stor[9], stor[8], inl[:LABEL_651] ; operand, left, right, addr
 call Battle::scriptGetBentSlot, stor[28], stor[10], 0x0 ; bentIndex, charOrBentSlot, mode
-add 0x81, stor[10] ; amount, operand
+add var[45][136], stor[10] ; amount, operand
 mov var[45][stor[10]], stor[9] ; source, dest
 and 0xf, stor[9] ; right, left
 jmp_cmp ==, 0x6, stor[9], inl[:LABEL_650] ; operand, left, right, addr
@@ -7034,7 +7034,7 @@ call Battle::scriptGetBentStat, stor[0], STATUS, stor[9] ; bentIndex, statIndex,
 jmp_cmp &, 0x2, stor[9], inl[:LABEL_658] ; operand, left, right, addr
 mov 0xffffffff, var[128 + stor[8]][4] ; source, dest
 call Battle::scriptGetBentSlot, stor[0], stor[9], 0x1 ; bentIndex, charOrBentSlot, mode
-add 184, stor[9] ; amount, operand
+add var[45][186], stor[9] ; amount, operand
 mov 0xffffffff, var[45][stor[9]] ; source, dest
 LABEL_658:
 
@@ -7097,7 +7097,7 @@ APPLY_STATUS_CONDITION:
 call Battle::scriptGetBentSlot, stor[0], stor[9], 0x0 ; bentIndex, charOrBentSlot, mode
 
 ; clear my battle var status
-add 129, stor[9] ; amount, operand
+add var[45][136], stor[9] ; amount, operand
 mov 0x0, var[45][stor[9]] ; source, dest
 
 ; set my battle var status turns to 3
