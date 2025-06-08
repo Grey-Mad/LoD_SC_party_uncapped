@@ -1,5 +1,5 @@
-replacement,player_combat_script,scripts/player_combat_script.txt,"Major rewrites to support modding"
-replacement,throw_item,scripts/throw_item.txt,"Handles throwing retail items"
+replacement,player_combat_script,scripts/player_combat_script.txt,"Major rewrites to support modding + party size patch"
+replacement,throw_item,scripts/throw_item.txt,"Handles throwing retail items + party size patch"
 diff,SECT/DRGN1.BIN/1,scripts/PartySizePatches/DRGN1/1.diff,"party size patch"
 diff,SECT/DRGN1.BIN/2,scripts/PartySizePatches/DRGN1/2.diff,"party size patch"
 diff,SECT/DRGN1.BIN/3,scripts/PartySizePatches/DRGN1/3.diff,"party size patch"
