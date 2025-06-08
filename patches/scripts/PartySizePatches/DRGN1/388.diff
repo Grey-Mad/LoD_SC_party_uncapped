@@ -117,4 +117,16 @@
  or 0x2, var[45][31]
  or 0x4, var[45][31]
  or 0x20, stor[7]
- 
+@@ -3093,8 +3093,12 @@
+ call 148, stor[26], 0xffffffff, 0x14, 0xffffe0c0, 0x0, 0x0
+ mov 0x1, stor[23]
+ wait stor[23]
++jmp_cmp ==, stor[24], 0xffffffff, inl[:SKIP_0]
+ call 138, stor[24], 0x0
++SKIP_0:
++jmp_cmp ==, stor[25], 0xffffffff, inl[:SKIP_1]
+ call 138, stor[25], 0x0
++SKIP_1:
+ call 6, 0x4, 0x2
+ mov 0x3, stor[23]
+ wait stor[23]
