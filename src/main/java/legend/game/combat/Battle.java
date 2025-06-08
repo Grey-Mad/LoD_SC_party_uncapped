@@ -2733,6 +2733,7 @@ public class Battle extends EngineState {
 
     if(combatant != null) {
       vramSlot = combatant.vramSlot_1a0;
+      combatant.loadTexture(timFile);
     } else {
       vramSlot = 0;
     }
@@ -6747,6 +6748,11 @@ public class Battle extends EngineState {
     effect.tmdType_04 = null;
     effect.extTmd_08 = null;
     effect.anim_0c = null;
+    if((id & 0xff00_0000) != 0x700_0000) {
+      effect.texture15 = ((BattleEntity27c)scriptStatePtrArr_800bc1c0[id].innerStruct_00).texture15;//greytodo: crash when entering the 5th generation, DRGN0.BIN\5650 
+      effect.texture24 =((BattleEntity27c)scriptStatePtrArr_800bc1c0[id].innerStruct_00).texture24;
+      effect.textured = true;
+    }
     effect.model_134 = effect.model_10;
 
     if((id & 0xff00_0000) == 0x700_0000) {
