@@ -8,7 +8,6 @@ import legend.core.gte.ModelPart10;
 import legend.core.memory.Method;
 import legend.core.platform.input.InputKey;
 import legend.core.platform.input.InputMod;
-import legend.core.spu.Spu;
 import legend.game.combat.Battle;
 import legend.game.combat.environment.BattlePreloadedEntities_18cb0;
 import legend.game.modding.events.RenderEvent;

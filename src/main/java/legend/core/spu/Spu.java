@@ -12,11 +12,6 @@ import static legend.core.GameEngine.AUDIO_THREAD;
 import static legend.core.GameEngine.CONFIG;
 import static legend.core.audio.Constants.BASE_SAMPLE_RATE;
 import static org.lwjgl.openal.AL10.AL_FORMAT_STEREO16;
-import static legend.game.Scus94491BpeSegment_800c.playableSounds_800c43d0;
-
-import legend.game.sound.PlayableSound0c;
-import java.util.ArrayList;
-import java.util.List;
 
 public class Spu {
   private static final Logger LOGGER = LogManager.getFormatterLogger(Spu.class);
@@ -28,7 +23,7 @@ public class Spu {
   private GenericSource source;
 
   private final short[] spuOutput = new short[SAMPLES_PER_TICK * 2];
-  public byte[] ram = new byte[512 * 1024]; // 0x8_0000
+  private final byte[] ram = new byte[512 * 1024]; // 0x8_0000
   private final float[] reverbWorkArea = new float[0x4_0000];
   public final Voice[] voices = new Voice[24];
 
@@ -49,11 +44,6 @@ public class Spu {
   private int noiseFrequencyShift;
   private int noiseFrequencyStep;
   private final Reverb reverb = new Reverb();
-
-  public List<Integer> effectSoundsBentSlots = new ArrayList<>();
-  public List<Integer> effectSoundsBentOffsets = new ArrayList<>();
-  public List<Integer> effectSpuRamSizes = new ArrayList<>();
-  public List<PlayableSound0c> effectPlayableSounds = new ArrayList<>();
 
   public Spu() {
     for(int i = 0; i < this.voices.length; i++) {
@@ -510,62 +500,6 @@ public class Spu {
       this.noiseFrequencyShift = packed >> 2 & 0xf;
       this.noiseFrequencyStep = packed & 0x3;
     }
-  }
-
-  public void removeCombatEffectSoundByBentSlot(int slot) {
-    synchronized(Spu.class){
-    if (this.effectSoundsBentSlots.contains(slot)){
-      byte[] spuRamOld = this.ram;
-      int index = this.effectSoundsBentSlots.indexOf(slot);
-      this.ram = new byte[spuRamOld.length - this.effectSpuRamSizes.get(index)];
-      System.arraycopy(spuRamOld, 0, this.ram, 0, this.effectSoundsBentOffsets.get(index));
-      System.arraycopy(spuRamOld, this.effectSoundsBentOffsets.get(index)+this.effectSpuRamSizes.get(index), this.ram, this.effectSoundsBentOffsets.get(index), spuRamOld.length - (this.effectSoundsBentOffsets.get(index)+this.effectSpuRamSizes.get(index))); 
-      for (int i=0; i<this.effectSoundsBentSlots.size(); i++){
-        if (this.effectSoundsBentOffsets.get(i)>this.effectSoundsBentOffsets.get(index)){
-          this.effectSoundsBentOffsets.set(i, this.effectSoundsBentOffsets.get(i)-this.effectSpuRamSizes.get(index));
-        }
-      }
-      playableSounds_800c43d0.remove(effectPlayableSounds.get(index));
-      PlayableSound0c[] sounds = new PlayableSound0c[playableSounds_800c43d0.size()];
-      playableSounds_800c43d0.toArray(sounds);
-
-      for (int i=0; i<sounds.length; i++){
-        if (sounds[i].soundBufferPtr_08*8 > this.effectSoundsBentOffsets.get(index)){
-          PlayableSound0c sound = sounds[i];
-          if (playableSounds_800c43d0.contains(sound)){
-            playableSounds_800c43d0.remove(sound);
-          }
-          sound.soundBufferPtr_08 = (sound.soundBufferPtr_08*8-this.effectSpuRamSizes.get(index))/8;
-          playableSounds_800c43d0.add(sound);
-        }
-      }
-      this.effectSoundsBentSlots.remove(index);
-      this.effectSoundsBentOffsets.remove(index);
-      this.effectSpuRamSizes.remove(index);
-      playableSounds_800c43d0.remove(effectPlayableSounds.get(index));
-      this.effectPlayableSounds.remove(index);
-    }}
-  }
-
-  public void clearCombatSounds() {
-    synchronized(Spu.class){
-    while (this.effectSoundsBentSlots.size() != 0){
-      byte[] spuRamOld = this.ram;
-      this.ram = new byte[spuRamOld.length - this.effectSpuRamSizes.get(0)];
-      System.arraycopy(spuRamOld, 0, this.ram, 0, this.effectSoundsBentOffsets.get(0));
-      System.arraycopy(spuRamOld, this.effectSoundsBentOffsets.get(0)+this.effectSpuRamSizes.get(0), this.ram, this.effectSoundsBentOffsets.get(0), spuRamOld.length - (this.effectSoundsBentOffsets.get(0)+this.effectSpuRamSizes.get(0))); 
-      for (int i=0; i<this.effectSoundsBentSlots.size(); i++){
-        if (this.effectSoundsBentOffsets.get(i)>this.effectSoundsBentOffsets.get(0)){
-          this.effectSoundsBentOffsets.set(i, this.effectSoundsBentOffsets.get(i)-this.effectSpuRamSizes.get(0));
-        }
-      }
-      this.effectSoundsBentSlots.remove(0);
-      this.effectSoundsBentOffsets.remove(0);
-      this.effectSpuRamSizes.remove(0);
-      playableSounds_800c43d0.remove(effectPlayableSounds.get(0));
-      this.effectPlayableSounds.remove(0);
-    }}
-
   }
 
   private static final double[][] interpolationWeights = new double[512][];
