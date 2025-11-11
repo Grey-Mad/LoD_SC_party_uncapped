@@ -17,7 +17,11 @@ import legend.core.memory.Method;
 import legend.core.memory.types.FloatRef;
 import legend.core.opengl.McqBuilder;
 import legend.core.platform.input.InputAction;
+<<<<<<< HEAD
 import legend.game.DrgnFiles;
+=======
+import legend.core.spu.Spu;
+>>>>>>> b0a85b5d (SPU and sound changes)
 import legend.game.EngineState;
 import legend.game.EngineStateEnum;
 import legend.game.Scus94491BpeSegment;
@@ -153,6 +157,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Function;
 
 import static legend.core.GameEngine.CONFIG;
@@ -163,6 +168,7 @@ import static legend.core.GameEngine.PLATFORM;
 import static legend.core.GameEngine.REGISTRIES;
 import static legend.core.GameEngine.RENDERER;
 import static legend.core.GameEngine.SCRIPTS;
+<<<<<<< HEAD
 import static legend.game.Audio.FUN_80020308;
 import static legend.game.Audio._800bc9a8;
 import static legend.game.Audio.characterSoundFileIndices_800500f8;
@@ -221,13 +227,29 @@ import static legend.game.Models.vramSlots_8005027c;
 import static legend.game.SItem.getUnlockedDragoonSpells;
 import static legend.game.SItem.giveEquipment;
 import static legend.game.SItem.giveItem;
+=======
+import static legend.core.GameEngine.SPU;
+>>>>>>> b0a85b5d (SPU and sound changes)
 import static legend.game.SItem.loadCharacterStats;
 import static legend.game.SItem.menuStack;
 import static legend.game.SItem.sortItems;
 import static legend.game.Scus94491BpeSegment.FUN_80013404;
 import static legend.game.Scus94491BpeSegment.battlePreloadedEntities_1f8003f4;
+<<<<<<< HEAD
+=======
+import static legend.game.Scus94491BpeSegment.centreScreenY_1f8003de;
+import static legend.game.Scus94491BpeSegment.charSoundEffectsLoaded;
+import static legend.game.Scus94491BpeSegment.displayHeight_1f8003e4;
+>>>>>>> b0a85b5d (SPU and sound changes)
 import static legend.game.Scus94491BpeSegment.getCharacterName;
 import static legend.game.Scus94491BpeSegment.loadMcq;
+<<<<<<< HEAD
+=======
+import static legend.game.Scus94491BpeSegment.loadMusicPackage;
+import static legend.game.Scus94491BpeSegment.monsterSoundLoaded;
+import static legend.game.Scus94491BpeSegment.playSound;
+import static legend.game.Scus94491BpeSegment.projectionPlaneDistance_1f8003f8;
+>>>>>>> b0a85b5d (SPU and sound changes)
 import static legend.game.Scus94491BpeSegment.rcos;
 import static legend.game.Scus94491BpeSegment.simpleRand;
 import static legend.game.Scus94491BpeSegment_8004.additionCounts_8004f5c0;
@@ -1245,46 +1267,15 @@ public class Battle extends EngineState {
   private void playBentSound(final int type, final ScriptState<BattleEntity27c> state, final int soundIndex, final int a3, final int a4, final int initialDelay, final int repeatDelay) {
     final BattleEntity27c bent = state.innerStruct_00;
 
-    int soundFileIndex = 0;
-    if(type == 1) {
-      //LAB_80019e68
-      for(int charSlot = 0; charSlot < 3; charSlot++) {
-        final int index = characterSoundFileIndices_800500f8[charSlot];
-        if(soundFiles_800bcf80[index].id_02 == bent.charId_272) {
-          //LAB_80019ea4
-          soundFileIndex = index;
-          break;
-        }
-      }
-    } else {
-      //LAB_80019f18
-      //LAB_80019f30
-      for(int monsterSlot = 0; monsterSlot < 4; monsterSlot++) {
-        final int index = monsterSoundFileIndices_800500e8[monsterSlot];
-        if(soundFiles_800bcf80[index].id_02 == bent.charId_272) {
-          //LAB_80019ea4
-          soundFileIndex = index;
-          break;
-        }
-
-        if(monsterSlot == 3) {
-          return;
-        }
-      }
-    }
-
-    //LAB_80019f70
-    //LAB_80019f74
-    //LAB_80019f7c
-    //LAB_80019eac
-    final SoundFile soundFile = soundFiles_800bcf80[soundFileIndex];
-
+    SoundFile soundFile = bent.model_148.effectSounds;
     // Retail bug: one of the Divine Dragon Spirit's attack scripts tries to play soundIndex 10 but there are only 10 elements in the patch/sequence file (DRGN0.1225.1.1)
-    if(soundIndex < soundFile.indices_08.length) {
-      final QueuedSound28 queuedSound = new QueuedSound28();
-      queuedSounds_800bd110.add(queuedSound);
+    if (soundFile.indices_08 != null){
+      if(soundIndex < soundFile.indices_08.length) {
+        final QueuedSound28 queuedSound = new QueuedSound28();
+        queuedSounds_800bd110.add(queuedSound);
 
-      playSound(type, soundFile, soundIndex, queuedSound, soundFile.playableSound_10, soundFile.indices_08[soundIndex], 0, (short)-1, (short)-1, (short)-1, (short)repeatDelay, (short)initialDelay, bent);
+        playSound(type, soundFile, soundIndex, queuedSound, soundFile.playableSound_10, soundFile.indices_08[soundIndex], 0, (short)-1, (short)-1, (short)-1, (short)repeatDelay, (short)initialDelay, bent);
+      }
     }
 
     //LAB_80019f9c
@@ -1293,44 +1284,25 @@ public class Battle extends EngineState {
   /** Same as playBentSound, but looks up bent by combatant index */
   @Method(0x80019facL)
   private void playCombatantSound(final int type, final int charOrMonsterIndex, final int soundIndex, final short initialDelay, final short repeatDelay) {
-    int soundFileIndex = 0;
     final MonsterBattleEntity monster = battleState_8006e398.getMonsterById(charOrMonsterIndex);
+    final PlayerBattleEntity character = battleState_8006e398.getPlayerById(charOrMonsterIndex);
+
+    final QueuedSound28 queuedSound = new QueuedSound28();
+    queuedSounds_800bd110.add(queuedSound);
 
     //LAB_8001a018
     if(type == 1) {
-      //LAB_8001a034
-      for(int charSlot = 0; charSlot < 3; charSlot++) {
-        final int index = characterSoundFileIndices_800500f8[charSlot];
-
-        if(soundFiles_800bcf80[index].id_02 == charOrMonsterIndex) {
-          soundFileIndex = index;
-          break;
-        }
-      }
+      final SoundFile soundFile = character.model_148.effectSounds;
+      playSound(type, soundFile, soundIndex, queuedSound, soundFile.playableSound_10, soundFile.indices_08[soundIndex], 0, (short)-1, (short)-1, (short)-1, repeatDelay, initialDelay, character);
     } else {
-      //LAB_8001a0e4
-      //LAB_8001a0f4
-      for(int monsterSlot = 0; monsterSlot < 4; monsterSlot++) {
-        final int index = monsterSoundFileIndices_800500e8[monsterSlot];
-
-        if(soundFiles_800bcf80[index].id_02 == charOrMonsterIndex) {
-          //LAB_8001a078
-          soundFileIndex = index;
-          break;
-        }
-      }
+      final SoundFile soundFile = monster.model_148.effectSounds;
+      playSound(type, soundFile, soundIndex, queuedSound, soundFile.playableSound_10, soundFile.indices_08[soundIndex], 0, (short)-1, (short)-1, (short)-1, repeatDelay, initialDelay, monster);
     }
 
     //LAB_8001a128
     //LAB_8001a12c
     //LAB_8001a134
     //LAB_8001a080
-    final QueuedSound28 queuedSound = new QueuedSound28();
-    queuedSounds_800bd110.add(queuedSound);
-
-    final SoundFile soundFile = soundFiles_800bcf80[soundFileIndex];
-    playSound(type, soundFile, soundIndex, queuedSound, soundFile.playableSound_10, soundFile.indices_08[soundIndex], 0, (short)-1, (short)-1, (short)-1, repeatDelay, initialDelay, monster);
-
     //LAB_8001a154
   }
 
@@ -1529,9 +1501,20 @@ public class Battle extends EngineState {
 
     //LAB_801095ec
     //LAB_801095fc
+<<<<<<< HEAD
     for(int i = 0; i < encounter.monsters.size(); i++) {
       final Encounter.Monster s5 = encounter.monsters.get(i);
       final int charIndex = s5.id & 0x1ff;
+=======
+    final AtomicInteger soundbankOffset = new AtomicInteger();
+    int phase = 0;
+    for(int i = 0; i < 6; i++) {
+      final EncounterData38.EnemyInfo08 s5 = fp.encounterData_00.enemyInfo_08[i];
+      final int charIndex = s5.index_00 & 0x1ff;
+      if(charIndex == 0x1ff) {
+        break;
+      }
+>>>>>>> b0a85b5d (SPU and sound changes)
 
       final int combatantIndex = this.getCombatantIndex(charIndex);
       final String name = "Enemy combatant index " + combatantIndex;
@@ -1548,6 +1531,29 @@ public class Battle extends EngineState {
       state.storage_44[7] |= FLAG_MONSTER;
       battleState_8006e398.addMonster(state);
       this.loadMonster(state);
+
+      bent.model_148.effectSounds.id_02 = -1;
+      bent.model_148.effectSounds.used_00 = false;
+      final int finalMonsterSlot = bent.charId_272;
+
+      if (encounterId_800bb0f8 == 390){
+        String boss = "";
+        switch(encounterId_800bb0f8) {
+          case 390 -> boss = "doel";
+        }
+        final String bossFinal = boss;
+        final int phaseFinal = phase;
+        loadDir("monsters/phases/%s/%d/%d".formatted(boss, phase, i), files -> {
+          final int offset = soundbankOffset.getAndUpdate(val -> val + MathHelper.roundUp(files.get(3).size(), 0x10));
+          monsterSoundLoaded(files, "Monster slot %d (file %s/%d)".formatted(finalMonsterSlot, bossFinal, phaseFinal), finalMonsterSlot, offset, bent);
+        });
+        phase++;
+      } else {
+        loadDir("monsters/" + bent.charId_272 + "/sounds", files -> {
+          final int offset = soundbankOffset.getAndUpdate(val -> val + MathHelper.roundUp(files.get(3).size(), 0x10));
+          monsterSoundLoaded(files, "Monster slot %d (file %d)".formatted(finalMonsterSlot, bent.charId_272), finalMonsterSlot, offset, bent);
+        });
+      }
     }
 
     pregameLoadingStage_800bb10c++;
@@ -1585,6 +1591,9 @@ public class Battle extends EngineState {
       bent.combatant_144 = this.getCombatant((short)combatantIndices[charSlot]);
       bent.charId_272 = charIndex;
       bent.combatantIndex_26c = combatantIndices[charSlot];
+      final String characterName = getCharacterName(gameState_800babc8.charIds_88[charSlot]).toLowerCase();
+      final int finalCharSlot = charSlot;
+      loadDir("characters/%s/sounds/combat".formatted(characterName), files -> charSoundEffectsLoaded(files, finalCharSlot, bent));
       bent.model_148.coord2_14.coord.transfer.x = charCount > 2 && charSlot == 0 ? 0x900 : 0xa00;
       bent.model_148.coord2_14.coord.transfer.y = 0.0f;
       // Alternates placing characters to the right and left of the main character (offsets by -0x400 for even character counts)
@@ -1885,6 +1894,9 @@ public class Battle extends EngineState {
 
   @Method(0x800c82b8L)
   public void deallocateCombat() {
+    synchronized(Spu.class){
+      SPU.clearCombatSounds();
+    }
     if(fullScreenEffect_800bb140.currentColour_28 == 0xff) {
       this.updateGameStateAndDeallocateMenu();
       this.setStageHasNoModel();
