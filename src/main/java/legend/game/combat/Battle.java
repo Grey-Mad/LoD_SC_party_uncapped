@@ -1536,7 +1536,7 @@ public class Battle extends EngineState {
       final int combatantIndex = this.getCombatantIndex(charIndex);
       final String name = "Enemy combatant index " + combatantIndex;
       final MonsterBattleEntity bent = new MonsterBattleEntity(name);
-      final int freeScript = scriptStatePtrArr_800bc1c0.length - (gameState_800babc8.charIds_88.length*2 + 2) + i;
+      final int freeScript = SCRIPTS.scriptStatePtrArr_800bc1c0.length - (gameState_800babc8.charIds_88.length*2 + 2) + i;
       final ScriptState<MonsterBattleEntity> state = SCRIPTS.allocateScriptState(freeScript, name, bent);
       state.setTicker(bent::bentLoadingTicker);
       state.setDestructor(bent::bentDestructor);
@@ -1575,7 +1575,7 @@ public class Battle extends EngineState {
     //LAB_800fbe70
     for(int charSlot = 0; charSlot < charCount; charSlot++) {
       final int charIndex = gameState_800babc8.charIds_88[charSlot];
-      final int freeScript = scriptStatePtrArr_800bc1c0.length - gameState_800babc8.charIds_88.length + charSlot;
+      final int freeScript = SCRIPTS.scriptStatePtrArr_800bc1c0.length - gameState_800babc8.charIds_88.length + charSlot;
       final String name = "Char ID " + charIndex + " (bent + " + (freeScript) + ')';
       final PlayerBattleEntity bent = new PlayerBattleEntity(name, freeScript, this.playerBattleScript_800c66fc);
       final ScriptState<PlayerBattleEntity> state = SCRIPTS.allocateScriptState(freeScript, name, bent);
@@ -4856,7 +4856,7 @@ public class Battle extends EngineState {
     //   3: script[0x1026] 0x0
     //   4: script[0x1027] 0xa0
     final BattleObject bobj;
-    if(script.params_20[4].get() < scriptStatePtrArr_800bc1c0.length) {
+    if(script.params_20[4].get() < SCRIPTS.scriptStatePtrArr_800bc1c0.length) {
       bobj = SCRIPTS.getObject(script.params_20[4].get(), BattleObject.class);
     } else {
       bobj = null;
@@ -4895,7 +4895,7 @@ public class Battle extends EngineState {
     //   3: script[0x102e] 0x0
     //   4: script[0x102f] 0xc8
     final BattleObject bobj;
-    if(script.params_20[4].get() < scriptStatePtrArr_800bc1c0.length) {
+    if(script.params_20[4].get() < SCRIPTS.scriptStatePtrArr_800bc1c0.length) {
       bobj = SCRIPTS.getObject(script.params_20[4].get(), BattleObject.class);
     } else {
       bobj = null;
@@ -6764,8 +6764,8 @@ public class Battle extends EngineState {
     effect.extTmd_08 = null;
     effect.anim_0c = null;
     if((id & 0xff00_0000) != 0x700_0000) {
-      effect.texture15 = ((BattleEntity27c)scriptStatePtrArr_800bc1c0[id].innerStruct_00).texture15;//greytodo: crash when entering the 5th generation, DRGN0.BIN\5650 
-      effect.texture24 =((BattleEntity27c)scriptStatePtrArr_800bc1c0[id].innerStruct_00).texture24;
+      effect.texture15 = ((BattleEntity27c)SCRIPTS.scriptStatePtrArr_800bc1c0[id].innerStruct_00).texture15;//greytodo: crash when entering the 5th generation, DRGN0.BIN\5650 
+      effect.texture24 =((BattleEntity27c)SCRIPTS.scriptStatePtrArr_800bc1c0[id].innerStruct_00).texture24;
       effect.textured = true;
     }
     effect.model_134 = effect.model_10;

@@ -171,7 +171,7 @@ public class ScriptManager {
   private int framesPerTick;
   private int currentTicks;
 
-  private final ScriptState<?>[] scriptStatePtrArr_800bc1c0 = new ScriptState[108];
+  public final ScriptState<?>[] scriptStatePtrArr_800bc1c0 = new ScriptState[108];
 
   public ScriptManager(final Path patchDir) {
     this.patchDir = patchDir;
