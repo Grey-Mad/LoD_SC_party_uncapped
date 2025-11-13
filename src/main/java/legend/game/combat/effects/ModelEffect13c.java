@@ -94,7 +94,7 @@ public class ModelEffect13c implements Effect<EffectManagerParams.AnimType> {
         zMin = oldZMin;
 
         if (textured){
-            RENDERER.queueModel(part.obj, lw, QueuedModelBattleTmd.class)
+            RENDERER.queueModel(model.modelParts_00[i].tmd_08.getObj(), lw, QueuedModelBattleTmd.class)
               .depthOffset(model.zOffset_a0 * 4)
               .usePs1Depth(model.usePs1Depth)
               .lightDirection(lightDirectionMatrix_800c34e8)
@@ -106,7 +106,7 @@ public class ModelEffect13c implements Effect<EffectManagerParams.AnimType> {
               .texture(this.texture24,0)
               .texture(this.texture15,1);
         }else{
-            RENDERER.queueModel(part.obj, lw, QueuedModelBattleTmd.class)
+            RENDERER.queueModel(model.modelParts_00[i].tmd_08.getObj(), lw, QueuedModelBattleTmd.class)
               .depthOffset(model.zOffset_a0 * 4)
               .usePs1Depth(model.usePs1Depth)
               .lightDirection(lightDirectionMatrix_800c34e8)

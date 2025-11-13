@@ -612,7 +612,7 @@ public abstract class BattleEntity27c extends BattleObject {
     if(v1 != 0) {
       if(this.combatant_144.isModelLoaded()) {
         this.model_148.uvAdjustments_9d = vramSlots_8005027c[vramSlotIndices_800fa730[this.combatant_144.vramSlot_1a0]];
-        this.model_148.uvAdjustments_9d = new UvAdjustmentMetrics14(1, 0, 240, 0, 0, false);
+        this.model_148.uvAdjustments_9d = new UvAdjustmentMetrics14(1, 0, 240, 0, 0);
         this.loadingAnimIndex_26e = 0;
         loadCombatantModelAndAnimation(this.model_148, this.combatant_144);
         this._278 = 1;
@@ -702,7 +702,7 @@ public abstract class BattleEntity27c extends BattleObject {
         Renderer.renderDobj2(part, true, 0);
 
         if (this.texture15 != null){
-            final QueuedModelBattleTmd queue = RENDERER.queueModel(model.modelParts_00[i].obj, lw, QueuedModelBattleTmd.class)
+            final QueuedModelBattleTmd queue = RENDERER.queueModel(model.modelParts_00[i].tmd_08.getObj(), lw, QueuedModelBattleTmd.class)
               .depthOffset(model.zOffset_a0 * 4)
               .usePs1Depth(model.usePs1Depth)
               .lightDirection(lightDirectionMatrix_800c34e8)
@@ -717,7 +717,7 @@ public abstract class BattleEntity27c extends BattleObject {
               queue.scissor(this.scissor);
             }
         } else {
-            final QueuedModelBattleTmd queue = RENDERER.queueModel(model.modelParts_00[i].obj, lw, QueuedModelBattleTmd.class)
+            final QueuedModelBattleTmd queue = RENDERER.queueModel(model.modelParts_00[i].tmd_08.getObj(), lw, QueuedModelBattleTmd.class)
               .depthOffset(model.zOffset_a0 * 4)
               .usePs1Depth(model.usePs1Depth)
               .lightDirection(lightDirectionMatrix_800c34e8)
@@ -730,7 +730,7 @@ public abstract class BattleEntity27c extends BattleObject {
             queue.scissor(this.scissor);
           }
       }
-    }
+    }}
 
     //LAB_800eca58
     if(model.shadowType_cc != 0) {
